@@ -1,0 +1,235 @@
+.container {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 3rem 4rem;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--gray-200);
+    color: var(--text-color);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 2.25rem;
+    margin-bottom: 2.5rem;
+    color: var(--gray-900);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+}
+
+.titleIcon {
+    color: var(--primary-color);
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.35rem;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    color: var(--gray-800);
+    font-weight: 600;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--gray-200);
+}
+
+.sectionIcon {
+    color: var(--secondary-color);
+}
+
+.intro, .paragraph {
+    margin-bottom: 1.25rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--gray-600);
+}
+
+.paragraph strong {
+    color: var(--gray-800);
+    font-weight: 600;
+}
+
+.infoList, .definitionList {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--gray-600);
+}
+
+.infoList li {
+    display: flex;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--gray-200);
+}
+
+.infoList li:last-child {
+    border-bottom: none;
+}
+
+.infoList li strong {
+    flex-shrink: 0;
+    width: 140px;
+    color: var(--gray-800);
+    font-weight: 600;
+}
+
+.infoList li span {
+    flex-grow: 1;
+}
+
+.definitionList li {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.definitionList li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 6px;
+    height: 6px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+}
+
+.definitionList li strong {
+    color: var(--gray-800);
+    font-weight: 600;
+    margin-right: 0.25rem;
+}
+
+.quote {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: var(--gray-50);
+    border-left: 4px solid var(--secondary-color);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--gray-700);
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.quoteIcon {
+    flex-shrink: 0;
+    color: var(--secondary-color);
+    margin-top: 0.1rem;
+}
+
+.quote em {
+    font-weight: 500;
+    color: var(--gray-800);
+}
+
+.importantNote {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background-color: var(--primary-color-light);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.noteIconWrapper {
+    flex-shrink: 0;
+    color: var(--primary-color);
+    margin-top: 0.1rem;
+}
+
+.noteContent {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--gray-700);
+}
+
+.noteContent strong {
+    color: var(--primary-color-dark);
+}
+
+.warningNote {
+    padding: 1.25rem;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    color: #991b1b;
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+}
+
+.warningNote strong {
+    color: #b91c1c;
+}
+
+.link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.link:hover {
+    color: var(--primary-color-dark);
+    text-decoration: underline;
+}
+
+.separator {
+    border: none;
+    border-top: 2px solid var(--gray-200);
+    margin: 3rem 0 2rem 0;
+}
+
+.confirmation {
+    font-style: italic;
+    text-align: center;
+    color: var(--gray-500);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 1.5rem;
+        padding: 2rem 1.5rem;
+    }
+
+    .title {
+        font-size: 1.8rem;
+    }
+
+    .sectionTitle {
+        font-size: 1.25rem;
+    }
+
+    .infoList li {
+        flex-direction: column;
+        border-bottom: none;
+        padding-bottom: 0;
+        margin-bottom: 1rem;
+    }
+
+    .infoList li strong {
+        margin-bottom: 0.2rem;
+    }
+
+    .importantNote,
+    .quote {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+}

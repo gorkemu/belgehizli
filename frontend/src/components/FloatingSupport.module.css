@@ -1,0 +1,75 @@
+.floatingButton {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: #ffffff; 
+    color: #1e293b; 
+    border: 1.5px solid #e2e8f0; 
+    border-radius: 99px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+    z-index: 9999;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    max-width: 56px;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+}
+
+.icon {
+    flex-shrink: 0;
+    color: #f59e0b; 
+    animation: bounceSoft 2.5s infinite;
+}
+
+.text {
+    font-weight: 600;
+    font-size: 0.95rem;
+    opacity: 0;
+    margin-left: 0;
+    transition: all 0.3s ease;
+    text-decoration: none !important;
+    pointer-events: none;
+}
+
+.floatingButton:hover,
+.floatingButton.expanded {
+    max-width: 250px;
+    padding: 1rem 1.5rem;
+    background-color: #fffbeb; 
+    border-color: #fcd34d; 
+    box-shadow: 0 14px 28px rgba(245, 158, 11, 0.15);
+    transform: translateY(-4px);
+}
+
+.floatingButton:hover .icon,
+.floatingButton.expanded .icon {
+    animation: none;
+    color: #d97706; 
+}
+
+.floatingButton:hover .text,
+.floatingButton.expanded .text {
+    opacity: 1;
+    margin-left: 0.75rem;
+    color: #92400e; 
+}
+
+.floatingButton:active {
+    transform: scale(0.92) translateY(-4px);
+}
+
+@keyframes bounceSoft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+@media (max-width: 768px) {
+    .floatingButton { bottom: 1.5rem; right: 1.5rem; }
+}

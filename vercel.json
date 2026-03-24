@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "https://belgehizli-api.onrender.com/api/sitemap.xml"
+    },
+    {
+      "source": "/templates/:id([^/]+)", 
+      "destination": "https://belgehizli-api.onrender.com/api/templates/:id" 
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+.appContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.appMain {
+    flex-grow: 1;
+    padding: 2rem 1.5rem;
+    width: 100%;
+}
