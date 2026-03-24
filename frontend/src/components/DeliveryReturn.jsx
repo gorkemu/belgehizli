@@ -29,7 +29,7 @@ function DeliveryReturn() {
                     </div>
                 </div>
 
-                {/* 1. TESLİMAT ŞARTLARI */}
+                {/* 1. TESLİMAT KOŞULLARI */}
                 <h2 className={styles.sectionTitle}><Zap size={22} className={styles.sectionIcon} /> 1. Teslimat Koşulları</h2>
                 <ul className={styles.policyList}>
                     <li>
@@ -53,7 +53,7 @@ function DeliveryReturn() {
                     </div>
                 </div>
 
-                {/* 3. UYUŞMAZLIK */}
+                {/* 3. İSTİSNAİ DURUMLAR VE ÇÖZÜM */}
                 <h2 className={styles.sectionTitle}><RefreshCcw size={22} className={styles.sectionIcon} /> 3. İstisnai Durumlar ve Çözüm</h2>
                 <p className={styles.paragraph}>
                     Mükerrer (yanlışlıkla arka arkaya iki kez) ödeme çekilmesi gibi teknik bir hata yaşanması durumunda, işlemin gerçekleştiği tarihi takip eden 3 (üç) iş günü içerisinde <strong>info@belgehizli.com</strong> adresi üzerinden bizimle iletişime geçebilirsiniz. Teknik inceleme sonucunda haksız çekim tespit edilirse iade işlemi Shopier üzerinden başlatılır.

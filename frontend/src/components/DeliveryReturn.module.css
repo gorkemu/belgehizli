@@ -1,5 +1,5 @@
 .container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 3rem auto;
     padding: 3rem 4rem;
     background-color: #ffffff;
@@ -9,21 +9,36 @@
     color: var(--text-color);
 }
 
-.title {
+.header {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    font-size: 2.25rem;
-    margin-bottom: 2.5rem;
-    color: var(--gray-900);
-    font-weight: 700;
-    letter-spacing: -0.02em;
     text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .titleIcon {
     color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 2.25rem;
+    color: var(--gray-900);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.lastUpdated {
+    font-size: 0.95rem;
+    color: var(--gray-500);
+}
+
+.lastUpdated strong {
+    color: var(--gray-700);
 }
 
 .sectionTitle {
@@ -151,6 +166,36 @@
 .exceptionNote strong {
     color: var(--gray-800);
 }
+
+.warningNote {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background-color: #fef2f2;
+    border-left: 4px solid #ef4444;
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.noteIconWrapper {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+}
+
+.importantNote .noteIconWrapper { color: var(--primary-color); }
+.warningNote .noteIconWrapper { color: #ef4444; }
+
+.noteContent {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.importantNote .noteContent { color: var(--gray-700); }
+.warningNote .noteContent { color: #991b1b; }
+
+.importantNote strong { color: var(--primary-color-dark); }
+.warningNote strong { color: #b91c1c; }
 
 @media (max-width: 768px) {
     .container {
