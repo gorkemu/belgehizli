@@ -1,4 +1,4 @@
-# Belge Hizli (Contract-Generator)
+# Belge Hızlı (Contract-Generator)
 
 Belge Hizli is a modern, full-stack web application designed to help users generate legal contracts, petitions, and official documents in PDF format within seconds using dynamic templates. The platform operates on a Public Service model—offering high-quality legal tools for free, supported by voluntary user contributions.
 
@@ -48,4 +48,4 @@ Manage templates directly in the MongoDB templates collection. Key fields: name,
 
 ## License
 
-This project is licensed under the **MIT License**. See the [LICENCE](https://github.com/gorkemu/belge-hizli/blob/main/LICENCE) file for details.
+This project is licensed under the **MIT License**. See the [LICENSE](https://github.com/gorkemu/belgehizli/blob/main/LICENCE) file for details.
