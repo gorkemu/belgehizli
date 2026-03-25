@@ -48,4 +48,4 @@ Manage templates directly in the MongoDB templates collection. Key fields: name,
 
 ## License
 
-This project is licensed under the **MIT License**. See the [LICENSE](https://github.com/gorkemu/belgehizli/blob/main/LICENCE) file for details.
+This project is licensed under the **MIT License**. See the [LICENSE](https://github.com/gorkemu/belgehizli/blob/main/LICENSE) file for details.
