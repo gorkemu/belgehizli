@@ -6,9 +6,9 @@ import styles from './TemplateDetail.module.css';
 import DocumentForm from './DocumentForm';
 import DocumentPreview from './DocumentPreview';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, CheckCircle2, AlertCircle, Download, Coffee, Heart, X } from 'lucide-react'; // X ikonu eklendi
+import { ArrowLeft, CheckCircle2, AlertCircle, Download, Coffee, Heart, X, ArrowDown } from 'lucide-react';
 
-// --- YASAL VERSİYON BİLGİLERİ ---
+
 const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20250521";
 const ON_BILGILENDIRME_FORMU_CURRENT_VERSION = "v_20250521";
 const COMBINED_LEGAL_DOC_VERSION = `KSTerms:${KULLANIM_SARTLARI_CURRENT_VERSION}_OBFTerms:${ON_BILGILENDIRME_FORMU_CURRENT_VERSION}`;
@@ -17,21 +17,19 @@ function TemplateDetail() {
     const { slug } = useParams();
     const navigate = useNavigate();
     const formRef = useRef(null);
-
     const [template, setTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
     const [formData, setFormData] = useState({});
     const [formErrors, setFormErrors] = useState({});
-
     const [loadingDownload, setLoadingDownload] = useState(false);
     const [downloadError, setDownloadError] = useState(null);
-    
     const [agreedToTerms, setAgreedToTerms] = useState(false);
-    
     const [isSupportModalOpen, setIsSupportModalOpen] = useState(false); 
-
+    const previewRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
+    const [isNoticeVisibleByScroll, setIsNoticeVisibleByScroll] = useState(true);
+    const [isNoticeDismissed, setIsNoticeDismissed] = useState(false); 
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
 
     useEffect(() => {
@@ -54,12 +52,64 @@ function TemplateDetail() {
             });
     }, [slug]);
 
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+        checkMobile(); 
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsNoticeVisibleByScroll(false);
+                } 
+                else if (entry.boundingClientRect.top > 0) {
+                    setIsNoticeVisibleByScroll(true);
+                } 
+                else {
+                    setIsNoticeVisibleByScroll(false);
+                }
+            },
+            {
+                root: null,
+                rootMargin: '-100px 0px 0px 0px', 
+                threshold: 0.1 
+            }
+        );
+
+        if (previewRef.current) {
+            observer.observe(previewRef.current);
+        }
+
+        return () => {
+            if (previewRef.current) {
+                observer.unobserve(previewRef.current);
+            }
+        };
+    }, [template]); 
+
+    const scrollToPreview = () => {
+        if (previewRef.current) {
+            const headerOffset = 95; 
+            const elementPosition = previewRef.current.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    };
+
     const handleFormChange = (newFormData, errors) => {
         setFormData(newFormData);
         setFormErrors(errors);
     };
     
-    // --- Ücretsiz İndirme İşlemi ---
+        // --- Ücretsiz İndirme İşlemi ---
     const handleDownload = async () => {
         let detectedError = null;
 
@@ -160,7 +210,7 @@ function TemplateDetail() {
                         )}
                     </div>
                     
-                    <div className={styles.previewColumn}>
+                    <div className={styles.previewColumn} ref={previewRef}>
                         {template.content ? (
                             <DocumentPreview templateContent={template.content} formData={formData} />
                         ) : (
@@ -169,7 +219,6 @@ function TemplateDetail() {
                     </div>
                 </div>
 
-                {/* ALT KISIM */}
                 <div className={styles.actionSection}>
                     <div className={styles.checkoutSection}>
                         <label className={styles.termsCheckboxContainer}>
@@ -185,7 +234,7 @@ function TemplateDetail() {
                             <span><CheckCircle2 size={16} className={styles.checkIcon}/> %100 Ücretsiz</span>
                             <span><CheckCircle2 size={16} className={styles.checkIcon}/> Kredi Kartı Gerekmez</span>
                         </div>
-                        
+
                         {downloadError && (
                             <div className={styles.paymentError}>
                                 <AlertCircle size={18} /> {downloadError}
@@ -204,6 +253,33 @@ function TemplateDetail() {
                     </div>
                 </div>
             </div>
+
+            {/* --- MOBİL ÖNİZLEME BİLDİRİMİ --- */}
+            {isMobile && !isNoticeDismissed && isNoticeVisibleByScroll && (
+                <div 
+                    className={styles.mobilePreviewNotice}
+                    onClick={scrollToPreview}
+                >
+                    <div className={styles.noticeIconCircle}>
+                        <ArrowDown size={18} className={styles.noticeIcon} />
+                    </div>
+                    
+                    <span className={styles.noticeText}>
+                        Canlı önizleme aşağıda
+                    </span>
+
+                    <button 
+                        onClick={(e) => {
+                            e.stopPropagation(); 
+                            setIsNoticeDismissed(true); 
+                        }} 
+                        className={styles.noticeCloseBtn} 
+                        aria-label="Kapat"
+                    >
+                        <X size={16} />
+                    </button>
+                </div>
+            )}    
 
             {/* --- DESTEK MODAL (KAHVE ISMARLA) --- */}
             {isSupportModalOpen && (

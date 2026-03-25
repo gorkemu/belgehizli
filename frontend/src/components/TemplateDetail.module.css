@@ -274,3 +274,81 @@
 .checkIcon {
     margin-right: 0.3rem;
 }
+
+.mobilePreviewNotice {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1e293b;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 0.6rem 0.6rem 1rem;
+    border-radius: 99px; 
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+    z-index: 9999;
+    font-weight: 500;
+    white-space: nowrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    
+    animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    0% { opacity: 0; transform: translate(-50%, 30px); }
+    100% { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.noticeIconCircle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.noticeIcon {
+    color: #fde047;
+    animation: bounceDown 1.5s infinite;
+}
+
+@keyframes bounceDown {
+    0%, 100% { transform: translateY(-2px); }
+    50% { transform: translateY(2px); }
+}
+
+.noticeText {
+    font-size: 0.9rem;
+    margin-right: 0.2rem;
+}
+
+.noticeCloseBtn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 0.4rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    margin-left: 0.2rem;
+}
+
+.noticeCloseBtn:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1025px) {
+    .mobilePreviewNotice {
+        display: none !important;
+    }
+}
