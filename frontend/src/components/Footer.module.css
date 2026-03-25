@@ -1,60 +1,109 @@
 .appFooter {
-    position: relative;
-    background-color: var(--gray-50);
+    background-color: #0f172a; /* Çok Şık Koyu Antrasit Zemin */
     margin-top: auto;
     width: 100%;
-    padding-top: 40px;
+    color: #f8fafc; 
+    /* Keskin geçiş için düz bir çizgi de eklenebilir, ama renk zıtlığı yeterince şık duracaktır */
+    border-top: 1px solid #1e293b; 
 }
 
-.waveContainer {
-    position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-    transform: rotate(180deg);
-}
-
-.waveContainer svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 40px;
-}
-
-.waveFill {
-    fill: var(--gray-50);
-}
-
+/* max-width KALDIRILDI - Artık tam genişlikte çalışır */
 .footerContent {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
+    width: 100%;
+    padding: 4rem 1.5rem; /* Üstten ve alttan eşit, ferah boşluk */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    gap: 3.5rem;
     text-align: center;
 }
 
-.footerLogo {
-    height: 32px;
-    opacity: 0.8;
-    margin-bottom: 0.5rem;
-    filter: grayscale(100%);
+.footerBrand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+    max-width: 400px;
+}
+
+/* --- LOGO STİLLERİ (Koyu Zemin Uyumlu) --- */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    text-decoration: none;
+    opacity: 0.9;
     transition: all 0.3s ease;
 }
 
-.footerLogo:hover {
+.logoContainer:hover {
     opacity: 1;
-    filter: grayscale(0%);
+}
+
+.iconCropper {
+    width: 44px;
+    height: 44px;
+    border-radius: 6px;
+    overflow: hidden;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.iconCropper img {
+    width: 100%;
+    height: 135%;
+    object-fit: cover;
+    object-position: top;
+}
+
+.logoText {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff; 
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.logoTextLight {
+    color: #f59e0b;
 }
 
 .footerDesc {
-    color: var(--gray-500);
+    color: #94a3b8; 
     font-size: 0.95rem;
     margin: 0;
+    line-height: 1.6;
+}
+
+/* --- SÜTUNLU LİNK YAPISI --- */
+.footerLinksWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.linkColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center; 
+}
+
+.columnTitle {
+    color: #ffffff;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.footerNav {
+    width: 100%;
 }
 
 .footerNav ul {
@@ -62,44 +111,103 @@
     padding: 0;
     margin: 0;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* MOBİLDE LİNKLER */
+.footerNav ul li {
+    width: 100%;
+    max-width: 300px;
 }
 
 .footerNav ul li a {
-    color: var(--gray-600);
+    color: #cbd5e1; 
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 500;
-    transition: all 0.3s ease;
-    display: inline-block; 
+    transition: all 0.2s ease;
+    display: block;
+    padding: 0.8rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    text-align: center;
 }
 
 .footerNav ul li a:hover {
-    color: var(--primary-color);
-    transform: translateX(3px); 
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #f59e0b; 
+    transform: translateY(-2px);
 }
 
 .footerBottom {
-    border-top: 1px solid var(--gray-200);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1.5rem;
     text-align: center;
+    background-color: #020617; 
 }
 
 .footerBottom p {
     margin: 0;
-    color: var(--gray-400);
+    color: #64748b;
     font-size: 0.85rem;
 }
 
+/* --- MASAÜSTÜ GÖRÜNÜM --- */
 @media (min-width: 768px) {
     .footerContent {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-between; 
+        text-align: left;
+        align-items: flex-start;
+        padding-left: 3rem;  
+        padding-right: 3rem;
+    }
+    
+    .footerBrand {
+        align-items: flex-start;
+        max-width: 350px;
+    }
+
+    .footerLinksWrapper {
+        flex-direction: row; 
+        width: auto;
+        gap: 5rem; 
+    }
+
+    .linkColumn {
+        align-items: flex-start; 
+    }
+
+    .footerNav ul {
+        align-items: flex-start; 
+    }
+
+    .footerNav ul li {
+        width: auto;
+    }
+    
+    .footerNav ul li a {
+        padding: 0;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
         text-align: left;
     }
-    .footerNav ul {
-        justify-content: flex-end;
+    
+    .footerNav ul li a:hover {
+        background-color: transparent;
+        color: #f59e0b; 
+        transform: translateX(4px); 
+    }
+}
+
+@media (min-width: 1200px) {
+    .footerContent { 
+        padding-left: 4rem; 
+        padding-right: 4rem; 
     }
 }

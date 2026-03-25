@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './TemplateList.module.css';
 import { Helmet } from 'react-helmet-async';
-import { Search, FileText, ArrowRight, AlertCircle, Loader2, Home as HomeIcon, Car, Gavel, Info } from 'lucide-react';
+import { Search, FileText, ArrowRight, AlertCircle, Loader2, Home as HomeIcon, Car, Gavel, Info, CheckCircle2 } from 'lucide-react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
 
@@ -103,6 +103,9 @@ function TemplateList() {
             <div className={styles.listPageContainer}>
                 
                 <div className={styles.listHeader}>
+                    <div className={styles.freeBadge}>
+                        <CheckCircle2 size={16} /> Tamamen Ücretsiz & Reklamsız
+                    </div>
                     <h1 className={styles.sectionTitle}>Belgenizi Kolayca Oluşturun</h1> 
                     <p className={styles.subtitle}>
                         İhtiyacınız olan şablonu seçin, akıllı formu doldurun ve PDF olarak anında indirin.

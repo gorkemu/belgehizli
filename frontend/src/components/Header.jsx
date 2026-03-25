@@ -1,47 +1,68 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import styles from './Header.module.css';
 
 function Header() {
     const [scrolled, setScrolled] = useState(false);
-    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState('');
+    
+    const navigate = useNavigate();
+    const location = useLocation(); 
 
+    // Scroll takibi
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 20);
+            setScrolled(window.scrollY > 60);
         };
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const isActive = (path) => location.pathname === path;
+    // Sayfa veya URL parametresi her değiştiğinde arama kutusunu temizle
+    useEffect(() => {
+        setSearchTerm('');
+    }, [location]);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if (searchTerm.trim()) {
+            navigate(`/sablonlar?search=${encodeURIComponent(searchTerm.trim())}`);
+        }
+    };
 
     return (
-        <header className={`${styles.appHeader} ${scrolled ? styles.scrolled : ''}`}>
-            <Link to="/" className={styles.logo}>
-                <img src="/logo.png" alt="Belge Hızlı Logosu" height="40" />
-            </Link>
-            <nav className={styles.appNav}>
-                <ul>
-                    <li>
-                        <Link to="/" className={isActive('/') ? styles.active : ''}>Ana Sayfa</Link>
-                    </li>
-                    <li>
-                        <Link to="/sablonlar" className={isActive('/sablonlar') ? styles.active : ''}>Şablonlar</Link>
-                    </li>
-                    <li>
-                        <Link to="/hakkimizda" className={isActive('/hakkimizda') ? styles.active : ''}>Hakkımızda</Link>
-                    </li>
-                    <li>
-                        <Link to="/iletisim" className={isActive('/iletisim') ? styles.active : ''}>İletişim</Link>
-                    </li>
+        <>
+            <div className={styles.headerSpacer}></div>
+
+            <header className={`${styles.appHeader} ${scrolled ? styles.scrolled : ''}`}>
+                <div className={styles.headerInner}>
                     
-                    <li>
-                        <Link to="/sablonlar" className={styles.navCtaBtn}>Hemen Başla</Link>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+                    <Link to="/" className={styles.logoContainer}>
+                        <img src="/logo.png" alt="Belge Hızlı" className={styles.dynamicLogoImg} />
+                        <span className={styles.logoText}>
+                            BELGE <span className={styles.logoTextLight}>HIZLI</span>
+                        </span>
+                    </Link>
+
+                    <div className={`${styles.searchWrapper} ${scrolled ? styles.searchVisible : styles.searchHidden}`}>
+                        <form className={styles.headerSearch} onSubmit={handleSearch}>
+                            <Search className={styles.searchIcon} size={18} />
+                            <input
+                                type="text"
+                                placeholder="Şablon ara (örn: kira)..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                            />
+                            <button type="submit" className={styles.searchBtn}>Ara</button>
+                        </form>
+                    </div>
+
+                    <div className={styles.rightSpacer}></div>
+
+                </div>
+            </header>
+        </>
     );
 }
 

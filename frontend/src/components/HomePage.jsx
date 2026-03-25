@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import styles from './HomePage.module.css'; 
 import { Helmet } from 'react-helmet-async'; 
-import { FileText, Search, PenLine, Download, ArrowRight, Home as HomeIcon, Car, Gavel } from 'lucide-react'; 
+import { FileText, Search, PenLine, Download, ArrowRight, Home as HomeIcon, Car, Gavel, CheckCircle2 } from 'lucide-react';
 
 const POPULAR_CHIPS = [
     { name: 'Kira Sözleşmesi', slug: 'konut-kira-sozlesmesi', icon: <HomeIcon size={14} /> },
@@ -64,7 +64,11 @@ function HomePage() {
                         <p className={styles.heroSubtitle}>
                             İhtiyacınıza özel, dinamik olarak oluşturulan şablonlarla saniyeler içinde hatasız PDF belgelerinizi hazırlayın.
                         </p>
-                        
+                        {/* --- ÜCRETSİZ VURGUSU --- */}
+                        <div className={styles.trustIndicators}>
+                            <span><CheckCircle2 size={18} className={styles.checkIcon}/> %100 Ücretsiz</span>
+                            <span><CheckCircle2 size={18} className={styles.checkIcon}/> Kredi Kartı Gerekmez</span>
+                        </div>
                         {/* --- ARAMA BÖLÜMÜ --- */}
                         <form className={styles.searchBar} onSubmit={handleSearch}>
                             <Search className={styles.searchIcon} size={20} />
@@ -142,7 +146,7 @@ function HomePage() {
                                 <Search size={32} />
                             </div>
                             <h3>1. Şablon Seç</h3>
-                            <p>Geniş hukuki ve kurumsal kütüphanemizden ihtiyacınız olan şablonu bulun.</p>
+                            <p>İhtiyacınız olan şablonu bulun.</p>
                         </div>
 
                         {/* 2. ADIM */}
@@ -151,7 +155,7 @@ function HomePage() {
                                 <PenLine size={32} />
                             </div>
                             <h3>2. Formu Doldur</h3>
-                            <p>Sizin için hazırladığımız dinamik ve akıllı formdaki alanları kolayca doldurun.</p>
+                            <p>Akıllı formdaki alanları doldurun ve anlık önizlemesini yapın.</p>
                         </div>
 
                         {/* 3. ADIM */}
@@ -160,7 +164,7 @@ function HomePage() {
                                 <Download size={32} />
                             </div>
                             <h3>3. İndir ve Kullan</h3>
-                            <p>Hatasız oluşturulan PDF belgenizi anında cihazınıza indirin.</p>
+                            <p>Belgenizi anında ve ücretsiz olarak indirin.</p>
                         </div>
                     </div>
                 </section>
