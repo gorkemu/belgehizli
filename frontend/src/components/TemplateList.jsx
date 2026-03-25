@@ -101,11 +101,13 @@ function TemplateList() {
             </Helmet> 
 
             <div className={styles.listPageContainer}>
-                
-                <div className={styles.listHeader}>
+                <div className={styles.stickyBadgeWrapper}>
                     <div className={styles.freeBadge}>
                         <CheckCircle2 size={16} /> Tamamen Ücretsiz & Reklamsız
                     </div>
+                </div>
+                
+                <div className={styles.listHeader}>
                     <h1 className={styles.sectionTitle}>Belgenizi Kolayca Oluşturun</h1> 
                     <p className={styles.subtitle}>
                         İhtiyacınız olan şablonu seçin, akıllı formu doldurun ve PDF olarak anında indirin.

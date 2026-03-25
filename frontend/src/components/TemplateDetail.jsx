@@ -143,12 +143,11 @@ function TemplateDetail() {
                         <ArrowLeft size={18} /> Geri
                     </button>
                     <div className={styles.headerTitles}>
+                        <div className={styles.freeBadge}>
+                            <CheckCircle2 size={16} /> Tamamen Ücretsiz & Reklamsız
+                        </div>
                         <h1 className={styles.title}>{template.name}</h1> 
                         <p className={styles.description}>{template.description}</p>
-                        <div className={styles.priceBadge}>
-                            Tamamen Ücretsiz
-                            <span className={styles.betaNote}>Abonelik veya gizli ücret yok</span>
-                        </div>
                     </div>
                 </div>
 
@@ -182,6 +181,11 @@ function TemplateDetail() {
                             </span>
                         </label>
 
+                        <div className={styles.trustIndicators}>
+                            <span><CheckCircle2 size={16} className={styles.checkIcon}/> %100 Ücretsiz</span>
+                            <span><CheckCircle2 size={16} className={styles.checkIcon}/> Kredi Kartı Gerekmez</span>
+                        </div>
+                        
                         {downloadError && (
                             <div className={styles.paymentError}>
                                 <AlertCircle size={18} /> {downloadError}

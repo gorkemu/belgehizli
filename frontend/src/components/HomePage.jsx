@@ -68,6 +68,7 @@ function HomePage() {
                         <div className={styles.trustIndicators}>
                             <span><CheckCircle2 size={18} className={styles.checkIcon}/> %100 Ücretsiz</span>
                             <span><CheckCircle2 size={18} className={styles.checkIcon}/> Kredi Kartı Gerekmez</span>
+                            <span><CheckCircle2 size={18} className={styles.checkIcon}/> Üyelik Gerekmez</span>
                         </div>
                         {/* --- ARAMA BÖLÜMÜ --- */}
                         <form className={styles.searchBar} onSubmit={handleSearch}>
@@ -78,7 +79,7 @@ function HomePage() {
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
-                            <button type="submit">Bul</button>
+                            <button type="submit">Ara</button>
                         </form>
 
                         {/* --- POPÜLER ÇİPLER --- */}

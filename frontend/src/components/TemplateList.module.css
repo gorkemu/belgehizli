@@ -365,20 +365,31 @@
   }
 }
 
+.stickyBadgeWrapper {
+    position: sticky;
+    top: 95px; 
+    z-index: 90; 
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    margin-top: 1rem;
+    pointer-events: none; 
+}
+
 .freeBadge {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     background: linear-gradient(135deg, #10b981 0%, #059669 100%);
     color: white;
-    padding: 0.4rem 1.2rem;
+    padding: 0.5rem 1.2rem;
     border-radius: 99px;
     font-size: 0.85rem;
     font-weight: 700;
     letter-spacing: 0.02em;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35); 
     animation: pulseGlow 2s infinite;
+    pointer-events: auto; 
 }
 
 @keyframes pulseGlow {
