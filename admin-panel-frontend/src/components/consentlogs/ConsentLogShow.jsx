@@ -5,16 +5,15 @@ import {
     SimpleShowLayout,
     TextField,
     DateField,
-    FunctionField, // ReferenceField yerine FunctionField
-    useGetOne,    // İlişkili kaydı çekmek için
-    Loading,      // Yükleniyor göstergesi
-    Link,         // React Admin Link component'i
-    ChipField     // ChipField (RelatedTransactionField içinde kullanılabilir)
+    FunctionField,
+    useGetOne,
+    Loading,
+    Link,
+    ChipField
 } from "react-admin";
 
-// İlgili Transaction'ı göstermek için özel bir alan component'i
 const RelatedTransactionForConsentLogField = (props) => {
-    const { record: consentLogRecord } = props; // Ana ConsentLog kaydını props'tan al
+    const { record: consentLogRecord } = props;
 
     if (!consentLogRecord || !consentLogRecord.transactionId) {
         return <TextField record={consentLogRecord} source="transactionId" label="Transaction ID (Ham)" emptyText="-" />;

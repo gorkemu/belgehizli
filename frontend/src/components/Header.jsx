@@ -8,9 +8,8 @@ function Header() {
     const [searchTerm, setSearchTerm] = useState('');
     
     const navigate = useNavigate();
-    const location = useLocation(); 
+    const location = useLocation();
 
-    // Scroll takibi
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 60);
@@ -19,7 +18,6 @@ function Header() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Sayfa veya URL parametresi her değiştiğinde arama kutusunu temizle
     useEffect(() => {
         setSearchTerm('');
     }, [location]);

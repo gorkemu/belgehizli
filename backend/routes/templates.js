@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const Template = require('../models/template'); 
-const Transaction = require('../models/transaction'); 
-const Invoice = require('../models/invoice');      
+const Template = require('../models/template');
+const Transaction = require('../models/transaction');
+const Invoice = require('../models/invoice');
 const ConsentLog = require('../models/consentLog');
 const { generatePdf } = require('../pdf-generator/pdfGenerator');
 const { sendPdfEmail } = require('../utils/mailer');
@@ -10,9 +10,8 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const Handlebars = require('handlebars');
-const { format } = require('date-fns'); // Sitemap için tarih formatlama
+const { format } = require('date-fns');
 
-// --- DATE FORMAT HELPER (For PDF) ---
 function formatDateHelper(dateString) {
     if (!dateString || typeof dateString !== 'string') return '';
     try {
@@ -25,7 +24,6 @@ function formatDateHelper(dateString) {
     } catch (e) { return dateString; }
 }
 
-// Handlebars helpers
 Handlebars.registerHelper('math', function (lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
@@ -48,7 +46,7 @@ Handlebars.registerHelper('default', function (value, defaultValue) {
     return value !== undefined && value !== null && value !== '' ? value : defaultValue;
 });
 
-Handlebars.registerHelper('formatDate', formatDateHelper); 
+Handlebars.registerHelper('formatDate', formatDateHelper);
 
 function turkceToLatin(text) {
     if (!text) return 'document';
@@ -58,7 +56,7 @@ function turkceToLatin(text) {
         .replace(/Ç/g, 'C').replace(/ğ/g, 'g').replace(/ü/g, 'u')
         .replace(/ş/g, 's').replace(/ı/g, 'i').replace(/i/g, 'i')
         .replace(/ö/g, 'o').replace(/ç/g, 'c')
-        .replace(/[^a-zA-Z0-9._-]/g, '_'); 
+        .replace(/[^a-zA-Z0-9._-]/g, '_');
 }
 
 const cssFilePath = path.join(__dirname, '..', 'styles', 'pdfStyles.css');
@@ -72,15 +70,14 @@ try {
     console.warn('UYARI: PDF stilleri yüklenemedi. PDF\'ler varsayılan stillerle oluşturulacak.');
 }
 
-// --- Eski ID - Slug Eşleme Dosyasını Yükle ---
 const oldIdToSlugMapPath = path.join(__dirname, '..', 'old-id-to-slug-map.json');
 let oldIdToSlugMap = {};
 try {
     const mapData = fs.readFileSync(oldIdToSlugMapPath, 'utf8');
     oldIdToSlugMap = JSON.parse(mapData);
-    console.log(`Successfully loaded old ID to slug map from ${oldIdToSlugMapPath}`); 
+    console.log(`Successfully loaded old ID to slug map from ${oldIdToSlugMapPath}`);
 } catch (error) {
-    console.error(`Failed to load old ID to slug map from ${oldIdToSlugMapPath}:`, error.message); 
+    console.error(`Failed to load old ID to slug map from ${oldIdToSlugMapPath}:`, error.message);
 }
 
 router.get('/sablonlar', async (req, res) => {
@@ -128,7 +125,7 @@ router.get('/templates/:id', async (req, res) => {
         }
         const template = await Template.findById(oldId);
         if (template && template.slug) {
-            return res.redirect(301, `/sablonlar/detay/${template.slug}`); 
+            return res.redirect(301, `/sablonlar/detay/${template.slug}`);
         } else if (template && !template.slug) {
             return res.status(404).json({ message: 'Şablon bulundu ancak slug atanmamış.' });
         }
@@ -139,7 +136,6 @@ router.get('/templates/:id', async (req, res) => {
     }
 });
 
-// --- PDF oluşturma ve Kayıt İşlemi ---
 router.post('/templates/:id/process-payment', async (req, res) => {
     let pdfBuffer = null;
     let template = null;
@@ -150,7 +146,7 @@ router.post('/templates/:id/process-payment', async (req, res) => {
         template = await Template.findById(req.params.id);
         if (!template) return res.status(404).json({ message: 'Şablon bulunamadı' });
 
-        const { formData, consentTimestamp, documentVersion } = req.body;
+        const { formData, editedHtml, consentTimestamp, documentVersion } = req.body;
         const userEmailForLog = formData?.belge_email || 'unknown@example.com';
 
         if (!consentTimestamp || !documentVersion) {
@@ -161,10 +157,11 @@ router.post('/templates/:id/process-payment', async (req, res) => {
             templateId: template._id,
             templateName: template.name || 'İsimsiz Şablon',
             userEmail: userEmailForLog,
-            status: 'completed', 
-            amount: 0, 
+            status: 'completed',
+            amount: 0,
             currency: 'TRY',
-            formDataSnapshot: JSON.stringify(formData)
+            formDataSnapshot: JSON.stringify(formData),
+            editedHtmlSnapshot: editedHtml || null
         });
         await newTransaction.save();
 
@@ -179,17 +176,25 @@ router.post('/templates/:id/process-payment', async (req, res) => {
         });
         await newConsentLog.save();
 
-        const compiledTemplate = Handlebars.compile(template.content || '');
-        const htmlContent = compiledTemplate(formData);
+        let htmlContent = "";
+
+        if (editedHtml) {
+            htmlContent = editedHtml;
+            console.log("Kullanıcının özel olarak düzenlediği HTML kullanılarak PDF basılıyor.");
+        } else {
+            const compiledTemplate = Handlebars.compile(template.content || '');
+            htmlContent = compiledTemplate(formData);
+            console.log("Standart Form verisi (Handlebars) kullanılarak PDF basılıyor.");
+        }
+
         const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8" />${pdfStyles}</head><body>${htmlContent}</body></html>`;
-        
+
         pdfBuffer = await generatePdf(fullHtml);
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
 
-        // --- E-POSTA GÖNDERİMİ ---
         if (userEmailForLog !== 'unknown@example.com' && pdfBuffer) {
             const emailSubject = `Belge Hızlı - ${template.name} Belgeniz 🎉`;
-            
+
             const emailHtml = `
   <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
     
@@ -239,7 +244,7 @@ router.post('/templates/:id/process-payment', async (req, res) => {
 `;
 
             const emailText = `Merhaba, ${template.name} belgeniz ektedir. Geliştiriciye destek olmak için: https://www.shopier.com/belgehizli/45489886`;
-            
+
             sendPdfEmail(userEmailForLog, emailSubject, emailText, emailHtml, pdfBuffer, safeFilename)
                 .catch(err => console.error("E-posta gönderilemedi:", err));
         }
@@ -259,7 +264,6 @@ router.post('/templates/:id/process-payment', async (req, res) => {
     }
 });
 
-// --- Dinamik Sitemap Rotası ---
 router.get('/sitemap.xml', async (req, res) => {
     try {
         const templates = await Template.find({}, 'slug updatedAt').lean();
@@ -267,7 +271,7 @@ router.get('/sitemap.xml', async (req, res) => {
 
         const staticUrls = [
             { loc: 'https://www.belgehizli.com/', changefreq: 'weekly', priority: '1.0' },
-            { loc: 'https://www.belgehizli.com/sablonlar', changefreq: 'daily', priority: '0.9' }, 
+            { loc: 'https://www.belgehizli.com/sablonlar', changefreq: 'daily', priority: '0.9' },
             { loc: 'https://www.belgehizli.com/hakkimizda', changefreq: 'monthly', priority: '0.7' },
             { loc: 'https://www.belgehizli.com/iletisim', changefreq: 'monthly', priority: '0.7' },
             { loc: 'https://www.belgehizli.com/gizlilik-politikasi', changefreq: 'monthly', priority: '0.5' },
@@ -282,7 +286,7 @@ router.get('/sitemap.xml', async (req, res) => {
 
         templates.forEach(template => {
             if (template.slug) {
-                const lastMod = template.updatedAt ? format(new Date(template.updatedAt), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd'); 
+                const lastMod = template.updatedAt ? format(new Date(template.updatedAt), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
                 const loc = `https://www.belgehizli.com/sablonlar/detay/${template.slug}`;
                 xml += `<url><loc>${loc}</loc><lastmod>${lastMod}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`;
             }

@@ -10,7 +10,6 @@ process.on('unhandledRejection', (reason, promise) => {
 
 });
 
-
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -23,7 +22,6 @@ const bcrypt = require('bcryptjs');
 dotenv.config();
 const app = express();
 
-// --- CORS Ayarları  ---
 const allowedOrigins = [
     'http://localhost:5173', 
     'http://localhost:5174', 
@@ -47,28 +45,23 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Basit loglama middleware'i 
 app.use((req, res, next) => {
-	// Sadece production'da değilse logla veya daha gelişmiş bir logger kullan
 	if (process.env.NODE_ENV !== 'production') {
 		console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
 	}
 	next();
 });
 
-
-// MongoDB Atlas bağlantısı
 const uri = process.env.ATLAS_URI;
 if (!uri) {
 	console.error('Hata: ATLAS_URI ortam değişkeni tanımlanmamış!');
-	process.exit(1); // URI yoksa uygulamayı durdur
+	process.exit(1);
 }
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }) 
     .then(async () => {
         console.log('MongoDB Atlas bağlantısı başarılı!');
 
-        // --- İLK ADMİN KULLANICISINI OLUŞTUR ---
         try {
             const adminCount = await AdminUser.countDocuments();
             if (adminCount === 0) {
@@ -101,17 +94,13 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 		process.exit(1); 
 	});
 
-// --- Hata Yönetimi Middleware'i ---
 app.use((err, req, res, next) => {
 	console.error("Beklenmeyen Hata:", err.stack || err); 
-	// CORS hatası ise özel mesaj gönder
 	if (err.message === 'Not allowed by CORS') {
 		return res.status(403).json({ message: 'CORS policy violation' });
 	}
-	// Diğer hatalar için genel bir mesaj gönder
 	res.status(err.status || 500).json({
 		message: err.message || 'Sunucuda bir hata oluştu.',
-		// Production'da hata detayını client'a gönderme
 		error: process.env.NODE_ENV !== 'production' ? err : {}
 	});
 });

@@ -3,41 +3,41 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const consentLogSchema = new Schema({
-    transactionId: { // Bu onayın doğrudan ilişkili olduğu işlem 
+    transactionId: {
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true,
         
     },
-    userEmail: { // İşlemi yapan/onay veren kullanıcının e-postası
+    userEmail: {
         type: String,
         required: true,
         trim: true,
         lowercase: true
     },
-    ipAddress: { // Onay anındaki IP adresi
+    ipAddress: {
         type: String,
         required: true
     },
-    userAgent: { // Onay anındaki User-Agent bilgisi
+    userAgent: {
         type: String,
         required: true
     },
-    documentType: { // Onaylanan belgenin türü
+    documentType: {
         type: String,
         required: true,
         default: 'LEGAL_TERMS_AGREEMENT' 
     },
-    documentVersion: { // Onaylanan spesifik metinlerin birleşik versiyonu/kimliği
+    documentVersion: {
         type: String,
         required: true 
     },
-    consentTimestampClient: { // Frontend'den gelen, onayın verildiği zaman damgası
+    consentTimestampClient: {
         type: Date,
         required: true
     }
 }, {
-    timestamps: true // createdAt (sunucu zamanı) ve updatedAt alanlarını otomatik ekler
+    timestamps: true
 });
 
 module.exports = mongoose.model('ConsentLog', consentLogSchema);

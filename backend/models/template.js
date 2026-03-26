@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
-const slugify = require('slugify'); 
+const slugify = require('slugify');
 
-// Alt alanlar için şema tanımı 
 const subfieldSchema = new mongoose.Schema({
     name: { type: String, required: true },
     label: { type: String, required: true },
@@ -10,9 +9,8 @@ const subfieldSchema = new mongoose.Schema({
     options: [String],
     required: Boolean,
 
-}, { _id: false }); 
+}, { _id: false });
 
-// Ana alanlar için şema tanımı
 const fieldSchema = new mongoose.Schema({
     name: { type: String, required: true },
     label: { type: String, required: true },
@@ -20,61 +18,54 @@ const fieldSchema = new mongoose.Schema({
     placeholder: String,
     options: [String],
     required: Boolean,
-    condition: { // Koşullu alanlar için
-        field: String, // Hangi alana bağlı
-        value: String  // Hangi değere bağlı
+    condition: {
+        field: String,
+        value: String
 
     },
-    // --- Tekrarlayan Bloklar İçin Alanlar ---
-    blockTitle: String, // Her bloğun başlığı (örn: "Kiracı")
-    addLabel: String,   // Ekleme butonu metni (örn: "Yeni Kiracı Ekle")
-    removeLabel: String,// Silme butonu metni (örn: "Kiracıyı Sil")
-    minInstances: Number, // Minimum blok sayısı
-    maxInstances: Number, // Maksimum blok sayısı
-    subfields: [subfieldSchema] // Tekrarlayan alanın içindeki alt alanlar
+    blockTitle: String,
+    addLabel: String,
+    removeLabel: String,
+    minInstances: Number,
+    maxInstances: Number,
+    subfields: [subfieldSchema]
 
-}, { _id: false }); 
+}, { _id: false });
 
-// Ana Template Şeması
 const templateSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
-    content: { type: String, required: true }, // Handlebars içeriği
+    content: { type: String, required: true },
     price: { type: Number, required: true, default: 0 },
-    fields: [fieldSchema], // Alanların dizisi
-    category: String, // Kategori alanı (filtreleme için eklenebilir)
+    fields: [fieldSchema],
+    category: String,
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now },
 
     slug: {
         type: String,
-        unique: true, // Slug benzersiz olmalı
-        index: true,  // Sorgulamalar için index 
-        sparse: true  // Slug'ı olmayan dökümanlar için benzersizlik kontrolünü atla (ileride gerekebilir)
+        unique: true,
+        index: true,
+        sparse: true
     }
 
 });
 
-// --- Slug Oluşturma Middleware'i ---
 templateSchema.pre('save', async function(next) {
-    // Eğer 'name' alanı değiştiyse veya döküman yeniyse slug oluştur
     if (this.isModified('name') || this.isNew) {
         if (this.name) {
-            // Slugify kullanarak slug oluştur, küçük harf yap ve özel karakterleri temizle
             const baseSlug = slugify(this.name, { lower: true, strict: true });
             let uniqueSlug = baseSlug;
             let counter = 1;
 
-            // Benzersiz slug bulana kadar kontrol et
-            // Kendi dökümanını kontrol dışında bırakmak için _id'yi kullan
             while (true) {
                 const existingTemplate = await mongoose.model('Template').findOne({
                     slug: uniqueSlug,
-                    _id: { $ne: this._id } // Kendi dökümanı hariç tut
+                    _id: { $ne: this._id }
                 });
 
                 if (!existingTemplate) {
-                    break; // Benzersiz slug bulundu
+                    break;
                 }
 
                 uniqueSlug = `${baseSlug}-${counter}`;
@@ -82,11 +73,9 @@ templateSchema.pre('save', async function(next) {
             }
             this.slug = uniqueSlug;
         } else {
-             // İsim yoksa slug'ı boş bırak veya farklı bir varsayılan ata
-            this.slug = null; 
+            this.slug = null;
         }
     }
-    // updatedAt alanını her kayıtta güncelle 
     this.updatedAt = Date.now();
     next();
 });

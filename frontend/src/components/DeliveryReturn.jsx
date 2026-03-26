@@ -29,7 +29,6 @@ function DeliveryReturn() {
                     </div>
                 </div>
 
-                {/* 1. TESLİMAT KOŞULLARI */}
                 <h2 className={styles.sectionTitle}><Zap size={22} className={styles.sectionIcon} /> 1. Teslimat Koşulları</h2>
                 <ul className={styles.policyList}>
                     <li>
@@ -41,7 +40,6 @@ function DeliveryReturn() {
                     </li>
                 </ul>
 
-                {/* 2. İADE VE CAYMA HAKKI */}
                 <h2 className={styles.sectionTitle}><ShieldAlert size={22} className={styles.sectionIcon} /> 2. İade ve Cayma Hakkı</h2>
                 <p className={styles.paragraph}>
                     Platformumuza yapılan gönüllü dijital destek işlemleri, niteliği gereği iade edilemez bir dijital hizmet tüketimidir.
@@ -53,7 +51,6 @@ function DeliveryReturn() {
                     </div>
                 </div>
 
-                {/* 3. İSTİSNAİ DURUMLAR VE ÇÖZÜM */}
                 <h2 className={styles.sectionTitle}><RefreshCcw size={22} className={styles.sectionIcon} /> 3. İstisnai Durumlar ve Çözüm</h2>
                 <p className={styles.paragraph}>
                     Mükerrer (yanlışlıkla arka arkaya iki kez) ödeme çekilmesi gibi teknik bir hata yaşanması durumunda, işlemin gerçekleştiği tarihi takip eden 3 (üç) iş günü içerisinde <strong>info@belgehizli.com</strong> adresi üzerinden bizimle iletişime geçebilirsiniz. Teknik inceleme sonucunda haksız çekim tespit edilirse iade işlemi Shopier üzerinden başlatılır.

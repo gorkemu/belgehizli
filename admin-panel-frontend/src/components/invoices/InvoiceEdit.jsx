@@ -11,18 +11,17 @@ import {
     NumberField,
     Toolbar,     
     SaveButton,  
-    DeleteButton // Opsiyonel silme butonu
+    DeleteButton
 } from "react-admin";
 
 const InvoiceEditToolbar = props => (
     <Toolbar {...props} >
         <SaveButton />
-        {/* <DeleteButton mutationMode="pessimistic" />  // Silme isteniyorsa */}
     </Toolbar>
 );
 
 export const InvoiceEdit = (props) => (
-    <Edit {...props} mutationMode="pessimistic"> {/* pessimistic: işlem bitene kadar UI'ı kilitle */}
+    <Edit {...props} mutationMode="pessimistic">
         <SimpleForm toolbar={<InvoiceEditToolbar />}>
             <TextField source="id" label="Invoice ID" />
             <ReferenceField label="İlgili Transaction" source="transactionId" reference="transactions" link="show">

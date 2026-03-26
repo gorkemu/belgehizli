@@ -7,13 +7,12 @@ const buildMongoFilters = (queryParams, resourceSchemaFields = {}) => {
     for (const key in queryParams) {
         if (queryParams.hasOwnProperty(key)) {
             const filterValue = queryParams[key];
-            // Boş string filtrelerini en başta atla
             if (typeof filterValue === 'string' && filterValue.trim() === '') {
                 continue;
             }
 
-            let actualKey = key; // Varsayılan olarak anahtarın kendisi
-            let operation = 'exact_match'; // Varsayılan işlem
+            let actualKey = key;
+            let operation = 'exact_match';
 
             if (key.endsWith('_like')) {
                 actualKey = key.slice(0, -5);
@@ -27,10 +26,8 @@ const buildMongoFilters = (queryParams, resourceSchemaFields = {}) => {
             } else if (key === 'q') {
                 operation = 'q_search';
             }
-            // Diğer özel son ekler (_ne, _gt, _lt vb.) buraya eklenebilir.
 
-            // Alan tipi/işleyicisini actualKey'e göre al
-            const fieldTypeHandler = resourceSchemaFields[actualKey] || 'exact_match'; // Varsayılan exact_match
+            const fieldTypeHandler = resourceSchemaFields[actualKey] || 'exact_match';
 
             switch (operation) {
                 case 'like':
@@ -46,13 +43,13 @@ const buildMongoFilters = (queryParams, resourceSchemaFields = {}) => {
                             if (!finalMongoFilters[actualKey]) finalMongoFilters[actualKey] = {};
                             finalMongoFilters[actualKey].$gte = date;
                         }
-                    } else if (fieldTypeHandler === 'number_range') { // number_range diye bir tip tanımlamadık ama olabilir
+                    } else if (fieldTypeHandler === 'number_range') {
                         const num = parseFloat(filterValue);
                         if (!isNaN(num)) {
                             if (!finalMongoFilters[actualKey]) finalMongoFilters[actualKey] = {};
                             finalMongoFilters[actualKey].$gte = num;
                         }
-                    } else { // Varsayılan olarak string/sayı için $gte
+                    } else {
                         finalMongoFilters[actualKey] = { $gte: filterValue };
                     }
                     break;
@@ -74,7 +71,7 @@ const buildMongoFilters = (queryParams, resourceSchemaFields = {}) => {
                         finalMongoFilters[actualKey] = { $lte: filterValue };
                     }
                     break;
-                case 'q_search': // 'q' query parametresi için
+                case 'q_search':
                     if (typeof filterValue === 'string') {
                         const searchQuery = { $regex: filterValue, $options: 'i' };
                         const searchFields = resourceSchemaFields.q_fields || [];
@@ -83,21 +80,16 @@ const buildMongoFilters = (queryParams, resourceSchemaFields = {}) => {
                         }
                     }
                     break;
-                case 'exact_match': // Varsayılan durum
+                case 'exact_match':
                 default:
                     if (fieldTypeHandler === 'objectId') {
                         if (mongoose.Types.ObjectId.isValid(filterValue)) {
                             finalMongoFilters[actualKey] = new mongoose.Types.ObjectId(filterValue);
-                        } else {
-                            // console.warn(`Invalid ObjectId for filter key ${actualKey}: ${filterValue}`);
-                            // Eşleşmemesi için imkansız bir değer atayabiliriz veya filtreyi atlayabiliriz.
-                            // finalMongoFilters[actualKey] = null; // Bu, null olanları arar, yanlış.
-                            // En iyisi bu filtreyi hiç eklememek eğer ID geçersizse.
                         }
                     } else if (fieldTypeHandler === 'boolean') {
                         if (filterValue === 'true') finalMongoFilters[actualKey] = true;
                         else if (filterValue === 'false') finalMongoFilters[actualKey] = false;
-                    } else { // string, number için tam eşleşme (status gibi)
+                    } else {
                         finalMongoFilters[actualKey] = filterValue;
                     }
                     break;

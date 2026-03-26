@@ -32,11 +32,11 @@ const InvoiceFilter = (props) => (
 
         <ReferenceInput
             label="Transaction'a Göre Filtrele"
-            source="transactionId" // Invoice modelindeki filtrelemek istediğimiz alan
-            reference="transactions" // Hangi Resource'tan seçim yapılacak
+            source="transactionId"
+            reference="transactions"
             perPage={200}
             sort={{ field: 'createdAt', order: 'DESC' }}
-            filterToQuery={searchText => ({ templateName_like: searchText })} // Dropdown içinde arama yaparken
+            filterToQuery={searchText => ({ templateName_like: searchText })}
             allowEmpty
             resettable
         >
@@ -45,16 +45,8 @@ const InvoiceFilter = (props) => (
                     record ? `${record.templateName || 'İsimsiz Şablon'} (Email: ${record.userEmail || 'N/A'}, ID: ...${record.id?.slice(-6)})` : ''
                 }
                 emptyText="Tüm Transactionlar"
-                emptyValue="" // Boş string, backend bunu "filtre yok" olarak anlar
-                // parse={value => (value === '' ? null : value)} // Opsiyonel: Backend'e null göndermek için
+                emptyValue=""
             />
-            {/* 
-            VEYA AutocompleteInput:
-            <AutocompleteInput 
-                optionText={record => record ? `${record.templateName} (ID: ...${record.id?.slice(-6)})` : ''}
-                filterToQuery={searchText => ({ templateName_like: searchText })}
-            /> 
-            */}
         </ReferenceInput>
         
         <DateInput source="createdAt_gte" label="Başlangıç Tarihi (Fatura)" resettable />

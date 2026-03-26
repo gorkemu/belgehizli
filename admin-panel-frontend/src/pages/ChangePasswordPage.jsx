@@ -25,12 +25,10 @@ const ChangePasswordPage = () => {
             return;
         }
 
-
         try {
             const token = localStorage.getItem('admin_token');
             if (!token) {
                 notify('Oturum bulunamadı, lütfen tekrar giriş yapın.', { type: 'error' });
-                // navigate('/login'); // Opsiyonel: Giriş sayfasına yönlendir
                 setLoading(false);
                 return;
             }
@@ -55,7 +53,7 @@ const ChangePasswordPage = () => {
         <Card sx={{ marginTop: 2, maxWidth: 600, margin: 'auto' }}>
             <Title title="Şifre Değiştir" />
             <CardContent>
-                <SimpleForm onSubmit={handleSubmit} toolbar={null}> {/* Kendi submit'imizi kullanıyoruz, RA toolbar'ı null */}
+                <SimpleForm onSubmit={handleSubmit} toolbar={null}>
                     <TextInput source="currentPassword" type="password" label="Mevcut Şifre" validate={required()} fullWidth />
                     <TextInput source="newPassword" type="password" label="Yeni Şifre" validate={required()} fullWidth />
                     <TextInput source="confirmPassword" type="password" label="Yeni Şifre (Tekrar)" validate={required()} fullWidth />
@@ -66,8 +64,6 @@ const ChangePasswordPage = () => {
     );
 };
 
-// React Admin'in form validasyonu için basit bir required fonksiyonu
 const required = (message = 'Bu alan zorunludur') => value => value ? undefined : message;
-
 
 export default ChangePasswordPage;

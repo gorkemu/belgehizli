@@ -6,7 +6,6 @@ const bcrypt = require('bcryptjs');
 const AdminUser = require('../models/adminUser'); 
 const { protectAdmin } = require('../middleware/adminAuthMiddleware');
 
-// POST /api/admin/login
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
@@ -27,15 +26,14 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ message: 'Geçersiz kullanıcı adı veya şifre.' });
         }
 
-        const isMatch = await admin.comparePassword(password); // Modeldeki metodu kullan
+        const isMatch = await admin.comparePassword(password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Geçersiz kullanıcı adı veya şifre.' });
         }
 
-        // Başarılı giriş, JWT oluştur
         const payload = {
             user: {
-                id: admin._id, // Veritabanındaki ID'yi kullan
+                id: admin._id,
                 username: admin.username,
                 role: 'admin'
             }
@@ -50,7 +48,7 @@ router.post('/login', async (req, res) => {
                 success: true,
                 message: 'Admin girişi başarılı!',
                 token: token,
-                user: { id: admin._id, username: admin.username, role: 'admin' } // Kullanıcı bilgisini de dön
+                user: { id: admin._id, username: admin.username, role: 'admin' }
             });
         });
 
@@ -60,7 +58,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// POST /api/admin/change-password (Giriş yapmış admin için)
 router.post('/change-password', protectAdmin, async (req, res) => { 
     const { currentPassword, newPassword, confirmPassword } = req.body;
 
@@ -72,18 +69,14 @@ router.post('/change-password', protectAdmin, async (req, res) => {
         return res.status(400).json({ message: 'Yeni şifreler eşleşmiyor.' });
     }
 
-    if (newPassword.length < 6) { // Şifre uzunluğu kontrolü (örnek)
+    if (newPassword.length < 6) {
         return res.status(400).json({ message: 'Yeni şifre en az 6 karakter olmalıdır.' });
     }
 
     try {
-        // req.adminUser middleware tarafından set edildiği için mevcut admini oradan alabiliriz.
-        // Veya tek bir admin kullanıcısı olduğu için doğrudan veritabanından bulabiliriz.
-        // Şimdilik tek admin olduğunu varsayarak bulalım
         const admin = await AdminUser.findOne({ username: req.adminUser.username }); 
         
         if (!admin) {
-            // Bu durum normalde olmamalı çünkü protectAdmin bunu kontrol eder.
             return res.status(404).json({ message: 'Admin kullanıcısı bulunamadı.' });
         }
 
@@ -92,7 +85,6 @@ router.post('/change-password', protectAdmin, async (req, res) => {
             return res.status(401).json({ message: 'Mevcut şifre yanlış.' });
         }
 
-        // Yeni şifreyi hash'le
         const salt = await bcrypt.genSalt(10);
         admin.passwordHash = await bcrypt.hash(newPassword, salt);
         await admin.save();
@@ -104,6 +96,5 @@ router.post('/change-password', protectAdmin, async (req, res) => {
         res.status(500).json({ message: 'Şifre değiştirilirken bir sunucu hatası oluştu.' });
     }
 });
-
 
 module.exports = router;

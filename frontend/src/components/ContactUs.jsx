@@ -36,7 +36,6 @@ function ContactUs() {
                 </div>
 
                 <div className={styles.gridContainer}>
-                    {/* FİRMA BİLGİLERİ KARTI */}
                     <div className={styles.infoCard}>
                         <h2 className={styles.subHeading}>
                             <Building2 size={24} className={styles.subHeadingIcon} />
@@ -74,7 +73,6 @@ function ContactUs() {
                         </div>
                     </div>
 
-                    {/* İLETİŞİM KANALLARI KARTI */}
                     <div className={styles.infoCard}>
                         <h2 className={styles.subHeading}>
                             <Mail size={24} className={styles.subHeadingIcon} />

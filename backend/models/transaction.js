@@ -13,7 +13,7 @@ const transactionSchema = new Schema({
         type: String,
         required: true
     },
-    userEmail: { // İşlemi başlatan e-posta 
+    userEmail: {
         type: String,
         required: true,
         trim: true,
@@ -46,16 +46,18 @@ const transactionSchema = new Schema({
         sparse: true,
         index: true
     },
-    // --- Snapshot Alanları ---
-    formDataSnapshot: { // Belge formu verilerinin JSON string'i
+    formDataSnapshot: {
         type: String,
-        required: true // Belge oluşturmak için bu veri zorunlu
+        required: true
     },
-    billingInfoSnapshot: { // Fatura bilgilerinin JSON string'i (varsa)
+    editedHtmlSnapshot: {
+        type: String,
+        default: null
+    },
+    billingInfoSnapshot: {
         type: String,
         sparse: true 
     },
-
     errorMessage: {
         type: String
     }

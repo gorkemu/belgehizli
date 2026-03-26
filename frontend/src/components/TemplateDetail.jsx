@@ -6,7 +6,7 @@ import styles from './TemplateDetail.module.css';
 import DocumentForm from './DocumentForm';
 import DocumentPreview from './DocumentPreview';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, CheckCircle2, AlertCircle, Download, Coffee, Heart, X, ArrowDown } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertCircle, Download, Coffee, X, ArrowDown, Lock, Edit2 } from 'lucide-react';
 
 
 const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20250521";
@@ -30,13 +30,18 @@ function TemplateDetail() {
     const [isMobile, setIsMobile] = useState(false);
     const [isNoticeVisibleByScroll, setIsNoticeVisibleByScroll] = useState(true);
     const [isNoticeDismissed, setIsNoticeDismissed] = useState(false); 
+    const editorRef = useRef(null);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
+    
+    const [currentStep, setCurrentStep] = useState(1);
+    const [showBackWarning, setShowBackWarning] = useState(false);
 
     useEffect(() => {
         setLoading(true);
         setError(null);
         setDownloadError(null);
         setIsSupportModalOpen(false); 
+        setCurrentStep(1);
 
         axios.get(`${API_BASE_URL}/sablonlar/detay/${slug}`)
             .then(response => {
@@ -109,7 +114,25 @@ function TemplateDetail() {
         setFormErrors(errors);
     };
     
-        // --- Ücretsiz İndirme İşlemi ---
+    const handleNextStep = async () => {
+        let isFormValid = true;
+        if (formRef.current) {
+            isFormValid = await formRef.current.handleSubmit();
+        }
+        
+        if (isFormValid) {
+            setCurrentStep(2);
+            if (window.innerWidth <= 1024 && previewRef.current) {
+                previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    };
+
+    const confirmGoBackToForm = () => {
+        setCurrentStep(1);
+        setShowBackWarning(false);
+    };
+    
     const handleDownload = async () => {
         let detectedError = null;
 
@@ -137,8 +160,15 @@ function TemplateDetail() {
         setLoadingDownload(true);
         
         try {
+            let finalEditedHtml = null;
+            if (editorRef.current) {
+                let rawHtml = editorRef.current.innerHTML;
+                finalEditedHtml = rawHtml.replace(/<mark[^>]*>/gi, '').replace(/<\/mark>/gi, '');
+            }
+            
             const backendPayload = {
                 formData,
+                editedHtml: finalEditedHtml,
                 email: formData?.belge_email || '',
                 consentTimestamp: new Date().toISOString(),
                 documentVersion: COMBINED_LEGAL_DOC_VERSION
@@ -159,7 +189,6 @@ function TemplateDetail() {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
 
-            // Başarılı indirme sonrası MODAL'I AÇ
             setIsSupportModalOpen(true);
             setDownloadError(null);
 
@@ -203,16 +232,35 @@ function TemplateDetail() {
 
                 <div className={styles.editorContainer}>
                     <div className={styles.formColumn}>
-                        {template.fields && template.fields.length > 0 ? (
-                            <DocumentForm templateFields={template.fields} onChange={handleFormChange} ref={formRef} />
-                        ) : (
-                            <div className={styles.emptyFormNotice}>Bu şablon için form alanı bulunmamaktadır.</div>
+                        
+                        {currentStep === 2 && (
+                            <div className={styles.formOverlay} onClick={() => setShowBackWarning(true)}>
+                                <div className={styles.overlayContent}>
+                                    <Lock size={32} className={styles.overlayIcon} />
+                                    <h4>Form Kilitlendi</h4>
+                                    <p>Belge üzerinde serbest düzenleme modundasınız.</p>
+                                    <span className={styles.overlayWarningText}>Forma dönmek için tıklayın (Önizlemede yaptığınız değişiklikler sıfırlanır).</span>
+                                </div>
+                            </div>
                         )}
+
+                        <div className={currentStep === 2 ? styles.blurredForm : ''}>
+                            {template.fields && template.fields.length > 0 ? (
+                                <DocumentForm templateFields={template.fields} onChange={handleFormChange} ref={formRef} />
+                            ) : (
+                                <div className={styles.emptyFormNotice}>Bu şablon için form alanı bulunmamaktadır.</div>
+                            )}
+                        </div>
                     </div>
                     
                     <div className={styles.previewColumn} ref={previewRef}>
                         {template.content ? (
-                            <DocumentPreview templateContent={template.content} formData={formData} />
+                            <DocumentPreview 
+                                templateContent={template.content} 
+                                formData={formData} 
+                                editorRef={editorRef}
+                                currentStep={currentStep}
+                            />
                         ) : (
                             <div className={styles.emptyPreviewNotice}>Önizleme içeriği tanımlanmamış.</div>
                         )}
@@ -221,41 +269,62 @@ function TemplateDetail() {
 
                 <div className={styles.actionSection}>
                     <div className={styles.checkoutSection}>
-                        <label className={styles.termsCheckboxContainer}>
-                            <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
-                            <span className={styles.termsLabel}>
-                                <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>Kullanım Şartları</Link>'nı
-                                ve <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>Gizlilik Politikası</Link>'nı
-                                okudum ve kabul ediyorum.
-                            </span>
-                        </label>
+                        
+                        {currentStep === 1 ? (
+                            <>
+                                <p className={styles.stepInfoText}>Belgenizi oluşturmak için formu eksiksiz doldurun.</p>
+                                <button onClick={handleNextStep} className={styles.nextStepButton}>
+                                    Sonraki Adım: İncele ve Düzelt <Edit2 size={18} />
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <label className={styles.termsCheckboxContainer}>
+                                    <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
+                                    <span className={styles.termsLabel}>
+                                        <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>Kullanım Şartları</Link>'nı
+                                        ve <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>Gizlilik Politikası</Link>'nı okudum.
+                                    </span>
+                                </label>
 
-                        <div className={styles.trustIndicators}>
-                            <span><CheckCircle2 size={16} className={styles.checkIcon}/> %100 Ücretsiz</span>
-                            <span><CheckCircle2 size={16} className={styles.checkIcon}/> Kredi Kartı Gerekmez</span>
-                        </div>
+                                {downloadError && (
+                                    <div className={styles.paymentError}><AlertCircle size={18} /> {downloadError}</div>
+                                )}
 
-                        {downloadError && (
-                            <div className={styles.paymentError}>
-                                <AlertCircle size={18} /> {downloadError}
-                            </div>
+                                <button
+                                    onClick={handleDownload}
+                                    disabled={loadingDownload || !agreedToTerms}
+                                    className={`${styles.payDownloadButton} ${(!agreedToTerms) ? styles.disabledButton : ''}`}
+                                >
+                                    <Download size={20} />
+                                    {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz İndir`}
+                                </button>
+                                
+                                <div className={styles.secureNoteContainer}>
+                                    <p className={styles.secureNote}>Tüm manuel düzenlemeleriniz PDF'e eklenecektir.</p>
+                                    <p className={styles.highlightNote}>* Belgedeki sarı vurgular sadece kontrol amaçlıdır, inen PDF'te görünmez.</p>
+                                </div>
+                            </>
                         )}
-
-                        <button
-                            onClick={handleDownload}
-                            disabled={loadingDownload || !agreedToTerms}
-                            className={`${styles.payDownloadButton} ${(!agreedToTerms) ? styles.disabledButton : ''}`}
-                        >
-                            <Download size={20} />
-                            {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz İndir`}
-                        </button>
-                        <p className={styles.secureNote}>Hiçbir ödeme bilgisi gerekmez.</p>
                     </div>
                 </div>
             </div>
 
-            {/* --- MOBİL ÖNİZLEME BİLDİRİMİ --- */}
-            {isMobile && !isNoticeDismissed && isNoticeVisibleByScroll && (
+            {showBackWarning && (
+                <div className={styles.modalOverlay} onClick={() => setShowBackWarning(false)}>
+                    <div className={styles.warningModal} onClick={(e) => e.stopPropagation()}>
+                        <AlertCircle size={48} className={styles.warningIcon} />
+                        <h3>Forma Geri Dön?</h3>
+                        <p>Eğer formu tekrar düzenlerseniz, sağ taraftaki belge üzerinde elle yaptığınız <strong>tüm düzeltmeler (ekler, yazım hataları vb.) silinecektir.</strong></p>
+                        <div className={styles.warningActions}>
+                            <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>İptal, İncelemeye Devam Et</button>
+                            <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>Evet, Forma Dön</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
+            {isMobile && !isNoticeDismissed && isNoticeVisibleByScroll && currentStep === 1 && (
                 <div 
                     className={styles.mobilePreviewNotice}
                     onClick={scrollToPreview}
@@ -281,7 +350,6 @@ function TemplateDetail() {
                 </div>
             )}    
 
-            {/* --- DESTEK MODAL (KAHVE ISMARLA) --- */}
             {isSupportModalOpen && (
                 <div className={styles.modalOverlay} onClick={() => setIsSupportModalOpen(false)}>
 

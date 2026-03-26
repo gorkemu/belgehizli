@@ -9,7 +9,6 @@ const path = require('path');
 const fs = require('fs');
 const Handlebars = require('handlebars'); 
 
-// --- Helper Fonksiyonlar (templates.js'den kopyalandı, gerekirse ortak bir utils dosyasına taşınabilir) ---
 const cssFilePath = path.join(__dirname, '..', 'styles', 'pdfStyles.css');
 let pdfStyles = '';
 try {
@@ -41,30 +40,28 @@ Handlebars.registerHelper('formatDate', function(dateString) {
         return `${day}.${month}.${year}`;
     } catch (e) { return dateString; }
 });
-// Diğer Handlebars helper'ları (eq, gt, default, math) buraya da eklenebilir.
 
-
-
-// --- PDF Oluşturma Fonksiyonu ---
-/**
- * Verilen Transaction ve Template için PDF buffer'ını oluşturur.
- * @param {object} transaction Transaction dokümanı
- * @param {object} template Template dokümanı
- * @param {object} formDataKullanilacak Form verisi
- * @returns {Promise<{pdfBuffer: Buffer, safeFilename: string} | null>}
- */
 const createPdfForTransaction = async (transaction, template, formDataKullanilacak) => {
     try {
-        const compiledTemplate = Handlebars.compile(template.content || '');
-        const htmlContent = compiledTemplate(formDataKullanilacak);
-        const fullHtml = `
-            <!DOCTYPE html><html><head><meta charset="utf-8" /><title>${template.name || 'Document'}</title>${pdfStyles}</head>
-            <body><div>${htmlContent}</div></body></html>`;
+        let fullHtml = "";
 
-        console.log(`createPdfForTransaction: Generating PDF for transaction ${transaction._id}...`);
+        if (transaction.editedHtmlSnapshot) {
+            console.log(`createPdfForTransaction: Using editedHtmlSnapshot for transaction ${transaction._id}...`);
+            fullHtml = `
+                <!DOCTYPE html><html><head><meta charset="utf-8" /><title>${template.name || 'Document'}</title>${pdfStyles}</head>
+                <body><div>${transaction.editedHtmlSnapshot}</div></body></html>`;
+        } 
+        else {
+            console.log(`createPdfForTransaction: Using standard formData (Handlebars) for transaction ${transaction._id}...`);
+            const compiledTemplate = Handlebars.compile(template.content || '');
+            const htmlContent = compiledTemplate(formDataKullanilacak);
+            fullHtml = `
+                <!DOCTYPE html><html><head><meta charset="utf-8" /><title>${template.name || 'Document'}</title>${pdfStyles}</head>
+                <body><div>${htmlContent}</div></body></html>`;
+        }
+
         const pdfBuffer = await generatePdf(fullHtml);
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
-        console.log(`createPdfForTransaction: PDF generated for transaction ${transaction._id}. Filename: ${safeFilename}`);
         return { pdfBuffer, safeFilename };
     } catch (error) {
         console.error(`createPdfForTransaction: Error generating PDF for transaction ${transaction._id}:`, error);
@@ -77,7 +74,6 @@ const createPdfForTransaction = async (transaction, template, formDataKullanilac
         return null;
     }
 };
-
 
 const generateAndDeliverDocument = async (transactionId) => {
     let transaction;
@@ -98,12 +94,9 @@ const generateAndDeliverDocument = async (transactionId) => {
             return { success: false, message: 'İşlem bulunamadı.' };
         }
 
-        // Durum kontrolü
         if (transaction.status !== 'payment_successful') {
              console.warn(`documentService: Transaction ${transactionId} ödeme başarılı değil veya zaten işleniyor/işlenmiş. Mevcut durum: ${transaction.status}`);
              if (['pdf_generated', 'email_sent', 'completed', 'failed'].includes(transaction.status)) {
-                // Eğer PDF zaten üretilmişse ve indirme isteniyorsa, bu fonksiyon değil, yeni /download endpointi çağrılmalı.
-                // Bu fonksiyon sadece ilk üretim ve gönderim için.
                 return { success: true, message: `İşlem daha önce işlenmiş veya ödeme başarılı değil: ${transaction.status}`, status: transaction.status };
              }
              return { success: false, message: `İşlem ödeme bekliyor veya başarısız/başlatılmamış: ${transaction.status}` };
@@ -118,7 +111,6 @@ const generateAndDeliverDocument = async (transactionId) => {
             return { success: false, message: 'Belge şablonu bulunamadı.' };
         }
 
-        // --- Snapshot'lardan veriyi al ---
         if (!transaction.formDataSnapshot) {
             transaction.status = 'failed';
             transaction.errorMessage = 'Belge oluşturmak için form verisi (snapshot) bulunamadı.';
@@ -140,32 +132,22 @@ const generateAndDeliverDocument = async (transactionId) => {
             try {
                 billingInfoToUse = JSON.parse(transaction.billingInfoSnapshot);
             } catch (parseError) {
-                // Fatura bilgisi parse edilemezse bu kritik bir hata değil, loglayıp devam edebiliriz.
-                // Fatura oluşturma atlanacaktır.
                 console.warn(`documentService: billingInfoSnapshot parse hatası. Transaction ID: ${transactionId}`, parseError);
                 transaction.errorMessage = (transaction.errorMessage || '') + '; Fatura bilgisi (snapshot) parse edilemedi.';
-                // status'u failed yapmayalım, sadece fatura oluşturulamaz.
             }
         }
 
         userEmailForDelivery = billingInfoToUse?.email || formDataToUse?.belge_email || transaction.userEmail;
 
-        // PDF Oluşturma
         const pdfResult = await createPdfForTransaction(transaction, template, formDataToUse);
 
         if (!pdfResult || !pdfResult.pdfBuffer) {
-            // createPdfForTransaction içinde hata zaten loglandı ve transaction'a işlendi (eğer transaction objesi varsa)
-            // transaction.status = 'failed'; // createPdfForTransaction içinde status değişmiyor, burada yapalım
-            // transaction.errorMessage = (transaction.errorMessage || '') + '; PDF oluşturulamadı (ana servis).';
-            // await transaction.save(); // createPdfForTransaction içinde save yapıldıysa gerek yok.
             return { success: false, message: 'PDF oluşturulamadı.' };
         }
-        transaction.status = 'pdf_generated'; // PDF başarıyla oluşturuldu
+        transaction.status = 'pdf_generated';
         await transaction.save();
         console.log(`documentService: PDF buffer obtained for transaction ${transaction._id}.`);
 
-
-        // E-posta Gönderimi (pdfResult.pdfBuffer ve pdfResult.safeFilename kullanılır)
         if (userEmailForDelivery && userEmailForDelivery !== 'unknown@example.com' && pdfResult.pdfBuffer) {
 
             const emailSubject = `Belge Hızlı - ${template.name || 'Belge'} Belgeniz`;
@@ -186,7 +168,6 @@ const generateAndDeliverDocument = async (transactionId) => {
             console.log(`documentService: PDF email skipped for transaction ${transaction._id} (no valid email or PDF buffer).`);
         }
 
-        // Fatura Kaydı Oluşturma
         if (billingInfoToUse && Object.keys(billingInfoToUse).length > 0 && billingInfoToUse.email && !transaction.invoiceId) {
             try {
                 console.log(`documentService: Creating invoice record for transaction ${transaction._id}...`);
@@ -218,8 +199,6 @@ const generateAndDeliverDocument = async (transactionId) => {
             console.log(`documentService: Invoice already exists or no billing info for transaction ${transaction._id}.`);
         }
 
-
-        // İşlem tamamlandı durumunu ayarla
         if (transaction.status !== 'failed') {
              transaction.status = 'completed';
              await transaction.save();
@@ -242,4 +221,4 @@ const generateAndDeliverDocument = async (transactionId) => {
     }
 };
 
-module.exports = { generateAndDeliverDocument, createPdfForTransaction }; 
+module.exports = { generateAndDeliverDocument, createPdfForTransaction };

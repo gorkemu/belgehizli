@@ -11,14 +11,12 @@ import jsonServerProvider from 'ra-data-json-server';
 import authProvider from './authProvider';
 import ChangePasswordPage from './pages/ChangePasswordPage'; 
 
-// İkonlar
 import VpnKeyIcon from '@mui/icons-material/VpnKey'; 
 import LabelIcon from '@mui/icons-material/Label'; 
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'; 
 
-// Bileşenler
 import { PendingInvoiceList } from './components/pendingInvoices/PendingInvoiceList';
 import { TransactionList } from './components/transactions/TransactionList';
 import { TransactionShow } from './components/transactions/TransactionShow';
@@ -35,7 +33,6 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080
 const ADMIN_DATA_API_URL = `${API_BASE_URL}/admin-data`;
 const dataProvider = jsonServerProvider(ADMIN_DATA_API_URL);
 
-// --- BELGE HIZLI KURUMSAL TEMASI (Mavi/Slate) ---
 const belgeHizliTheme = createTheme({
     ...defaultTheme,
     palette: {
@@ -89,7 +86,6 @@ const belgeHizliTheme = createTheme({
     }
 });
 
-// --- DASHBOARD ---
 const Dashboard = () => {
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -177,7 +173,6 @@ const Dashboard = () => {
     );
 };
 
-// --- MENÜ ---
 const MyMenu = () => (
     <Menu>
         <Menu.DashboardItem />
@@ -191,7 +186,6 @@ const MyMenu = () => (
 
 const MyLayout = (props) => <Layout {...props} menu={MyMenu} />;
 
-// --- ANA APP BİLEŞENİ ---
 function App() {
   return (
     <Admin

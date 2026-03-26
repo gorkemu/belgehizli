@@ -7,7 +7,6 @@ const Template = require('../models/template');
 const { createPdfForTransaction } = require('../utils/documentService');
 const { sendPdfEmail } = require('../utils/mailer');
 
-// GET /api/document/download/:transactionId
 router.get('/download/:transactionId', async (req, res) => {
     try {
         const transactionId = req.params.transactionId;
@@ -32,16 +31,12 @@ router.get('/download/:transactionId', async (req, res) => {
         try { formDataToUse = JSON.parse(transaction.formDataSnapshot); }
         catch (e) { return res.status(500).json({ message: 'Form verisi okunamadı.' }); }
 
-        // createPdfForTransaction artık safeFilename'ı da döndürmeli
-        // veya biz burada template.name'i kullanarak oluşturmalıyız.
-        // createPdfForTransaction'ın { pdfBuffer, safeFilename } döndürdüğünü varsayalım.
         const pdfResult = await createPdfForTransaction(transaction, template, formDataToUse);
 
-        // pdfResult.safeFilename'ın varlığını kontrol et
-        if (pdfResult && pdfResult.pdfBuffer && pdfResult.safeFilename) { // safeFilename kontrolü eklendi
+        if (pdfResult && pdfResult.pdfBuffer && pdfResult.safeFilename) {
             res.setHeader('Content-Type', 'application/pdf');
             res.setHeader('Access-Control-Expose-Headers', 'Content-Disposition');
-            res.setHeader('Content-Disposition', `attachment; filename="${pdfResult.safeFilename}"`); // pdfResult'tan gelen dosya adını kullan
+            res.setHeader('Content-Disposition', `attachment; filename="${pdfResult.safeFilename}"`);
             res.send(pdfResult.pdfBuffer);
         } else {
             console.error("Backend /download: pdfResult, pdfBuffer, or safeFilename is missing.");
@@ -55,8 +50,6 @@ router.get('/download/:transactionId', async (req, res) => {
     }
 });
 
-
-// POST /api/document/resend-email/:transactionId
 router.post('/resend-email/:transactionId', async (req, res) => {
     try {
         const transactionId = req.params.transactionId;
@@ -84,7 +77,7 @@ router.post('/resend-email/:transactionId', async (req, res) => {
         console.log(`Resending email for transaction ${transaction._id} to ${transaction.userEmail}`);
         const pdfResult = await createPdfForTransaction(transaction, template, formDataToUse);
 
-        if (!pdfResult || !pdfResult.pdfBuffer || !pdfResult.safeFilename) { // safeFilename kontrolü
+        if (!pdfResult || !pdfResult.pdfBuffer || !pdfResult.safeFilename) {
             console.error(`Resend Email: PDF or safeFilename could not be generated for transaction ${transaction._id}`);
             return res.status(500).json({ message: 'E-posta için PDF veya dosya adı oluşturulamadı.' });
         }

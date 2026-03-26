@@ -13,7 +13,6 @@ import {
 } from "react-admin";
 import { Link } from 'react-router-dom';
 
-
 const BillingInfoField = () => {
     const record = useRecordContext(); 
     if (!record || !record.billingInfo) return null;
@@ -31,7 +30,7 @@ const BillingInfoField = () => {
 
 const EditInvoiceButton = () => {
     const record = useRecordContext(); 
-    if (!record) return null; // record yoksa butonu render etme
+    if (!record) return null;
     
     if (!record.invoiceId) {
         return (

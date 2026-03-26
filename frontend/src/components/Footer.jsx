@@ -7,7 +7,6 @@ function Footer() {
         <footer className={styles.appFooter}>
             <div className={styles.footerContent}>
                 
-                {/* SOL KISIM: Marka ve Açıklama */}
                 <div className={styles.footerBrand}>
                     <div className={styles.logoContainer}>
                         <div className={styles.iconCropper}>
@@ -22,7 +21,6 @@ function Footer() {
                     </p>
                 </div>
 
-                {/* SAĞ KISIM: Kategorize Edilmiş Link Sütunları */}
                 <div className={styles.footerLinksWrapper}>
                     
                     <div className={styles.linkColumn}>

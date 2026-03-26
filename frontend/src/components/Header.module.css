@@ -1,20 +1,18 @@
-/* --- SABİT TUTUCU BOŞLUK --- */
 .headerSpacer {
     height: 80px;
     width: 100%;
     display: block;
 }
 
-/* --- GENEL HEADER --- */
 .appHeader {
-    background-color: transparent; 
-    position: fixed; 
+    background-color: transparent;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
     transition: background-color 0.4s ease, box-shadow 0.4s ease;
-    height: 80px; 
+    height: 80px;
     display: flex;
     align-items: center;
 }
@@ -27,7 +25,6 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
-/* 2. İSTEK ÇÖZÜMÜ: max-width: 1200px kaldırıldı. Logo hep solda kalır. */
 .headerInner {
     width: 100%;
     display: flex;
@@ -36,20 +33,19 @@
     padding: 0 1.5rem;
 }
 
-/* --- SOL KISIM (LOGO VE METİN) --- */
 .logoContainer {
     display: flex;
     align-items: center;
     gap: 0.8rem;
     text-decoration: none;
-    flex: 1; 
+    flex: 1;
 }
 
 .dynamicLogoImg {
     width: 44px;
     height: 44px;
     object-fit: cover;
-    object-position: top; 
+    object-position: top;
     border-radius: 6px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -58,7 +54,7 @@
     width: 60px;
     height: 60px;
     object-fit: contain;
-    object-position: center; 
+    object-position: center;
     border-radius: 0;
 }
 
@@ -69,7 +65,7 @@
     letter-spacing: -0.02em;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 300px; 
+    max-width: 300px;
     opacity: 1;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     transform-origin: left center;
@@ -79,7 +75,6 @@
     color: #f59e0b;
 }
 
-/* Scroll olunca HTML metni kaybolur (Hem mobilde hem masaüstünde) */
 .scrolled .logoText {
     max-width: 0;
     opacity: 0;
@@ -89,9 +84,8 @@
     gap: 0;
 }
 
-/* --- ORTA KISIM (ARAMA ÇUBUĞU) --- */
 .searchWrapper {
-    flex: 2; 
+    flex: 2;
     display: flex;
     justify-content: center;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,7 +97,7 @@
     max-width: 0;
     transform: translateY(10px);
     pointer-events: none;
-    visibility: hidden; 
+    visibility: hidden;
 }
 
 .searchVisible {
@@ -179,13 +173,19 @@
 }
 
 @keyframes shine {
-    0% { left: -100%; }
-    20% { left: 200%; }
-    100% { left: 200%; }
+    0% {
+        left: -100%;
+    }
+    20% {
+        left: 200%;
+    }
+    100% {
+        left: 200%;
+    }
 }
 
 .rightSpacer {
-    flex: 1; 
+    flex: 1;
 }
 
 .headerSearch input:focus {
@@ -193,28 +193,26 @@
     box-shadow: none;
 }
 
-/* --- MOBİL VE GENİŞ EKRAN GÖRÜNÜMLERİ --- */
 @media (max-width: 768px) {
     .headerInner {
         padding: 0 1rem;
-        gap: 0.5rem; 
+        gap: 0.5rem;
     }
     .rightSpacer {
-        display: none; 
+        display: none;
     }
     .logoContainer {
-        flex: 0 0 auto; 
+        flex: 0 0 auto;
     }
-    /* 1. İSTEK ÇÖZÜMÜ: display: none !important KILDIRILDI. Artık mobilde yazı .scrolled kuralı ile kaybolacak */
     .logoText {
-        font-size: 1.4rem; /* Mobilde sığması için font biraz küçüldü */
+        font-size: 1.4rem;
     }
     .searchWrapper {
-        flex: 1; 
-        justify-content: flex-end; 
+        flex: 1;
+        justify-content: flex-end;
     }
     .searchBtn {
-        padding: 0.5rem 1rem; 
+        padding: 0.5rem 1rem;
     }
     .dynamicLogoImg {
         width: 38px;
@@ -226,10 +224,14 @@
     }
 }
 
-/* Geniş ekranlarda kenarlardan biraz daha boşluk bırakalım (Logo tam uca yapışmasın) */
 @media (min-width: 768px) {
-    .headerInner { padding: 0 3rem; }
+    .headerInner {
+        padding: 0 3rem;
+    }
 }
+
 @media (min-width: 1200px) {
-    .headerInner { padding: 0 4rem; }
+    .headerInner {
+        padding: 0 4rem;
+    }
 }

@@ -2,9 +2,8 @@
 import React from 'react'; 
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
-import { FileSearch, AlertTriangle, FileText, Loader2 } from 'lucide-react'; 
+import { FileSearch, AlertTriangle, FileText, Loader2, Edit3, Lock } from 'lucide-react';
 
-// --- DATE FORMAT HELPER ---
 function formatDateHelper(dateString) {
     if (!dateString || typeof dateString !== 'string') return ''; 
     try {
@@ -21,7 +20,6 @@ function formatDateHelper(dateString) {
     }
 }
 
-// Handlebars helpers 
 try {
     Handlebars.registerHelper('math', function (lvalue, operator, rvalue) {
         lvalue = parseFloat(lvalue);
@@ -63,9 +61,24 @@ try {
     console.error("Handlebars helper kaydedilirken hata:", e);
 }
 
-function DocumentPreview({ templateContent, formData }) {
+function highlightFormData(html, formData) {
+    let highlightedHtml = html;
+    
+    const valuesToHighlight = Object.values(formData)
+        .filter(val => typeof val === 'string' && val.trim().length > 1)
+        .sort((a, b) => b.length - a.length);
 
-    // Şablon yüklenirken gösterilecek durum
+    valuesToHighlight.forEach(val => {
+        const escapedVal = val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+        const regex = new RegExp(`(${escapedVal})(?![^<]*>)`, 'g');
+        
+        highlightedHtml = highlightedHtml.replace(regex, `<mark class="${styles.dynamicHighlight}">$1</mark>`);
+    });
+
+    return highlightedHtml;
+}
+
+function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
     if (!templateContent) {
         return (
             <div className={styles.container}>
@@ -77,7 +90,6 @@ function DocumentPreview({ templateContent, formData }) {
         );
     }
 
-    // Form verisi beklenirken gösterilecek durum
     if (!formData) {
         return (
             <div className={styles.container}>
@@ -91,19 +103,36 @@ function DocumentPreview({ templateContent, formData }) {
 
     try {
         const template = Handlebars.compile(templateContent);
-        const previewHtml = template(formData); 
+        let previewHtml = template(formData); 
+
+        if (currentStep === 2) {
+            previewHtml = highlightFormData(previewHtml, formData);
+        }
 
         return (
             <div className={styles.container}>
                 <div className={styles.previewHeader}>
                     <FileSearch size={20} className={styles.headerIcon} />
                     <h3 className={styles.previewTitle}>Canlı Önizleme</h3>
+                    
+                    {currentStep === 1 ? (
+                        <div className={styles.lockedBadge}>
+                            <Lock size={14} /> Formu doldurduktan sonra düzenleyebilirsiniz
+                        </div>
+                    ) : (
+                        <div className={styles.editBadge}>
+                            <Edit3 size={14} /> Belgeye tıklayarak metin ekleyebilir veya silebilirsiniz
+                        </div>
+                    )}
                 </div>
 
                 <div className={styles.paperContainer}>
                     <div 
+                        ref={editorRef}
                         className={styles.previewArea} 
                         dangerouslySetInnerHTML={{ __html: previewHtml }} 
+                        contentEditable={currentStep === 2}
+                        suppressContentEditableWarning={true}
                     />
                 </div>
             </div>

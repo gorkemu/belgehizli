@@ -10,10 +10,7 @@ const protectAdmin = async (req, res, next) => {
             token = req.headers.authorization.split(' ')[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             
-            // Token'dan alınan kullanıcı ID'si ile admin kullanıcısını bul
-            // Şifre değiştirme gibi işlemler için güncel kullanıcı bilgisi önemli olabilir
-            // Veya sadece token geçerliyse ve payload'da admin rolü varsa devam et
-            req.adminUser = await AdminUser.findById(decoded.user.id).select('-passwordHash'); // Şifre hash'ini dışarıda bırak
+            req.adminUser = await AdminUser.findById(decoded.user.id).select('-passwordHash');
 
             if (!req.adminUser || decoded.user.role !== 'admin') {
                 return res.status(401).json({ message: 'Yetkisiz erişim, token geçersiz veya admin değil.' });

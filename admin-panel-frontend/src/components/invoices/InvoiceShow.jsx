@@ -14,7 +14,6 @@ import {
     Link 
 } from "react-admin";
 
-// JSON verisini formatlı göstermek için helper component
 const JsonDataField = ({ source, record = {} }) => {
     if (!record || typeof record[source] === 'undefined') return <ChipField record={{v:'-'}} source="v" size="small"/>;
     let data = record[source];
@@ -24,9 +23,8 @@ const JsonDataField = ({ source, record = {} }) => {
     return <pre>{JSON.stringify(data, null, 2)}</pre>;
 };
 
-// İlgili Transaction'ı göstermek için özel bir alan component'i
 const RelatedTransactionForInvoiceField = (props) => {
-    const { record: invoiceRecord } = props; // Ana Invoice kaydını props'tan al
+    const { record: invoiceRecord } = props;
 
     if (!invoiceRecord || !invoiceRecord.transactionId) {
         return <TextField record={invoiceRecord} source="transactionId" label="Transaction ID (Ham)" emptyText="-" />;
@@ -64,7 +62,6 @@ const RelatedTransactionForInvoiceField = (props) => {
         </Link>
     );
 };
-
 
 export const InvoiceShow = (props) => (
     <Show {...props}>

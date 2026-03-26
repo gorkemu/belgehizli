@@ -8,20 +8,18 @@ const ConsentLog = require('../models/consentLog');
 const { buildMongoFilters } = require('../utils/filterUtils'); 
 const mapSortKey = (key) => (key === 'id' ? '_id' : key);
 
-// --- Kaynaklara Özel Şema Alanı Tanımları (Filtreleme için) ---
 const transactionResourceFields = {
     userEmail: 'string_like',
     templateName: 'string_like',
     status: 'exact_match',
     createdAt: 'date_range',
-    // q için aranacak alanlar (eğer frontend q filtresi gönderirse)
     q_fields: ['userEmail', 'templateName', 'paymentGatewayRef', 'errorMessage'] 
 };
 
 const invoiceResourceFields = {
     customerEmail: 'string_like',
     invoiceNumber: 'string_like',
-    status: 'exact_match', // pending_manual, invoice_sent vb.
+    status: 'exact_match',
     createdAt: 'date_range',
     transactionId: 'objectId',
     q_fields: ['customerEmail', 'invoiceNumber', 'customerName', 'notes']
@@ -37,7 +35,6 @@ const consentLogResourceFields = {
     q_fields: ['userEmail', 'documentVersion', 'ipAddress']
 };
 
-// --- GENEL LISTELEME FONKSİYONU İÇİN YARDIMCI ---
 const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFields, populateOptions = null) => {
     try {
         const { 
@@ -49,9 +46,8 @@ const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFi
         let [start, end] = rangeQuery ? JSON.parse(rangeQuery) : 
                              (req.query._start && req.query._end ? [parseInt(req.query._start, 10), parseInt(req.query._end, 10) -1 ] : [0, 9]);
         
-        // Güvenlik: end'in start'tan küçük olmamasını sağla ve makul bir limit
         if (end < start) end = start + 9;
-        if (end - start + 1 > 1000) end = start + 999; // Max 1000 kayıt gibi bir sınır
+        if (end - start + 1 > 1000) end = start + 999;
 
         const limit = end - start + 1;
         const skip = start;
@@ -84,16 +80,14 @@ const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFi
             .skip(idFromQuery ? 0 : skip)
             .limit(idFromQuery ? total : limit);
 
-        if (populateOptions && !idFromQuery) { // Sadece normal listelemede populate et, GET_MANY için değil
+        if (populateOptions && !idFromQuery) {
             query = query.populate(populateOptions);
         }
         
         const documents = await query.lean();
-        // formattedDocuments artık id alanını her zaman içerecek
         const formattedDocuments = documents.map(doc => {
             const formattedDoc = { ...doc, id: doc._id.toString() };
-            // Populate edilmiş alanlar için de 'id' ekle (eğer obje ise ve _id'si varsa)
-            if (populateOptions && !idFromQuery) { // Sadece populate edildiyse
+            if (populateOptions && !idFromQuery) {
                 (Array.isArray(populateOptions) ? populateOptions : [populateOptions]).forEach(pop => {
                     const path = typeof pop === 'string' ? pop : pop.path;
                     if (formattedDoc[path] && typeof formattedDoc[path] === 'object' && formattedDoc[path] !== null && formattedDoc[path]._id) {
@@ -101,10 +95,6 @@ const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFi
                     }
                 });
             }
-            // ReferenceField'ın doğru çalışması için, referans yapılan alanın (örn: transactionId)
-            // populate edilmemiş ham ID değerini içermesi gerekir.
-            // Eğer populateOptions transactionId'yi içeriyorsa, bu frontend'de sorun yaratır.
-            // Bu yüzden, eğer ReferenceField kullanacaksak, populate etmemek en iyisi.
             return formattedDoc;
         });
 
@@ -118,9 +108,7 @@ const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFi
     }
 };
 
-// --- TRANSACTIONS ---
 router.get('/transactions', (req, res) => {
-    // Transactions listesi için populate gerekmiyor (kendi başına bir kaynak)
     handleListRequest(req, res, Transaction, 'transactions', transactionResourceFields);
 });
 
@@ -142,36 +130,23 @@ router.get('/transactions/:id', async (req, res) => {
 
 router.get('/transactions-pending-invoice', async (req, res) => {
     try {
-        // React Admin'den gelen sayfalama ve sıralama parametreleri
         const { sort: sortQuery, range: rangeQuery, filter: filterObjectQuery } = req.query;
 
-        const [sortField, sortOrderStr] = sortQuery ? JSON.parse(sortQuery) : ['createdAt', 'ASC']; // Eskiden yeniye sırala
-        const [start, end] = rangeQuery ? JSON.parse(rangeQuery) : [0, 24]; // Varsayılan olarak ilk 25
+        const [sortField, sortOrderStr] = sortQuery ? JSON.parse(sortQuery) : ['createdAt', 'ASC'];
+        const [start, end] = rangeQuery ? JSON.parse(rangeQuery) : [0, 24];
         
         const limit = end - start + 1;
         const skip = start;
         const sortOrder = sortOrderStr.toLowerCase() === 'asc' ? 1 : -1;
-        const mappedSortField = mapSortKey(sortField); // mapSortKey'in tanımlı olduğunu varsayıyoruz
+        const mappedSortField = mapSortKey(sortField);
 
-        // Faturalanacakları bulmak için kriterler:
-        // 1. Transaction durumu 'payment_successful' VEYA 'completed' VEYA 'email_sent' VEYA 'pdf_generated'
-        //    (yani ödeme alınmış ve işlem bir şekilde ilerlemiş)
-        // 2. Transaction'ın 'invoiceId' alanı YOK (null veya undefined) 
-        //    VEYA 'invoiceId' VAR ama ilişkili Invoice'un durumu 'pending_creation'
-        
         const query = {
             status: { $in: ['payment_successful', 'completed', 'email_sent', 'pdf_generated'] },
-            // invoiceId alanı olmayanları veya olanların invoice durumunu kontrol etmemiz gerekecek.
-            // Bu, MongoDB aggregation ile daha verimli yapılabilir.
         };
 
-        // Basit Yöntem (Performans çok fazla kayıt için ideal olmayabilir):
-        // Önce potansiyel transaction'ları çek, sonra invoice durumlarını kontrol et.
         let potentialTransactions = await Transaction.find(query)
             .sort({ [mappedSortField]: sortOrder })
-            // Sayfalamayı tüm potansiyel sonuçlar üzerinden değil, filtrelenmiş sonuçlar üzerinden yapmak daha doğru.
-            // Bu yüzden önce tümünü çekip sonra filtreleyip sonra sayfalayacağız ya da aggregation kullanacağız.
-            .lean(); // Populate etmeden çekelim, invoice'a ayrıca bakarız.
+            .lean();
 
         let transactionsPendingInvoice = [];
         for (const trans of potentialTransactions) {
@@ -186,13 +161,11 @@ router.get('/transactions-pending-invoice', async (req, res) => {
         }
 
         const total = transactionsPendingInvoice.length;
-        // Sayfalamayı manuel yap
         const paginatedTransactions = transactionsPendingInvoice.slice(skip, skip + limit);
 
         const formattedTransactions = paginatedTransactions.map(t => ({ 
             ...t, 
             id: t._id.toString(),
-            // billingInfoSnapshot'ı da gönderelim ki fatura bilgileri listede görünsün
             billingInfo: t.billingInfoSnapshot ? JSON.parse(t.billingInfoSnapshot) : null 
         }));
 
@@ -206,11 +179,7 @@ router.get('/transactions-pending-invoice', async (req, res) => {
     }
 });
 
-// --- INVOICES ---
 router.get('/invoices', (req, res) => {
-    // InvoiceList'te transactionId için ReferenceField kullanıyorsak, burada populate ETMEMELİYİZ.
-    // ReferenceField kendi GET_MANY isteğini yapacak.
-    // Eğer populate edilmiş veriyi doğrudan göstermek isteseydik (FunctionField ile), o zaman populate ederdik.
     handleListRequest(req, res, Invoice, 'invoices', invoiceResourceFields); 
 });
 
@@ -224,7 +193,6 @@ router.get('/invoices/:id', async (req, res) => {
         if (!invoice) {
             return res.status(404).json({ message: 'Fatura bulunamadı.' });
         }
-        // transactionId artık sadece ID olarak dönecek
         res.json({ ...invoice, id: invoice._id.toString() });
     } catch (error) {
         console.error('Error fetching single invoice for admin:', error);
@@ -238,9 +206,8 @@ router.put('/invoices/:id', async (req, res) => {
             return res.status(400).json({ message: 'Geçersiz Invoice ID formatı.' });
         }
 
-        const { status, invoiceNumber, errorMessage } = req.body; // Güncellenecek alanları al
+        const { status, invoiceNumber, errorMessage } = req.body;
         
-        // Sadece izin verilen alanların güncellenmesini sağla
         const updateData = {};
         if (status) {
             const validStatuses = Invoice.schema.path('status').enumValues;
@@ -250,10 +217,10 @@ router.put('/invoices/:id', async (req, res) => {
                 return res.status(400).json({ message: `Geçersiz fatura durumu: ${status}` });
             }
         }
-        if (typeof invoiceNumber === 'string') { // invoiceNumber boş string de olabilir (silmek için)
+        if (typeof invoiceNumber === 'string') {
             updateData.invoiceNumber = invoiceNumber;
         }
-        if (typeof errorMessage === 'string') { // errorMessage boş string de olabilir
+        if (typeof errorMessage === 'string') {
             updateData.errorMessage = errorMessage;
         }
 
@@ -261,8 +228,6 @@ router.put('/invoices/:id', async (req, res) => {
             return res.status(400).json({ message: 'Güncellenecek veri bulunamadı.' });
         }
 
-        // new: true -> güncellenmiş dokümanı döndürür
-        // runValidators: true -> Mongoose şema validasyonlarını çalıştırır
         const updatedInvoice = await Invoice.findByIdAndUpdate(
             req.params.id,
             { $set: updateData },
@@ -273,12 +238,10 @@ router.put('/invoices/:id', async (req, res) => {
             return res.status(404).json({ message: 'Güncellenecek fatura bulunamadı.' });
         }
 
-        // React Admin update yanıtında güncellenmiş kaydın tamamını id ile bekler
         res.json({ ...updatedInvoice, id: updatedInvoice._id.toString() });
 
     } catch (error) {
         console.error('Error updating invoice for admin:', error);
-        // Mongoose validasyon hatası olabilir
         if (error.name === 'ValidationError') {
             return res.status(400).json({ message: 'Fatura güncelleme validasyon hatası: ' + error.message });
         }
@@ -286,9 +249,7 @@ router.put('/invoices/:id', async (req, res) => {
     }
 });
 
-// --- CONSENT LOGS ---
 router.get('/consent-logs', (req, res) => {
-    // ConsentLogList'te transactionId için ReferenceField kullanıyorsak, burada populate ETMEMELİYİZ.
     handleListRequest(req, res, ConsentLog, 'consent-logs', consentLogResourceFields); 
 });
 
@@ -302,7 +263,6 @@ router.get('/consent-logs/:id', async (req, res) => {
         if (!consentLog) {
             return res.status(404).json({ message: 'Onay logu bulunamadı.' });
         }
-        // transactionId artık sadece ID olarak dönecek
         res.json({ ...consentLog, id: consentLog._id.toString() });
     } catch (error) {
         console.error('Error fetching single consent log for admin:', error);
@@ -310,20 +270,16 @@ router.get('/consent-logs/:id', async (req, res) => {
     }
 });
 
-// --- DASHBOARD İSTATİSTİKLERİ ENDPOINT'İ ---
-// GET /api/admin-data/dashboard-stats
 router.get('/dashboard-stats', async (req, res) => {
     try {
         const today = new Date();
-        today.setHours(0, 0, 0, 0); // Günün başlangıcı
+        today.setHours(0, 0, 0, 0);
 
         const tomorrow = new Date(today);
-        tomorrow.setDate(today.getDate() + 1); // Yarının başlangıcı
+        tomorrow.setDate(today.getDate() + 1);
 
-        // 1. Toplam Transaction Sayısı
         const totalTransactions = await Transaction.countDocuments();
 
-        // 2. Bugün Oluşturulan Transaction Sayısı
         const todayTransactions = await Transaction.countDocuments({
             createdAt: {
                 $gte: today,
@@ -331,18 +287,12 @@ router.get('/dashboard-stats', async (req, res) => {
             },
         });
 
-        // 3. Toplam Fatura Kaydı Sayısı
         const totalInvoices = await Invoice.countDocuments();
 
-        // 4. Durumu 'pending_creation' Olan Fatura Sayısı
         const pendingInvoices = await Invoice.countDocuments({
             status: 'pending_creation',
         });
-        // Alternatif: "Faturalanacak İşlem Sayısı" (biraz daha karmaşık, önceki logic'e benzer)
-        // Bu, status: payment_successful olup da invoiceId'si olmayan veya invoice.status: pending_creation olan Transaction'ları sayar.
-        // Şimdilik sadece pending_creation Invoice sayısını alalım.
 
-        // 5. Toplam Onay Logu Sayısı
         const totalConsentLogs = await ConsentLog.countDocuments();
 
         res.json({
@@ -358,7 +308,5 @@ router.get('/dashboard-stats', async (req, res) => {
         res.status(500).json({ message: 'Dashboard istatistikleri alınırken bir hata oluştu.' });
     }
 });
-
-
 
 module.exports = router;
