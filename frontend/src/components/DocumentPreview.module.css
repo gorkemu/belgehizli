@@ -12,13 +12,14 @@
 .previewHeader {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 0.75rem;
     padding: 1rem 1.5rem;
     background-color: #f8fafc;
     border-bottom: 1px solid var(--gray-200);
     flex-shrink: 0;
     z-index: 10;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 
 .headerIcon {
@@ -215,18 +216,37 @@
     }
 }
 
-.editBadge {
+.editBadge, .lockedBadge {
     margin-left: auto;
     display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
+    align-items: flex-start;
+    gap: 0.4rem;
     font-size: 0.75rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.editBadge {
     color: #059669;
     background-color: #ecfdf5;
-    padding: 0.3rem 0.8rem;
-    border-radius: 99px;
-    font-weight: 600;
     border: 1px solid #a7f3d0;
+}
+
+.lockedBadge {
+    color: #64748b;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+}
+
+@media (max-width: 768px) {
+    .editBadge, .lockedBadge {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 .previewArea[contenteditable="true"] {
@@ -264,20 +284,6 @@
     border-color: #2563eb;
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
     outline: none;
-}
-
-.lockedBadge {
-    margin-left: auto;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.75rem;
-    color: #64748b;
-    background-color: #f1f5f9;
-    padding: 0.3rem 0.8rem;
-    border-radius: 99px;
-    font-weight: 600;
-    border: 1px solid #e2e8f0;
 }
 
 .dynamicHighlight {

@@ -122,8 +122,18 @@ function TemplateDetail() {
         
         if (isFormValid) {
             setCurrentStep(2);
+            
             if (window.innerWidth <= 1024 && previewRef.current) {
-                previewRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                    const headerOffset = 95;
+                    const elementPosition = previewRef.current.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }, 50);
             }
         }
     };
@@ -250,6 +260,15 @@ function TemplateDetail() {
                             ) : (
                                 <div className={styles.emptyFormNotice}>Bu şablon için form alanı bulunmamaktadır.</div>
                             )}
+
+                            {currentStep === 1 && (
+                                <div className={styles.step1ActionContainer}>
+                                    <p className={styles.stepInfoText}>Belgenizi oluşturmak için formu eksiksiz doldurun.</p>
+                                    <button onClick={handleNextStep} className={styles.nextStepButton}>
+                                        Sonraki Adım: İncele ve Düzelt <Edit2 size={18} />
+                                    </button>
+                                </div>
+                            )}
                         </div>
                     </div>
                     
@@ -267,47 +286,37 @@ function TemplateDetail() {
                     </div>
                 </div>
 
-                <div className={styles.actionSection}>
-                    <div className={styles.checkoutSection}>
-                        
-                        {currentStep === 1 ? (
-                            <>
-                                <p className={styles.stepInfoText}>Belgenizi oluşturmak için formu eksiksiz doldurun.</p>
-                                <button onClick={handleNextStep} className={styles.nextStepButton}>
-                                    Sonraki Adım: İncele ve Düzelt <Edit2 size={18} />
-                                </button>
-                            </>
-                        ) : (
-                            <>
-                                <label className={styles.termsCheckboxContainer}>
-                                    <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
-                                    <span className={styles.termsLabel}>
-                                        <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>Kullanım Şartları</Link>'nı
-                                        ve <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>Gizlilik Politikası</Link>'nı okudum.
-                                    </span>
-                                </label>
+                {currentStep === 2 && (
+                    <div className={styles.actionSection}>
+                        <div className={styles.checkoutSection}>
+                            <label className={styles.termsCheckboxContainer}>
+                                <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
+                                <span className={styles.termsLabel}>
+                                    <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>Kullanım Şartları</Link>'nı
+                                    ve <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>Gizlilik Politikası</Link>'nı okudum.
+                                </span>
+                            </label>
 
-                                {downloadError && (
-                                    <div className={styles.paymentError}><AlertCircle size={18} /> {downloadError}</div>
-                                )}
+                            {downloadError && (
+                                <div className={styles.paymentError}><AlertCircle size={18} /> {downloadError}</div>
+                            )}
 
-                                <button
-                                    onClick={handleDownload}
-                                    disabled={loadingDownload || !agreedToTerms}
-                                    className={`${styles.payDownloadButton} ${(!agreedToTerms) ? styles.disabledButton : ''}`}
-                                >
-                                    <Download size={20} />
-                                    {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz İndir`}
-                                </button>
-                                
-                                <div className={styles.secureNoteContainer}>
-                                    <p className={styles.secureNote}>Tüm manuel düzenlemeleriniz PDF'e eklenecektir.</p>
-                                    <p className={styles.highlightNote}>* Belgedeki sarı vurgular sadece kontrol amaçlıdır, inen PDF'te görünmez.</p>
-                                </div>
-                            </>
-                        )}
+                            <button
+                                onClick={handleDownload}
+                                disabled={loadingDownload || !agreedToTerms}
+                                className={`${styles.payDownloadButton} ${(!agreedToTerms) ? styles.disabledButton : ''}`}
+                            >
+                                <Download size={20} />
+                                {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz İndir`}
+                            </button>
+                            
+                            <div className={styles.secureNoteContainer}>
+                                <p className={styles.secureNote}>Tüm manuel düzenlemeleriniz PDF'e eklenecektir.</p>
+                                <p className={styles.highlightNote}>* Belgedeki sarı vurgular sadece kontrol amaçlıdır, inen PDF'te görünmez.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
 
             {showBackWarning && (
@@ -352,9 +361,7 @@ function TemplateDetail() {
 
             {isSupportModalOpen && (
                 <div className={styles.modalOverlay} onClick={() => setIsSupportModalOpen(false)}>
-
                     <div className={styles.supportModal} onClick={(e) => e.stopPropagation()}>
-
                         <button onClick={() => setIsSupportModalOpen(false)} className={styles.modalCloseButton}>
                             <X size={20} />
                         </button>

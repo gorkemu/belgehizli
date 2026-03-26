@@ -747,3 +747,12 @@
     padding: 0.3rem 0.8rem;
     border-radius: 6px;
 }
+
+.step1ActionContainer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
