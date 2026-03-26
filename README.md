@@ -7,13 +7,18 @@ Belge Hızlı is a modern, full-stack web application designed to help users gen
 * **Dynamic Template System:** Add or update contract types directly via MongoDB without any code changes.
 * **Advanced Form Generation:**
     * **Auto-UI:** Forms are automatically generated based on template field definitions.
+    * **Auto-Save (No Data Loss):** Form progress is instantly saved to `localStorage`, ensuring users never lose their data due to accidental reloads or connection drops.
     * **Repeatable Blocks:** Supports multiple instances of field groups (e.g., adding multiple tenants/landlords).
     * **Conditional Logic:** Fields dynamically show or hide based on previous user selections.
 * **Interactive WYSIWYG Preview & Editing:**
-    * **2-Step Wizard Flow:** Users first fill out the structured form, then enter a locked-down "Review & Edit" mode.
+    * **2-Step Wizard Flow:** Users first fill out the structured form, then enter a locked-down "Review & Edit" mode with rewarding UX transitions.
     * **Smart Highlighting:** User-entered data is dynamically highlighted in the preview, making it easy to spot and adjust language suffixes or grammar.
     * **Manual Overrides:** The preview document acts as a live text editor (`contentEditable`), allowing users to add, delete, or rewrite paragraphs directly on the document before downloading.
     * **Smart Mobile Navigation:** Features an `IntersectionObserver`-powered floating action button (FAB) that guides mobile users to the preview section seamlessly.
+* **Conversion-Optimized UX:**
+    * Frictionless CTAs with inline validation instead of disabled states.
+    * Trust-building micro-copy (e.g., "No credit card required").
+    * Humanized error handling and device-agnostic copywriting.
 * **Free-to-Use Model:** All document generation services are completely free for the public.
 * **Voluntary Support (Shopier):** A sleek Buy Me a Coffee modal appears after successful downloads, integrated with Shopier for voluntary contributions.
 * **Legal Compliance & Logging:**
