@@ -9,17 +9,21 @@ Belge Hızlı is a modern, full-stack web application designed to help users gen
     * **Auto-UI:** Forms are automatically generated based on template field definitions.
     * **Repeatable Blocks:** Supports multiple instances of field groups (e.g., adding multiple tenants/landlords).
     * **Conditional Logic:** Fields dynamically show or hide based on previous user selections.
-* **Real-Time Preview:** Live document preview featuring the Inter font and DD.MM.YYYY date formatting.
+* **Interactive WYSIWYG Preview & Editing:**
+    * **2-Step Wizard Flow:** Users first fill out the structured form, then enter a locked-down "Review & Edit" mode.
+    * **Smart Highlighting:** User-entered data is dynamically highlighted in the preview, making it easy to spot and adjust language suffixes or grammar.
+    * **Manual Overrides:** The preview document acts as a live text editor (`contentEditable`), allowing users to add, delete, or rewrite paragraphs directly on the document before downloading.
+    * **Smart Mobile Navigation:** Features an `IntersectionObserver`-powered floating action button (FAB) that guides mobile users to the preview section seamlessly.
 * **Free-to-Use Model:** All document generation services are completely free for the public.
 * **Voluntary Support (Shopier):** A sleek Buy Me a Coffee modal appears after successful downloads, integrated with Shopier for voluntary contributions.
 * **Legal Compliance & Logging:**
     * Mandatory consent for Terms of Service and Privacy Policy before generation.
     * **Consent Logs:** Records user IP, User-Agent, timestamp, and document version for legal audit trails.
-* **High-Fidelity PDF Output:** Powered by Browserless.io / Puppeteer for professional, print-ready documents.
+* **High-Fidelity PDF Output:** Powered by Browserless.io / Puppeteer for professional, print-ready documents. Manually edited HTML is sanitized and perfectly rendered.
 * **Dual Delivery:** Instant browser download combined with automated email delivery.
 * **Robust Admin Dashboard (React Admin):**
     * **Analytics:** Real-time tracking of daily and total transaction volumes.
-    * **Transaction Management:** Full visibility into every document generation attempt and status.
+    * **Transaction Management:** Full visibility into every document generation attempt, status, and HTML snapshots.
     * **Manual Invoice Tracking:** Interface to manage and record manual invoices for voluntary supporters.
 
 ## Technology Stack
