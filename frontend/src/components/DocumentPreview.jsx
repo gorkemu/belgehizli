@@ -1,22 +1,21 @@
-// frontend/src/components/DocumentPreview.jsx
-import React from 'react'; 
+import React from 'react';
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
 import { FileSearch, AlertTriangle, FileText, Loader2, Edit3, Lock } from 'lucide-react';
 
 function formatDateHelper(dateString) {
-    if (!dateString || typeof dateString !== 'string') return ''; 
+    if (!dateString || typeof dateString !== 'string') return '';
     try {
         const date = new Date(dateString);
-        if (isNaN(date.getTime())) return dateString; 
+        if (isNaN(date.getTime())) return dateString;
 
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
         return `${day}.${month}.${year}`;
     } catch (e) {
         console.error("Error formatting date:", dateString, e);
-        return dateString; 
+        return dateString;
     }
 }
 
@@ -35,14 +34,14 @@ try {
         return String(a) === String(b);
     });
 
-    Handlebars.registerHelper('each_with_index', function(context, options) {
+    Handlebars.registerHelper('each_with_index', function (context, options) {
         let ret = "";
         if (context && context.length > 0) {
-            for(let i=0; i<context.length; i++) {
-                 ret = ret + options.fn({...context[i], '@index': i});
+            for (let i = 0; i < context.length; i++) {
+                ret = ret + options.fn({ ...context[i], '@index': i });
             }
         } else {
-            ret = options.inverse(this); 
+            ret = options.inverse(this);
         }
         return ret;
     });
@@ -55,27 +54,18 @@ try {
         return value !== undefined && value !== null && value !== '' ? value : defaultValue;
     });
 
-    Handlebars.registerHelper('formatDate', formatDateHelper); 
+    Handlebars.registerHelper('formatDate', formatDateHelper);
 
 } catch (e) {
     console.error("Handlebars helper kaydedilirken hata:", e);
 }
 
-function highlightFormData(html, formData) {
-    let highlightedHtml = html;
+function prepareTemplateForHighlighting(templateStr) {
+    let processed = templateStr.replace(/\{\{\{(.*?)\}\}\}/g, `<mark class="${styles.dynamicHighlight}">{{{$1}}}</mark>`);
     
-    const valuesToHighlight = Object.values(formData)
-        .filter(val => typeof val === 'string' && val.trim().length > 1)
-        .sort((a, b) => b.length - a.length);
-
-    valuesToHighlight.forEach(val => {
-        const escapedVal = val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
-        const regex = new RegExp(`(${escapedVal})(?![^<]*>)`, 'g');
-        
-        highlightedHtml = highlightedHtml.replace(regex, `<mark class="${styles.dynamicHighlight}">$1</mark>`);
-    });
-
-    return highlightedHtml;
+    processed = processed.replace(/\{\{(?![#\/!>{]|else\b)(.*?)\}\}/g, `<mark class="${styles.dynamicHighlight}">{{$1}}</mark>`);
+    
+    return processed;
 }
 
 function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
@@ -102,19 +92,20 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
     }
 
     try {
-        const template = Handlebars.compile(templateContent);
-        let previewHtml = template(formData); 
-
+        let finalTemplateContent = templateContent;
         if (currentStep === 2) {
-            previewHtml = highlightFormData(previewHtml, formData);
+            finalTemplateContent = prepareTemplateForHighlighting(templateContent);
         }
+
+        const template = Handlebars.compile(finalTemplateContent);
+        const previewHtml = template(formData);
 
         return (
             <div className={styles.container}>
                 <div className={styles.previewHeader}>
                     <FileSearch size={20} className={styles.headerIcon} />
                     <h3 className={styles.previewTitle}>Canlı Önizleme</h3>
-                    
+
                     {currentStep === 1 ? (
                         <div className={styles.lockedBadge}>
                             <Lock size={14} /> Formu doldurduktan sonra düzenleyebilirsiniz
@@ -127,10 +118,10 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
                 </div>
 
                 <div className={styles.paperContainer}>
-                    <div 
+                    <div
                         ref={editorRef}
-                        className={styles.previewArea} 
-                        dangerouslySetInnerHTML={{ __html: previewHtml }} 
+                        className={styles.previewArea}
+                        dangerouslySetInnerHTML={{ __html: previewHtml }}
                         contentEditable={currentStep === 2}
                         suppressContentEditableWarning={true}
                     />
@@ -141,18 +132,18 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
         console.error("Handlebars şablonunu derlerken/işlerken hata oluştu (Frontend):", error);
         return (
             <div className={styles.container}>
-                 <div className={styles.previewHeader}>
+                <div className={styles.previewHeader}>
                     <AlertTriangle size={20} className={styles.errorIconHeader} />
                     <h3 className={styles.previewTitleError}>Önizleme Hatası</h3>
-                 </div>
-                 <div className={styles.previewError}>
-                     <p><strong>Önizleme oluşturulurken bir hata meydana geldi.</strong></p>
-                     <p className={styles.errorMessageText}>{error.message}</p>
-                     <p className={styles.errorHint}>
-                        Lütfen şablon içeriğini ve form verilerini kontrol edin. Handlebars sözdizimi hatalı veya eksik olabilir.
-                     </p>
                 </div>
-             </div>
+                <div className={styles.previewError}>
+                    <p><strong>Önizleme oluşturulurken bir hata meydana geldi.</strong></p>
+                    <p className={styles.errorMessageText}>{error.message}</p>
+                    <p className={styles.errorHint}>
+                        Lütfen şablon içeriğini ve form verilerini kontrol edin. Handlebars sözdizimi hatalı veya eksik olabilir.
+                    </p>
+                </div>
+            </div>
         );
     }
 }
