@@ -4,10 +4,10 @@ import { Helmet } from 'react-helmet-async';
 import { ShieldCheck, Info, User, Database, Scale, Share2, Cookie, CheckSquare, RefreshCw } from 'lucide-react';
 
 function PrivacyPolicy() {
-    const siteName = "Belge Hızlı"; 
-    const ownerName = "Abdurrahman Görkem Ünal"; 
-    const address = "Gülbahar Mah. Kurtuluş 1 Sk. No: 15 İç Kapı No:10 Şişli / İSTANBUL"; 
-    const email = "info@belgehizli.com"; 
+    const siteName = import.meta.env.VITE_SITE_NAME;
+    const ownerName = import.meta.env.VITE_SELLER_NAME; 
+    const address = import.meta.env.VITE_SELLER_ADDRESS;
+    const email = import.meta.env.VITE_SELLER_EMAIL;
     const lastUpdateDate = "29.03.2026"; 
     const siteUrl = "https://www.belgehizli.com/"; 
 

@@ -5,12 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import { ScrollText, Info, Scale, ShieldAlert, FileText, CheckCircle2 } from 'lucide-react';
 
 function TermsOfService() {
-    const siteName = "Belge Hızlı"; 
-    const ownerName = "Abdurrahman Görkem Ünal"; 
-    const address = "Gülbahar Mah. Kurtuluş 1 Sk. No: 15 İç Kapı No:10 Şişli / İSTANBUL"; 
-    const email = "info@belgehizli.com"; 
+    const siteName = import.meta.env.VITE_SITE_NAME;
+    const ownerName = import.meta.env.VITE_SELLER_NAME;
+    const address = import.meta.env.VITE_SELLER_ADDRESS; 
+    const email = import.meta.env.VITE_SELLER_EMAIL;
     const lastUpdateDate = "24.03.2026"; 
-    const siteUrl = "https://www.belgehizli.com/"; 
+    const siteUrl = import.meta.env.VITE_SITE_URL;
 
     return (
         <>
@@ -34,7 +34,6 @@ function TermsOfService() {
                     </div>
                 </div>
 
-                {/* BÖLÜM 1: KULLANIM ŞARTLARI */}
                 <div className={styles.mainSection}>
                     <h2 className={styles.mainSectionTitle}>
                         <FileText size={28} className={styles.mainSectionIcon} /> BÖLÜM 1: KULLANIM ŞARTLARI
@@ -59,7 +58,6 @@ function TermsOfService() {
 
                 <hr className={styles.separator} />
 
-                {/* BÖLÜM 2: MESAFELİ SATIŞ SÖZLEŞMESİ */}
                 <div className={styles.mainSection}>
                     <h2 className={styles.mainSectionTitle}>
                         <Scale size={28} className={styles.mainSectionIcon} /> BÖLÜM 2: MESAFELİ SATIŞ SÖZLEŞMESİ

@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import { ShieldCheck, Info } from 'lucide-react'; 
 
 function AboutUs() {
-    const siteName = "Belge Hızlı";
+    const siteName = import.meta.env.VITE_SITE_NAME;
 
     return (
         <>

@@ -5,12 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import { Building2, Mail, Phone, MapPin, FileText, User, Headset } from 'lucide-react';
 
 function ContactUs() {
-	const ownerName = "Abdurrahman Görkem Ünal";
-	const address = "Gülbahar Mah. Kurtuluş 1 Sk. No: 15 İç Kapı No:10 Şişli / İSTANBUL";
-	const taxOffice = "Zincirlikuyu Vergi Dairesi Müd.";
-	const taxIdNumber = "9070132427";
-	const email = "info@belgehizli.com"; 
-	const phone = "05530968833";
+	const ownerName = import.meta.env.VITE_SITE_OWNER_NAME;
+	const address = import.meta.env.VITE_SELLER_ADDRESS;
+	const taxOffice = import.meta.env.VITE_SELLER_TAX_OFFICE;
+	const taxIdNumber = import.meta.env.VITE_SELLER_TAX_ID;
+	const email = import.meta.env.VITE_SELLER_EMAIL;
+	const phone = import.meta.env.VITE_SELLER_PHONE;
 
 	return (
         <>
