@@ -16,6 +16,7 @@ import LabelIcon from '@mui/icons-material/Label';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import AssignmentIndIcon from '@mui/icons-material/AssignmentInd'; 
+import PolicyIcon from '@mui/icons-material/Policy'; 
 
 import { PendingInvoiceList } from './components/pendingInvoices/PendingInvoiceList';
 import { TransactionList } from './components/transactions/TransactionList';
@@ -25,6 +26,8 @@ import { InvoiceShow } from './components/invoices/InvoiceShow';
 import { InvoiceEdit } from './components/invoices/InvoiceEdit';
 import { ConsentLogList } from './components/consentlogs/ConsentLogList';
 import { ConsentLogShow } from './components/consentlogs/ConsentLogShow';
+
+import LegalManager from './pages/LegalManager'; 
 
 import { Card, CardContent, Typography, Grid, Paper, Box } from '@mui/material'; 
 import axios from 'axios'; 
@@ -180,6 +183,7 @@ const MyMenu = () => (
         <MenuItemLink to="/transactions" primaryText="İşlemler (Transactions)" leftIcon={<LabelIcon />} />
         <MenuItemLink to="/invoices" primaryText="Faturalar (Invoices)" leftIcon={<ReceiptIcon />} />
         <MenuItemLink to="/consent-logs" primaryText="Onay Logları (Consent)" leftIcon={<VerifiedUserIcon />} />
+        <MenuItemLink to="/legal-manager" primaryText="Hukuki Metinler" leftIcon={<PolicyIcon />} />
         <MenuItemLink to="/change-password" primaryText="Şifre Değiştir" leftIcon={<VpnKeyIcon />} />
     </Menu>
 );
@@ -202,6 +206,7 @@ function App() {
         
         <CustomRoutes> 
             <Route path="/change-password" element={<ChangePasswordPage />} />
+            <Route path="/legal-manager" element={<LegalManager />} />
         </CustomRoutes>
     </Admin>
   );

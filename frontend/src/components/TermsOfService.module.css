@@ -6,7 +6,7 @@
     border-radius: 20px;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--gray-200);
-    color: var(--text-color);
+    color: var(--gray-700);
 }
 
 .header {
@@ -15,223 +15,127 @@
     align-items: center;
     text-align: center;
     margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid var(--gray-200);
 }
 
 .titleIcon {
     color: var(--primary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .title {
     font-size: 2.25rem;
     color: var(--gray-900);
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .lastUpdated {
     font-size: 0.95rem;
     color: var(--gray-500);
+    background-color: var(--gray-50);
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    border: 1px solid var(--gray-200);
 }
 
 .lastUpdated strong {
     color: var(--gray-700);
 }
 
-.mainSection {
-    margin-top: 1rem;
-}
-
-.mainSectionTitle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    font-size: 1.6rem;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
-    color: var(--primary-color-dark);
+.dynamicContent h2 {
+    font-size: 1.35rem;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--gray-900);
     font-weight: 700;
-    text-align: center;
-    padding: 1rem;
-    background-color: var(--primary-color-light);
-    border-radius: var(--radius-md);
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gray-100);
 }
 
-.mainSectionIcon {
-    color: var(--primary-color);
-}
-
-.articleTitle {
-    font-size: 1.25rem;
+.dynamicContent h3 {
+    font-size: 1.15rem;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    color: var(--gray-800);
-    font-weight: 600;
-    border-bottom: 1px solid var(--gray-200);
-    padding-bottom: 0.5rem;
+    color: var(--primary-color-dark);
+    font-weight: 700;
 }
 
-.paragraph {
-    margin-bottom: 1.25rem;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: var(--gray-600);
-}
-
-.paragraph strong {
-    color: var(--gray-800);
-    font-weight: 600;
-}
-
-.definitionList,
-.checkList,
-.infoList {
-    list-style: none;
-    padding-left: 0;
+.dynamicContent p {
     margin-bottom: 1.5rem;
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--gray-600);
 }
 
-.definitionList li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
-    position: relative;
-}
-
-.definitionList li::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
-}
-
-.definitionList strong {
-    color: var(--gray-800);
+.dynamicContent strong {
+    color: var(--gray-900);
     font-weight: 600;
 }
 
-.checkList li {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
+.dynamicContent hr {
+    border: none;
+    border-top: 2px dashed var(--gray-200);
+    margin: 3rem 0;
 }
 
-.checkIcon {
-    flex-shrink: 0;
-    color: #10b981;
-    margin-top: 0.2rem;
-}
-
-.infoList li {
-    display: flex;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed var(--gray-200);
-}
-
-.infoList li:last-child {
-    border-bottom: none;
-}
-
-.infoList li strong {
-    flex-shrink: 0;
-    width: 120px;
-    color: var(--gray-800);
-    font-weight: 600;
-}
-
-.importantNote {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
+.dynamicContent .important-note {
     padding: 1.5rem;
-    background-color: var(--primary-color-light);
-    border-left: 4px solid var(--primary-color);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    background-color: #eff6ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 12px 12px 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #1e3a8a;
+    margin-bottom: 2.5rem;
 }
 
-.warningNote {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin: 1.5rem 0;
+.dynamicContent .warning-note {
     padding: 1.5rem;
     background-color: #fef2f2;
     border-left: 4px solid #ef4444;
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-}
-
-.noteIconWrapper {
-    flex-shrink: 0;
-    margin-top: 0.1rem;
-}
-
-.importantNote .noteIconWrapper { color: var(--primary-color); }
-.warningNote .noteIconWrapper { color: #ef4444; }
-
-.noteContent {
+    border-radius: 0 12px 12px 0;
+    color: #991b1b;
     font-size: 0.95rem;
     line-height: 1.6;
+    margin: 2rem 0;
 }
 
-.importantNote .noteContent { color: var(--gray-700); }
-.warningNote .noteContent { color: #991b1b; }
+.dynamicContent .success-note {
+    padding: 1.5rem;
+    background-color: #ecfdf5;
+    border-left: 4px solid #10b981;
+    border-radius: 0 12px 12px 0;
+    color: #065f46;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 2rem 0;
+}
 
-.importantNote strong { color: var(--primary-color-dark); }
-.warningNote strong { color: #b91c1c; }
+.spinner {
+    color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
 
-.separator {
-    border: none;
-    border-top: 2px dashed var(--gray-300);
-    margin: 4rem 0;
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
     .container {
         margin: 1.5rem;
         padding: 2rem 1.5rem;
+        border-radius: 16px;
     }
-
     .title {
-        font-size: 1.8rem;
+        font-size: 1.75rem;
     }
-
-    .mainSectionTitle {
+    .dynamicContent h2 {
         font-size: 1.25rem;
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .articleTitle {
-        font-size: 1.15rem;
-    }
-
-    .infoList li {
-        flex-direction: column;
-        border-bottom: none;
-        padding-bottom: 0;
-        margin-bottom: 1rem;
-    }
-
-    .infoList li strong {
-        margin-bottom: 0.2rem;
-    }
-
-    .importantNote,
-    .warningNote {
-        flex-direction: column;
-        gap: 0.75rem;
+        margin-top: 2.5rem;
     }
 }

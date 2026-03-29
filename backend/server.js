@@ -21,6 +21,7 @@ const cron = require('node-cron');
 const AdminUser = require('./models/adminUser');
 const Transaction = require('./models/transaction');
 const bcrypt = require('bcryptjs');
+const legalRoutes = require('./routes/legal');
 
 dotenv.config();
 const app = express();
@@ -72,6 +73,8 @@ app.use((req, res, next) => {
     if (req.query) mongoSanitize.sanitize(req.query);
     next();
 });
+
+app.use('/api/legal', legalRoutes);
 
 app.use('/api/', apiLimiter);
 

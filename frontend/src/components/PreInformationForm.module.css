@@ -15,7 +15,7 @@
     justify-content: center;
     gap: 0.75rem;
     font-size: 2.25rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     color: var(--gray-900);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -26,7 +26,15 @@
     color: var(--primary-color);
 }
 
-.sectionTitle {
+.versionBadge {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--gray-500);
+    margin-bottom: 2.5rem;
+    font-style: italic;
+}
+
+.dynamicContent h2 {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -39,23 +47,23 @@
     border-bottom: 1px solid var(--gray-200);
 }
 
-.sectionIcon {
+.dynamicContent h2 svg {
     color: var(--secondary-color);
 }
 
-.intro, .paragraph {
+.dynamicContent p {
     margin-bottom: 1.25rem;
     font-size: 1.05rem;
     line-height: 1.7;
     color: var(--gray-600);
 }
 
-.paragraph strong {
+.dynamicContent strong {
     color: var(--gray-800);
     font-weight: 600;
 }
 
-.infoList, .definitionList {
+.dynamicContent ul {
     list-style: none;
     padding-left: 0;
     margin-bottom: 1.5rem;
@@ -64,77 +72,30 @@
     color: var(--gray-600);
 }
 
-.infoList li {
-    display: flex;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed var(--gray-200);
-}
-
-.infoList li:last-child {
-    border-bottom: none;
-}
-
-.infoList li strong {
-    flex-shrink: 0;
-    width: 140px;
-    color: var(--gray-800);
-    font-weight: 600;
-}
-
-.infoList li span {
-    flex-grow: 1;
-}
-
-.definitionList li {
+.dynamicContent ul li {
     margin-bottom: 1rem;
     padding-left: 1.5rem;
     position: relative;
 }
 
-.definitionList li::before {
+.dynamicContent ul li::before {
     content: "";
     position: absolute;
     left: 0;
-    top: 0.5rem;
+    top: 0.6rem;
     width: 6px;
     height: 6px;
     background-color: var(--primary-color);
     border-radius: 50%;
 }
 
-.definitionList li strong {
-    color: var(--gray-800);
-    font-weight: 600;
-    margin-right: 0.25rem;
+.dynamicContent hr {
+    border: none;
+    border-top: 2px solid var(--gray-200);
+    margin: 3rem 0 2rem 0;
 }
 
-.quote {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background-color: var(--gray-50);
-    border-left: 4px solid var(--secondary-color);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
-    color: var(--gray-700);
-    font-size: 1rem;
-    line-height: 1.6;
-}
-
-.quoteIcon {
-    flex-shrink: 0;
-    color: var(--secondary-color);
-    margin-top: 0.1rem;
-}
-
-.quote em {
-    font-weight: 500;
-    color: var(--gray-800);
-}
-
-.importantNote {
+.dynamicContent .important-note {
     display: flex;
     align-items: flex-start;
     gap: 1rem;
@@ -143,71 +104,12 @@
     background-color: var(--primary-color-light);
     border-left: 4px solid var(--primary-color);
     border-radius: 0 var(--radius-md) var(--radius-md) 0;
-}
-
-.noteIconWrapper {
-    flex-shrink: 0;
-    color: var(--primary-color);
-    margin-top: 0.1rem;
-}
-
-.noteContent {
     font-size: 0.95rem;
     line-height: 1.6;
     color: var(--gray-700);
 }
 
-.noteContent strong {
-    color: var(--primary-color-dark);
-}
-
-.warningNote {
-    padding: 1.25rem;
-    background-color: #fef2f2;
-    border: 1px solid #fecaca;
-    border-radius: var(--radius-md);
-    color: #991b1b;
-    font-size: 0.95rem;
-    margin-top: 1.5rem;
-}
-
-.warningNote strong {
-    color: #b91c1c;
-}
-
-.link {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.link:hover {
-    color: var(--primary-color-dark);
-    text-decoration: underline;
-}
-
-.separator {
-    border: none;
-    border-top: 2px solid var(--gray-200);
-    margin: 3rem 0 2rem 0;
-}
-
-.confirmation {
-    font-style: italic;
-    text-align: center;
-    color: var(--gray-500);
-    font-size: 0.95rem;
-    line-height: 1.6;
-    padding: 0 1rem;
-}
-
-.successIcon {
-    color: #10b981;
-    flex-shrink: 0;
-}
-
-.successNote {
+.dynamicContent .success-note {
     background-color: #ecfdf5;
     padding: 1.5rem;
     border-left: 4px solid #10b981;
@@ -218,12 +120,7 @@
     margin-bottom: 2.5rem;
 }
 
-.successNote strong {
-    color: #047857;
-    font-weight: 700;
-}
-
-.warningNote {
+.dynamicContent .warning-note {
     padding: 1.5rem;
     background-color: #fef2f2;
     border-left: 4px solid #ef4444;
@@ -234,8 +131,24 @@
     margin-bottom: 2.5rem;
 }
 
-.warningNote strong {
-    color: #7f1d1d;
+.dynamicContent .confirmation {
+    font-style: italic;
+    text-align: center;
+    color: var(--gray-500);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    padding: 0 1rem;
+}
+
+.spinner {
+    color: var(--primary-color);
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {
@@ -243,29 +156,15 @@
         margin: 1.5rem;
         padding: 2rem 1.5rem;
     }
-
     .title {
         font-size: 1.8rem;
     }
-
-    .sectionTitle {
+    .dynamicContent h2 {
         font-size: 1.25rem;
     }
-
-    .infoList li {
-        flex-direction: column;
-        border-bottom: none;
-        padding-bottom: 0;
-        margin-bottom: 1rem;
-    }
-
-    .infoList li strong {
-        margin-bottom: 0.2rem;
-    }
-
-    .importantNote,
-    .quote {
-        flex-direction: column;
-        gap: 0.75rem;
+    .dynamicContent .important-note,
+    .dynamicContent .success-note,
+    .dynamicContent .warning-note {
+        padding: 1.25rem;
     }
 }
