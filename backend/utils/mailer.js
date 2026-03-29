@@ -8,22 +8,21 @@ const emailConfig = {
     from: process.env.EMAIL_FROM
 };
 
-let transporter = nodemailer.createTransport({
-    host: emailConfig.host,
-    port: emailConfig.port,
-    secure: false,
+const transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST, 
+    port: 465,
+    secure: true, 
     auth: {
-        user: emailConfig.user,
-        pass: emailConfig.pass,
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
     },
-    requireTLS: true,
-    connectionTimeout: 30000,
+    tls: {
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: false
+    },
+    connectionTimeout: 20000, 
     greetingTimeout: 20000,
     socketTimeout: 30000,
-    tls: {
-        rejectUnauthorized: false,
-        minVersion: 'TLSv1.2'
-    }
 });
 
 transporter.verify((error, success) => {
