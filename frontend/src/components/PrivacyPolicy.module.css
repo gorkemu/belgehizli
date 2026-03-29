@@ -51,6 +51,15 @@
     color: var(--gray-700);
 }
 
+.dynamicContent {
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+    word-break: normal;
+    white-space: normal !important;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 .dynamicContent h2 {
     display: flex;
     align-items: center;
@@ -62,6 +71,7 @@
     font-weight: 700;
     padding-bottom: 0.75rem;
     border-bottom: 2px solid var(--gray-100);
+    white-space: normal !important;
 }
 
 .dynamicContent p {
@@ -69,6 +79,7 @@
     font-size: 1.05rem;
     line-height: 1.8;
     color: var(--gray-600);
+    white-space: normal !important;
 }
 
 .dynamicContent strong {

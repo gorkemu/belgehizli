@@ -38,6 +38,12 @@ function TermsOfService() {
         ? new Date(legalDoc.updatedAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })
         : "Tarih Bekleniyor...";
 
+    const getCleanedHtml = (htmlContent) => {
+        if (!htmlContent) return '';
+        const cleanHtml = htmlContent.replace(/&nbsp;/g, ' ');
+        return DOMPurify.sanitize(cleanHtml);
+    };
+
     return (
         <>
             <Helmet> 

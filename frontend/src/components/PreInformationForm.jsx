@@ -35,6 +35,12 @@ function PreInformationForm() {
         ? new Date(legalDoc.updatedAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })
         : "Tarih Bekleniyor...";
 
+    const getCleanedHtml = (htmlContent) => {
+        if (!htmlContent) return '';
+        const cleanHtml = htmlContent.replace(/&nbsp;/g, ' ');
+        return DOMPurify.sanitize(cleanHtml);
+    };
+
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>
