@@ -1,12 +1,18 @@
-// backend/routes/adminAuth.js
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs'); 
-const AdminUser = require('../models/adminUser'); 
+const bcrypt = require('bcryptjs');
+const rateLimit = require('express-rate-limit');
+const AdminUser = require('../models/adminUser');
 const { protectAdmin } = require('../middleware/adminAuthMiddleware');
 
-router.post('/login', async (req, res) => {
+const loginLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 5,
+    message: { message: 'Çok fazla giriş denemesi yaptınız. Güvenlik gereği IP adresiniz 15 dakika kilitlendi.' }
+});
+
+router.post('/login', loginLimiter, async (req, res) => {
     const { username, password } = req.body;
 
     const jwtSecretEnv = process.env.JWT_SECRET;
@@ -58,7 +64,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/change-password', protectAdmin, async (req, res) => { 
+router.post('/change-password', protectAdmin, async (req, res) => {
     const { currentPassword, newPassword, confirmPassword } = req.body;
 
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -74,7 +80,7 @@ router.post('/change-password', protectAdmin, async (req, res) => {
     }
 
     try {
-        const admin = await AdminUser.findOne({ username: req.adminUser.username }); 
+        const admin = await AdminUser.findOne({ username: req.adminUser.username });
         
         if (!admin) {
             return res.status(404).json({ message: 'Admin kullanıcısı bulunamadı.' });

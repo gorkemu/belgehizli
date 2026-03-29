@@ -7,8 +7,8 @@ import DocumentPreview from './DocumentPreview';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Coffee, X, ArrowDown, Lock, Edit2 } from 'lucide-react';
 
-const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20250521";
-const ON_BILGILENDIRME_FORMU_CURRENT_VERSION = "v_20250521";
+const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20260329";
+const ON_BILGILENDIRME_FORMU_CURRENT_VERSION = "v_20260329";
 const COMBINED_LEGAL_DOC_VERSION = `KSTerms:${KULLANIM_SARTLARI_CURRENT_VERSION}_OBFTerms:${ON_BILGILENDIRME_FORMU_CURRENT_VERSION}`;
 
 function TemplateDetail() {
@@ -110,7 +110,11 @@ function TemplateDetail() {
 
     useEffect(() => {
         if (formData && Object.keys(formData).length > 0) {
-            localStorage.setItem(`belgehizli-autosave-${slug}`, JSON.stringify(formData));
+            const handler = setTimeout(() => {
+                localStorage.setItem(`belgehizli-autosave-${slug}`, JSON.stringify(formData));
+            }, 500); 
+
+            return () => clearTimeout(handler);
         }
     }, [formData, slug]);
 
@@ -224,7 +228,18 @@ function TemplateDetail() {
 
         } catch (error) {
             console.error('İndirme hatası:', error);
-            setDownloadError('Bir şey ters gitti 😕 Lütfen tekrar dene veya bize ulaş.');
+            
+            let message = 'Bir şey ters gitti 😕 Lütfen tekrar dene veya bize ulaş.';
+            
+            if (error.response?.status === 429) {
+                message = 'Çok fazla istek yapıldı, lütfen biraz bekleyip tekrar dene.';
+            } else if (error.response?.status === 500) {
+                message = 'Sunucu kaynaklı bir hata oluştu, lütfen daha sonra tekrar dene.';
+            } else if (error.code === 'ERR_NETWORK') {
+                message = 'İnternet bağlantında bir sorun var gibi görünüyor.';
+            }
+            
+            setDownloadError(message);
         } finally {
             setLoadingDownload(false);
         }

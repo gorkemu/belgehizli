@@ -6,7 +6,7 @@
     border-radius: 20px;
     box-shadow: var(--shadow-lg);
     border: 1px solid var(--gray-200);
-    color: var(--text-color);
+    color: var(--gray-700);
 }
 
 .header {
@@ -15,26 +15,42 @@
     align-items: center;
     text-align: center;
     margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2rem;
     border-bottom: 1px solid var(--gray-200);
 }
 
 .titleIcon {
     color: var(--primary-color);
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    animation: scaleIn 0.5s ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .title {
     font-size: 2.25rem;
     color: var(--gray-900);
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.02em;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
 }
 
 .lastUpdated {
     font-size: 0.95rem;
     color: var(--gray-500);
+    background-color: var(--gray-50);
+    padding: 0.4rem 1rem;
+    border-radius: 99px;
+    border: 1px solid var(--gray-200);
 }
 
 .lastUpdated strong {
@@ -44,30 +60,43 @@
 .sectionTitle {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     font-size: 1.35rem;
-    margin-top: 3rem;
-    margin-bottom: 1.25rem;
-    color: var(--gray-800);
-    font-weight: 600;
+    margin-top: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--gray-900);
+    font-weight: 700;
     padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--gray-200);
+    border-bottom: 2px solid var(--gray-100);
 }
 
 .sectionIcon {
-    color: var(--secondary-color);
+    color: var(--primary-color);
+    flex-shrink: 0;
 }
 
 .paragraph {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--gray-600);
 }
 
 .paragraph strong {
-    color: var(--gray-800);
+    color: var(--gray-900);
     font-weight: 600;
+}
+
+.paragraph em {
+    display: block;
+    background-color: #f8fafc;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+    font-style: normal;
+    font-size: 1rem;
+    color: var(--gray-700);
+    margin-top: 1rem;
 }
 
 .infoList,
@@ -77,9 +106,9 @@
 .linkList {
     list-style: none;
     padding-left: 0;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-size: 1.05rem;
-    line-height: 1.7;
+    line-height: 1.8;
     color: var(--gray-600);
 }
 
@@ -87,8 +116,8 @@
 .purposeList li,
 .rightsList li,
 .linkList li {
-    margin-bottom: 0.75rem;
-    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    padding-left: 2rem;
     position: relative;
 }
 
@@ -96,102 +125,116 @@
 .purposeList li::before,
 .rightsList li::before,
 .linkList li::before {
-    content: "";
+    content: "•";
     position: absolute;
-    left: 0;
-    top: 0.6rem;
-    width: 6px;
-    height: 6px;
-    background-color: var(--primary-color);
-    border-radius: 50%;
+    left: 0.5rem;
+    top: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
 }
 
 .dataList strong,
 .purposeList strong {
-    color: var(--gray-800);
+    color: var(--gray-900);
     font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.2rem;
+}
+
+.infoList {
+    background-color: var(--gray-50);
+    padding: 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--gray-200);
 }
 
 .infoList li {
     display: flex;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px dashed var(--gray-200);
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-200);
 }
 
 .infoList li:last-child {
     border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .infoList li strong {
     flex-shrink: 0;
-    width: 150px;
-    color: var(--gray-800);
+    width: 160px;
+    color: var(--gray-900);
     font-weight: 600;
 }
 
 .link {
     color: var(--primary-color);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.2s ease;
+    border-bottom: 1px solid transparent;
 }
 
 .link:hover {
     color: var(--primary-color-dark);
-    text-decoration: underline;
+    border-bottom-color: var(--primary-color-dark);
 }
 
 .importantNote {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    padding: 1.5rem;
-    background-color: var(--primary-color-light);
-    border-left: 4px solid var(--primary-color);
-    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+    padding: 1.75rem;
+    background-color: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-left: 5px solid #3b82f6;
 }
 
 .noteIconWrapper {
     flex-shrink: 0;
-    color: var(--primary-color);
-    margin-top: 0.1rem;
+    color: #3b82f6;
+    margin-top: 0.2rem;
 }
 
 .noteContent {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    color: var(--gray-700);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #1e3a8a;
 }
 
 @media (max-width: 768px) {
     .container {
         margin: 1.5rem;
         padding: 2rem 1.5rem;
+        border-radius: 16px;
     }
 
     .title {
-        font-size: 1.8rem;
+        font-size: 1.75rem;
     }
 
     .sectionTitle {
         font-size: 1.25rem;
+        margin-top: 2.5rem;
     }
 
     .infoList li {
         flex-direction: column;
         border-bottom: none;
         padding-bottom: 0;
-        margin-bottom: 1rem;
+        margin-bottom: 1.25rem;
     }
 
     .infoList li strong {
-        margin-bottom: 0.2rem;
+        margin-bottom: 0.25rem;
     }
 
     .importantNote {
         flex-direction: column;
-        gap: 0.75rem;
+        gap: 1rem;
+        padding: 1.25rem;
     }
 }

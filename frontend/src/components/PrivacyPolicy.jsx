@@ -38,7 +38,6 @@ function PrivacyPolicy() {
                     <strong>{siteName}</strong> olarak, <strong>{siteUrl}</strong> internet sitemizi ziyaret eden kullanıcılarımızın kişisel verilerinin gizliliğine büyük önem veriyoruz. 6698 sayılı KVKK uyarınca verilerinizin işlenmesi hakkında sizleri bilgilendirmek isteriz.
                 </p>
 
-                {/* 1. VERİ SORUMLUSU */}
                 <h2 className={styles.sectionTitle}><User size={22} className={styles.sectionIcon} /> 1. Veri Sorumlusunun Kimliği</h2> 
                 <ul className={styles.infoList}>
                     <li><strong>Veri Sorumlusu:</strong> <span>{ownerName}</span></li> 
@@ -46,30 +45,28 @@ function PrivacyPolicy() {
                     <li><strong>E-posta:</strong> <a href={`mailto:${email}`} className={styles.link}>{email}</a></li>
                 </ul>
 
-                {/* 2. İŞLENEN VERİLER */}
                 <h2 className={styles.sectionTitle}><Database size={22} className={styles.sectionIcon} /> 2. İşlenen Kişisel Veriler ve Amaçları</h2> 
                 <ul className={styles.dataList}>
-                    <li><strong>İletişim Bilgileri:</strong> E-posta adresiniz (belge gönderimi için).</li>
-                    <li><strong>Form Verileri:</strong> Şablonları doldururken girdiğiniz geçici veriler (sadece PDF oluşturmak için anlık işlenir).</li>
-                    <li><strong>İşlem Güvenliği Bilgileri:</strong> IP adresiniz ve log kayıtları.</li>
+                    <li><strong>İletişim Bilgileri:</strong> E-posta adresiniz (belge gönderimi ve iletişimin sağlanması için).</li>
+                    <li><strong>Form Verileri (Sözleşme/Belge İçerikleri):</strong> Şablonları doldururken girdiğiniz geçici veriler. Bu veriler yalnızca PDF belgenizin oluşturulması ve cihazınıza/e-postanıza güvenle iletilebilmesi amacıyla <strong>en fazla 24 saat süreyle</strong> sunucularımızda tutulur. 24 saatin sonunda tüm sözleşme/form içerikleri ve girdiğiniz kişisel veriler sistemimizden <strong>otomatik ve kalıcı olarak silinir.</strong></li>
+                    <li><strong>İşlem Güvenliği Bilgileri:</strong> Sistemin güvenliğini sağlamak ve yasal log zorunluluklarını yerine getirmek amacıyla IP adresiniz ve işlem zamanı kayıtları.</li>
                     <li><strong>Destek/Ödeme Bilgileri:</strong> Gönüllü dijital destek satın almanız durumunda ad, soyad ve iletişim bilgileriniz Shopier aracılığıyla yasal faturalandırma amacıyla işlenir. Kredi kartı bilgileriniz tarafımızca ASLA görülmez ve saklanmaz.</li>
                 </ul>
 
-                {/* 3. HUKUKİ SEBEPLER */}
                 <h2 className={styles.sectionTitle}><Scale size={22} className={styles.sectionIcon} /> 3. Kişisel Veri İşlemenin Hukuki Sebepleri</h2> 
-                <p className={styles.paragraph}>KVKK m.5 uyarınca; bir sözleşmenin ifası (şartların kabulü), hukuki yükümlülüklerin yerine getirilmesi ve meşru menfaatlerimiz doğrultusunda verileriniz işlenmektedir.</p>
+                <p className={styles.paragraph}>KVKK m.5 uyarınca; bir sözleşmenin ifası (şartların kabulü ve hizmetin sunulması), yasal yükümlülüklerin yerine getirilmesi ve meşru menfaatlerimiz doğrultusunda verileriniz işlenmektedir.</p>
+                <p className={styles.paragraph}><em>Sistemimiz <strong>"Veri Minimizasyonu"</strong> ilkesiyle tasarlanmıştır; bu doğrultuda hizmetin ifası (belgenin üretilmesi ve size teslimi) tamamlandıktan sonra gerekliliği ortadan kalkan form içerikleri yasal süre beklenmeksizin 24 saat içinde otomatik olarak imha edilir.</em></p>
 
-                {/* 4. VERİ AKTARIMI */}
                 <h2 className={styles.sectionTitle}><Share2 size={22} className={styles.sectionIcon} /> 4. Kişisel Verilerin Aktarımı</h2> 
                 <p className={styles.paragraph}>
-                    Kişisel verileriniz, yalnızca gerekli güvenlik önlemleri alınarak aşağıdaki taraflara aktarılabilir:
+                    Kişisel verileriniz, yalnızca gerekli üst düzey güvenlik önlemleri alınarak aşağıdaki taraflara aktarılabilir:
                 </p>
                 <ul className={styles.purposeList}>
-                    <li><strong>Ödeme Hizmeti Sağlayıcıları:</strong> Gönüllü destek işlemlerinin güvenli tahsilatı ve yasal faturalandırma için Shopier (iyzico vb. altyapılar) ile sipariş bilgileriniz paylaşılır.</li> 
-                    <li><strong>Yetkili Kamu Kurumları:</strong> Yasal zorunluluklar doğduğunda yetkili mercilerle.</li>
+                    <li><strong>Ödeme Hizmeti Sağlayıcıları:</strong> Gönüllü destek işlemlerinin güvenli tahsilatı ve yasal faturalandırma için yalnızca fatura bilgileriniz Shopier (veya benzeri BDDK onaylı altyapılar) ile paylaşılır. <br/><span style={{ color: '#059669', fontWeight: '600' }}>(Önemli Not: Doldurduğunuz sözleşme/belge içerikleri hiçbir ödeme kuruluşu veya 3. taraf ile ASLA paylaşılmaz.)</span></li> 
+                    <li><strong>Bulut ve Altyapı Sağlayıcıları:</strong> Belge üretim süreçlerinin (PDF dönüşümü) gerçekleştirilmesi için, verileriniz şifreli olarak güvenli sunucu altyapılarımızda anlık işlenir.</li>
+                    <li><strong>Yetkili Kamu Kurumları:</strong> Yasal zorunluluklar doğduğunda ve resmi talep üzerine yetkili mercilerle.</li>
                 </ul>
 
-                {/* 5. ÇEREZLER */}
                 <h2 className={styles.sectionTitle}>
                     <Cookie size={22} className={styles.sectionIcon} />
                     5. Çerezler (Cookies)

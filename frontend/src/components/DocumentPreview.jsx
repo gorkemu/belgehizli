@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
 import { FileSearch, AlertTriangle, FileText, Loader2, Edit3, Lock } from 'lucide-react';
+import DOMPurify from 'dompurify';
 
 function formatDateHelper(dateString) {
     if (!dateString || typeof dateString !== 'string') return '';
@@ -98,7 +99,15 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
         }
 
         const template = Handlebars.compile(finalTemplateContent);
-        const previewHtml = template(formData);
+        const rawHtml = template(formData);
+        const previewHtml = DOMPurify.sanitize(rawHtml, {
+            ALLOWED_TAGS: [
+                'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 
+                'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead', 
+                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
+            ],
+            ALLOWED_ATTR: ['class', 'style', 'href', 'target'] 
+        });
 
         return (
             <div className={styles.container}>

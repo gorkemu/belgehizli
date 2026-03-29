@@ -1,13 +1,19 @@
-// backend/routes/document.js
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const rateLimit = require('express-rate-limit');
 const Transaction = require('../models/transaction');
 const Template = require('../models/template');
 const { createPdfForTransaction } = require('../utils/documentService');
 const { sendPdfEmail } = require('../utils/mailer');
 
-router.get('/download/:transactionId', async (req, res) => {
+const documentActionLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000,
+    max: 30,
+    message: { message: 'Çok fazla belge işlemi denemesi yaptınız. Lütfen biraz bekleyin.' }
+});
+
+router.get('/download/:transactionId', documentActionLimiter, async (req, res) => {
     try {
         const transactionId = req.params.transactionId;
         if (!mongoose.Types.ObjectId.isValid(transactionId)) {
@@ -24,8 +30,10 @@ router.get('/download/:transactionId', async (req, res) => {
         if (!template) {
             return res.status(404).json({ message: 'İşleme ait şablon bulunamadı.' });
         }
-        if (!transaction.formDataSnapshot) {
-            return res.status(500).json({ message: 'İşleme ait form verisi bulunamadı.' });
+        if (!transaction.formDataSnapshot && !transaction.editedHtmlSnapshot) {
+            return res.status(410).json({ 
+                message: 'Güvenliğiniz ve veri politikalarımız gereği, bu belgedeki kişisel veriler oluşturulduktan 24 saat sonra sistemimizden kalıcı olarak silinmiştir. Belgeye tekrar ihtiyacınız varsa lütfen yeni bir form doldurarak ücretsiz oluşturun.' 
+            });
         }
         let formDataToUse;
         try { formDataToUse = JSON.parse(transaction.formDataSnapshot); }
@@ -50,7 +58,7 @@ router.get('/download/:transactionId', async (req, res) => {
     }
 });
 
-router.post('/resend-email/:transactionId', async (req, res) => {
+router.post('/resend-email/:transactionId', documentActionLimiter, async (req, res) => {
     try {
         const transactionId = req.params.transactionId;
         if (!mongoose.Types.ObjectId.isValid(transactionId)) {
@@ -63,8 +71,10 @@ router.post('/resend-email/:transactionId', async (req, res) => {
         if (!transaction.userEmail || transaction.userEmail === 'unknown@example.com') {
             return res.status(400).json({ message: 'Bu işlem için geçerli bir kullanıcı e-postası bulunmuyor.' });
         }
-        if (!transaction.formDataSnapshot) {
-            return res.status(500).json({ message: 'Belge oluşturmak için gerekli form verisi bulunamadı.' });
+        if (!transaction.formDataSnapshot && !transaction.editedHtmlSnapshot) {
+            return res.status(410).json({ 
+                message: 'Güvenliğiniz ve veri politikalarımız gereği, bu belgedeki kişisel veriler oluşturulduktan 24 saat sonra sistemimizden kalıcı olarak silinmiştir. Belgeye tekrar ihtiyacınız varsa lütfen yeni bir form doldurarak ücretsiz oluşturun.' 
+            });
         }
         const template = await Template.findById(transaction.templateId);
         if (!template) {
