@@ -1,5 +1,9 @@
 // backend/utils/mailer.js
 
+const { Resend } = require('resend');
+
+const resend = new Resend(process.env.EMAIL_PASS);
+
 const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => {
     try {
         const maskedEmail = to.replace(/^(.)(.*)(.@.*)$/, (_, a, b, c) => a + b.replace(/./g, '*') + c);
@@ -24,7 +28,7 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
         console.log('E-posta başarıyla gönderildi. İşlem ID:', data.id);
         return data;
     } catch (error) {
-        console.error('E-posta gönderim hatası oluştu.');
+        console.error('E-posta gönderim hatası oluştu:', error.message);
         throw error;
     }
 };
