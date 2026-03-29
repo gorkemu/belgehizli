@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer');
 
 const emailConfig = {
     host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT, 10) || 465,
+    port: parseInt(process.env.EMAIL_PORT, 10) || 587,
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
     from: process.env.EMAIL_FROM
@@ -11,24 +11,26 @@ const emailConfig = {
 let transporter = nodemailer.createTransport({
     host: emailConfig.host,
     port: emailConfig.port,
-    secure: emailConfig.port === 465,
+    secure: false,
     auth: {
         user: emailConfig.user,
         pass: emailConfig.pass,
     },
+    requireTLS: true,
     connectionTimeout: 30000,
     greetingTimeout: 20000,
     socketTimeout: 30000,
     tls: {
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        minVersion: 'TLSv1.2'
     }
 });
 
 transporter.verify((error, success) => {
     if (error) {
-        console.error("MAİLER HATASI (Bağlantı Kurulamadı):", error);
+        console.error("!!! MAİLER BAĞLANTI HATASI (587):", error.message);
     } else {
-        console.log("MAİLER BAŞARILI: Zoho sunucusuna bağlanıldı.");
+        console.log("+++ MAİLER BAŞARILI: Zoho 587 portu üzerinden hazır.");
     }
 });
 
