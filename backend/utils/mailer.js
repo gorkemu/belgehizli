@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 const emailConfig = {
-    host: process.env.EMAIL_HOST || 'smtp.zoho.eu',
+    host: process.env.EMAIL_HOST || 'smtp.resend.com',
     port: parseInt(process.env.EMAIL_PORT, 10) || 465,
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -11,25 +11,22 @@ const emailConfig = {
 const transporter = nodemailer.createTransport({
     host: emailConfig.host,
     port: emailConfig.port,
-    secure: emailConfig.port === 465,
+    secure: emailConfig.port === 465, 
     auth: {
         user: emailConfig.user,
         pass: emailConfig.pass,
     },
     tls: {
-        minVersion: 'TLSv1.2',
         rejectUnauthorized: false
     },
-    connectionTimeout: 30000,
-    greetingTimeout: 20000,
-    socketTimeout: 45000
+    connectionTimeout: 15000 
 });
 
 transporter.verify((error, success) => {
     if (error) {
-        console.error(`!!! MAİLER BAĞLANTI HATASI (${emailConfig.port}):`, error.message);
+        console.error(`!!! RESEND BAĞLANTI HATASI (${emailConfig.port}):`, error.message);
     } else {
-        console.log(`+++ MAİLER BAŞARILI: Zoho ${emailConfig.port} portu üzerinden hazır.`);
+        console.log(`+++ RESEND HAZIR`);
     }
 });
 
