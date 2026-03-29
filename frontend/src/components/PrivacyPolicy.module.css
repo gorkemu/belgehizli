@@ -52,12 +52,16 @@
 }
 
 .dynamicContent {
-    word-wrap: break-word !important;
-    overflow-wrap: break-word !important;
-    word-break: normal;
     white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: normal;
     max-width: 100%;
     overflow-x: hidden;
+}
+
+.dynamicContent p, .dynamicContent li {
+    white-space: normal !important;
 }
 
 .dynamicContent h2 {

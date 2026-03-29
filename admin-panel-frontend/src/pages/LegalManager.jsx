@@ -69,6 +69,7 @@ function LegalManager() {
             return;
         }
 
+        const cleanedContent = content.replace(/&nbsp;/g, ' ');
         const token = localStorage.getItem('admin_token'); 
 
         try {
@@ -78,7 +79,7 @@ function LegalManager() {
                 {
                     type: docType,
                     version: version,
-                    content: content,
+                    content: cleanedContent,
                     isActive: true 
                 },
                 {
