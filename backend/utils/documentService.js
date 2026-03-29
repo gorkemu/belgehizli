@@ -8,7 +8,6 @@ const { sendPdfEmail } = require('../utils/mailer');
 const path = require('path');
 const fs = require('fs');
 const Handlebars = require('handlebars'); 
-const DOMPurify = require('isomorphic-dompurify');
 
 const cssFilePath = path.join(__dirname, '..', 'styles', 'pdfStyles.css');
 let pdfStyles = '';
@@ -46,34 +45,20 @@ const createPdfForTransaction = async (transaction, template, formDataKullanilac
     try {
         let fullHtml = "";
 
-        const sanitizeOptions = {
-            ALLOWED_TAGS: [
-                'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 
-                'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead', 
-                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
-            ],
-            ALLOWED_ATTR: ['class', 'style', 'href', 'target'] 
-        };
-
         if (transaction.editedHtmlSnapshot) {
-            console.log(`createPdfForTransaction: Using editedHtmlSnapshot for transaction ${transaction._id}...`);
-            
-            const safeEditedHtml = DOMPurify.sanitize(transaction.editedHtmlSnapshot, sanitizeOptions);
-            
+            const content = transaction.editedHtmlSnapshot;
+
             fullHtml = `
                 <!DOCTYPE html><html><head><meta charset="utf-8" /><title>${template.name || 'Document'}</title>${pdfStyles}</head>
-                <body><div>${safeEditedHtml}</div></body></html>`;
+                <body><div>${content}</div></body></html>`;
         } 
         else {
-            console.log(`createPdfForTransaction: Using standard formData (Handlebars) for transaction ${transaction._id}...`);
             const compiledTemplate = Handlebars.compile(template.content || '');
             const htmlContent = compiledTemplate(formDataKullanilacak);
-            
-            const safeHtmlContent = DOMPurify.sanitize(htmlContent, sanitizeOptions);
-            
+
             fullHtml = `
                 <!DOCTYPE html><html><head><meta charset="utf-8" /><title>${template.name || 'Document'}</title>${pdfStyles}</head>
-                <body><div>${safeHtmlContent}</div></body></html>`;
+                <body><div>${htmlContent}</div></body></html>`;
         }
 
         const pdfBuffer = await generatePdf(fullHtml);
