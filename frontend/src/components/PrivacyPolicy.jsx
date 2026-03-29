@@ -9,7 +9,7 @@ function PrivacyPolicy() {
     const address = import.meta.env.VITE_SELLER_ADDRESS;
     const email = import.meta.env.VITE_SELLER_EMAIL;
     const lastUpdateDate = "29.03.2026"; 
-    const siteUrl = "https://www.belgehizli.com/"; 
+    const siteUrl = import.meta.env.VITE_SITE_URL;
 
     return (
         <>
