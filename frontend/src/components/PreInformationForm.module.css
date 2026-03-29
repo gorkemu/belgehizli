@@ -157,6 +157,27 @@
     margin-bottom: 1rem;
 }
 
+.dynamicContent em {
+    font-style: italic;
+    background-color: transparent; 
+    padding: 0;
+    border: none;
+    display: inline; 
+}
+
+.dynamicContent .important-box {
+    display: block;
+    background-color: #f8fafc;
+    padding: 1rem 1.5rem;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
+    font-style: normal;
+    font-size: 1rem;
+    color: var(--gray-700);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }

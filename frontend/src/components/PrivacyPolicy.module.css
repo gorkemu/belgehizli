@@ -88,6 +88,14 @@
 }
 
 .dynamicContent em {
+    font-style: italic;
+    background-color: transparent; 
+    padding: 0;
+    border: none;
+    display: inline; 
+}
+
+.dynamicContent .important-box {
     display: block;
     background-color: #f8fafc;
     padding: 1rem 1.5rem;
@@ -97,6 +105,7 @@
     font-size: 1rem;
     color: var(--gray-700);
     margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .dynamicContent ul {
