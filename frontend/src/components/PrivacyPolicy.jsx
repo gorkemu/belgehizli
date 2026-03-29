@@ -8,7 +8,7 @@ function PrivacyPolicy() {
     const ownerName = "Abdurrahman Görkem Ünal"; 
     const address = "Gülbahar Mah. Kurtuluş 1 Sk. No: 15 İç Kapı No:10 Şişli / İSTANBUL"; 
     const email = "info@belgehizli.com"; 
-    const lastUpdateDate = "24.03.2026"; 
+    const lastUpdateDate = "29.03.2026"; 
     const siteUrl = "https://www.belgehizli.com/"; 
 
     return (
@@ -88,7 +88,6 @@ function PrivacyPolicy() {
                     <li><a href="https://support.apple.com/kb/ph19214?locale=tr_TR" target="_blank" rel="noopener noreferrer" className={styles.link}>Safari</a></li>
                 </ul>
 
-                {/* 6. HAKLARINIZ */}
                 <h2 className={styles.sectionTitle}>
                     <CheckSquare size={22} className={styles.sectionIcon} />
                     6. KVKK Kapsamındaki Haklarınız
@@ -105,7 +104,6 @@ function PrivacyPolicy() {
                     Bu haklarınızı kullanmak için taleplerinizi <a href={`mailto:${email}`} className={styles.link}>{email}</a> adresine iletebilirsiniz.
                 </p>
 
-                {/* 7. GÜNCELLEMELER */}
                 <h2 className={styles.sectionTitle}>
                     <RefreshCw size={22} className={styles.sectionIcon} />
                     7. Politika Değişiklikleri
