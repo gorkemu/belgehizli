@@ -22,12 +22,7 @@ if (emailHost && emailPort && emailUser && emailPass && emailFrom) {
             user: emailUser,
             pass: emailPass,
         },
-        tls: {
-            rejectUnauthorized: false 
-        },
-        connectionTimeout: 10000, 
-        greetingTimeout: 5000,
-        socketTimeout: 15000
+
     });
 
     transporter.verify(function(error, success) {
