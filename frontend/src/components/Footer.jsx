@@ -40,7 +40,6 @@ function Footer() {
                             <ul>
                                 <li><Link to="/gizlilik-politikasi">Gizlilik Politikası</Link></li>
                                 <li><Link to="/kullanim-sartlari">Kullanım Şartları</Link></li>
-                                <li><Link to="/teslimat-iade">İptal ve İade</Link></li>
                                 <li><Link to="/on-bilgilendirme-formu">Ön Bilgilendirme</Link></li>
                             </ul>
                         </nav>

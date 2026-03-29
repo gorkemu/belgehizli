@@ -12,7 +12,6 @@ import AboutUs from './components/AboutUs';
 import ContactUs from './components/ContactUs';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
-import DeliveryReturn from './components/DeliveryReturn';
 import PreInformationForm from './components/PreInformationForm'; 
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -39,7 +38,6 @@ function App() {
                         <Route path="/sablonlar/detay/:slug" element={<TemplateDetail />} />
                         <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
                         <Route path="/kullanim-sartlari" element={<TermsOfService />} />
-                        <Route path="/teslimat-iade" element={<DeliveryReturn />} />
                         <Route path="/hakkimizda" element={<AboutUs />} />
                         <Route path="/on-bilgilendirme-formu" element={<PreInformationForm />} />
                         <Route path="/iletisim">
