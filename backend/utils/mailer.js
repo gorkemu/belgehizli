@@ -1,41 +1,41 @@
 const nodemailer = require('nodemailer');
 
 const emailConfig = {
-    host: process.env.EMAIL_HOST,
-    port: parseInt(process.env.EMAIL_PORT, 10) || 587,
+    host: process.env.EMAIL_HOST || 'smtp.zoho.eu',
+    port: parseInt(process.env.EMAIL_PORT, 10) || 465,
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
     from: process.env.EMAIL_FROM
 };
 
 const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST, 
-    port: 465,
-    secure: true, 
+    host: emailConfig.host,
+    port: emailConfig.port,
+    secure: emailConfig.port === 465,
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: emailConfig.user,
+        pass: emailConfig.pass,
     },
     tls: {
         minVersion: 'TLSv1.2',
         rejectUnauthorized: false
     },
-    connectionTimeout: 20000, 
+    connectionTimeout: 30000,
     greetingTimeout: 20000,
-    socketTimeout: 30000,
+    socketTimeout: 45000
 });
 
 transporter.verify((error, success) => {
     if (error) {
-        console.error("!!! MAİLER BAĞLANTI HATASI (587):", error.message);
+        console.error(`!!! MAİLER BAĞLANTI HATASI (${emailConfig.port}):`, error.message);
     } else {
-        console.log("+++ MAİLER BAŞARILI: Zoho 587 portu üzerinden hazır.");
+        console.log(`+++ MAİLER BAŞARILI: Zoho ${emailConfig.port} portu üzerinden hazır.`);
     }
 });
 
 const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => {
     if (!transporter) {
-        console.error("E-posta gönderilemedi: Taşıyıcı yapılandırılamadı.");
+        console.error("E-posta gönderilemedi: Taşıyıcı (transporter) başlatılamadı.");
         return;
     }
 
@@ -55,11 +55,13 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
     };
 
     try {
-        console.log(`Sending PDF email to user...`);
+        console.log(`E-posta gönderimi başlatılıyor: ${to}`);
         let info = await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully. Message ID: %s', info.messageId);
+        console.log('E-posta başarıyla gönderildi. Mesaj ID: %s', info.messageId);
+        return info;
     } catch (error) {
-        console.error('Error sending email:', error);
+        console.error('E-posta gönderim hatası:', error);
+        throw error;
     }
 };
 
