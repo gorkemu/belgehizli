@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
 import { FileSearch, AlertTriangle, FileText, Loader2, Edit3, Lock } from 'lucide-react';
@@ -9,7 +9,6 @@ function formatDateHelper(dateString) {
     try {
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return dateString;
-
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
@@ -63,13 +62,59 @@ try {
 
 function prepareTemplateForHighlighting(templateStr) {
     let processed = templateStr.replace(/\{\{\{(.*?)\}\}\}/g, `<mark class="${styles.dynamicHighlight}">{{{$1}}}</mark>`);
-    
     processed = processed.replace(/\{\{(?![#\/!>{]|else\b)(.*?)\}\}/g, `<mark class="${styles.dynamicHighlight}">{{$1}}</mark>`);
-    
     return processed;
 }
 
 function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
+    const compiledTemplate = useMemo(() => {
+        if (!templateContent) return null;
+        try {
+            return Handlebars.compile(templateContent);
+        } catch (error) {
+            console.error("Handlebars derleme hatası:", error);
+            return null;
+        }
+    }, [templateContent]);
+
+    const safeHtml = useMemo(() => {
+        if (!compiledTemplate) return '';
+
+        try {
+            let templateToUse = templateContent;
+            if (currentStep === 2) {
+                templateToUse = prepareTemplateForHighlighting(templateContent);
+                const tempCompiled = Handlebars.compile(templateToUse);
+                const rawHtml = tempCompiled(formData || {});
+                return DOMPurify.sanitize(rawHtml, {
+                    ALLOWED_TAGS: [
+                        'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
+                        'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
+                    ],
+                    ALLOWED_ATTR: ['class', 'style', 'href', 'target'],
+                    FORBID_TAGS: ['script', 'style', 'iframe'],
+                    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
+                });
+            } else {
+                const rawHtml = compiledTemplate(formData || {});
+                return DOMPurify.sanitize(rawHtml, {
+                    ALLOWED_TAGS: [
+                        'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
+                        'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
+                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
+                    ],
+                    ALLOWED_ATTR: ['class', 'style', 'href', 'target'],
+                    FORBID_TAGS: ['script', 'style', 'iframe'],
+                    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
+                });
+            }
+        } catch (error) {
+            console.error("HTML oluşturma/temizleme hatası:", error);
+            return '<p style="color: red;">Önizleme oluşturulurken bir hata oluştu.</p>';
+        }
+    }, [compiledTemplate, templateContent, formData, currentStep]);
+
     if (!templateContent) {
         return (
             <div className={styles.container}>
@@ -92,69 +137,32 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
         );
     }
 
-    try {
-        let finalTemplateContent = templateContent;
-        if (currentStep === 2) {
-            finalTemplateContent = prepareTemplateForHighlighting(templateContent);
-        }
-
-        const template = Handlebars.compile(finalTemplateContent);
-        const rawHtml = template(formData);
-        const previewHtml = DOMPurify.sanitize(rawHtml, {
-            ALLOWED_TAGS: [
-                'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li', 
-                'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead', 
-                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
-            ],
-            ALLOWED_ATTR: ['class', 'style', 'href', 'target'] 
-        });
-
-        return (
-            <div className={styles.container}>
-                <div className={styles.previewHeader}>
-                    <FileSearch size={20} className={styles.headerIcon} />
-                    <h3 className={styles.previewTitle}>Canlı Önizleme</h3>
-
-                    {currentStep === 1 ? (
-                        <div className={styles.lockedBadge}>
-                            <Lock size={14} /> Formu doldurduktan sonra düzenleyebilirsiniz
-                        </div>
-                    ) : (
-                        <div className={styles.editBadge}>
-                            <Edit3 size={14} /> Belgeye tıklayarak metin ekleyebilir veya silebilirsiniz
-                        </div>
-                    )}
-                </div>
-
-                <div className={styles.paperContainer}>
-                    <div
-                        ref={editorRef}
-                        className={styles.previewArea}
-                        dangerouslySetInnerHTML={{ __html: previewHtml }}
-                        contentEditable={currentStep === 2}
-                        suppressContentEditableWarning={true}
-                    />
-                </div>
+    return (
+        <div className={styles.container}>
+            <div className={styles.previewHeader}>
+                <FileSearch size={20} className={styles.headerIcon} />
+                <h3 className={styles.previewTitle}>Canlı Önizleme</h3>
+                {currentStep === 1 ? (
+                    <div className={styles.lockedBadge}>
+                        <Lock size={14} /> Formu doldurduktan sonra düzenleyebilirsiniz
+                    </div>
+                ) : (
+                    <div className={styles.editBadge}>
+                        <Edit3 size={14} /> Belgeye tıklayarak metin ekleyebilir veya silebilirsiniz
+                    </div>
+                )}
             </div>
-        );
-    } catch (error) {
-        console.error("Handlebars şablonunu derlerken/işlerken hata oluştu (Frontend):", error);
-        return (
-            <div className={styles.container}>
-                <div className={styles.previewHeader}>
-                    <AlertTriangle size={20} className={styles.errorIconHeader} />
-                    <h3 className={styles.previewTitleError}>Önizleme Hatası</h3>
-                </div>
-                <div className={styles.previewError}>
-                    <p><strong>Önizleme oluşturulurken bir hata meydana geldi.</strong></p>
-                    <p className={styles.errorMessageText}>{error.message}</p>
-                    <p className={styles.errorHint}>
-                        Lütfen şablon içeriğini ve form verilerini kontrol edin. Handlebars sözdizimi hatalı veya eksik olabilir.
-                    </p>
-                </div>
+            <div className={styles.paperContainer}>
+                <div
+                    ref={editorRef}
+                    className={styles.previewArea}
+                    dangerouslySetInnerHTML={{ __html: safeHtml }}
+                    contentEditable={currentStep === 2}
+                    suppressContentEditableWarning={true}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default DocumentPreview;
