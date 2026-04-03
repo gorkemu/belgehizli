@@ -5,7 +5,7 @@
 
 Belge Hızlı is a modern, full-stack web application designed to help users generate legal contracts, petitions, and official documents in PDF format within seconds using dynamic templates. The platform operates on a Public Service model—offering high-quality legal tools for free, supported by voluntary user contributions.
 
-![App Preview](./docs/images/app-preview.png)
+![App Preview](.docs/images/homepage.png)
 
 ## Key Features
 
