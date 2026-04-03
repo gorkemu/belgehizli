@@ -5,8 +5,6 @@
 
 Belge Hızlı is a modern, full-stack web application designed to help users generate legal contracts, petitions, and official documents in PDF format within seconds using dynamic templates. The platform operates on a Public Service model—offering high-quality legal tools for free, supported by voluntary user contributions.
 
-![App Preview](/docs/images/homepage.png)
-
 ## Key Features
 
 * **Dynamic Template System:** Add or update contract types directly via MongoDB without any code changes.
@@ -138,17 +136,112 @@ Every template **MUST** include a `belge_email` field for automated email delive
     "description": "Standart konut kiralama işlemleri için gerekli bilgileri içeren sözleşme.",
     "price": 15,
     "slug": "konut-kira-sozlesmesi",
-    "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. KİRAYA VEREN(LER):</strong></p>\n{{#each kiralayanlar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p><strong>B. KİRACI(LAR):</strong></p>\n{{#each kiracilar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p>Kiralanan Adresi: {{kiralanan_adres}}</p>\n\n<p><strong>3. KİRA ARTIŞI</strong></p>\n{{#if (eq artis_tipi 'TÜFE')}}\n<p>Kira bedeli her yıl TÜFE oranında artırılacaktır.</p>\n{{else}}\n<p>Kira bedeli her yıl %{{artis_orani}} oranında artırılacaktır.</p>\n{{/if}}\n</div>",
+    "content": "<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. KİRAYA VEREN(LER):</strong></p>\n{{#each kiralayanlar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p><strong>B. KİRACI(LAR):</strong></p>\n{{#each kiracilar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p><strong>2. KİRALANAN KONUT</strong></p>\n<p>Kiralanan Adresi: {{kiralanan_adres}}</p>\n<p>Başlangıç Tarihi: {{formatDate baslangic_tarihi}}</p>\n<p>Kira Süresi: {{kira_suresi}} Ay</p>\n<p>Aylık Kira Bedeli: {{aylik_kira_bedeli}} TL</p>\n<p>Ödeme Günü: Her ayın {{odeme_gunu}}. günü</p>\n\n<p><strong>3. KİRA ARTIŞI</strong></p>\n{{#if (eq artis_tipi 'TÜFE')}}\n<p>Kira bedeli her yıl TÜFE oranında artırılacaktır.</p>\n{{else}}\n<p>Kira bedeli her yıl %{{artis_orani}} oranında artırılacaktır.</p>\n{{/if}}\n\n<p><strong>4. DEPOZİTO</strong></p>\n{{#if (eq depozito_alindi 'Evet')}}\n<p>Kiracı(lar)dan toplam {{depozito_tutari}} TL depozito alınmıştır.</p>\n{{else}}\n<p>Kiracı(lar)dan depozito alınmamıştır.</p>\n{{/if}}\n\n<p><strong>5. ÖZEL KOŞULLAR</strong></p>\n<p>{{ozel_kosullar}}</p>\n\n<p>İşbu sözleşme, taraflarca okunmuş, anlaşılmış ve {{formatDate imza_tarihi}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px;'>\n  <p><strong>Kiraya Veren(ler):</strong></p>\n  {{#each kiralayanlar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n  {{/each}}\n  <p><strong>Kiracı(lar):</strong></p>\n  {{#each kiracilar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n  {{/each}}\n</div>",
     "fields": [
         {
             "name": "kiralayanlar",
             "label": "Kiraya Veren Bilgileri",
             "blockTitle": "Kiraya Veren",
             "fieldType": "repeatable",
+            "addLabel": "Başka Kiraya Veren Ekle",
+            "removeLabel": "Kiraya Vereni Sil",
             "minInstances": 1,
             "subfields": [
-                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true }
+                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
+                { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
+                { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
             ]
+        },
+        {
+            "name": "kiracilar",
+            "label": "Kiracı Bilgileri",
+            "blockTitle": "Kiracı",
+            "fieldType": "repeatable",
+            "addLabel": "Başka Kiracı Ekle",
+            "removeLabel": "Kiracıyı Sil",
+            "minInstances": 1,
+            "subfields": [
+                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
+                { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
+                { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
+            ]
+        },
+        {
+            "name": "kiralanan_adres",
+            "label": "Kiralanan Konutun Tam Adresi",
+            "fieldType": "textarea",
+            "required": true,
+            "placeholder": "Mahalle, Sokak, No, İlçe/İl"
+        },
+        {
+            "name": "baslangic_tarihi",
+            "label": "Kira Sözleşmesi Başlangıç Tarihi",
+            "fieldType": "date",
+            "required": true
+        },
+        {
+            "name": "kira_suresi",
+            "label": "Kira Süresi (Ay Olarak)",
+            "fieldType": "number",
+            "required": true,
+            "placeholder": "Örn: 12"
+        },
+        {
+            "name": "aylik_kira_bedeli",
+            "label": "Aylık Kira Bedeli (TL)",
+            "fieldType": "number",
+            "required": true,
+            "placeholder": "Örn: 15000"
+        },
+        {
+            "name": "odeme_gunu",
+            "label": "Kira Ödemesi İçin Ayın Kaçıncı Günü?",
+            "fieldType": "number",
+            "required": true,
+            "placeholder": "1 ile 31 arası"
+        },
+        {
+            "name": "artis_tipi",
+            "label": "Yıllık Kira Artış Yöntemi",
+            "fieldType": "select",
+            "options": ["TÜFE", "Belirtilen Oran"],
+            "required": true
+        },
+        {
+            "name": "artis_orani",
+            "label": "Belirtilen Artış Oranı (%)",
+            "fieldType": "number",
+            "required": false,
+            "placeholder": "Artış Yöntemi 'Belirtilen Oran' ise doldurun",
+            "condition": { "field": "artis_tipi", "value": "Belirtilen Oran" }
+        },
+        {
+            "name": "depozito_alindi",
+            "label": "Depozito Alındı mı?",
+            "fieldType": "radio",
+            "options": ["Evet", "Hayır"],
+            "required": true
+        },
+        {
+            "name": "depozito_tutari",
+            "label": "Alınan Depozito Tutarı (TL)",
+            "fieldType": "number",
+            "required": false,
+            "placeholder": "Depozito alındıysa doldurun",
+            "condition": { "field": "depozito_alindi", "value": "Evet" }
+        },
+        {
+            "name": "ozel_kosullar",
+            "label": "Özel Koşullar",
+            "fieldType": "textarea",
+            "required": false,
+            "placeholder": "Sözleşmeye eklemek istediğiniz özel maddeler varsa yazınız."
+        },
+        {
+            "name": "imza_tarihi",
+            "label": "Sözleşme İmza Tarihi",
+            "fieldType": "date",
+            "required": true
         },
         {
             "name": "belge_email",
@@ -159,7 +252,7 @@ Every template **MUST** include a `belge_email` field for automated email delive
     ]
 }
 ```
-</details> ```
+</details> 
 
 ## License
 
