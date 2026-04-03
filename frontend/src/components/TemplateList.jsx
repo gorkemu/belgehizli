@@ -51,10 +51,6 @@ function TemplateList() {
     setSearchTerm(query);
   }, [location.search]);
 
-  useEffect(() => {
-    setVisibleCount(12);
-  }, [searchTerm, activeCategory, templates]);
-
   const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchTerm(val);
@@ -213,7 +209,7 @@ function TemplateList() {
             {visibleCount < filteredTemplates.length && (
               <div className={styles.loadMoreContainer}>
                 <button onClick={handleLoadMore} className={styles.loadMoreButton}>
-                  Daha Fazla Şablon Göster ({filteredTemplates.length - visibleCount} kaldı)
+                  Daha Fazla Şablon Göster 
                 </button>
               </div>
             )}
