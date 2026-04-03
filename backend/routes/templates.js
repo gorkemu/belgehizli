@@ -318,8 +318,4 @@ router.get('/sitemap.xml', async (req, res) => {
     }
 });
 
-router.get('/api/ping', (req, res) => {
-    res.status(200).send('Sunucu ayakta!');
-});
-
 module.exports = router;

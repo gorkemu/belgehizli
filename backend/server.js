@@ -28,6 +28,10 @@ const app = express();
 
 app.set('trust proxy', 1); 
 
+app.get('/api/ping', (req, res) => {
+    res.status(200).send('Sunucu ayakta!');
+});
+
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 200,
