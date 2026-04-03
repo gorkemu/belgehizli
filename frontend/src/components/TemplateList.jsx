@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './TemplateList.module.css';
 import { Helmet } from 'react-helmet-async';
-import { Search, FileText, ArrowRight, AlertCircle, Info, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, FileText, ArrowRight, AlertCircle, Info, CheckCircle2 } from 'lucide-react';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
 
@@ -23,11 +23,6 @@ function TemplateList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const [visibleCount, setVisibleCount] = useState(12);
-
-  const categoryScrollRef = useRef(null);
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(true);
-
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -37,7 +32,6 @@ function TemplateList() {
       .then(response => {
         setTemplates(response.data);
         setLoading(false);
-        setTimeout(handleScroll, 100);
       })
       .catch(error => {
         let errorMessage = 'Şablonlar yüklenirken bir hata oluştu.';
@@ -61,36 +55,6 @@ function TemplateList() {
     setVisibleCount(12);
   }, [searchTerm, activeCategory, templates]);
 
-  const handleScroll = () => {
-    if (categoryScrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = categoryScrollRef.current;
-      setShowLeftArrow(scrollLeft > 5);
-      setShowRightArrow(Math.ceil(scrollLeft + clientWidth) < scrollWidth - 5);
-    }
-  };
-
-  const scrollCategory = (direction) => {
-    if (categoryScrollRef.current) {
-      const scrollAmount = 250;
-      categoryScrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('resize', handleScroll);
-    return () => window.removeEventListener('resize', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    if (categoryScrollRef.current) {
-      categoryScrollRef.current.scrollLeft = 0;
-      handleScroll();
-    }
-  }, [activeCategory]);
-
   const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchTerm(val);
@@ -106,14 +70,14 @@ function TemplateList() {
   };
 
   const filteredTemplates = templates.filter(template => {
-    const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          template.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
+    const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      template.description.toLowerCase().includes(searchTerm.toLowerCase());
+
     let matchesCategory = true;
     if (activeCategory !== 'all') {
       const categoryObj = CATEGORIES.find(c => c.id === activeCategory);
-      matchesCategory = categoryObj.keywords.some(kw => 
-        template.name.toLowerCase().includes(kw) || 
+      matchesCategory = categoryObj.keywords.some(kw =>
+        template.name.toLowerCase().includes(kw) ||
         template.slug.includes(kw)
       );
     }
@@ -179,27 +143,15 @@ function TemplateList() {
           </form>
 
           <div className={styles.categoryWrapper}>
-            {showLeftArrow && (
-              <button 
-                className={`${styles.scrollArrow} ${styles.scrollArrowLeft}`} 
-                onClick={() => scrollCategory('left')}
-                aria-label="Sola Kaydır"
-              >
-                <ChevronLeft size={20} />
-              </button>
-            )}
-
-            <div 
-              className={styles.categoryScroll} 
-              ref={categoryScrollRef} 
-              onScroll={handleScroll}
+            <div
+              className={styles.categoryScroll}
             >
               {CATEGORIES.map((category) => (
                 <button
                   key={category.id}
                   onClick={() => {
                     setActiveCategory(category.id);
-                    setSearchTerm(''); 
+                    setSearchTerm('');
                     navigate('/sablonlar', { replace: true });
                   }}
                   className={`${styles.categoryTab} ${activeCategory === category.id ? styles.categoryTabActive : ''}`}
@@ -209,16 +161,6 @@ function TemplateList() {
                 </button>
               ))}
             </div>
-
-            {showRightArrow && (
-              <button 
-                className={`${styles.scrollArrow} ${styles.scrollArrowRight}`} 
-                onClick={() => scrollCategory('right')}
-                aria-label="Sağa Kaydır"
-              >
-                <ChevronRight size={20} />
-              </button>
-            )}
           </div>
         </div>
 

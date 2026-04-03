@@ -121,60 +121,9 @@
   display: flex;
   justify-content: center;
   gap: 0.75rem;
-  overflow-x: auto;
-  overflow-y: hidden;
   padding: 0.5rem 0;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
   flex: 1;
-}
-
-.categoryScroll::-webkit-scrollbar {
-  height: 4px;
-}
-.categoryScroll::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 4px;
-}
-.categoryScroll::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-
-.scrollArrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: white;
-  border: 1px solid #e2e8f0;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #475569;
-  cursor: pointer;
-  z-index: 10;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  transition: all 0.2s ease;
-  padding: 0;
-}
-
-.scrollArrow:hover {
-  background: #f8fafc;
-  color: #2563eb;
-  border-color: #cbd5e1;
-  transform: translateY(-50%) scale(1.05);
-}
-
-.scrollArrowLeft {
-  left: -12px;
-}
-
-.scrollArrowRight {
-  right: -12px;
+  flex-wrap: wrap
 }
 
 .categoryTab {
@@ -573,16 +522,5 @@
   .imageOverlay svg {
     width: 32px;
     height: 32px;
-  }
-  .scrollArrow {
-    display: none;
-  }
-  .categoryScroll {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    scrollbar-width: none;
-  }
-  .categoryScroll::-webkit-scrollbar {
-    display: none;
   }
 }

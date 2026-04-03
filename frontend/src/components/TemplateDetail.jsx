@@ -30,7 +30,7 @@ function TemplateDetail() {
     const [isNoticeDismissed, setIsNoticeDismissed] = useState(false);
     const editorRef = useRef(null);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
-    
+
     const [currentStep, setCurrentStep] = useState(1);
     const [showBackWarning, setShowBackWarning] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
@@ -46,10 +46,10 @@ function TemplateDetail() {
         axios.get(`${API_BASE_URL}/sablonlar/detay/${slug}`)
             .then(response => {
                 setTemplate(response.data);
-                
+
                 const savedFormData = localStorage.getItem(`belgehizli-autosave-${slug}`);
                 let initialData = {};
-                
+
                 if (savedFormData) {
                     try {
                         initialData = JSON.parse(savedFormData);
@@ -58,7 +58,7 @@ function TemplateDetail() {
                         console.error("Hafızadaki veri okunamadı", e);
                     }
                 }
-                
+
                 setFormData(initialData);
                 setFormErrors({});
                 setAgreedToTerms(false);
@@ -116,7 +116,7 @@ function TemplateDetail() {
                 localStorage.setItem(`belgehizli-autosave-${slug}`, JSON.stringify(formData));
                 setAutoSaveVisible(true);
                 setTimeout(() => setAutoSaveVisible(false), 2000);
-            }, 500); 
+            }, 500);
 
             return () => clearTimeout(handler);
         }
@@ -145,20 +145,20 @@ function TemplateDetail() {
         setFormData(newFormData);
         setFormErrors(errors);
     };
-    
+
     const handleFormValidityChange = (valid) => {
         setIsFormValid(valid);
     };
-    
+
     const handleNextStep = async () => {
         let isFormValidLocal = true;
         if (formRef.current) {
             isFormValidLocal = await formRef.current.handleSubmit();
         }
-        
+
         if (isFormValidLocal) {
             setCurrentStep(2);
-            
+
             if (window.innerWidth <= 1024 && previewRef.current) {
                 setTimeout(() => {
                     const headerOffset = 95;
@@ -178,7 +178,7 @@ function TemplateDetail() {
         setCurrentStep(1);
         setShowBackWarning(false);
     };
-    
+
     const handleDownload = async () => {
         let detectedError = null;
 
@@ -204,14 +204,14 @@ function TemplateDetail() {
 
         setDownloadError(null);
         setLoadingDownload(true);
-        
+
         try {
             let finalEditedHtml = null;
             if (editorRef.current) {
                 let rawHtml = editorRef.current.innerHTML;
                 finalEditedHtml = rawHtml.replace(/<mark[^>]*>/gi, '').replace(/<\/mark>/gi, '');
             }
-            
+
             const backendPayload = {
                 formData,
                 editedHtml: finalEditedHtml,
@@ -242,9 +242,9 @@ function TemplateDetail() {
 
         } catch (error) {
             console.error('İndirme hatası:', error);
-            
+
             let message = 'Bir şey ters gitti 😕 Lütfen tekrar dene veya bize ulaş.';
-            
+
             if (error.response?.status === 429) {
                 message = 'Çok fazla istek yapıldı, lütfen biraz bekleyip tekrar dene.';
             } else if (error.response?.status === 500) {
@@ -252,7 +252,7 @@ function TemplateDetail() {
             } else if (error.code === 'ERR_NETWORK') {
                 message = 'İnternet bağlantında bir sorun var gibi görünüyor.';
             }
-            
+
             setDownloadError(message);
         } finally {
             setLoadingDownload(false);
@@ -342,11 +342,11 @@ function TemplateDetail() {
 
                         <div className={currentStep === 2 ? styles.blurredForm : ''}>
                             {template.fields && template.fields.length > 0 ? (
-                                <DocumentForm 
-                                    templateFields={template.fields} 
-                                    onChange={handleFormChange} 
+                                <DocumentForm
+                                    templateFields={template.fields}
+                                    onChange={handleFormChange}
                                     onValidChange={handleFormValidityChange}
-                                    ref={formRef} 
+                                    ref={formRef}
                                     initialData={formData}
                                 />
                             ) : (
@@ -359,8 +359,8 @@ function TemplateDetail() {
                                         <CheckCircle2 size={16} className={styles.progressIcon} />
                                         Tüm zorunlu alanları doldurduktan sonra ilerleyebilirsiniz.
                                     </div>
-                                    <button 
-                                        onClick={handleNextStep} 
+                                    <button
+                                        onClick={handleNextStep}
                                         disabled={!isFormValid}
                                         className={`${styles.nextStepButton} ${!isFormValid ? styles.disabledButton : ''}`}
                                     >
@@ -377,7 +377,7 @@ function TemplateDetail() {
                             )}
                         </div>
                     </div>
-                    
+
                     <div className={styles.previewColumn} ref={previewRef} data-locked={currentStep === 1 ? "true" : "false"}>
                         {template.content ? (
                             <>
@@ -420,8 +420,8 @@ function TemplateDetail() {
                             <div className={styles.ctaWrapper}>
                                 <button
                                     onClick={handleDownload}
-                                    disabled={loadingDownload}
-                                    className={`${styles.payDownloadButton} ${loadingDownload ? styles.disabledButton : ''}`}
+                                    disabled={loadingDownload || !agreedToTerms}
+                                    className={`${styles.payDownloadButton} ${(loadingDownload || !agreedToTerms) ? styles.disabledButton : ''}`}
                                 >
                                     <Download size={20} />
                                     {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz PDF'i İndir`}
@@ -445,7 +445,7 @@ function TemplateDetail() {
                     </div>
                 </div>
             )}
-            
+
             {isMobile && !isNoticeDismissed && isNoticeVisibleByScroll && currentStep === 1 && (
                 <div
                     className={styles.mobilePreviewNotice}
@@ -454,7 +454,7 @@ function TemplateDetail() {
                     <div className={styles.noticeIconCircle}>
                         <ArrowDown size={18} className={styles.noticeIcon} />
                     </div>
-                    
+
                     <span className={styles.noticeText}>
                         Canlı önizleme aşağıda
                     </span>
@@ -485,7 +485,7 @@ function TemplateDetail() {
                             </div>
                             <h2 className={styles.supportTitle}>Belgeniz İndirildi! 🎉</h2>
                         </div>
-                        
+
                         <p className={styles.supportText}>
                             Belge Hızlı'yı reklamsız, aboneliksiz ve tamamen ücretsiz tutmak için çalışıyorum.
                             Eğer bu belge işinizi çözdüyse ve bu amme hizmetinin devam etmesini isterseniz,
@@ -501,7 +501,7 @@ function TemplateDetail() {
                             >
                                 <Coffee size={20} /> Bana Bir Kahve Ismarla
                             </a>
-                            
+
                             <button onClick={() => setIsSupportModalOpen(false)} className={styles.restartButton}>
                                 Kapat
                             </button>
