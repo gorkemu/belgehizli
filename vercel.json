@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/sitemap.xml",
-      "destination": "https://belgehizli-api.onrender.com/api/sitemap.xml"
+      "destination": "https://belgehizli-api.onrender.com/sitemap.xml"
     },
     {
       "source": "/templates/:id([^/]+)", 
@@ -11,6 +11,10 @@
     {
       "source": "/(.*)",
       "destination": "/index.html"
+    },
+    {
+        "source": "/api/ping",
+        "destination": "https://belgehizli-api.onrender.com/api/ping"
     }
   ]
 }
