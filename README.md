@@ -134,9 +134,9 @@ Every template **MUST** include a `belge_email` field for automated email delive
 {
     "name": "Konut Kira Sözleşmesi",
     "description": "Standart konut kiralama işlemleri için gerekli bilgileri içeren sözleşme.",
-    "price": 0,
+    "price": 15,
     "slug": "konut-kira-sozlesmesi",
-   "content": "<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n\
+    "content": "<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n\
 <p><strong>A. KİRAYA VEREN(LER):</strong></p>\n\
 {{#each kiralayanlar}}\n\
 <div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n\
