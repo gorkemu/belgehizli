@@ -282,40 +282,4 @@ router.post('/templates/:id/process-payment', async (req, res) => {
     }
 });
 
-router.get('/sitemap.xml', async (req, res) => {
-    try {
-        const templates = await Template.find({}, 'slug updatedAt').lean();
-        let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
-
-        const staticUrls = [
-            { loc: 'https://www.belgehizli.com/', changefreq: 'weekly', priority: '1.0' },
-            { loc: 'https://www.belgehizli.com/sablonlar', changefreq: 'daily', priority: '0.9' },
-            { loc: 'https://www.belgehizli.com/hakkimizda', changefreq: 'monthly', priority: '0.7' },
-            { loc: 'https://www.belgehizli.com/iletisim', changefreq: 'monthly', priority: '0.7' },
-            { loc: 'https://www.belgehizli.com/gizlilik-politikasi', changefreq: 'monthly', priority: '0.5' },
-            { loc: 'https://www.belgehizli.com/kullanim-sartlari', changefreq: 'monthly', priority: '0.5' },
-            { loc: 'https://www.belgehizli.com/on-bilgilendirme-formu', changefreq: 'monthly', priority: '0.5' },
-        ];
-
-        staticUrls.forEach(url => {
-            xml += `<url><loc>${url.loc}</loc><changefreq>${url.changefreq}</changefreq><priority>${url.priority}</priority></url>`;
-        });
-
-        templates.forEach(template => {
-            if (template.slug) {
-                const lastMod = template.updatedAt ? format(new Date(template.updatedAt), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
-                const loc = `https://www.belgehizli.com/sablonlar/detay/${template.slug}`;
-                xml += `<url><loc>${loc}</loc><lastmod>${lastMod}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`;
-            }
-        });
-
-        xml += `</urlset>`;
-        res.header('Content-Type', 'application/xml');
-        res.send(xml);
-    } catch (error) {
-        console.error('Sitemap oluşturulurken hata oluştu:', error);
-        res.status(500).send('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"></urlset>');
-    }
-});
-
 module.exports = router;
