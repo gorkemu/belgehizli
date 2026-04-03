@@ -1,6 +1,11 @@
 # Belge Hızlı (Contract-Generator)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-success)](https://www.belgehizli.com/)
+
 Belge Hızlı is a modern, full-stack web application designed to help users generate legal contracts, petitions, and official documents in PDF format within seconds using dynamic templates. The platform operates on a Public Service model—offering high-quality legal tools for free, supported by voluntary user contributions.
+
+![App Preview](./docs/images/app-preview.png)
 
 ## Key Features
 
@@ -15,15 +20,8 @@ Belge Hızlı is a modern, full-stack web application designed to help users gen
     * **Smart Highlighting:** User-entered data is dynamically highlighted in the preview, making it easy to spot and adjust language suffixes or grammar.
     * **Manual Overrides:** The preview document acts as a live text editor (`contentEditable`), allowing users to add, delete, or rewrite paragraphs directly on the document before downloading.
     * **Smart Mobile Navigation:** Features an `IntersectionObserver`-powered floating action button (FAB) that guides mobile users to the preview section seamlessly.
-* **Conversion-Optimized UX:**
-    * Frictionless CTAs with inline validation instead of disabled states.
-    * Trust-building micro-copy (e.g., "No credit card required").
-    * Humanized error handling and device-agnostic copywriting.
 * **Free-to-Use Model:** All document generation services are completely free for the public.
 * **Voluntary Support (Shopier):** A sleek Buy Me a Coffee modal appears after successful downloads, integrated with Shopier for voluntary contributions.
-* **Legal Compliance & Logging:**
-    * Mandatory consent for Terms of Service and Privacy Policy before generation.
-    * **Consent Logs:** Records user IP, User-Agent, timestamp, and document version for legal audit trails.
 * **High-Fidelity PDF Output:** Powered by Browserless.io / Puppeteer for professional, print-ready documents. Manually edited HTML is sanitized and perfectly rendered.
 * **Dual Delivery:** Instant browser download combined with automated email delivery.
 * **Robust Admin Dashboard (React Admin):**
@@ -38,22 +36,130 @@ Belge Hızlı is a modern, full-stack web application designed to help users gen
 * **Admin Panel:** React Admin, Material UI (MUI).
 * **Services & Hosting:** Browserless.io (PDF rendering), Shopier (Support gateway), Fly.io / Render (Hosting), SMTP Service.
 
-## Live Links
-
-* **Platform:** https://www.belgehizli.com/
-
 ## Adding New Templates
 
-Manage templates directly in the MongoDB templates collection. Key fields: name, description, price (set to 0 for free), content (HTML/Handlebars), and fields.
+Templates are stored directly in MongoDB. You can add them via the database GUI or a seed script.
 
-* **Field Object:** name, label, fieldType ("text", "textarea", "number", "date", "select", "radio", "email", "checkbox", "repeatable"), required, placeholder, options, condition: {field, value}.
-* **Note:** For automated email delivery, ensure the template includes a belge_email field (type: email).
+### Template Structure
 
-## Scripts & Setup
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `name` | String | Display name of the template |
+| `description` | String | Short description shown to users |
+| `price` | Number | Set to `0` for free templates |
+| `slug` | String | URL-friendly unique identifier (e.g., `konut-kira-sozlesmesi`) |
+| `content` | String | HTML/Handlebars template with dynamic placeholders |
+| `fields` | Array | Form field definitions |
 
-* **Backend:** npm start (production), npm run dev (development)
-* **Frontend:** npm run dev (development), npm run build (build for production)
-* **Admin:** npm start
+### Field Types & Examples
+
+#### 1. Basic Fields & Selects
+```json
+{
+    "name": "artis_tipi",
+    "label": "Yıllık Kira Artış Yöntemi",
+    "fieldType": "select",
+    "options": ["TÜFE", "Belirtilen Oran"],
+    "required": true
+}
+```
+
+#### 2. Conditional Field 
+```json
+{
+    "name": "depozito_tutari",
+    "label": "Alınan Depozito Tutarı (TL)",
+    "fieldType": "number",
+    "condition": { "field": "depozito_alindi", "value": "Evet" }
+}
+```
+
+#### 3. Repeatable Blocks
+```json
+{
+    "name": "kiracilar",
+    "label": "Kiracı Bilgileri",
+    "fieldType": "repeatable",
+    "minInstances": 1,
+    "subfields": [
+        { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true }
+    ]
+}
+```
+
+> **Note:** In your `content`, use `{{#each kiracilar}}` to loop through these blocks:
+
+```handlebars
+{{#each kiracilar}}
+<div>
+    <p>Adı Soyadı: {{this.ad_soyad}}</p>
+    <p>T.C. Kimlik No: {{this.tc_no}}</p>
+</div>
+{{/each}}
+```
+
+### Handlebars Helpers in Content
+
+| Helper | Usage |
+| :--- | :--- |
+| `{{formatDate date}}` | Formats a date object |
+| `{{#if (eq a 'b')}}` | Conditional equality check |
+| `{{#each array}}` | Loops through repeatable blocks |
+
+**Example with conditional logic:**
+```handlebars
+{{#if (eq depozito_alindi 'Evet')}}
+<p>Kiracı(lar)dan toplam {{depozito_tutari}} TL depozito alınmıştır.</p>
+{{else}}
+<p>Kiracı(lar)dan depozito alınmamıştır.</p>
+{{/if}}
+```
+
+### Mandatory Field Requirement
+
+Every template **MUST** include a `belge_email` field for automated email delivery:
+```json
+{
+    "name": "belge_email",
+    "label": "E-posta (Belgenin Gönderileceği)",
+    "fieldType": "email",
+    "required": true
+}
+```
+
+### Complete JSON Example
+
+<details>
+<summary><b>Click here to view a full template JSON (Konut Kira Sözleşmesi)</b></summary>
+
+```json
+{
+    "name": "Konut Kira Sözleşmesi",
+    "description": "Standart konut kiralama işlemleri için gerekli bilgileri içeren sözleşme.",
+    "price": 15,
+    "slug": "konut-kira-sozlesmesi",
+    "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. KİRAYA VEREN(LER):</strong></p>\n{{#each kiralayanlar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p><strong>B. KİRACI(LAR):</strong></p>\n{{#each kiracilar}}\n<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n  <p>Adresi: {{this.adres}}</p>\n</div>\n{{/each}}\n\n<p>Kiralanan Adresi: {{kiralanan_adres}}</p>\n\n<p><strong>3. KİRA ARTIŞI</strong></p>\n{{#if (eq artis_tipi 'TÜFE')}}\n<p>Kira bedeli her yıl TÜFE oranında artırılacaktır.</p>\n{{else}}\n<p>Kira bedeli her yıl %{{artis_orani}} oranında artırılacaktır.</p>\n{{/if}}\n</div>",
+    "fields": [
+        {
+            "name": "kiralayanlar",
+            "label": "Kiraya Veren Bilgileri",
+            "blockTitle": "Kiraya Veren",
+            "fieldType": "repeatable",
+            "minInstances": 1,
+            "subfields": [
+                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true }
+            ]
+        },
+        {
+            "name": "belge_email",
+            "label": "E-posta (Belgenin Gönderileceği)",
+            "fieldType": "email",
+            "required": true
+        }
+    ]
+}
+```
+</details> ```
 
 ## License
 
