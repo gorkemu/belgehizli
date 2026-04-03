@@ -3,6 +3,14 @@
       {
         "source": "/(.*)",
         "destination": "/index.html"
-      }
+      },
+      {
+      "source": "/sitemap.xml",
+      "destination": "https://belgehizli-api.onrender.com/sitemap.xml"
+    },
+    {
+        "source": "/api/ping",
+        "destination": "https://belgehizli-api.onrender.com/api/ping"
+    }
     ]
   }
