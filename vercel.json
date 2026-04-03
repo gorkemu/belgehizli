@@ -9,12 +9,12 @@
       "destination": "https://belgehizli-api.onrender.com/api/templates/:id" 
     },
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "source": "/api/ping",
+      "destination": "https://belgehizli-api.onrender.com/api/ping"
     },
     {
-        "source": "/api/ping",
-        "destination": "https://belgehizli-api.onrender.com/api/ping"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
