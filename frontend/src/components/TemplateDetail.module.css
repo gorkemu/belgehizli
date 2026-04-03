@@ -73,43 +73,101 @@
     animation: pulseGlow 2s infinite;
 }
 
-.priceBadge {
-    display: inline-flex;
+.stepperWrapper {
+    display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    font-weight: 600;
-    color: #15803d;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 0.75rem;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    border-radius: 14px;
+    border: 1px solid var(--gray-200);
 }
 
-.betaNote {
-    font-size: 0.85rem;
-    background-color: #f0fdf4;
-    color: #166534;
-    padding: 0.3rem 0.8rem;
-    border-radius: 999px;
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    border: 1px solid #bbf7d0;
+    color: var(--gray-400);
+}
+
+.stepActive {
+    color: #0f172a;
+}
+
+.stepPassive {
+    color: var(--gray-300);
+}
+
+.stepNumber {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.stepActive .stepNumber {
+    background: #0f172a;
+    color: white;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.25);
+}
+
+.stepConnector {
+    width: 80px;
+    height: 2px;
+    background: var(--gray-200);
+    margin: 0 1rem;
+    border-radius: 2px;
+    transition: background 0.4s ease;
+}
+
+.connectorDone {
+    background: #10b981;
+}
+
+.progressBarContainer {
+    width: 100%;
+    height: 4px;
+    background-color: var(--gray-200);
+    border-radius: 2px;
+    margin: 0.5rem 0 2rem 0;
+    overflow: hidden;
+}
+
+.progressBar {
+    height: 100%;
+    background: linear-gradient(90deg, #0f172a, #2563eb);
+    border-radius: 2px;
+    transition: width 0.4s ease;
 }
 
 .editorContainer {
     display: grid;
-    grid-template-columns: minmax(320px, 450px) 1fr;
-    gap: 3rem;
+    grid-template-columns: 1fr 2fr;
+    gap: 2.5rem;
     margin-bottom: 3rem;
     align-items: start;
+    justify-items: center;
 }
 
 .formColumn {
     position: relative;
     min-width: 0;
+    width: 100%;
 }
 
 .previewColumn {
     min-width: 0;
-    position: sticky;
-    top: 100px;
-    height: calc(100vh - 120px);
+    max-width: 1000px;
     overflow-y: auto;
     scrollbar-width: thin;
 }
@@ -123,6 +181,35 @@
     border-radius: 10px;
 }
 
+.previewColumn[data-locked="true"] {
+    opacity: 0.85;
+    filter: blur(0.3px);
+}
+
+.formColumnHeader {
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+}
+
+.formStepTag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #1d4ed8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.3rem;
+}
+
+.formColumnHint {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #1e40af;
+    line-height: 1.5;
+}
+
 .formOverlay {
     position: absolute;
     top: 0;
@@ -130,7 +217,6 @@
     width: 100%;
     height: 100%;
     background-color: rgba(248, 250, 252, 0.6);
-    backdrop-filter: blur(4px);
     z-index: 50;
     display: flex;
     align-items: center;
@@ -154,6 +240,15 @@
     max-width: 80%;
 }
 
+.overlayStep {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+}
+
 .overlayIconSuccess {
     color: #10b981;
     margin-bottom: 0.8rem;
@@ -171,14 +266,6 @@
     font-size: 0.95rem;
     color: var(--gray-600);
     line-height: 1.5;
-}
-
-.overlayWarningText {
-    display: block;
-    margin-top: 0.8rem;
-    font-size: 0.85rem;
-    color: #ef4444;
-    font-weight: 500;
 }
 
 .blurredForm {
@@ -205,13 +292,6 @@
     border: 1px solid var(--gray-200);
 }
 
-.stepInfoText {
-    text-align: center;
-    color: var(--gray-600);
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
-
 .step1ActionContainer {
     margin-top: 2rem;
     padding-top: 1.5rem;
@@ -221,27 +301,79 @@
     gap: 0.5rem;
 }
 
-.nextStepButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 100%;
-    padding: 1.25rem;
-    background-color: #0f172a;
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s ease;
+.stickyMobileButton {
+    /* position: sticky; */
+    bottom: 1rem;
+    background: white;
+    padding: 1rem 0 0 0;
+    z-index: 10;
+    border-top: none;
+    margin-top: 1rem;
+    padding-bottom: 2rem;
 }
 
-.nextStepButton:hover {
-    background-color: #1e293b;
+.progressHint {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    color: var(--gray-500);
+    margin-bottom: 0.75rem;
+}
+
+.progressIcon {
+    color: #10b981;
+}
+
+.nextStepButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.25);
+}
+
+.nextStepButton:hover:not(.disabledButton) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.3);
+}
+
+.nextStepButton.disabledButton {
+    background: var(--gray-400);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btnInner {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.btnMainText {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.btnSubText {
+    display: block;
+    font-size: 0.78rem;
+    color: #fff;
+    margin-top: 0.1rem;
+}
+
+.btnArrow {
+    flex-shrink: 0;
+    color: #94a3b8;
 }
 
 .actionSection {
@@ -320,7 +452,7 @@
 }
 
 .payDownloadButton:active:not(.disabledButton) {
-    transform: translateY(1px); 
+    transform: translateY(1px);
     box-shadow: var(--shadow-sm);
 }
 
@@ -331,29 +463,30 @@
     transform: none !important;
 }
 
-.secureNoteContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
+.previewNotes {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid var(--gray-200);
     text-align: center;
 }
 
-.secureNote {
-    font-size: 0.85rem;
-    color: var(--gray-500);
-    margin: 0;
-}
-
+.secureNote,
 .highlightNote {
     margin: 0;
     font-size: 0.85rem;
+    color: var(--gray-600);
+}
+
+.highlightNote {
+    margin-top: 0.4rem;
     color: #d97706;
     font-weight: 600;
     background-color: #fef3c7;
     padding: 0.3rem 0.8rem;
     border-radius: 6px;
+    display: inline-block;
 }
 
 .paymentError {
@@ -578,7 +711,7 @@
 
 .mobilePreviewNotice {
     position: fixed;
-    bottom: 2rem;
+    bottom: 1rem;
     left: 50%;
     transform: translateX(-50%);
     background-color: #0f172a;
@@ -648,18 +781,6 @@
     gap: 1rem;
 }
 
-.statusContainerError {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    color: #dc3545;
-    font-size: 1.2rem;
-    font-weight: bold;
-    gap: 1rem;
-}
-
 .errorScreen {
     display: flex;
     flex-direction: column;
@@ -671,46 +792,9 @@
     color: #ef4444;
 }
 
-.loadingScreen {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 50vh;
-    gap: 1rem;
-    font-size: 1.2rem;
-    color: var(--gray-600);
-}
-
 .spinner {
     color: #2563eb;
     animation: spin 1s linear infinite;
-}
-
-.trustIndicators {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    flex-wrap: wrap;
-    margin-bottom: 0.5rem;
-}
-
-.trustIndicators span {
-    display: inline-flex;
-    align-items: center;
-    color: #059669;
-    font-weight: 600;
-    font-size: 0.85rem;
-    background-color: #ecfdf5;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    border: 1px solid #a7f3d0;
-}
-
-.checkIcon {
-    margin-right: 0.3rem;
 }
 
 .ctaWrapper {
@@ -721,40 +805,39 @@
     gap: 0.6rem;
 }
 
-.noCreditCard {
-    font-size: 0.85rem;
-    color: #059669; 
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-weight: 600;
-}
-
 @keyframes pulseGlow {
     0% {
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
     }
+
     70% {
         box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
     }
+
     100% {
         box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
     }
 }
 
 @keyframes bounceSoft {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-4px);
     }
 }
 
 @keyframes bounceDown {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(-2px);
     }
+
     50% {
         transform: translateY(2px);
     }
@@ -765,6 +848,7 @@
         opacity: 0;
         transform: scale(0.9);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -776,6 +860,7 @@
         opacity: 0;
         transform: translate(-50%, 30px);
     }
+
     100% {
         opacity: 1;
         transform: translate(-50%, 0);
@@ -786,6 +871,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -794,6 +880,7 @@
 @media (max-width: 1024px) {
     .editorContainer {
         grid-template-columns: 1fr;
+        gap: 2rem;
     }
 
     .workspaceContainer {
@@ -802,11 +889,36 @@
         margin: 1rem 0;
         border-radius: 0;
     }
-}
 
-@media (min-width: 1025px) {
-    .mobilePreviewNotice {
-        display: none !important;
+    .previewColumn {
+        position: relative;
+        top: 0;
+        height: auto;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .stepperWrapper {
+        padding: 1rem;
+    }
+
+    .stepItem span {
+        display: none;
+    }
+
+    .stepConnector {
+        width: 40px;
+    }
+
+    .stickyMobileButton {
+        background: white;
+        padding: 1rem 0;
+        padding-bottom: 3rem;
+        margin-top: 0;
+        /* position: sticky; */
+        bottom: 0;
+        z-index: 10;
+        border-top: 1px solid var(--gray-200);
     }
 }
 
@@ -827,4 +939,20 @@
     .supportText {
         font-size: 1rem;
     }
+    .actionSection {
+    padding: 0.5rem;
+    margin-top: 1rem;
+}
+.termsLabel {
+    font-size: 0.75rem;
+}
+
+.checkboxInput {
+    width: 1rem;
+    height: 1rem;
+}
+.payDownloadButton {
+    padding: 1rem;
+    font-size: 1rem;
+}
 }

@@ -6,6 +6,7 @@ const Invoice = require('../models/invoice');
 const ConsentLog = require('../models/consentLog');
 const { generatePdf } = require('../pdf-generator/pdfGenerator');
 const { sendPdfEmail } = require('../utils/mailer');
+const { sanitizeHtmlForPdf } = require('../utils/sanitizer');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -176,18 +177,31 @@ router.post('/templates/:id/process-payment', async (req, res) => {
         });
         await newConsentLog.save();
 
-        let htmlContent = "";
+        let rawHtmlContent = "";
 
         if (editedHtml) {
-            htmlContent = editedHtml;
-            console.log("Kullanıcının özel olarak düzenlediği HTML kullanılarak PDF basılıyor.");
+            rawHtmlContent = editedHtml;
+            console.log("Kullanıcının özel olarak düzenlediği HTML kullanılarak PDF hazırlanıyor.");
         } else {
             const compiledTemplate = Handlebars.compile(template.content || '');
-            htmlContent = compiledTemplate(formData);
-            console.log("Standart Form verisi (Handlebars) kullanılarak PDF basılıyor.");
+            rawHtmlContent = compiledTemplate(formData);
+            console.log("Standart Form verisi (Handlebars) kullanılarak PDF hazırlanıyor.");
         }
 
-        const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8" />${pdfStyles}</head><body>${htmlContent}</body></html>`;
+        const cleanHtmlContent = sanitizeHtmlForPdf(rawHtmlContent);
+
+        const fullHtml = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8" />
+                ${pdfStyles}
+            </head>
+            <body>
+                ${cleanHtmlContent}
+            </body>
+            </html>
+        `;
 
         pdfBuffer = await generatePdf(fullHtml);
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
@@ -196,52 +210,52 @@ router.post('/templates/:id/process-payment', async (req, res) => {
             const emailSubject = `Belge Hızlı - ${template.name} Belgeniz 🎉`;
 
             const emailHtml = `
-  <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
-    
-    <div style="background-color: #2563eb; padding: 24px; text-align: center;">
-      <h1 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600;">Belgeniz Hazır!</h1>
-    </div>
-    
-    <div style="padding: 32px; background-color: #ffffff;">
-      <p style="font-size: 16px; line-height: 1.6; color: #334155;">Merhaba,</p>
-      <p style="font-size: 16px; line-height: 1.6; color: #334155;">
-        Belge Hızlı kullanarak oluşturduğunuz <strong>${template.name || 'Belge'}</strong> başarıyla hazırlandı ve ekte tarafınıza sunuldu.
-      </p>
-      
-      <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 32px 0;" />
-      
-      <div style="background-color: #ffffff; border: 2px solid #fde68a; border-radius: 16px; padding: 32px 24px; text-align: center;">
-        
-        <div style="display: inline-block; background-color: #fffbeb; width: 64px; height: 64px; border-radius: 50%; line-height: 64px; font-size: 28px; margin-bottom: 16px;">
-          ☕
-        </div>
-        
-        <h3 style="margin: 0 0 12px 0; color: #0f172a; font-size: 18px; font-weight: 800;">Bu Projeye Destek Olun 🎉</h3>
-        
-        <p style="font-size: 15px; color: #475569; margin-bottom: 24px; line-height: 1.6;">
-          Belge Hızlı'yı reklamsız, aboneliksiz ve tamamen ücretsiz tutmak için çalışıyorum. 
-          Eğer bu belge işinizi çözdüyse ve bu amme hizmetinin devam etmesini isterseniz, 
-          bana bir kahve ısmarlayarak destek olabilirsiniz. 💛
-        </p>
-        
-        <a href="https://www.shopier.com/belgehizli/45489886" 
-           style="display: inline-block; background-color: #fffbeb; color: #b45309; border: 1px solid #fcd34d; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">
-           Bana Bir Kahve Ismarla
-        </a>
-        
-      </div>
-    </div>
-    
-    <div style="background-color: #f8fafc; padding: 16px; text-align: center; border-top: 1px solid #e2e8f0;">
-      <p style="font-size: 12px; color: #94a3b8; margin: 0;">© ${new Date().getFullYear()} Belge Hızlı - Hızlı, Güvenilir, Ücretsiz.</p>
-      
-      <span style="display: none !important; opacity: 0; font-size: 0px; color: #f8fafc; max-height: 0; line-height: 0; overflow: hidden;">
-        ${Date.now()}
-      </span>
-    </div>
-    
-  </div>
-`;
+              <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+                
+                <div style="background-color: #2563eb; padding: 24px; text-align: center;">
+                  <h1 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600;">Belgeniz Hazır!</h1>
+                </div>
+                
+                <div style="padding: 32px; background-color: #ffffff;">
+                  <p style="font-size: 16px; line-height: 1.6; color: #334155;">Merhaba,</p>
+                  <p style="font-size: 16px; line-height: 1.6; color: #334155;">
+                    Belge Hızlı kullanarak oluşturduğunuz <strong>${template.name || 'Belge'}</strong> başarıyla hazırlandı ve ekte tarafınıza sunuldu.
+                  </p>
+                  
+                  <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 32px 0;" />
+                  
+                  <div style="background-color: #ffffff; border: 2px solid #fde68a; border-radius: 16px; padding: 32px 24px; text-align: center;">
+                    
+                    <div style="display: inline-block; background-color: #fffbeb; width: 64px; height: 64px; border-radius: 50%; line-height: 64px; font-size: 28px; margin-bottom: 16px;">
+                      ☕
+                    </div>
+                    
+                    <h3 style="margin: 0 0 12px 0; color: #0f172a; font-size: 18px; font-weight: 800;">Bu Projeye Destek Olun 🎉</h3>
+                    
+                    <p style="font-size: 15px; color: #475569; margin-bottom: 24px; line-height: 1.6;">
+                      Belge Hızlı'yı reklamsız, aboneliksiz ve tamamen ücretsiz tutmak için çalışıyorum. 
+                      Eğer bu belge işinizi çözdüyse ve bu amme hizmetinin devam etmesini isterseniz, 
+                      bana bir kahve ısmarlayarak destek olabilirsiniz. 💛
+                    </p>
+                    
+                    <a href="https://www.shopier.com/belgehizli/45489886" 
+                       style="display: inline-block; background-color: #fffbeb; color: #b45309; border: 1px solid #fcd34d; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">
+                       Bana Bir Kahve Ismarla
+                    </a>
+                    
+                  </div>
+                </div>
+                
+                <div style="background-color: #f8fafc; padding: 16px; text-align: center; border-top: 1px solid #e2e8f0;">
+                  <p style="font-size: 12px; color: #94a3b8; margin: 0;">© ${new Date().getFullYear()} Belge Hızlı - Hızlı, Güvenilir, Ücretsiz.</p>
+                  
+                  <span style="display: none !important; opacity: 0; font-size: 0px; color: #f8fafc; max-height: 0; line-height: 0; overflow: hidden;">
+                    ${Date.now()}
+                  </span>
+                </div>
+                
+              </div>
+            `;
 
             const emailText = `Merhaba, ${template.name} belgeniz ektedir. Geliştiriciye destek olmak için: https://www.shopier.com/belgehizli/45489886`;
 
@@ -255,12 +269,16 @@ router.post('/templates/:id/process-payment', async (req, res) => {
 
     } catch (error) {
         console.error("İşlem Hatası:", error);
+        
         if (newTransaction) {
             newTransaction.status = 'failed';
             newTransaction.errorMessage = error.message;
             await newTransaction.save();
         }
-        if (!res.headersSent) res.status(500).json({ message: 'Sunucu hatası oluştu.' });
+        
+        if (!res.headersSent) {
+            res.status(500).json({ message: 'Belge oluşturulurken bir sunucu hatası meydana geldi.' });
+        }
     }
 });
 
@@ -276,7 +294,6 @@ router.get('/sitemap.xml', async (req, res) => {
             { loc: 'https://www.belgehizli.com/iletisim', changefreq: 'monthly', priority: '0.7' },
             { loc: 'https://www.belgehizli.com/gizlilik-politikasi', changefreq: 'monthly', priority: '0.5' },
             { loc: 'https://www.belgehizli.com/kullanim-sartlari', changefreq: 'monthly', priority: '0.5' },
-            { loc: 'https://www.belgehizli.com/teslimat-iade', changefreq: 'monthly', priority: '0.5' },
             { loc: 'https://www.belgehizli.com/on-bilgilendirme-formu', changefreq: 'monthly', priority: '0.5' },
         ];
 

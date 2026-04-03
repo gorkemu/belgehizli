@@ -71,5 +71,7 @@
 }
 
 @media (max-width: 768px) {
-    .floatingButton { bottom: 1.5rem; right: 1.5rem; }
+    .floatingButton { 
+        display: none 
+    }
 }

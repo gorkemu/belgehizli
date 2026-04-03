@@ -5,7 +5,7 @@ import styles from './TemplateDetail.module.css';
 import DocumentForm from './DocumentForm';
 import DocumentPreview from './DocumentPreview';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Coffee, X, ArrowDown, Lock, Edit2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Coffee, X, ArrowDown, Lock, Edit2, ArrowRight, Save } from 'lucide-react';
 
 const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20260329";
 const ON_BILGILENDIRME_FORMU_CURRENT_VERSION = "v_20260329";
@@ -33,6 +33,8 @@ function TemplateDetail() {
     
     const [currentStep, setCurrentStep] = useState(1);
     const [showBackWarning, setShowBackWarning] = useState(false);
+    const [isFormValid, setIsFormValid] = useState(false);
+    const [autoSaveVisible, setAutoSaveVisible] = useState(false);
 
     useEffect(() => {
         setLoading(true);
@@ -112,11 +114,19 @@ function TemplateDetail() {
         if (formData && Object.keys(formData).length > 0) {
             const handler = setTimeout(() => {
                 localStorage.setItem(`belgehizli-autosave-${slug}`, JSON.stringify(formData));
+                setAutoSaveVisible(true);
+                setTimeout(() => setAutoSaveVisible(false), 2000);
             }, 500); 
 
             return () => clearTimeout(handler);
         }
     }, [formData, slug]);
+
+    useEffect(() => {
+        if (currentStep === 2 && editorRef.current) {
+            setTimeout(() => editorRef.current.focus(), 100);
+        }
+    }, [currentStep]);
 
     const scrollToPreview = () => {
         if (previewRef.current) {
@@ -136,13 +146,17 @@ function TemplateDetail() {
         setFormErrors(errors);
     };
     
+    const handleFormValidityChange = (valid) => {
+        setIsFormValid(valid);
+    };
+    
     const handleNextStep = async () => {
-        let isFormValid = true;
+        let isFormValidLocal = true;
         if (formRef.current) {
-            isFormValid = await formRef.current.handleSubmit();
+            isFormValidLocal = await formRef.current.handleSubmit();
         }
         
-        if (isFormValid) {
+        if (isFormValidLocal) {
             setCurrentStep(2);
             
             if (window.innerWidth <= 1024 && previewRef.current) {
@@ -263,6 +277,8 @@ function TemplateDetail() {
     );
     if (!template) return null;
 
+    const progressPercent = currentStep === 1 ? 50 : 100;
+
     return (
         <>
             <Helmet>
@@ -283,16 +299,43 @@ function TemplateDetail() {
                     </div>
                 </div>
 
+                <div className={styles.stepperWrapper}>
+                    <div className={`${styles.stepItem} ${currentStep === 1 ? styles.stepActive : ''}`}>
+                        <div className={styles.stepNumber}>1</div>
+                        <span>Formu Doldur</span>
+                    </div>
+                    <div className={`${styles.stepConnector} ${currentStep === 2 ? styles.connectorDone : ''}`} />
+                    <div className={`${styles.stepItem} ${currentStep === 2 ? styles.stepActive : styles.stepPassive}`}>
+                        <div className={styles.stepNumber}>2</div>
+                        <span>İncele & Düzenle</span>
+                    </div>
+                </div>
+
+                <div className={styles.progressBarContainer}>
+                    <div className={styles.progressBar} style={{ width: `${progressPercent}%` }} />
+                </div>
+
                 <div className={styles.editorContainer}>
                     <div className={styles.formColumn}>
-                        
+                        {currentStep === 1 && (
+                            <div className={styles.formColumnHeader}>
+                                <div className={styles.formStepTag}>Adım 1 / 2</div>
+                                <p className={styles.formColumnHint}>
+                                    Formu doldurun, canlı önizlemede belgenizi görün. Tamamlayınca <strong>“Sonraki Adım”</strong> ile düzenleme moduna geçin.
+                                </p>
+                            </div>
+                        )}
+
                         {currentStep === 2 && (
                             <div className={styles.formOverlay} onClick={() => setShowBackWarning(true)}>
                                 <div className={styles.overlayContent}>
-                                    <CheckCircle2 size={36} className={styles.overlayIconSuccess} />
-                                    <h4>✨ Belgen Neredeyse Hazır!</h4>
-                                    <p>Şu an <strong>Önizleme ve Düzenleme</strong> modundasın. Canlı önizleme ekranından belgeni inceleyip son rötuşları yapabilirsin.</p>
-                                    <span className={styles.overlayWarningText}>Forma geri dönmek istersen buraya tıkla (manuel değişikliklerin silinir).</span>
+                                    <div className={styles.overlayStep}>Adım 2 / 2</div>
+                                    <CheckCircle2 size={32} className={styles.overlayIconSuccess} />
+                                    <h4>Belgeniz İndirmeye Hazır!</h4>
+                                    <p>
+                                        Şimdi önizleme üzerinde değişiklikler yapabilirsiniz.
+                                    </p>
+
                                 </div>
                             </div>
                         )}
@@ -302,6 +345,7 @@ function TemplateDetail() {
                                 <DocumentForm 
                                     templateFields={template.fields} 
                                     onChange={handleFormChange} 
+                                    onValidChange={handleFormValidityChange}
                                     ref={formRef} 
                                     initialData={formData}
                                 />
@@ -310,24 +354,48 @@ function TemplateDetail() {
                             )}
 
                             {currentStep === 1 && (
-                                <div className={styles.step1ActionContainer}>
-                                    <p className={styles.stepInfoText}>Belgenizi oluşturmak için formu eksiksiz doldurun.</p>
-                                    <button onClick={handleNextStep} className={styles.nextStepButton}>
-                                        Sonraki Adım: İncele ve Düzelt <Edit2 size={18} />
+                                <div className={`${styles.step1ActionContainer} ${isMobile ? styles.stickyMobileButton : ''}`}>
+                                    <div className={styles.progressHint}>
+                                        <CheckCircle2 size={16} className={styles.progressIcon} />
+                                        Tüm zorunlu alanları doldurduktan sonra ilerleyebilirsiniz.
+                                    </div>
+                                    <button 
+                                        onClick={handleNextStep} 
+                                        disabled={!isFormValid}
+                                        className={`${styles.nextStepButton} ${!isFormValid ? styles.disabledButton : ''}`}
+                                    >
+                                        <span className={styles.btnInner}>
+                                            <Edit2 size={20} />
+                                            <span>
+                                                <span className={styles.btnMainText}>Sonraki Adım: İncele & Düzenle</span>
+                                                <span className={styles.btnSubText}>Belgeyi düzenleyip indirebilirsiniz</span>
+                                            </span>
+                                        </span>
+                                        <ArrowRight size={18} className={styles.btnArrow} />
                                     </button>
                                 </div>
                             )}
                         </div>
                     </div>
                     
-                    <div className={styles.previewColumn} ref={previewRef}>
+                    <div className={styles.previewColumn} ref={previewRef} data-locked={currentStep === 1 ? "true" : "false"}>
                         {template.content ? (
-                            <DocumentPreview
-                                templateContent={template.content}
-                                formData={formData}
-                                editorRef={editorRef}
-                                currentStep={currentStep}
-                            />
+                            <>
+                                <DocumentPreview
+                                    templateContent={template.content}
+                                    formData={formData}
+                                    editorRef={editorRef}
+                                    currentStep={currentStep}
+                                />
+                                {currentStep === 2 && (
+                                    <div className={styles.previewNotes}>
+                                        <p className={styles.secureNote}>Tüm manuel düzenlemeleriniz PDF'e eklenecektir.</p>
+                                        <p className={styles.highlightNote}>
+                                            * Belgedeki sarı vurgular sadece kontrol amaçlıdır, inen PDF'te görünmez.
+                                        </p>
+                                    </div>
+                                )}
+                            </>
                         ) : (
                             <div className={styles.emptyPreviewNotice}>Önizleme içeriği tanımlanmamış.</div>
                         )}
@@ -358,14 +426,6 @@ function TemplateDetail() {
                                     <Download size={20} />
                                     {loadingDownload ? 'Belge Hazırlanıyor...' : `Ücretsiz PDF'i İndir`}
                                 </button>
-                                <span className={styles.noCreditCard}>
-                                    <CheckCircle2 size={14} /> Kredi kartı gerekmez
-                                </span>
-                            </div>
-                            
-                            <div className={styles.secureNoteContainer}>
-                                <p className={styles.secureNote}>Tüm manuel düzenlemeleriniz PDF'e eklenecektir.</p>
-                                <p className={styles.highlightNote}>* Belgedeki sarı vurgular sadece kontrol amaçlıdır, inen PDF'te görünmez.</p>
                             </div>
                         </div>
                     </div>
@@ -377,10 +437,10 @@ function TemplateDetail() {
                     <div className={styles.warningModal} onClick={(e) => e.stopPropagation()}>
                         <AlertCircle size={48} className={styles.warningIcon} />
                         <h3>Forma Geri Dön?</h3>
-                        <p>Eğer formu tekrar düzenlerseniz, <strong>canlı önizleme üzerindeki belgede</strong> elle yaptığınız tüm düzeltmeler (ekler, yazım hataları vb.) silinecektir.</p>
+                        <p>Eğer forma geri dönderseniz <strong>canlı önizleme üzerinde</strong> yaptığınız tüm değişiklikler silinecektir.</p>
                         <div className={styles.warningActions}>
-                            <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>İptal, İncelemeye Devam Et</button>
-                            <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>Evet, Forma Dön</button>
+                            <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>Önizleme  Üzerinden Devam Et</button>
+                            <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>Forma Geri Dön</button>
                         </div>
                     </div>
                 </div>

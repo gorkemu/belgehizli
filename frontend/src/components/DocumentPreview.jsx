@@ -152,6 +152,17 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
                     </div>
                 )}
             </div>
+            {currentStep === 1 && (
+                <div className={styles.step1Banner}>
+                    <div className={styles.bannerIcon}>
+                        <Edit3 size={20} />
+                    </div>
+                    <div>
+                        <strong>Formu doldurmaya başlayın</strong>
+                        <p>Doldurduğunuz bilgiler anında buraya yansıyacak. Formu doldurduktan sonra "Sonraki Adım" butonuna tıklayın.</p>
+                    </div>
+                </div>
+            )}
             <div className={styles.paperContainer}>
                 <div
                     ref={editorRef}
