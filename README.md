@@ -137,47 +137,47 @@ Every template **MUST** include a `belge_email` field for automated email delive
     "price": 15,
     "slug": "konut-kira-sozlesmesi",
     "content": "<h2>KONUT KİRA SÖZLEŞMESİ</h2>\n\n<p><strong>1. TARAFLAR</strong></p>\n\
-<p><strong>A. KİRAYA VEREN(LER):</strong></p>\n\
-{{#each kiralayanlar}}\n\
-<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n\
-  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n\
-  <p>Adresi: {{this.adres}}</p>\n\
-</div>\n\
-{{/each}}\n\n\
-<p><strong>B. KİRACI(LAR):</strong></p>\n\
-{{#each kiracilar}}\n\
-<div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n\
-  <p>T.C. Kimlik No: {{this.tc_no}}</p>\n\
-  <p>Adresi: {{this.adres}}</p>\n\
-</div>\n\
-{{/each}}\n\n\
-<p><strong>2. KİRALANAN KONUT</strong></p>\n\
-<p>Kiralanan Adresi: {{kiralanan_adres}}</p>\n\
-<p>Başlangıç Tarihi: {{formatDate baslangic_tarihi}}</p>\n\
-<p>Kira Süresi: {{kira_suresi}} Ay</p>\n\
-<p>Aylık Kira Bedeli: {{aylik_kira_bedeli}} TL</p>\n\
-<p>Ödeme Günü: Her ayın {{odeme_gunu}}. günü</p>\n\n\
-<p><strong>3. KİRA ARTIŞI</strong></p>\n\
-{{#if (eq artis_tipi 'TÜFE')}}\n\
-<p>Kira bedeli her yıl TÜFE oranında artırılacaktır.</p>\n\
-{{else}}\n\
-<p>Kira bedeli her yıl %{{artis_orani}} oranında artırılacaktır.</p>\n\
-{{/if}}\n\n\
-<p><strong>4. DEPOZİTO</strong></p>\n\
-{{#if (eq depozito_alindi 'Evet')}}\n\
-<p>Kiracı(lar)dan toplam {{depozito_tutari}} TL depozito alınmıştır.</p>\n\
-{{else}}\n\
-<p>Kiracı(lar)dan depozito alınmamıştır.</p>\n\
-{{/if}}\n\n\
-<p><strong>5. ÖZEL KOŞULLAR</strong></p>\n\
-<p>{{ozel_kosullar}}</p>\n\n\
-<p>İşbu sözleşme, taraflarca okunmuş, anlaşılmış ve {{formatDate imza_tarihi}} tarihinde imzalanmıştır.</p>\n\n\
-<div style='margin-top: 40px;'>\n  <p><strong>Kiraya Veren(ler):</strong></p>\n\
-  {{#each kiralayanlar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n  {{/each}}\n\
-  <p><strong>Kiracı(lar):</strong></p>\n\
-  {{#each kiracilar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n\
-  {{/each}}\n\
-</div>",
+        <p><strong>A. KİRAYA VEREN(LER):</strong></p>\n\
+        {{#each kiralayanlar}}\n\
+        <div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n\
+        <p>T.C. Kimlik No: {{this.tc_no}}</p>\n\
+        <p>Adresi: {{this.adres}}</p>\n\
+        </div>\n\
+        {{/each}}\n\n\
+        <p><strong>B. KİRACI(LAR):</strong></p>\n\
+        {{#each kiracilar}}\n\
+        <div style='margin-bottom: 10px;'>\n  <p>Adı Soyadı: {{this.ad_soyad}}</p>\n\
+        <p>T.C. Kimlik No: {{this.tc_no}}</p>\n\
+        <p>Adresi: {{this.adres}}</p>\n\
+        </div>\n\
+        {{/each}}\n\n\
+        <p><strong>2. KİRALANAN KONUT</strong></p>\n\
+        <p>Kiralanan Adresi: {{kiralanan_adres}}</p>\n\
+        <p>Başlangıç Tarihi: {{formatDate baslangic_tarihi}}</p>\n\
+        <p>Kira Süresi: {{kira_suresi}} Ay</p>\n\
+        <p>Aylık Kira Bedeli: {{aylik_kira_bedeli}} TL</p>\n\
+        <p>Ödeme Günü: Her ayın {{odeme_gunu}}. günü</p>\n\n\
+        <p><strong>3. KİRA ARTIŞI</strong></p>\n\
+        {{#if (eq artis_tipi 'TÜFE')}}\n\
+        <p>Kira bedeli her yıl TÜFE oranında artırılacaktır.</p>\n\
+        {{else}}\n\
+        <p>Kira bedeli her yıl %{{artis_orani}} oranında artırılacaktır.</p>\n\
+        {{/if}}\n\n\
+        <p><strong>4. DEPOZİTO</strong></p>\n\
+        {{#if (eq depozito_alindi 'Evet')}}\n\
+        <p>Kiracı(lar)dan toplam {{depozito_tutari}} TL depozito alınmıştır.</p>\n\
+        {{else}}\n\
+        <p>Kiracı(lar)dan depozito alınmamıştır.</p>\n\
+        {{/if}}\n\n\
+        <p><strong>5. ÖZEL KOŞULLAR</strong></p>\n\
+        <p>{{ozel_kosullar}}</p>\n\n\
+        <p>İşbu sözleşme, taraflarca okunmuş, anlaşılmış ve {{formatDate imza_tarihi}} tarihinde imzalanmıştır.</p>\n\n\
+        <div style='margin-top: 40px;'>\n  <p><strong>Kiraya Veren(ler):</strong></p>\n\
+        {{#each kiralayanlar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n  {{/each}}\n\
+        <p><strong>Kiracı(lar):</strong></p>\n\
+        {{#each kiracilar}}\n  <p>{{this.ad_soyad}}<br/>İmza: _________________________</p>\n\
+        {{/each}}\n\
+        </div>",
     "fields": [
         {
             "name": "kiralayanlar",
@@ -188,9 +188,24 @@ Every template **MUST** include a `belge_email` field for automated email delive
             "removeLabel": "Kiraya Vereni Sil",
             "minInstances": 1,
             "subfields": [
-                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
-                { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
-                { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
+                {
+                    "name": "ad_soyad",
+                    "label": "Adı Soyadı",
+                    "fieldType": "text",
+                    "required": true
+                },
+                {
+                    "name": "tc_no",
+                    "label": "T.C. Kimlik No",
+                    "fieldType": "text",
+                    "required": true
+                },
+                {
+                    "name": "adres",
+                    "label": "İkametgah Adresi",
+                    "fieldType": "textarea",
+                    "required": true
+                }
             ]
         },
         {
@@ -202,9 +217,24 @@ Every template **MUST** include a `belge_email` field for automated email delive
             "removeLabel": "Kiracıyı Sil",
             "minInstances": 1,
             "subfields": [
-                { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
-                { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
-                { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
+                {
+                    "name": "ad_soyad",
+                    "label": "Adı Soyadı",
+                    "fieldType": "text",
+                    "required": true
+                },
+                {
+                    "name": "tc_no",
+                    "label": "T.C. Kimlik No",
+                    "fieldType": "text",
+                    "required": true
+                },
+                {
+                    "name": "adres",
+                    "label": "İkametgah Adresi",
+                    "fieldType": "textarea",
+                    "required": true
+                }
             ]
         },
         {
@@ -254,7 +284,10 @@ Every template **MUST** include a `belge_email` field for automated email delive
             "fieldType": "number",
             "required": false,
             "placeholder": "Artış Yöntemi 'Belirtilen Oran' ise doldurun",
-            "condition": { "field": "artis_tipi", "value": "Belirtilen Oran" }
+            "condition": {
+                "field": "artis_tipi",
+                "value": "Belirtilen Oran"
+            }
         },
         {
             "name": "depozito_alindi",
@@ -269,7 +302,10 @@ Every template **MUST** include a `belge_email` field for automated email delive
             "fieldType": "number",
             "required": false,
             "placeholder": "Depozito alındıysa doldurun",
-            "condition": { "field": "depozito_alindi", "value": "Evet" }
+            "condition": {
+                "field": "depozito_alindi",
+                "value": "Evet"
+            }
         },
         {
             "name": "ozel_kosullar",
