@@ -5,11 +5,7 @@ import styles from './TemplateDetail.module.css';
 import DocumentForm from './DocumentForm';
 import DocumentPreview from './DocumentPreview';
 import { Helmet } from 'react-helmet-async';
-import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Coffee, X, ArrowDown, Lock, Edit2, ArrowRight, Save } from 'lucide-react';
-
-const KULLANIM_SARTLARI_CURRENT_VERSION = "v_20260329";
-const ON_BILGILENDIRME_FORMU_CURRENT_VERSION = "v_20260329";
-const COMBINED_LEGAL_DOC_VERSION = `KSTerms:${KULLANIM_SARTLARI_CURRENT_VERSION}_OBFTerms:${ON_BILGILENDIRME_FORMU_CURRENT_VERSION}`;
+import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Coffee, X, ArrowDown, Edit2, ArrowRight } from 'lucide-react';
 
 function TemplateDetail() {
     const { slug } = useParams();
@@ -30,7 +26,6 @@ function TemplateDetail() {
     const [isNoticeDismissed, setIsNoticeDismissed] = useState(false);
     const editorRef = useRef(null);
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
-
     const [currentStep, setCurrentStep] = useState(1);
     const [showBackWarning, setShowBackWarning] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
@@ -217,10 +212,9 @@ function TemplateDetail() {
                 editedHtml: finalEditedHtml,
                 email: formData?.belge_email || '',
                 consentTimestamp: new Date().toISOString(),
-                documentVersion: COMBINED_LEGAL_DOC_VERSION
             };
 
-            const response = await axios.post(`${API_BASE_URL}/templates/${template._id}/process-payment`, backendPayload, {
+            const response = await axios.post(`${API_BASE_URL}/templates/${template._id}/generate-document`, backendPayload, {
                 responseType: 'blob'
             });
 

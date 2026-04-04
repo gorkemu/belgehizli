@@ -26,13 +26,13 @@ const legalRoutes = require('./routes/legal');
 dotenv.config();
 const app = express();
 
-app.set('trust proxy', 1); 
+app.set('trust proxy', 1);
 
 app.get('/api/ping', (req, res) => {
     res.status(200).send('Sunucu ayakta!');
 });
 
-const Template = require('./models/template'); 
+const Template = require('./models/template');
 const { format } = require('date-fns');
 
 app.get('/sitemap.xml', async (req, res) => {
@@ -107,7 +107,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(express.json({ limit: '10mb' })); 
+app.use(express.json({ limit: '10mb' }));
 
 app.use(helmet());
 app.use((req, res, next) => {
@@ -143,8 +143,8 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
         try {
             const adminCount = await AdminUser.countDocuments();
             if (adminCount === 0) {
-                const adminUser = process.env.ADMIN_USERNAME || 'admin';
-                const adminPass = process.env.ADMIN_PASSWORD || 'admin123';
+                const adminUser = process.env.ADMIN_USERNAME;
+                const adminPass = process.env.ADMIN_PASSWORD;
                 const salt = await bcrypt.genSalt(10);
                 const hashedPassword = await bcrypt.hash(adminPass, salt);
                 await AdminUser.create({ username: adminUser, passwordHash: hashedPassword });
@@ -161,15 +161,15 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
                 expirationDate.setHours(expirationDate.getHours() - 24);
 
                 const result = await Transaction.updateMany(
-                    { 
+                    {
                         createdAt: { $lt: expirationDate },
                         $or: [
                             { formDataSnapshot: { $exists: true } },
                             { editedHtmlSnapshot: { $exists: true } }
                         ]
                     },
-                    { 
-                        $unset: { formDataSnapshot: 1, editedHtmlSnapshot: 1 } 
+                    {
+                        $unset: { formDataSnapshot: 1, editedHtmlSnapshot: 1 }
                     }
                 );
 

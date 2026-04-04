@@ -4,6 +4,7 @@ const Template = require('../models/template');
 const Transaction = require('../models/transaction');
 const Invoice = require('../models/invoice');
 const ConsentLog = require('../models/consentLog');
+const LegalDocument = require('../models/LegalDocument');
 const { generatePdf } = require('../pdf-generator/pdfGenerator');
 const { sendPdfEmail } = require('../utils/mailer');
 const { sanitizeHtmlForPdf } = require('../utils/sanitizer');
@@ -137,7 +138,7 @@ router.get('/templates/:id', async (req, res) => {
     }
 });
 
-router.post('/templates/:id/process-payment', async (req, res) => {
+router.post('/templates/:id/generate-document', async (req, res) => {
     let pdfBuffer = null;
     let template = null;
     let newTransaction = null;
@@ -147,10 +148,10 @@ router.post('/templates/:id/process-payment', async (req, res) => {
         template = await Template.findById(req.params.id);
         if (!template) return res.status(404).json({ message: 'Şablon bulunamadı' });
 
-        const { formData, editedHtml, consentTimestamp, documentVersion } = req.body;
+        const { formData, editedHtml, consentTimestamp } = req.body;
         const userEmailForLog = formData?.belge_email || 'unknown@example.com';
 
-        if (!consentTimestamp || !documentVersion) {
+        if (!consentTimestamp) {
             return res.status(400).json({ message: 'Kullanıcı onayı bilgileri eksik.' });
         }
 
@@ -166,13 +167,25 @@ router.post('/templates/:id/process-payment', async (req, res) => {
         });
         await newTransaction.save();
 
+        const [activeKSTerms, activeOBFTerms, activeGizlilik] = await Promise.all([
+            LegalDocument.findOne({ type: 'kullanim_sartlari', isActive: true }),
+            LegalDocument.findOne({ type: 'on_bilgilendirme', isActive: true }),
+            LegalDocument.findOne({ type: 'gizlilik_politikasi', isActive: true })
+        ]);
+
+        const ksVersion = activeKSTerms ? activeKSTerms.version : 'v_Bilinmiyor';
+        const obfVersion = activeOBFTerms ? activeOBFTerms.version : 'v_Bilinmiyor';
+        const gizlilikVersion = activeGizlilik ? activeGizlilik.version : 'v_Bilinmiyor'; 
+        
+        const dynamicDocumentVersion = `KS:${ksVersion}_OBF:${obfVersion}_Gizlilik:${gizlilikVersion}`;
+
         newConsentLog = new ConsentLog({
             transactionId: newTransaction._id,
             userEmail: userEmailForLog,
             ipAddress: req.ip || req.socket?.remoteAddress || 'N/A',
             userAgent: req.headers['user-agent'] || 'N/A',
             documentType: 'LEGAL_TERMS_AGREEMENT',
-            documentVersion: documentVersion,
+            documentVersion: dynamicDocumentVersion,
             consentTimestampClient: new Date(consentTimestamp)
         });
         await newConsentLog.save();
