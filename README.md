@@ -125,7 +125,7 @@ Every template **MUST** include a `belge_email` field for automated email delive
 }
 ```
 
-### Complete JSON Example
+### Complete JSON Example 
 
 <details>
 <summary><b>View a full example (Konut Kira Sözleşmesi)</b></summary>
