@@ -86,8 +86,11 @@ const pdfLimiter = rateLimit({
 });
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    process.env.ADMIN_URL,
+    process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : null,
+    process.env.ADMIN_URL ? process.env.ADMIN_URL.replace(/\/$/, '') : null,
+    'https://www.belgehizli.com',  
+    'https://belgehizli.com',      
+    'https://staging.belgehizli.com', 
     process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null,
     process.env.NODE_ENV === 'development' ? 'http://localhost:5174' : null
 ].filter(Boolean);
