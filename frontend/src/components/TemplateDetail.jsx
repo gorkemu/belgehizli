@@ -218,11 +218,25 @@ function TemplateDetail() {
                 responseType: 'blob'
             });
 
+            const formatFilename = (text) => {
+                if (!text) return 'belge';
+                return text
+                    .replace(/Ğ/g, 'G').replace(/Ü/g, 'U').replace(/Ş/g, 'S')
+                    .replace(/I/g, 'I').replace(/İ/g, 'I').replace(/Ö/g, 'O')
+                    .replace(/Ç/g, 'C').replace(/ğ/g, 'g').replace(/ü/g, 'u')
+                    .replace(/ş/g, 's').replace(/ı/g, 'i').replace(/i/g, 'i')
+                    .replace(/ö/g, 'o').replace(/ç/g, 'c')
+                    .replace(/\s+/g, '_') 
+                    .replace(/[^a-zA-Z0-9._-]/g, ''); 
+            };
+
             const blob = new Blob([response.data], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
-            const filename = template?.name ? `${template.name.replace(/[^a-zA-Z0-9._-]/g, '_')}.pdf` : 'belge.pdf';
+            
+            const filename = template?.name ? `${formatFilename(template.name)}.pdf` : 'belge.pdf';
+            
             link.download = filename;
             document.body.appendChild(link);
             link.click();
@@ -237,14 +251,14 @@ function TemplateDetail() {
         } catch (error) {
             console.error('İndirme hatası:', error);
 
-            let message = 'Bir şey ters gitti 😕 Lütfen tekrar dene veya bize ulaş.';
+            let message = 'Bir şey ters gitti 😕 Lütfen tekrar deneyin.';
 
             if (error.response?.status === 429) {
-                message = 'Çok fazla istek yapıldı, lütfen biraz bekleyip tekrar dene.';
+                message = 'Çok fazla istek yapıldı, lütfen biraz bekleyip tekrar deneyin.';
             } else if (error.response?.status === 500) {
-                message = 'Sunucu kaynaklı bir hata oluştu, lütfen daha sonra tekrar dene.';
+                message = 'Sunucu kaynaklı bir hata oluştu, lütfen daha sonra tekrar deneyin.';
             } else if (error.code === 'ERR_NETWORK') {
-                message = 'İnternet bağlantında bir sorun var gibi görünüyor.';
+                message = 'Lütfen internet bağlantınızı kontrol edin ve daha sonra tekrar deneyin.';
             }
 
             setDownloadError(message);
