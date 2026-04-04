@@ -14,7 +14,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsOfService from './components/TermsOfService';
 import PreInformationForm from './components/PreInformationForm';
 import Header from './components/Header';
-import Footer from './components/Footer';
+import Footer from './components/Footer'; 
 import FloatingSupport from './components/FloatingSupport';
 
 function App() {
