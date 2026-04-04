@@ -86,12 +86,10 @@ const pdfLimiter = rateLimit({
 });
 
 const allowedOrigins = [
-    'http://localhost:5173',
-    'http://localhost:5174',
-    'https://www.belgehizli.com',
-    'https://belgehizli.com',
     process.env.FRONTEND_URL,
-    process.env.ADMIN_URL
+    process.env.ADMIN_URL,
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null,
+    process.env.NODE_ENV === 'development' ? 'http://localhost:5174' : null
 ].filter(Boolean);
 
 const corsOptions = {
