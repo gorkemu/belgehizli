@@ -8,12 +8,17 @@ const AdminUserSchema = new mongoose.Schema({
         required: true,
         unique: true,
         trim: true,
-        lowercase: true,
-        default: 'admin'
+        lowercase: true
     },
     passwordHash: {
         type: String,
         required: true,
+    },
+    role: {
+        type: String,
+        enum: ['SUPER_ADMIN', 'TEMPLATE_EDITOR'], 
+        default: 'TEMPLATE_EDITOR', 
+        required: true
     }
 }, {
     timestamps: true
