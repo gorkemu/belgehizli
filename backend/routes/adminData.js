@@ -7,6 +7,9 @@ const Invoice = require('../models/invoice');
 const ConsentLog = require('../models/consentLog');
 const { buildMongoFilters } = require('../utils/filterUtils'); 
 const mapSortKey = (key) => (key === 'id' ? '_id' : key);
+const AdminUser = require('../models/adminUser');
+const bcrypt = require('bcryptjs');
+const { protectAdmin, authorizeRole } = require('../middleware/adminAuthMiddleware');
 
 const transactionResourceFields = {
     userEmail: 'string_like',
@@ -306,6 +309,64 @@ router.get('/dashboard-stats', async (req, res) => {
     } catch (error) {
         console.error('Error fetching dashboard stats:', error);
         res.status(500).json({ message: 'Dashboard istatistikleri alınırken bir hata oluştu.' });
+    }
+});
+
+// [GET] List Admin Users (only SUPER_ADMIN) for react-admin
+router.get('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (req, res) => {
+    try {
+        const users = await AdminUser.find().select('-passwordHash'); 
+        
+        res.set('X-Total-Count', users.length);
+        
+        const mappedUsers = users.map(u => ({
+            id: u._id,
+            username: u.username,
+            role: u.role,
+            createdAt: u.createdAt
+        }));
+        
+        res.json(mappedUsers);
+    } catch (error) {
+        console.error('Kullanıcı listeleme hatası:', error);
+        res.status(500).json({ message: 'Kullanıcılar alınamadı.' });
+    }
+});
+
+// [POST] C
+router.post('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (req, res) => {
+    try {
+        const { username, password, role } = req.body;
+
+        if (!username || !password || !role) {
+            return res.status(400).json({ message: 'Kullanıcı adı, şifre ve rol zorunludur.' });
+        }
+
+        const existing = await AdminUser.findOne({ username: username.toLowerCase() });
+        if (existing) {
+            return res.status(400).json({ message: 'Bu kullanıcı adı zaten kullanılıyor.' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const passwordHash = await bcrypt.hash(password, salt);
+
+        const newUser = new AdminUser({ 
+            username: username.toLowerCase(), 
+            passwordHash, 
+            role 
+        });
+        
+        await newUser.save();
+
+        res.status(201).json({ 
+            id: newUser._id, 
+            username: newUser.username, 
+            role: newUser.role 
+        });
+
+    } catch (error) {
+        console.error('Kullanıcı oluşturma hatası:', error);
+        res.status(500).json({ message: 'Kullanıcı oluşturulurken bir hata meydana geldi.' });
     }
 });
 

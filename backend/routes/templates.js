@@ -8,6 +8,9 @@ const LegalDocument = require('../models/LegalDocument');
 const { generatePdf } = require('../pdf-generator/pdfGenerator');
 const { sendPdfEmail } = require('../utils/mailer');
 const { sanitizeHtmlForPdf } = require('../utils/sanitizer');
+const { createTemplate, updateTemplate, deleteTemplate } = require('../controllers/templateController');
+const { protectAdmin } = require('../middleware/adminAuthMiddleware');
+const { verifyToken, authorizeRole } = require('../middleware/adminAuthMiddleware');
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -294,5 +297,18 @@ router.post('/templates/:id/generate-document', async (req, res) => {
         }
     }
 });
+
+// ==========================================
+// ADMIN PANEL ROUTES FOR TEMPLATE MANAGEMENT
+// ==========================================
+
+// 1. Create Template (SUPER_ADMIN and TEMPLATE_EDITOR can do)
+router.post('/admin/sablonlar', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), createTemplate);
+
+// 2. Update Template (SUPER_ADMIN and TEMPLATE_EDITOR can do)
+router.put('/admin/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), updateTemplate);
+
+// 3. Delete Template (ONLY SUPER_ADMIN can do)
+router.delete('/admin/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN'), deleteTemplate);
 
 module.exports = router;

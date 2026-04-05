@@ -16,7 +16,7 @@ router.post('/login', loginLimiter, async (req, res) => {
     const { username, password } = req.body;
 
     const jwtSecretEnv = process.env.JWT_SECRET;
-    const jwtExpiresInEnv = process.env.JWT_EXPIRES_IN || '1h';
+    const jwtExpiresInEnv = process.env.JWT_EXPIRES_IN || '1d';
 
     if (!jwtSecretEnv) {
         console.error('Admin login config error: JWT_SECRET is missing in .env');
@@ -38,11 +38,9 @@ router.post('/login', loginLimiter, async (req, res) => {
         }
 
         const payload = {
-            user: {
-                id: admin._id,
-                username: admin.username,
-                role: 'admin'
-            }
+            id: admin._id,
+            username: admin.username,
+            role: admin.role
         };
 
         jwt.sign(payload, jwtSecretEnv, { expiresIn: jwtExpiresInEnv }, (err, token) => {
@@ -54,7 +52,11 @@ router.post('/login', loginLimiter, async (req, res) => {
                 success: true,
                 message: 'Admin girişi başarılı!',
                 token: token,
-                user: { id: admin._id, username: admin.username, role: 'admin' }
+                user: { 
+                    id: admin._id, 
+                    username: admin.username, 
+                    role: admin.role
+                }
             });
         });
 
