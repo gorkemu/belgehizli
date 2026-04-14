@@ -51,7 +51,12 @@ jobs:
 
     - name: Playwright Testlerini Çalıştır
       working-directory: ./frontend
-      # Frontend testleri çalışırken webServer (playwright.config.js) frontend'i ayağa kaldıracak
+      env:
+        # GitHub Secrets'tan alıp sistem değişkenine eşliyoruz
+        TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+        TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+        # Varsa diğer API URL vb. değişkenler
+        VITE_API_URL: http://localhost:5000 
       run: npx playwright test
 
     # --- HATA DURUMUNDA RAPORLARI KAYDET ---

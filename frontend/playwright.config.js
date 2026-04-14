@@ -11,9 +11,12 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   
+  globalSetup: require.resolve('./tests/global-setup'),
+
   use: {
     baseURL: 'http://localhost:5173',
-    
+    // 2. Kaydedilen oturum dosyasının yolu
+    storageState: 'storageState.json',
     // Testler başarısız olursa video ve hata takibini kaydet 
     trace: 'on-first-retry',
     video: 'retain-on-failure',
