@@ -38,7 +38,7 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     await projectCard.getByTitle('Belgeyi Sil').click();
 
     // "Belgeyi Sil" modalında "Kalıcı Olarak Sil" butonuna tıkla
-    await page.getByRole('button', { name: 'Klıcı Olarak Sil' }).click();
+    await page.getByRole('button', { name: 'Kalıcı Olarak Sil' }).click();
 
     await page.waitForTimeout(500); // Silme işleminin bitmesini bekle
     await page.close();

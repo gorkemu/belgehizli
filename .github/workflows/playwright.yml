@@ -32,6 +32,7 @@ jobs:
         ATLAS_URI: ${{ secrets.ATLAS_URI }}
         MONGO_URI: ${{ secrets.ATLAS_URI }} 
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        BROWSERLESS_API_KEY: ${{ secrets.BROWSERLESS_API_KEY }}
         PORT: 8080
         NODE_ENV: development
       run: npm run start & 
