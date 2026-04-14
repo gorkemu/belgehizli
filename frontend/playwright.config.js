@@ -11,7 +11,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
   
-  globalSetup: require.resolve('./tests/global-setup'),
+  globalSetup: './tests/global-setup.js',
 
   use: {
     baseURL: 'http://localhost:5173',
