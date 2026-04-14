@@ -1,0 +1,227 @@
+/* Auth.module.css */
+.authContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 24px;
+    background: #f5f5f4;
+    position: relative;
+    overflow: hidden;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.authContainer::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: radial-gradient(circle at 30% 70%, rgba(37, 99, 235, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+.authCard {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 44px 40px;
+    border-radius: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    width: 100%;
+    max-width: 460px;
+    position: relative;
+    z-index: 1;
+    border: 1px solid #e7e5e4;
+}
+
+.authTitle {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #1c1917;
+    text-align: center;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+}
+
+.authSubtitle {
+    color: #57534e;
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #57534e;
+    margin-left: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+}
+
+.input {
+    padding: 14px 18px;
+    border: 1px solid #e7e5e4;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #1c1917;
+    background-color: #fafaf9;
+    transition: all 0.15s ease;
+    outline: none;
+    font-family: inherit;
+}
+
+.input:hover {
+    border-color: #d6d3d1;
+    background-color: #ffffff;
+}
+
+.input:focus {
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.input::placeholder {
+    color: #a8a29e;
+    font-weight: 400;
+}
+
+.submitBtn {
+    width: 100%;
+    background-color: #1c1917;
+    color: white;
+    border: none;
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 14px;
+    cursor: pointer;
+    margin-top: 28px;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.submitBtn:hover:not(:disabled) {
+    background-color: #292524;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.submitBtn:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #a8a29e;
+    box-shadow: none;
+    transform: none;
+}
+
+.errorBox {
+    background-color: #fef2f2;
+    color: #dc2626;
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #fecaca;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.switchText {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 0.95rem;
+    color: #57534e;
+}
+
+.switchLink {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 700;
+    margin-left: 4px;
+    transition: color 0.15s;
+}
+
+.switchLink:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.accountTypeGroup {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.accountTypeOption {
+    flex: 1;
+    padding: 16px 8px;
+    text-align: center;
+    border: 1px solid #e7e5e4;
+    border-radius: 14px;
+    cursor: pointer;
+    background-color: #fafaf9;
+    font-weight: 600;
+    color: #57534e;
+    transition: all 0.15s ease;
+    font-size: 0.9rem;
+}
+
+.accountTypeOption:hover {
+    border-color: #d6d3d1;
+    background-color: #ffffff;
+    color: #1c1917;
+}
+
+.accountTypeOptionActive {
+    border-color: #2563eb;
+    background-color: #eff6ff;
+    color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+    .authCard {
+        padding: 32px 24px;
+    }
+    
+    .authTitle {
+        font-size: 1.6rem;
+    }
+}

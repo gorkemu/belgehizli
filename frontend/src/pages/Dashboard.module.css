@@ -1,0 +1,533 @@
+/* Dashboard.module.css */
+.root {
+    padding: 40px;
+    max-width: 1040px;
+    margin: 0 auto;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    height: 60vh;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #57534e;
+}
+
+.spinner {
+    color: #a8a29e;
+    animation: spin 1s linear infinite;
+}
+
+.loadingText {
+    margin-top: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.toast {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 40px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    font-size: 0.9rem;
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+.toastSuccess {
+    background-color: #1c1917;
+}
+
+.toastError {
+    background-color: #dc2626;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(28, 25, 23, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+}
+
+.modalCard {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: scaleIn 0.2s ease-out;
+    border: 1px solid #e7e5e4;
+    cursor: default;
+}
+
+.modalIconBox {
+    width: 48px;
+    height: 48px;
+    background-color: #fef2f2;
+    border-radius: 12px;
+    border: 1px solid #fecaca;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.modalTitle {
+    margin: 0 0 8px 0;
+    color: #1c1917;
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+.modalText {
+    margin: 0 0 24px 0;
+    color: #57534e;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+.modalActions {
+    display: flex;
+    gap: 12px;
+}
+
+.cancelModalBtn {
+    flex: 1;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #d6d3d1;
+    border-radius: 8px;
+    color: #44403c;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.cancelModalBtn:hover {
+    background-color: #f5f5f4;
+    border-color: #a8a29e;
+    color: #1c1917;
+}
+
+.confirmDeleteBtn {
+    flex: 1;
+    padding: 10px;
+    background-color: #dc2626;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.confirmDeleteBtn:hover {
+    background-color: #b91c1c;
+}
+
+.heroSection {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.heroTextContainer {
+    max-width: 600px;
+}
+
+.greeting {
+    margin: 0;
+    color: #1c1917;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    margin: 8px 0 0 0;
+    color: #57534e;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.heroCardsRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.heroCardPrimary,
+.heroCardSecondary {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid #e7e5e4;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.heroCardPrimary {
+    background-color: #1c1917;
+    border-color: #1c1917;
+    color: white;
+}
+
+.heroCardPrimary:hover {
+    background-color: #292524;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(28, 25, 23, 0.15);
+}
+
+.heroCardSecondary {
+    background-color: #ffffff;
+    color: #1c1917;
+}
+
+.heroCardSecondary:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.heroCardIconPrimary {
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.heroCardIconSecondary {
+    width: 48px;
+    height: 48px;
+    background-color: #f5f5f4;
+    border: 1px solid #e7e5e4;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.heroCardContent h3 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.heroCardPrimary .heroCardContent p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #a8a29e;
+    font-weight: 500;
+}
+
+.heroCardSecondary .heroCardContent p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #57534e;
+    font-weight: 500;
+}
+
+.projectsSection {
+    background-color: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #e7e5e4;
+    width: 100%;
+}
+
+.sectionHeader {
+    padding: 20px 24px;
+    border-bottom: 1px solid #e7e5e4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fafaf9;
+    border-radius: 16px 16px 0 0;
+}
+
+.sectionTitle {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #1c1917;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.viewAllLink {
+    font-size: 0.85rem;
+    color: #57534e;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+    background-color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #e7e5e4;
+}
+
+.viewAllLink:hover {
+    background-color: #f5f5f4;
+    color: #1c1917;
+}
+
+.projectList {
+    display: flex;
+    flex-direction: column;
+}
+
+.emptyProjects {
+    padding: 60px 20px;
+    text-align: center;
+    color: #a8a29e;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.emptyIcon {
+    width: 48px;
+    height: 48px;
+    background-color: #f5f5f4;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e7e5e4;
+}
+
+.projectRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    transition: background-color 0.15s;
+    position: relative;
+    border-bottom: 1px solid #f5f5f4;
+}
+
+.projectRow:last-child {
+    border-bottom: none;
+}
+
+.projectRow:hover {
+    background-color: #fafaf9;
+}
+
+.projectInfo {
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.projectIconWrapper {
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border: 1px solid #e7e5e4;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.15s;
+}
+
+.projectRow:hover .projectIconWrapper {
+    background-color: #f5f5f4;
+    border-color: #d6d3d1;
+}
+
+.projectTextData {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.projectName {
+    margin: 0 0 4px 0;
+    color: #1c1917;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.projectDate {
+    font-size: 0.8rem;
+    color: #a8a29e;
+    font-weight: 500;
+}
+
+.editInput {
+    width: 100%;
+    max-width: 300px;
+    padding: 4px 8px;
+    margin-left: -8px;
+    border: 1.5px solid #1c1917;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    outline: none;
+    font-weight: 700;
+    font-family: inherit;
+    color: #1c1917;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(28, 25, 23, 0.1);
+}
+
+.projectMenu {
+    position: relative;
+}
+
+.menuTrigger {
+    background: none;
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #a8a29e;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.menuTrigger:hover {
+    background-color: #e7e5e4;
+    color: #1c1917;
+}
+
+.menuDropdown {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #e7e5e4;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    min-width: 180px;
+    padding: 6px;
+}
+
+.menuItem {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #44403c;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: left;
+    transition: background-color 0.15s;
+    font-family: inherit;
+}
+
+.menuItem:hover {
+    background-color: #f5f5f4;
+    color: #1c1917;
+}
+
+.menuDivider {
+    height: 1px;
+    background-color: #f5f5f4;
+    margin: 4px 0;
+}
+
+.menuItemDanger {
+    color: #dc2626;
+}
+
+.menuItemDanger:hover {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .root {
+        padding: 24px 16px;
+    }
+
+    .greeting {
+        font-size: 1.5rem;
+    }
+
+    .heroCardsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .projectRow {
+        padding: 16px;
+    }
+}

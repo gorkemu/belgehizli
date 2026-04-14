@@ -1,67 +1,76 @@
-import React, { useState, useEffect } from 'react';
+// frontend/src/components/Header.jsx
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search } from 'lucide-react';
+import { Search, LayoutDashboard } from 'lucide-react';
+import { AuthContext } from '../context/AuthContext';
 import styles from './Header.module.css';
 
 function Header() {
-    const [scrolled, setScrolled] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-    
-    const navigate = useNavigate();
-    const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 60);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useContext(AuthContext);
 
-    useEffect(() => {
-        setSearchTerm('');
-    }, [location]);
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-    const handleSearch = (e) => {
-        e.preventDefault();
-        if (searchTerm.trim()) {
-            navigate(`/sablonlar?search=${encodeURIComponent(searchTerm.trim())}`);
-        }
-    };
+  useEffect(() => { setSearchTerm(''); }, [location]);
 
-    return (
-        <>
-            <div className={styles.headerSpacer}></div>
+  const handleSearch = e => {
+    e.preventDefault();
+    if (searchTerm.trim()) navigate(`/sablonlar?search=${encodeURIComponent(searchTerm.trim())}`);
+  };
 
-            <header className={`${styles.appHeader} ${scrolled ? styles.scrolled : ''}`}>
-                <div className={styles.headerInner}>
-                    
-                    <Link to="/" className={styles.logoContainer}>
-                        <img src="/logo.png" alt="Belge Hızlı" className={styles.dynamicLogoImg} />
-                        <span className={styles.logoText}>
-                            BELGE <span className={styles.logoTextLight}>HIZLI</span>
-                        </span>
-                    </Link>
+  const dashboardPath = user?.currentOrganization?.type === 'CLIENT' ? '/portal' : '/panel';
 
-                    <div className={`${styles.searchWrapper} ${scrolled ? styles.searchVisible : styles.searchHidden}`}>
-                        <form className={styles.headerSearch} onSubmit={handleSearch}>
-                            <Search className={styles.searchIcon} size={18} />
-                            <input
-                                type="text"
-                                placeholder="Şablon ara (örn: kira)..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                            <button type="submit" className={styles.searchBtn}>Ara</button>
-                        </form>
-                    </div>
+  return (
+    <>
+      <div className={styles.headerSpacer} />
 
-                    <div className={styles.rightSpacer}></div>
+      <header className={`${styles.appHeader} ${scrolled ? styles.scrolled : ''}`}>
+        <div className={styles.headerInner}>
 
-                </div>
-            </header>
-        </>
-    );
+          <Link to="/" className={styles.logoContainer}>
+            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.logoFull} />
+            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.logoIcon} />
+          </Link>
+
+          <div className={`${styles.searchWrapper} ${scrolled ? styles.searchVisible : styles.searchHidden}`}>
+            <form className={styles.headerSearch} onSubmit={handleSearch}>
+              <Search className={styles.searchIcon} size={16} />
+              <input
+                type="text"
+                placeholder="Hazır şablon ara (örn: kira, dilekçe)..."
+                value={searchTerm}
+                onChange={e => setSearchTerm(e.target.value)}
+              />
+              <button type="submit" className={styles.searchBtn}>Bul</button>
+            </form>
+          </div>
+
+          <div className={styles.rightSpacer}>
+            {user ? (
+              <Link to={dashboardPath} className={styles.dashboardBtn}>
+                <LayoutDashboard size={16} />
+                <span>Çalışma Alanı</span>
+              </Link>
+            ) : (
+              <div className={styles.authButtons}>
+                <Link to="/giris-yap" className={styles.loginLink}>Giriş</Link>
+                <Link to="/kayit-ol" className={styles.registerLink}>Ücretsiz Başla</Link>
+              </div>
+            )}
+          </div>
+
+        </div>
+      </header>
+    </>
+  );
 }
 
 export default Header;

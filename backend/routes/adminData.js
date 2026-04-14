@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const Transaction = require('../models/transaction');
 const Invoice = require('../models/invoice');
 const ConsentLog = require('../models/consentLog');
+const Template = require('../models/template');
 const { buildMongoFilters } = require('../utils/filterUtils'); 
 const mapSortKey = (key) => (key === 'id' ? '_id' : key);
 const AdminUser = require('../models/adminUser');
@@ -109,6 +110,26 @@ const handleListRequest = async (req, res, Model, resourceName, resourceSchemaFi
         console.error(`Error fetching ${resourceName} for admin:`, error);
         res.status(500).json({ message: `${resourceName} listesi alınırken hata oluştu.` });
     }
+};
+
+const formatOptionsToArray = (fields) => {
+    if (!fields || !Array.isArray(fields)) return fields;
+    
+    return fields.map(field => {
+        if (typeof field.options === 'string') {
+            field.options = field.options.split(',').map(s => s.trim()).filter(Boolean);
+        }
+        
+        if (field.subfields && Array.isArray(field.subfields)) {
+            field.subfields = field.subfields.map(sub => {
+                if (typeof sub.options === 'string') {
+                    sub.options = sub.options.split(',').map(s => s.trim()).filter(Boolean);
+                }
+                return sub;
+            });
+        }
+        return field;
+    });
 };
 
 router.get('/transactions', (req, res) => {
@@ -312,7 +333,7 @@ router.get('/dashboard-stats', async (req, res) => {
     }
 });
 
-// [GET] List Admin Users (only SUPER_ADMIN) for react-admin
+// [GET] List Admin Users for react-admin
 router.get('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (req, res) => {
     try {
         const users = await AdminUser.find().select('-passwordHash'); 
@@ -333,7 +354,7 @@ router.get('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (re
     }
 });
 
-// [POST] C
+// [POST] Create Admin User for react-admin
 router.post('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (req, res) => {
     try {
         const { username, password, role } = req.body;
@@ -367,6 +388,74 @@ router.post('/admin-users', protectAdmin, authorizeRole('SUPER_ADMIN'), async (r
     } catch (error) {
         console.error('Kullanıcı oluşturma hatası:', error);
         res.status(500).json({ message: 'Kullanıcı oluşturulurken bir hata meydana geldi.' });
+    }
+});
+
+// [GET] List Templates for react-admin 
+router.get('/sablonlar', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), async (req, res) => {
+    try {
+        const templates = await Template.find();
+        res.set('X-Total-Count', templates.length);
+        
+        const mappedTemplates = templates.map(t => ({
+            ...t._doc,
+            id: t._id
+        }));
+        res.json(mappedTemplates);
+    } catch (error) {
+        res.status(500).json({ message: 'Şablonlar alınamadı.' });
+    }
+});
+
+// [GET] Get Template Details for react-admin 
+router.get('/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), async (req, res) => {
+    try {
+        const template = await Template.findById(req.params.id);
+        if (!template) return res.status(404).json({ message: 'Şablon bulunamadı' });
+        
+        res.json({ ...template._doc, id: template._id });
+    } catch (error) {
+        res.status(500).json({ message: 'Şablon detayları alınamadı.' });
+    }
+});
+
+// [POST] Create Template for react-admin
+router.post('/sablonlar', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), async (req, res) => {
+    try {
+        req.body.fields = formatOptionsToArray(req.body.fields); 
+        
+        const newTemplate = new Template(req.body);
+        await newTemplate.save();
+        res.status(201).json({ ...newTemplate._doc, id: newTemplate._id });
+    } catch (error) {
+        res.status(500).json({ message: 'Şablon oluşturulamadı.', error: error.message });
+    }
+});
+
+// [PUT] Update Template for react-admin
+router.put('/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), async (req, res) => {
+    try {
+        const template = await Template.findById(req.params.id);
+        if (!template) return res.status(404).json({ message: 'Güncellenecek şablon bulunamadı.' });
+        console.log("REACT-ADMIN'DEN GELEN HAM FIELDS:", JSON.stringify(req.body.fields, null, 2));
+        req.body.fields = formatOptionsToArray(req.body.fields);
+        console.log("ÇEVİRİ SONRASI FIELDS:", JSON.stringify(req.body.fields, null, 2));
+        template.set(req.body);
+        await template.save();
+
+        res.json({ ...template._doc, id: template._id });
+    } catch (error) {
+        res.status(500).json({ message: 'Şablon güncellenirken hata oluştu.' });
+    }
+});
+
+// [DELETE] Delete Template for react-admin
+router.delete('/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN'), async (req, res) => {
+    try {
+        const deleted = await Template.findByIdAndDelete(req.params.id);
+        res.json({ ...deleted._doc, id: deleted._id });
+    } catch (error) {
+        res.status(500).json({ message: 'Şablon silinemedi.' });
     }
 });
 

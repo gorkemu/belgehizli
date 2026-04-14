@@ -36,3 +36,5 @@ admin-panel-frontend/.vite/
 /backend/legal_templates
 /backend/all_templates
 /backend/importTemplates.js
+degiskenornegi.json
+kullanimornekleri.md

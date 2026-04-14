@@ -56,7 +56,7 @@ const transactionSchema = new Schema({
     },
     billingInfoSnapshot: {
         type: String,
-        sparse: true 
+        sparse: true
     },
     errorMessage: {
         type: String

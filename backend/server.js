@@ -22,6 +22,8 @@ const AdminUser = require('./models/adminUser');
 const Transaction = require('./models/transaction');
 const bcrypt = require('bcryptjs');
 const legalRoutes = require('./routes/legal');
+const userAuthRoutes = require('./routes/userAuth');
+const projectsRoutes = require('./routes/projects');
 
 dotenv.config();
 const app = express();
@@ -108,7 +110,8 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.use(helmet());
 app.use((req, res, next) => {
@@ -118,8 +121,10 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/api/auth', userAuthRoutes);
 app.use('/api/legal', legalRoutes);
-
+app.use('/api/user-templates', require('./routes/userTemplates'));
+app.use('/api/projects', projectsRoutes);
 app.use('/api/', apiLimiter);
 
 app.use(/^\/api\/templates\/.*\/process-payment$/, pdfLimiter);

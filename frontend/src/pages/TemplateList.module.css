@@ -1,0 +1,529 @@
+/* TemplateList.module.css */
+
+:root {
+  --page-bg: #fbfbfb;
+  --surface: #ffffff;
+  --border: #e7e5e4;
+  --border2: #d6d3d1;
+  --text: #1c1917;
+  --text2: #57534e;
+  --text3: #a8a29e;
+  --accent: #2563eb;
+  --accent-bg: #eff6ff;
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .04);
+  --shadow: 0 4px 16px rgba(0, 0, 0, .04);
+
+  --r: 8px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+}
+
+.pageWrapper {
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.disclaimerBanner {
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  font-size: 0.8rem;
+  color: var(--text2);
+}
+
+.disclaimerInner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.disclaimerIcon {
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.listPageContainer {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+}
+
+.listHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 3.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 1.5rem;
+}
+
+.badge svg {
+  color: var(--text3);
+}
+
+.sectionTitle {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 1rem 0;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 1.05rem;
+  color: var(--text2);
+  margin: 0 0 2.5rem 0;
+  line-height: 1.6;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--border2);
+  border-radius: var(--r-xl);
+  padding: 5px 5px 5px 18px;
+  margin-bottom: 2rem;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .15s, box-shadow .15s;
+}
+
+.searchBar:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, .08);
+}
+
+.searchIcon {
+  color: var(--text3);
+  flex-shrink: 0;
+}
+
+.searchBar input {
+  flex: 1;
+  border: none;
+  padding: .75rem .875rem;
+  font-size: .95rem;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+}
+
+.searchBar input::placeholder {
+  color: var(--text3);
+}
+
+.searchBar button {
+  background: var(--text);
+  color: #fff;
+  border: none;
+  padding: .75rem 1.5rem;
+  border-radius: 18px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background .15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.searchBar button:hover {
+  background: #292524;
+}
+
+.categoryWrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.categoryTab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.5rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.categoryTab svg {
+  color: var(--text3);
+  transition: color 0.15s;
+}
+
+.categoryTab:hover {
+  background: var(--page-bg);
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.categoryTabActive {
+  background: var(--text);
+  color: #ffffff;
+  border-color: var(--text);
+}
+
+.categoryTabActive svg {
+  color: #ffffff;
+}
+
+.categoryTabActive:hover {
+  background: #292524;
+  border-color: #292524;
+  color: #fff
+}
+
+.templateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.templateCard {
+  background-color: var(--surface);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.templateCard:hover {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border-color: var(--border2);
+  transform: translateY(-4px);
+}
+
+.cardImageContainer {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+  background-color: var(--page-bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.cardPreviewImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.4s ease;
+}
+
+.templateCard:hover .cardPreviewImage {
+  transform: scale(1.05);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 25, 23, 0.4);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.templateCard:hover .imageOverlay {
+  opacity: 1;
+}
+
+.overlayAction {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transform: translateY(10px);
+  transition: transform 0.2s ease;
+}
+
+.templateCard:hover .overlayAction {
+  transform: translateY(0);
+}
+
+.cardContent {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cardTitle {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.cardDescription {
+  font-size: 0.9rem;
+  color: var(--text2);
+  line-height: 1.6;
+  margin: 0 0 1.5rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.cardFooter {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid #f5f5f4;
+}
+
+.cardLinkText {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text3);
+  font-weight: 700;
+  transition: color 0.15s ease, gap 0.15s ease;
+}
+
+.templateCard:hover .cardLinkText {
+  color: var(--text);
+  gap: 0.75rem;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+
+.loadMoreButton {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 0.9rem 2.5rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+}
+
+.loadMoreButton:hover {
+  background: var(--surface);
+  border-color: var(--text);
+}
+
+.noTemplatesMessage {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: var(--text2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border);
+}
+
+.noDataIconWrap {
+  width: 64px;
+  height: 64px;
+  background: var(--page-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  margin-bottom: 1rem;
+}
+
+.noTemplatesMessage h3 {
+  font-size: 1.2rem;
+  color: var(--text);
+  margin: 0 0 0.5rem 0;
+}
+
+.noTemplatesMessage p {
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem 0;
+}
+
+.clearSearchButton {
+  background-color: var(--text);
+  color: white;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  border-radius: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  font-family: inherit;
+}
+
+.clearSearchButton:hover {
+  background-color: #292524;
+}
+
+.statusContainerError {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: #dc2626;
+  font-size: 1.1rem;
+  font-weight: 600;
+  gap: 1.5rem;
+}
+
+.retryButton {
+  background-color: var(--text);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.skeletonCard {
+  pointer-events: none;
+  border: 1px solid var(--border);
+}
+
+.skeletonImage,
+.skeletonTitle,
+.skeletonDesc {
+  background: #f5f5f4;
+  background-image: linear-gradient(to right, #f5f5f4 0%, var(--border) 20%, #f5f5f4 40%, #f5f5f4 100%);
+  background-repeat: no-repeat;
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.skeletonImage {
+  height: 180px;
+  width: 100%;
+}
+
+.skeletonTitle {
+  height: 20px;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  width: 70%;
+}
+
+.skeletonDesc {
+  height: 12px;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.skeletonDescShort {
+  width: 50%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -468px 0;
+  }
+
+  100% {
+    background-position: 468px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .listPageContainer {
+    padding: 2rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .searchBar {
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .searchBar input {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem;
+  }
+
+  .searchIcon {
+    display: none;
+  }
+
+  .searchBar button {
+    width: 100%;
+    border-radius: 16px;
+    padding: 0.8rem;
+  }
+
+  .templateGrid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .disclaimerInner {
+    flex-direction: column;
+    text-align: left;
+    align-items: flex-start;
+  }
+}

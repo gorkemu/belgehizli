@@ -1,7 +1,8 @@
+// frontend/src/components/DocumentPreview.jsx
 import React, { useMemo } from 'react';
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
-import { FileSearch, AlertTriangle, FileText, Loader2, Edit3, Lock } from 'lucide-react';
+import { FileSearch, FileText, Loader2, Edit3, Lock, Eye } from 'lucide-react';
 import DOMPurify from 'dompurify';
 
 function formatDateHelper(dateString) {
@@ -14,12 +15,11 @@ function formatDateHelper(dateString) {
         const year = date.getFullYear();
         return `${day}.${month}.${year}`;
     } catch (e) {
-        console.error("Error formatting date:", dateString, e);
         return dateString;
     }
 }
 
-try {
+if (!Handlebars.helpers.math) {
     Handlebars.registerHelper('math', function (lvalue, operator, rvalue) {
         lvalue = parseFloat(lvalue);
         rvalue = parseFloat(rvalue);
@@ -30,97 +30,83 @@ try {
         }[operator];
     });
 
-    Handlebars.registerHelper('eq', function (a, b) {
-        return String(a) === String(b);
-    });
+    Handlebars.registerHelper('eq', function (a, b) { return String(a) === String(b); });
 
     Handlebars.registerHelper('each_with_index', function (context, options) {
         let ret = "";
         if (context && context.length > 0) {
-            for (let i = 0; i < context.length; i++) {
-                ret = ret + options.fn({ ...context[i], '@index': i });
-            }
+            for (let i = 0; i < context.length; i++) ret += options.fn({ ...context[i], '@index': i });
         } else {
             ret = options.inverse(this);
         }
         return ret;
     });
 
-    Handlebars.registerHelper('gt', function (a, b) {
-        return parseFloat(a) > parseFloat(b);
-    });
-
+    Handlebars.registerHelper('gt', function (a, b) { return parseFloat(a) > parseFloat(b); });
     Handlebars.registerHelper('default', function (value, defaultValue) {
         return value !== undefined && value !== null && value !== '' ? value : defaultValue;
     });
-
     Handlebars.registerHelper('formatDate', formatDateHelper);
-
-} catch (e) {
-    console.error("Handlebars helper kaydedilirken hata:", e);
 }
 
 function prepareTemplateForHighlighting(templateStr) {
+    if (!templateStr) return '';
     let processed = templateStr.replace(/\{\{\{(.*?)\}\}\}/g, `<mark class="${styles.dynamicHighlight}">{{{$1}}}</mark>`);
     processed = processed.replace(/\{\{(?![#\/!>{]|else\b)(.*?)\}\}/g, `<mark class="${styles.dynamicHighlight}">{{$1}}</mark>`);
     return processed;
 }
 
+const purifyConfig = {
+    ALLOWED_TAGS: [
+        'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
+        'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
+        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre',
+        'img', 'iframe'
+    ],
+    ALLOWED_ATTR: [
+        'class', 'style', 'href', 'target',
+        'src', 'alt', 'width', 'height',
+        'data-youtube-video', 'allowfullscreen', 'frameborder',
+        'containerstyle', 'wrapperstyle'
+    ],
+    FORBID_TAGS: ['script', 'style'],
+    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
+};
+
 function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
-    const compiledTemplate = useMemo(() => {
-        if (!templateContent) return null;
-        try {
-            return Handlebars.compile(templateContent);
-        } catch (error) {
-            console.error("Handlebars derleme hatası:", error);
-            return null;
-        }
-    }, [templateContent]);
 
     const safeHtml = useMemo(() => {
-        if (!compiledTemplate) return '';
+        if (!templateContent) return '';
 
         try {
             let templateToUse = templateContent;
+
             if (currentStep === 2) {
                 templateToUse = prepareTemplateForHighlighting(templateContent);
-                const tempCompiled = Handlebars.compile(templateToUse);
-                const rawHtml = tempCompiled(formData || {});
-                return DOMPurify.sanitize(rawHtml, {
-                    ALLOWED_TAGS: [
-                        'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
-                        'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
-                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
-                    ],
-                    ALLOWED_ATTR: ['class', 'style', 'href', 'target'],
-                    FORBID_TAGS: ['script', 'style', 'iframe'],
-                    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
-                });
-            } else {
-                const rawHtml = compiledTemplate(formData || {});
-                return DOMPurify.sanitize(rawHtml, {
-                    ALLOWED_TAGS: [
-                        'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
-                        'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
-                        'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre'
-                    ],
-                    ALLOWED_ATTR: ['class', 'style', 'href', 'target'],
-                    FORBID_TAGS: ['script', 'style', 'iframe'],
-                    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
-                });
             }
+
+            const compiledTemplate = Handlebars.compile(templateToUse);
+            const rawHtml = compiledTemplate(formData || {});
+
+            return DOMPurify.sanitize(rawHtml, purifyConfig);
+
         } catch (error) {
-            console.error("HTML oluşturma/temizleme hatası:", error);
-            return '<p style="color: red;">Önizleme oluşturulurken bir hata oluştu.</p>';
+            console.error("Şablon Derleme Hatası:", error);
+            return `
+                <div class="${styles.errorFallback}">
+                    <h3>Sözdizimi Hatası (Syntax Error)</h3>
+                    <p>Şablonunuzda kapatılmamış bir değişken <strong>{{ }}</strong> veya hatalı bir kurgu bulunuyor. Lütfen kontrol edip tekrar deneyin.</p>
+                </div>
+            `;
         }
-    }, [compiledTemplate, templateContent, formData, currentStep]);
+    }, [templateContent, formData, currentStep]);
 
     if (!templateContent) {
         return (
             <div className={styles.container}>
                 <div className={styles.emptyState}>
-                    <Loader2 size={40} className={styles.spinner} />
-                    <p>Önizleme için şablon içeriği yükleniyor...</p>
+                    <Loader2 size={36} className={styles.spinner} />
+                    <p>Önizleme verileri yükleniyor...</p>
                 </div>
             </div>
         );
@@ -131,7 +117,7 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
             <div className={styles.container}>
                 <div className={styles.emptyState}>
                     <FileText size={48} className={styles.emptyIcon} />
-                    <p>Belgeyi önizlemek için lütfen sol taraftaki formu doldurmaya başlayın.</p>
+                    <p>Belge önizlemesini görmek için sol taraftaki formu doldurmaya başlayabilirsiniz.</p>
                 </div>
             </div>
         );
@@ -140,33 +126,37 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
     return (
         <div className={styles.container}>
             <div className={styles.previewHeader}>
-                <FileSearch size={20} className={styles.headerIcon} />
-                <h3 className={styles.previewTitle}>Canlı Önizleme</h3>
+                <FileSearch size={18} className={styles.headerIcon} />
+                <h3 className={styles.previewTitle}>Belge Önizlemesi</h3>
+
                 {currentStep === 1 ? (
                     <div className={styles.lockedBadge}>
-                        <Lock size={14} /> Formu doldurduktan sonra düzenleyebilirsiniz
+                        <Lock size={14} /> Manuel Düzenleme Kapalı
                     </div>
                 ) : (
                     <div className={styles.editBadge}>
-                        <Edit3 size={14} /> Belgeye tıklayarak metin ekleyebilir veya silebilirsiniz
+                        <Edit3 size={14} /> Manuel Düzenleme Açık
                     </div>
                 )}
             </div>
+
             {currentStep === 1 && (
                 <div className={styles.step1Banner}>
                     <div className={styles.bannerIcon}>
-                        <Edit3 size={20} />
+                        <Eye size={20} />
                     </div>
-                    <div>
-                        <strong>Formu doldurmaya başlayın</strong>
-                        <p>Doldurduğunuz bilgiler anında buraya yansıyacak. Formu doldurduktan sonra "Sonraki Adım" butonuna tıklayın.</p>
+                    <div className={styles.bannerContent}>
+                        <strong>Canlı Önizleme Aktif</strong>
+                        <p>Sol taraftaki forma girdiğiniz veriler eşzamanlı olarak bu alana yansıyacaktır. Manuel metin düzenlemelerini bir sonraki adımda yapabilirsiniz.</p>
                     </div>
                 </div>
             )}
+
             <div className={styles.paperContainer}>
                 <div
                     ref={editorRef}
                     className={styles.previewArea}
+                    data-editable={currentStep === 2}
                     dangerouslySetInnerHTML={{ __html: safeHtml }}
                     contentEditable={currentStep === 2}
                     suppressContentEditableWarning={true}
