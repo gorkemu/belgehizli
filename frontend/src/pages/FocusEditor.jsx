@@ -260,25 +260,168 @@ export const FocusEditor = () => {
     useEffect(() => { if (isZenMode) setIsSidebarOpen(false); }, [isZenMode]);
 
     useEffect(() => {
-        const hasSeenTour = localStorage.getItem('focus_editor_tour_seen');
-        if (!hasSeenTour && !loading) {
-            const timer = setTimeout(() => {
-                const driverObj = driver({
-                    showProgress: true, animate: true, doneBtnText: 'Bitir', nextBtnText: 'İleri', prevBtnText: 'Geri', popoverClass: 'custom-driver-theme', allowClose: false,
-                    steps: [
-                        { element: '#focus-title-input', popover: { title: 'Belge Adı', description: 'Çalışmanızın adını buradan değiştirebilirsiniz. Değişiklikleriniz otomatik olarak buluta kaydedilir.', side: "bottom", align: 'start' } },
-                        { element: '#focus-theme-selector', popover: { title: 'Atmosferi Değiştirin', description: 'Yazım deneyiminizi kişiselleştirmek için 8 farklı temadan birini seçin.', side: "bottom", align: 'center' } },
-                        { element: '#focus-variables-tab', popover: { title: 'Akıllı Değişkenler', description: 'Belgenizdeki dinamik alanları buradan yönetebilir, metin içinde klavye kısayolu (Örn: {{ ) ile çağırabilirsiniz.', side: "right", align: 'start' }, onHighlightStarted: () => { setIsSidebarOpen(true); setActiveTab('variables'); } },
-                        { element: '#focus-paper-area', popover: { title: 'Hızlı Komutlar', description: 'Boş bir satırda "/" (eğik çizgi) tuşuna basarak anında başlık, tablo, liste veya imza alanı ekleyebilirsiniz.', side: "top", align: 'center' } },
-                        { element: '#focus-zen-btn', popover: { title: 'Zen Modu', description: 'Sadece metne odaklanmak istediğinizde bu butona basarak tüm dikkat dağıtıcı menüleri gizleyebilirsiniz. İyi çalışmalar!', side: "bottom", align: 'end' } }
-                    ],
-                    onDestroyStarted: () => { if (!driverObj.hasNextStep() || window.confirm("Eğitim turunu kapatmak istediğinize emin misiniz?")) { localStorage.setItem('focus_editor_tour_seen', 'true'); driverObj.destroy(); } },
-                });
-                driverObj.drive();
-            }, 1000);
-            return () => clearTimeout(timer);
-        }
-    }, [loading]);
+    const hasSeenTour = localStorage.getItem('focus_editor_tour_seen');
+    if (!hasSeenTour && !loading) {
+        const timer = setTimeout(() => {
+            const driverObj = driver({
+                showProgress: true,
+                animate: true,
+                doneBtnText: 'Yazmaya Başla ✍️',
+                nextBtnText: 'İleri →',
+                prevBtnText: '← Geri',
+                popoverClass: 'custom-driver-theme',
+                allowClose: false,
+                steps: [
+                    /* 1 ─ Belge adı */
+                    {
+                        element: '#focus-title-input',
+                        popover: {
+                            title: '📝 Belge Adı',
+                            description:
+                                'Çalışmanızın adını buradan değiştirebilirsiniz. ' +
+                                'Tüm değişiklikler <strong>otomatik olarak buluta</strong> kaydedilir — kaydet butonuna basmayı unutma derdiniz yok.',
+                            side: 'bottom',
+                            align: 'start',
+                        },
+                    },
+ 
+                    /* 2 ─ Tema seçici */
+                    {
+                        element: '#focus-theme-selector',
+                        popover: {
+                            title: '🎨 Atmosferi Seçin',
+                            description:
+                                '8 farklı temadan birini seçerek yazı deneyiminizi kişiselleştirin: ' +
+                                'Gün Işığı, Gece Yarısı, Kütüphane, Orman, Buzul, Günbatımı, Mürekkep veya Lavanta.',
+                            side: 'bottom',
+                            align: 'center',
+                        },
+                    },
+ 
+                    /* 3 ─ Yazım / Önizleme geçişi */
+                    {
+                        element: '#focus-view-toggle',
+                        popover: {
+                            title: '👁 Yazım & Önizleme',
+                            description:
+                                '<strong>Yazım</strong> modunda tam editöre sahipsiniz. ' +
+                                '<strong>Önizleme</strong> moduna geçince değişkenler gerçek değerleriyle ' +
+                                'belgeye yansır — PDF almadan önce son kontrol için idealdir.',
+                            side: 'bottom',
+                            align: 'center',
+                        },
+                    },
+ 
+                    /* 4 ─ Değişkenler sekmesi */
+                    {
+                        element: '#focus-variables-tab',
+                        popover: {
+                            title: '⚡ Değişken Kütüphanesi',
+                            description:
+                                'Projenize ait tüm değişkenleri buradan yönetin. ' +
+                                'Ekledikten sonra metin içinde <code>{{</code> yazarak ' +
+                                'açılan listeden seçip hızlıca yapıştırabilirsiniz.',
+                            side: 'right',
+                            align: 'start',
+                        },
+                        onHighlightStarted: () => {
+                            setIsSidebarOpen(true);
+                            setActiveTab('variables');
+                        },
+                    },
+ 
+                    /* 5 ─ Tetikleyici / kısayol tuşu */
+                    {
+                        element: '.triggerPanel',   // CSS sınıfına göre hedef
+                        popover: {
+                            title: '🔧 Kısayol Tuşu',
+                            description:
+                                'Değişkenleri çağırmak için kullandığınız tetikleyiciyi ' +
+                                'buradan değiştirebilirsiniz: <code>{{isim}}</code>, ' +
+                                '<code>[isim]</code>, <code>@isim</code> veya tamamen özel bir format.',
+                            side: 'right',
+                            align: 'start',
+                        },
+                        onHighlightStarted: () => {
+                            setIsSidebarOpen(true);
+                            setActiveTab('variables');
+                        },
+                    },
+ 
+                    /* 6 ─ Bölümler / İçindekiler */
+                    {
+                        element: '#focus-paper-area',
+                        popover: {
+                            title: '📚 Bölümler (İçindekiler)',
+                            description:
+                                '"İçindekiler" sekmesinden projenize yeni bölümler ekleyebilir, ' +
+                                'sürükle-bırak ile sıralayabilir ve bölümler arasında tek tıkla geçiş yapabilirsiniz.',
+                            side: 'left',
+                            align: 'center',
+                        },
+                        onHighlightStarted: () => {
+                            setIsSidebarOpen(true);
+                            setActiveTab('sections');
+                        },
+                    },
+ 
+                    /* 7 ─ Slash komutları */
+                    {
+                        element: '#focus-paper-area',
+                        popover: {
+                            title: '/ Hızlı Komutlar',
+                            description:
+                                'Kağıtta yeni bir satıra <strong>/</strong> yazın: anında başlık, tablo, ' +
+                                'liste, alıntı, imza bloğu veya sayfa sonu ekleyebilirsiniz. ' +
+                                'Eller klavyede kalır, fare gerekmez.',
+                            side: 'top',
+                            align: 'center',
+                        },
+                    },
+ 
+                    /* 8 ─ PDF indirme */
+                    {
+                        element: '.pdfButton',   // CSS sınıfıyla hedef
+                        popover: {
+                            title: '🖨 PDF\'e Aktar',
+                            description:
+                                'Belgenizi değişkenler doldurulmuş biçimde PDF olarak indirin. ' +
+                                'Önizleme modunda değişkenlerinizi test ettikten sonra kullanmanızı öneririz.',
+                            side: 'bottom',
+                            align: 'end',
+                        },
+                    },
+ 
+                    /* 9 ─ Zen modu */
+                    {
+                        element: '#focus-zen-btn',
+                        popover: {
+                            title: '🧘 Zen Modu',
+                            description:
+                                'Tüm menüleri gizleyip yalnızca beyaz kağıda odaklanmak için ' +
+                                'bu butona tıklayın. <kbd>Esc</kbd> tuşuyla veya üst köşedeki ' +
+                                'küçülen butona tıklayarak normal görünüme dönebilirsiniz.',
+                            side: 'bottom',
+                            align: 'end',
+                        },
+                    },
+                ],
+ 
+                onDestroyStarted: () => {
+                    if (!driverObj.hasNextStep() ||
+                        window.confirm('Eğitim turunu kapatmak istediğinize emin misiniz?')) {
+                        localStorage.setItem('focus_editor_tour_seen', 'true');
+                        driverObj.destroy();
+                    }
+                },
+            });
+ 
+            driverObj.drive();
+        }, 1000);
+ 
+        return () => clearTimeout(timer);
+    }
+}, [loading]);
 
     const handleThemeChange = useCallback((newTheme) => { setEditorTheme(newTheme); localStorage.setItem('focus_theme', newTheme); setPopover({ show: false }); }, []);
     const showToast = useCallback((message, type = 'success', silent = false) => { if (silent) return; setToast({ show: true, message, type }); setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3000); }, []);
@@ -624,6 +767,68 @@ export const FocusEditor = () => {
                 </>
             )}
 
+            {/* Slash (Komut) Menüsü */}
+            {slashMenuState.show && (
+                <>
+                    <div className={styles.popoverOverlay} onMouseDown={() => setSlashMenuState(s => ({ ...s, show: false }))} style={{ background: 'transparent' }} />
+
+                    {/* Kısmi Değişiklik: fixedPopover eklendi ve top/left buraya taşındı */}
+                    <div className={styles.fixedPopover} style={{ top: slashMenuState.pos.top, left: slashMenuState.pos.left, zIndex: 2000 }}>
+                        <div className={styles.dropdownMenuFixed} style={{ minWidth: '180px' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: 800, padding: '4px 10px', color: 'var(--text-muted)', borderBottom: '1px solid var(--border)', margin: '0 0 4px 0' }}>KOMUTLAR</div>
+                            <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                                {filteredSlashCmds.map((cmd, idx) => (
+                                    <button
+                                        key={cmd.id}
+                                        id={`slash-item-${idx}`}
+                                        className={`${styles.dropdownItem} ${idx === slashSelectedIndex ? styles.dropdownItemActive : ''}`}
+                                        style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}
+                                        onClick={() => executeSlashCommand(cmd)}
+                                    >
+                                        <span style={{ color: 'var(--text-secondary)' }}>{cmd.icon}</span>
+                                        <span>{cmd.label}</span>
+                                    </button>
+                                ))}
+                                {filteredSlashCmds.length === 0 && <div style={{ padding: '8px', fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center' }}>Komut bulunamadı</div>}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
+
+            {/* Kısayol Değişken Menüsü */}
+            {varMenuState.show && (
+                <>
+                    <div className={styles.popoverOverlay} onMouseDown={() => setVarMenuState(s => ({ ...s, show: false }))} style={{ background: 'transparent' }} />
+
+                    {/* Kısmi Değişiklik: fixedPopover eklendi ve top/left buraya taşındı */}
+                    <div className={styles.fixedPopover} style={{ top: varMenuState.pos.top, left: varMenuState.pos.left, zIndex: 2000 }}>
+                        <div className={styles.dropdownMenuFixed} style={{ minWidth: '220px' }}>
+                            <div style={{ fontSize: '0.7rem', fontWeight: 800, padding: '4px 10px', color: 'var(--text-muted)', borderBottom: '1px solid var(--border)', margin: '0 0 4px 0' }}>DEĞİŞKENLER</div>
+                            <div style={{ maxHeight: '250px', overflowY: 'auto' }}>
+                                {varKeys.filter(k => k.toLowerCase().includes(varMenuState.query.toLowerCase())).map((k, idx) => (
+                                    <button
+                                        key={k}
+                                        id={`var-item-${idx}`}
+                                        className={`${styles.dropdownItem} ${idx === varSelectedIndex ? styles.dropdownItemActive : ''}`}
+                                        style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+                                        onClick={() => {
+                                            const sym = getTriggerSymbols(projectVars._trigger || '{{');
+                                            editor.chain().focus().deleteRange(varMenuState.range).insertContent({ type: 'text', text: `${sym.s}${k}${sym.e} ` }).run();
+                                            setVarMenuState(s => ({ ...s, show: false }));
+                                        }}
+                                    >
+                                        <span style={{ fontWeight: 600 }}>{k}</span>
+                                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{projectVars[k]}</span>
+                                    </button>
+                                ))}
+                                {varKeys.filter(k => k.toLowerCase().includes(varMenuState.query.toLowerCase())).length === 0 && <div style={{ padding: '8px', fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center' }}>Değişken bulunamadı</div>}
+                            </div>
+                        </div>
+                    </div>
+                </>
+            )}
+
             {/* PDF İndirme Modalı */}
             {pdfConfirmModal && (
                 <div className={`no-print ${styles.modalOverlay}`} onMouseDown={() => setPdfConfirmModal(false)}>
@@ -741,7 +946,7 @@ export const FocusEditor = () => {
 
                     <div className={styles.headerActions}>
                         {/* TEMA SEÇİCİ DROPDOWN */}
-                        <div className={styles.compactThemeDropdown}>
+                        <div id="focus-theme-selector" className={styles.compactThemeDropdown}>
                             <button onClick={(e) => popover.show && popover.type === 'themes' ? closePopover() : openPopover(e, 'themes')} className={styles.themeActiveBtn} title="Temayı Değiştir">
                                 {THEMES.find(t => t.id === editorTheme)?.emoji}
                             </button>

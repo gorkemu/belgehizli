@@ -1862,17 +1862,27 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  color: var(--text-secondary);
+  color: var(--text-primary); /* Daha net okunabilirlik için primary yapıldı */
   font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.15s;
+  transition: background-color 0.15s, color 0.15s;
   white-space: nowrap;
 }
 
+/* Farenin üzerine geldiği an (Normal Hover) */
 .dropdownItem:hover {
   background-color: var(--bg-hover);
-  color: var(--text-primary);
+}
+
+.dropdownItemActive {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+}
+
+/* Aktif öğenin içindeki ikon ve metinlerin renk uyumu */
+.dropdownItemActive span {
+  color: var(--accent) !important; 
 }
 
 .colorPaletteFixed {

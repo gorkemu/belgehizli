@@ -51,7 +51,7 @@ const MainLayout = () => {
                 enableDeclineButton
             >
                 Bu web sitesi, kullanıcı deneyimini geliştirmek ve site trafiğini analiz etmek için çerezleri kullanır. Daha fazla bilgi için{" "}
-                <Link to="/gizlilik-politikasi" style={{ color: "var(--accent)", textDecoration: "underline" }}>
+                <Link to="/gizlilik-politikasi" style={{ color: "var(--gray-300)", textDecoration: "underline" }}>
                     Gizlilik Politikamızı
                 </Link>{" "}
                 okuyun.

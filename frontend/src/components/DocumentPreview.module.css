@@ -86,17 +86,9 @@
     font-weight: 700;
 }
 
-.previewArea h1 {
-    font-size: 18pt;
-}
-
-.previewArea h2 {
-    font-size: 16pt;
-}
-
-.previewArea h3 {
-    font-size: 14pt;
-}
+.previewArea h1 { font-size: 18pt; }
+.previewArea h2 { font-size: 16pt; }
+.previewArea h3 { font-size: 14pt; }
 
 .previewArea p {
     margin-top: 0;
@@ -144,6 +136,135 @@
     margin: 0 0 0.9rem 0;
 }
 
+/* ========================================================
+   GÖRSEL HİZALAMA – Kapsamlı Kurallar
+   Güvenlik: yalnızca img etiketini hedefler;
+   JS ile (applyImageAlignment) uygulanan inline style'ları
+   CSS katmanı da destekler.
+======================================================== */
+
+/* Tüm resimler için temel kural */
+.previewArea img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+/* data-align="center" – doğrudan öznitelik */
+.previewArea img[data-align="center"] {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+}
+
+/* data-align="right" */
+.previewArea img[data-align="right"] {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    float: none !important;
+}
+
+/* data-align="left" */
+.previewArea img[data-align="left"] {
+    display: block !important;
+    margin-right: auto !important;
+    margin-left: 0 !important;
+    float: none !important;
+}
+
+/* Üst paragrafın text-align'ına göre otomatik hizalama
+   (TipTap'ın standart çıktısı: <p style="text-align: center"><img...>) */
+.previewArea p[style*="text-align: center"] > img,
+.previewArea p[style*="text-align:center"] > img,
+.previewArea div[style*="text-align: center"] > img,
+.previewArea div[style*="text-align:center"] > img {
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+}
+
+.previewArea p[style*="text-align: right"] > img,
+.previewArea p[style*="text-align:right"] > img,
+.previewArea div[style*="text-align: right"] > img,
+.previewArea div[style*="text-align:right"] > img {
+    display: block;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    float: none !important;
+}
+
+/* Flex sarmalayıcı ile hizalama (tiptap-extension-resize-image flex yaklaşımı) */
+.previewArea div[style*="display: flex"] {
+    width: 100% !important;
+}
+
+.previewArea div[style*="justify-content: center"],
+.previewArea div[style*="justify-content:center"] {
+    display: flex !important;
+    width: 100% !important;
+}
+
+.previewArea div[style*="justify-content: flex-end"],
+.previewArea div[style*="justify-content:flex-end"] {
+    display: flex !important;
+    justify-content: flex-end !important;
+    width: 100% !important;
+}
+
+/* margin: auto tabanlı hizalama (çeşitli TipTap sürümleri) */
+.previewArea img[style*="margin: 0px auto"],
+.previewArea img[style*="margin:0px auto"],
+.previewArea img[style*="margin: 0 auto"],
+.previewArea img[style*="margin:0 auto"] {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    float: none !important;
+}
+
+.previewArea img[style*="margin: 0px 0px 0px auto"],
+.previewArea img[style*="margin-left: auto"] {
+    display: block !important;
+    margin-left: auto !important;
+    float: none !important;
+}
+
+/* Float tabanlı hizalama */
+.previewArea img[style*="float: right"] {
+    float: right;
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.previewArea img[style*="float: left"] {
+    float: left;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* figure / figcaption desteği */
+.previewArea figure {
+    margin: 1rem 0;
+    max-width: 100%;
+}
+
+.previewArea figure img {
+    max-width: 100%;
+}
+
+.previewArea figcaption {
+    font-size: 0.8rem;
+    color: #78716c;
+    text-align: center;
+    margin-top: 6px;
+    font-style: italic;
+}
+
+/* ======================================================== */
+
 .emptyState {
     display: flex;
     flex-direction: column;
@@ -167,13 +288,8 @@
 }
 
 @keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
 }
 
 .errorFallback {
@@ -242,9 +358,7 @@
     color: #57534e;
 }
 
-.bannerContent {
-    flex: 1;
-}
+.bannerContent { flex: 1; }
 
 .bannerContent strong {
     display: block;
@@ -321,47 +435,64 @@
     margin: 0 !important;
 }
 
-.previewArea :global(.ql-align-center) {
-    text-align: center;
+.previewArea :global(.ql-align-center) { text-align: center; }
+.previewArea :global(.ql-align-right)  { text-align: right; }
+.previewArea :global(.ql-align-justify){ text-align: justify; }
+
+/* ========================================================
+   TABLE BASELINE
+======================================================== */
+.previewArea table {
+    border: 1px solid #000;
+    width: 100% !important;
+    max-width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    margin: 0 0 16px 0;
+    font-size: 14px;
+    line-height: 1.4;
 }
 
-.previewArea :global(.ql-align-right) {
-    text-align: right;
+.previewArea table th {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    font-weight: bold;
+    vertical-align: top;
 }
 
-.previewArea :global(.ql-align-justify) {
-    text-align: justify;
+.previewArea table td {
+    border: 1px solid #000;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.previewArea table td,
+.previewArea table th {
+    min-width: 1em;
+    overflow-wrap: break-word !important;
+    white-space: normal !important;
+}
+
+.previewArea table img {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+.previewArea .tableWrapper {
+    overflow-x: auto;
+    max-width: 100%;
+    margin: 0 0 16px 0;
 }
 
 @media (max-width: 768px) {
-    .container {
-        border-radius: 12px;
-    }
-
-    .previewHeader {
-        padding: 12px 16px;
-    }
-
-    .paperContainer {
-        padding: 16px;
-    }
-
-    .previewArea {
-        padding: 24px 16px;
-        min-height: auto;
-    }
-
-    .editBadge,
-    .lockedBadge {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .step1Banner {
-        padding: 12px 16px;
-    }
-
+    .container { border-radius: 12px; }
+    .previewHeader { padding: 12px 16px; }
+    .paperContainer { padding: 16px; }
+    .previewArea { padding: 24px 16px; min-height: auto; }
+    .editBadge, .lockedBadge { margin-left: 0; width: 100%; justify-content: center; }
+    .step1Banner { padding: 12px 16px; }
     .previewArea[data-editable="true"] p,
     .previewArea[data-editable="true"] li,
     .previewArea[data-editable="true"] h1,
@@ -380,23 +511,10 @@
         box-shadow: none !important;
         font-family: inherit !important;
     }
-
-    .previewHeader,
-    .step1Banner,
-    .editBadge,
-    .lockedBadge {
-        display: none !important;
-    }
-
-    .paperContainer {
-        padding: 0 !important;
-        background-color: white !important;
-    }
-
-    .previewArea {
-        padding: 0 !important;
-        box-shadow: none !important;
-        max-width: none !important;
-        border: none !important;
-    }
+    .previewHeader, .step1Banner, .editBadge, .lockedBadge { display: none !important; }
+    .paperContainer { padding: 0 !important; background-color: white !important; }
+    .previewArea { padding: 0 !important; box-shadow: none !important; max-width: none !important; border: none !important; }
+    /* Yazdırmada data-align hizalamasını koru */
+    .previewArea img[data-align="center"] { display: block !important; margin: 0 auto !important; }
+    .previewArea img[data-align="right"]  { display: block !important; margin-left: auto !important; }
 }

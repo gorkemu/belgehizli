@@ -19,7 +19,7 @@ import {
   AlignCenter, AlignRight, Zap, Heading1, Heading2, Heading3,
   Sparkles, Lightbulb, Wand2, Layers, Loader2, Cloud,
   Bot, Keyboard, Palette, Highlighter, List, ListOrdered, Quote, Scissors,
-  FileUp, Image as ImageIcon, Printer, Variable
+  FileUp, Image as ImageIcon, Printer, Variable, AlignJustify
 } from 'lucide-react';
 
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -307,7 +307,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
       const coords = view.coordsAtPos(selection.from);
       const selectedText = state.doc.textBetween(selection.from, selection.to).trim();
       if (selectedText.length > 0) {
-        setSelectionMenu(prev => ({ show: true, top: coords.bottom + 5, left: coords.left, mode: prev.text !== selectedText ? 'button' : prev.mode, text: selectedText, fieldType: prev.text !== selectedText ? 'text' : prev.fieldType }));
+        setSelectionMenu(prev => ({ show: true, top: coords.top - 48, left: coords.left, mode: prev.text !== selectedText ? 'button' : prev.mode, text: selectedText, fieldType: prev.text !== selectedText ? 'text' : prev.fieldType }));
         setFormatMenu({ show: true, top: coords.top - 48, left: coords.left });
       }
       setSlashMenuState(s => ({ ...s, show: false })); setVarMenuState(s => ({ ...s, show: false }));
@@ -323,7 +323,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
     if (varMatch) {
       const coords = view.coordsAtPos(selection.from);
-      setVarMenuState({ show: true, pos: { top: coords.bottom + 5, left: coords.left }, query: varMatch[2], range: { from: selection.from - (varMatch[1].length + varMatch[2].length), to: selection.from } });
+      // AKILLI POZİSYONLAMA: Ekranın altında yeterli yer yoksa menüyü ÜSTE aç
+      const menuHeight = 320;
+      const topPos = (window.innerHeight - coords.bottom < menuHeight) ? coords.top - menuHeight : coords.bottom + 5;
+
+      setVarMenuState({ show: true, pos: { top: topPos, left: coords.left }, query: varMatch[2], range: { from: selection.from - (varMatch[1].length + varMatch[2].length), to: selection.from } });
       setVarSelectedIndex(0); setSlashMenuState(s => ({ ...s, show: false }));
       return;
     }
@@ -332,7 +336,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     const slashMatch = textBefore.match(slashRegex);
     if (slashMatch) {
       const coords = view.coordsAtPos(selection.from);
-      setSlashMenuState({ show: true, pos: { top: coords.bottom + 5, left: coords.left }, query: slashMatch[1], range: { from: selection.from - (1 + slashMatch[1].length), to: selection.from } });
+      // AKILLI POZİSYONLAMA
+      const menuHeight = 320;
+      const topPos = (window.innerHeight - coords.bottom < menuHeight) ? coords.top - menuHeight : coords.bottom + 5;
+
+      setSlashMenuState({ show: true, pos: { top: topPos, left: coords.left }, query: slashMatch[1], range: { from: selection.from - (1 + slashMatch[1].length), to: selection.from } });
       setSlashSelectedIndex(0); setVarMenuState(s => ({ ...s, show: false }));
       return;
     }
@@ -348,7 +356,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
       CustomTable.configure({ resizable: true }), TableRow, TableHeader, CustomTableCell,
       Placeholder.configure({ placeholder: "Metni yapıştırın veya '/' tuşuna basın..." }),
-      ImageResize.configure({ inline: false, allowBase64: true }),
+      ImageResize.configure({ inline: true, allowBase64: true }),
       CharacterCount.configure({ limit: EDITOR_LIMITS.MAX_CHARS })
     ],
     content: DOMPurify.sanitize(formData.content || ''),
@@ -442,6 +450,97 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     }
   };
 
+  // ONBOARDING useEffect
+  useEffect(() => {
+    if (!editor) return;
+    const hasSeenTour = localStorage.getItem('template_builder_tour_seen');
+    if (hasSeenTour) return;
+
+    const timer = setTimeout(() => {
+      const driverObj = driver({
+        showProgress: true,
+        animate: true,
+        doneBtnText: 'Bitir 🎉',
+        nextBtnText: 'İleri →',
+        prevBtnText: '← Geri',
+        popoverClass: 'custom-driver-theme',
+        allowClose: false,
+        steps: [
+          {
+            element: '#tb-paper',
+            popover: {
+              title: '📄 Beyaz Kağıt',
+              description: 'Belge içeriğinizi buraya yazın. Mevcut bir Word / .txt dosyasını doğrudan kağıdın üzerine sürükleyip bırakabilirsiniz.',
+              side: 'top',
+              align: 'center',
+            },
+          },
+          {
+            element: '.ProseMirror',
+            popover: {
+              title: '/ Komut Menüsü',
+              description: 'Boş bir satırda <strong>/</strong> yazarak başlık, tablo, liste veya imza bloğu ekleyebilirsiniz. Klavyeden hiç ayrılmanıza gerek yok!',
+              side: 'top',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tb-magic-btn',
+            popover: {
+              title: '✨ Sihirli Algılama',
+              description: 'Daha önce <code>{{isim}}</code>, <code>[tarih]</code> gibi formatlar kullandıysanız bu buton hepsini otomatik bulur ve sol panele form alanı olarak ekler.',
+              side: 'bottom',
+              align: 'start',
+            },
+          },
+          {
+            element: '#tb-trigger-select',
+            popover: {
+              title: '🔧 Değişken Formatı',
+              description: 'Tercih ettiğiniz değişken stilini seçin: <code>{{isim}}</code>, <code>[isim]</code>, <code>@isim</code> veya tamamen özel bir format.',
+              side: 'bottom',
+              align: 'start',
+            },
+          },
+          {
+            element: '#field-list',
+            popover: {
+              title: '📋 Form Alanları',
+              description: 'Kağıtta bir kelimeyi fareyle seçin — beliren menüden <strong>"Soruya Dönüştür"</strong> seçeneği, o kelimeyi otomatik olarak buraya bir soru olarak ekler.',
+              side: 'right',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tb-cond-btn',
+            popover: {
+              title: '⚡ Şartlı Blok',
+              description: 'Belirli bir form sorusuna verilen cevaba göre gösterilecek / gizlenecek paragraflar ekleyebilirsiniz. Örneğin yalnızca "Evet" seçildiğinde görünen bir madde.',
+              side: 'bottom',
+              align: 'end',
+            },
+          },
+          {
+            element: '#tb-preview-btn',
+            popover: {
+              title: '👁 Önizleme & Test',
+              description: 'Formu test verileriyle doldurun, belgenizin nasıl görüneceğini canlı izleyin ve PDF olarak indirin.',
+              side: 'bottom',
+              align: 'center',
+            },
+          },
+        ],
+        onDestroyStarted: () => {
+          localStorage.setItem('template_builder_tour_seen', 'true');
+          driverObj.destroy();
+        },
+      });
+      driverObj.drive();
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, [editor]); // editor mount edildiğinde bir kez çalışır
+
   useEffect(() => {
     if (!formData.name && formData.fields.length === 0) return;
     setSaveStatus('unsaved');
@@ -497,9 +596,17 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
   }, [editor, formData.fields, triggerSymbol]);
 
   useEffect(() => {
-    if (slashMenuState.show) { const el = window.document.getElementById(`slash-item-${slashSelectedIndex}`); if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
-    if (varMenuState.show) { const el = window.document.getElementById(`var-item-${varSelectedIndex}`); if (el) el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+    if (slashMenuState.show) { const el = window.document.getElementById(`slash-item-${slashSelectedIndex}`); if (el) el.scrollIntoView({ block: 'nearest' }); }
+    if (varMenuState.show) { const el = window.document.getElementById(`var-item-${varSelectedIndex}`); if (el) el.scrollIntoView({ block: 'nearest' }); }
   }, [slashSelectedIndex, slashMenuState.show, varSelectedIndex, varMenuState.show]);
+
+  // 2. Fare ile sayfa kaydırılırsa tüm açık menüleri gizle
+  const handleEditorScroll = useCallback(() => {
+    if (slashMenuStateRef.current.show) setSlashMenuState(s => ({ ...s, show: false }));
+    if (varMenuStateRef.current.show) setVarMenuState(s => ({ ...s, show: false }));
+    if (formatMenu.show) setFormatMenu({ show: false, top: 0, left: 0 });
+    if (selectionMenu.show) setSelectionMenu(s => ({ ...s, show: false }));
+  }, [formatMenu.show, selectionMenu.show]);
 
   const executeSlashCommand = useCallback((cmd) => {
     const ms = slashMenuStateRef.current; editor?.chain().focus().deleteRange(ms.range).run(); cmd.action(editor); setSlashMenuState(s => ({ ...s, show: false }));
@@ -838,7 +945,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                 </div>
                 <div className={styles.smartBarRight}>
                   {/* TETİKLEYİCİ AYARI */}
-                  <select value={triggerSymbol} onChange={e => { if (e.target.value === 'custom') { setIsTriggerCustom(true); setCustomTriggerInput(''); } else { setIsTriggerCustom(false); handleTriggerChange(e.target.value); } }} className={styles.triggerSelectSmart} title="Değişken Formatı (Tetikleyici)">
+                  <select id="tb-trigger-select" value={triggerSymbol} onChange={e => { if (e.target.value === 'custom') { setIsTriggerCustom(true); setCustomTriggerInput(''); } else { setIsTriggerCustom(false); handleTriggerChange(e.target.value); } }} className={styles.triggerSelectSmart} title="Değişken Formatı (Tetikleyici)">
                     <option value="{{">{"{{ }}"}</option>
                     <option value="[">{"[ ]"}</option>
                     <option value="<<">{"<< >>"}</option>
@@ -860,29 +967,82 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
               {editor && (
                 <div className={`no-print ${styles.toolbar}`}>
+                  {/* ── Satır 1: Geri al / İleri al · Biçim · Font · Renk · Medya ── */}
                   <div className={styles.toolbarRow}>
-                    <T onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} icon={<Undo2 size={15} />} title="Geri al" /><T onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} icon={<Redo2 size={15} />} title="İleri al" />
+                    <T onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} icon={<Undo2 size={15} />} title="Geri al" />
+                    <T onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} icon={<Redo2 size={15} />} title="İleri al" />
                     <div className={styles.tbDivider} />
-                    <select onChange={e => e.target.value ? editor.chain().focus().setFontSize(e.target.value).run() : editor.chain().focus().unsetFontSize().run()} value={currentFontSize || ''} className={styles.select}><option value="">Boyut</option>{[10, 12, 14, 16, 18, 20, 24, 28].map(s => <option key={s} value={`${s}px`}>{s}</option>)}</select>
-                    <select onChange={e => e.target.value ? editor.chain().focus().setLineHeight(e.target.value).run() : editor.chain().focus().unsetLineHeight().run()} value={currentLineHeight || ''} className={styles.select}><option value="">Satır</option><option value="1">1.0</option><option value="1.2">1.2</option><option value="1.5">1.5</option><option value="2.0">2.0</option></select>
+                    <T onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} icon={<Bold size={15} />} title="Kalın (Ctrl+B)" />
+                    <T onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} icon={<Italic size={15} />} title="İtalik (Ctrl+I)" />
                     <div className={styles.tbDivider} />
-                    <T onClick={(e) => popover.show && popover.type === 'textColor' ? closePopover() : openPopover(e, 'textColor')} variant={textColor ? 'active' : 'default'} icon={<Palette size={16} />} title="Yazı Rengi" />
-                    <T onClick={(e) => popover.show && popover.type === 'highlightColor' ? closePopover() : openPopover(e, 'highlightColor')} variant={highlightColor && highlightColor !== 'transparent' ? 'active' : 'default'} icon={<Highlighter size={16} />} title="Vurgu Rengi" />
+                    <select
+                      onChange={e => editor.chain().focus().setFontFamily(e.target.value).run()}
+                      defaultValue=""
+                      className={styles.select}
+                    >
+                      <option value="" disabled>Font</option>
+                      <option value="Inter">Inter</option>
+                      <option value="Helvetica">Helvetica</option>
+                      <option value="Arial">Arial</option>
+                    </select>
+                    <select onChange={e => e.target.value ? editor.chain().focus().setFontSize(e.target.value).run() : editor.chain().focus().unsetFontSize().run()} value={currentFontSize || ''} className={styles.select}>
+                      <option value="">Boyut</option>
+                      {[10, 12, 14, 16, 18, 20, 24, 28].map(s => <option key={s} value={`${s}px`}>{s}</option>)}
+                    </select>
+                    <select onChange={e => e.target.value ? editor.chain().focus().setLineHeight(e.target.value).run() : editor.chain().focus().unsetLineHeight().run()} value={currentLineHeight || ''} className={styles.select}>
+                      <option value="">Satır</option>
+                      <option value="1.4">1.4</option><option value="1.5">1.5</option>
+                      <option value="1.6">1.6</option><option value="1.7">1.7</option>
+                      <option value="1.8">1.8</option>
+                    </select>
                     <div className={styles.tbDivider} />
-                    <T onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} icon={<Bold size={15} />} title="Kalın" /><T onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} icon={<Italic size={15} />} title="İtalik" />
+                    <T onClick={e => popover.show && popover.type === 'textColor' ? closePopover() : openPopover(e, 'textColor')} variant={textColor ? 'active' : 'default'} icon={<Palette size={16} />} title="Yazı Rengi" />
+                    <T onClick={e => popover.show && popover.type === 'highlightColor' ? closePopover() : openPopover(e, 'highlightColor')} variant={highlightColor && highlightColor !== 'transparent' ? 'active' : 'default'} icon={<Highlighter size={16} />} title="Vurgu Rengi" />
                     <div className={styles.tbDivider} />
                     <input type="file" ref={imageInputRef} onChange={handleImageUpload} accept="image/*" style={{ display: 'none' }} />
                     <T onClick={() => imageInputRef.current.click()} icon={<ImageIcon size={15} />} title="Resim Ekle" />
                   </div>
+
+                  {/* ── Satır 2: Başlık · Hizalama · Listeler · Değişken · İmza · Tablo ── */}
                   <div className={styles.toolbarRow}>
-                    <select onChange={e => { const val = parseInt(e.target.value); val === 0 ? editor.chain().focus().unsetFontSize().setParagraph().run() : editor.chain().focus().unsetFontSize().toggleHeading({ level: val }).run(); }} value={currentHeadingLevel} className={styles.select}><option value="0">Normal</option><option value="1">Başlık 1</option><option value="2">Başlık 2</option><option value="3">Başlık 3</option></select>
+                    <select onChange={e => {
+                      const val = parseInt(e.target.value);
+                      val === 0
+                        ? editor.chain().focus().unsetFontSize().setParagraph().run()
+                        : editor.chain().focus().unsetFontSize().toggleHeading({ level: val }).run();
+                    }} value={currentHeadingLevel} className={styles.select}>
+                      <option value="0">Normal</option>
+                      <option value="1">Başlık 1</option>
+                      <option value="2">Başlık 2</option>
+                      <option value="3">Başlık 3</option>
+                    </select>
                     <div className={styles.tbDivider} />
-                    <T onClick={() => editor.chain().focus().setTextAlign('left').run()} active={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={15} />} /><T onClick={() => editor.chain().focus().setTextAlign('center').run()} active={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={15} />} /><T onClick={() => editor.chain().focus().setTextAlign('right').run()} active={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={15} />} />
+                    <T onClick={() => editor.chain().focus().setTextAlign('left').run()} active={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={15} />} title="Sola Hizala" />
+                    <T onClick={() => editor.chain().focus().setTextAlign('center').run()} active={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={15} />} title="Ortala" />
+                    <T onClick={() => editor.chain().focus().setTextAlign('right').run()} active={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={15} />} title="Sağa Hizala" />
+                    <T onClick={() => editor.chain().focus().setTextAlign('justify').run()} active={editor.isActive({ textAlign: 'justify' })} icon={<AlignJustify size={15} />} title="İki Yana Hizala" />
                     <div className={styles.tbDivider} />
-                    <T onClick={(e) => popover.show && popover.type === 'variables' ? closePopover() : openPopover(e, 'variables')} icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><Variable size={14} /> <span>Ekle</span> <ChevronDown size={12} /></div>} title="Değişken Ekle" />
+                    <T onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} icon={<List size={15} />} title="Madde İşaretli Liste" />
+                    <T onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} icon={<ListOrdered size={15} />} title="Numaralı Liste" />
                     <div className={styles.tbDivider} />
-                    <T onClick={(e) => popover.show && popover.type === 'signature' ? closePopover() : openPopover(e, 'signature')} active={popover.show && popover.type === 'signature'} icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><PenTool size={15} /> <ChevronDown size={12} /></div>} title="İmza Ekle" />
-                    {inTable && (<><div className={styles.tbDivider} /><T onClick={() => editor.chain().focus().deleteTable().run()} title="Tabloyu Sil" icon={<Trash2 size={15} />} customStyle={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca' }} /></>)}
+                    <T
+                      onClick={e => popover.show && popover.type === 'variables' ? closePopover() : openPopover(e, 'variables')}
+                      icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><Variable size={14} /><span style={{ fontSize: '14px' }}>Değişken Ekle</span><ChevronDown size={12} /></div>}
+                      title="Değişken Ekle"
+                    />
+                    <div className={styles.tbDivider} />
+                    <T
+                      onClick={e => popover.show && popover.type === 'signature' ? closePopover() : openPopover(e, 'signature')}
+                      active={popover.show && popover.type === 'signature'}
+                      icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><PenTool size={15} /><span style={{ fontSize: '14px' }}>İmza Ekle</span><ChevronDown size={12} /></div>}
+                      title="İmza Ekle"
+                    />
+                    {inTable && (
+                      <>
+                        <div className={styles.tbDivider} />
+                        <T onClick={() => editor.chain().focus().deleteTable().run()} title="Tabloyu Sil" icon={<Trash2 size={15} />} customStyle={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca' }} />
+                      </>
+                    )}
                   </div>
                 </div>
               )}
@@ -892,6 +1052,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
+                onScroll={handleEditorScroll}
               >
                 {isDraggingFile && (
                   <div className={styles.dragOverlay}>
@@ -955,7 +1116,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                   </div>
                 )}
 
-                <div id="tb-paper" className={styles.paper} onClick={() => { if (editor && !editor.isFocused) editor.chain().focus().run(); }}>
+                <div id="tb-paper" className={styles.paper} onClick={() => { if (editor && !editor.isFocused) editor.chain().focus().run(); }} onScroll={handleEditorScroll}>
                   <EditorContent editor={editor} />
                   {editor && (
                     <div className={styles.characterCount}>

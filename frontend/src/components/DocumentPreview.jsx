@@ -56,21 +56,77 @@ function prepareTemplateForHighlighting(templateStr) {
     return processed;
 }
 
+// ─── Güvenlik: yalnızca resimlere özgü hizalama işlemi ─────────────────────
+// Diğer tüm HTML elemanlarına dokunmaz; yalnızca <img> etiketlerinin
+// data-align özniteliği ve üst-eleman text-align stiline bakarak
+// gerekli margin / display düzeltmelerini inline style ile uygular.
+function applyImageAlignment(html) {
+    if (typeof document === 'undefined' || !html) return html;
+    const div = document.createElement('div');
+    div.innerHTML = html;
+
+    // 1. data-align özniteliği taşıyan resimler
+    div.querySelectorAll('img[data-align]').forEach(img => {
+        const align = img.getAttribute('data-align');
+        if (align === 'center') {
+            img.style.display = 'block';
+            img.style.marginLeft = 'auto';
+            img.style.marginRight = 'auto';
+        } else if (align === 'right') {
+            img.style.display = 'block';
+            img.style.marginLeft = 'auto';
+            img.style.marginRight = '0';
+        } else if (align === 'left') {
+            img.style.display = 'block';
+            img.style.marginRight = 'auto';
+            img.style.marginLeft = '0';
+        }
+    });
+
+    // 2. Üst eleman (p veya div) text-align stiline göre hizalama
+    div.querySelectorAll('p, div').forEach(container => {
+        const textAlign = container.style && container.style.textAlign;
+        if (!textAlign) return;
+        container.querySelectorAll('img').forEach(img => {
+            // Zaten data-align ile işlendiyse tekrar dokunma
+            if (img.getAttribute('data-align')) return;
+            if (textAlign === 'center') {
+                img.style.display = 'block';
+                img.style.marginLeft = 'auto';
+                img.style.marginRight = 'auto';
+            } else if (textAlign === 'right') {
+                img.style.display = 'block';
+                img.style.marginLeft = 'auto';
+                img.style.marginRight = '0';
+            }
+        });
+    });
+
+    return div.innerHTML;
+}
+
+// ─── DOMPurify konfigürasyonu ───────────────────────────────────────────────
+// data-align yalnızca img etiketlerinde anlamlıdır; diğer data-* öznitelikleri
+// ALLOWED_ATTR dışında tutulmaya devam eder.
 const purifyConfig = {
     ALLOWED_TAGS: [
         'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
         'div', 'span', 'mark', 'table', 'tbody', 'td', 'tr', 'th', 'thead',
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'u', 'strike', 'pre',
-        'img', 'iframe'
+        'img', 'iframe', 'figure', 'figcaption'
     ],
     ALLOWED_ATTR: [
         'class', 'style', 'href', 'target',
         'src', 'alt', 'width', 'height',
         'data-youtube-video', 'allowfullscreen', 'frameborder',
-        'containerstyle', 'wrapperstyle'
+        'containerstyle', 'wrapperstyle',
+        // Görsel hizalama için – yalnızca img etiketine anlamlı katkı sağlar
+        'data-align',
+        // İmza tablosu tipi vs. için
+        'data-type'
     ],
     FORBID_TAGS: ['script', 'style'],
-    FORBID_ATTR: ['onerror', 'onload', 'onmouseover']
+    FORBID_ATTR: ['onerror', 'onload', 'onmouseover', 'onclick', 'onfocus', 'onblur']
 };
 
 function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
@@ -88,7 +144,11 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
             const compiledTemplate = Handlebars.compile(templateToUse);
             const rawHtml = compiledTemplate(formData || {});
 
-            return DOMPurify.sanitize(rawHtml, purifyConfig);
+            // 1. Önce DOMPurify ile temizle
+            const sanitized = DOMPurify.sanitize(rawHtml, purifyConfig);
+
+            // 2. Yalnızca resimlere özgü hizalama düzeltmesini uygula
+            return applyImageAlignment(sanitized);
 
         } catch (error) {
             console.error("Şablon Derleme Hatası:", error);

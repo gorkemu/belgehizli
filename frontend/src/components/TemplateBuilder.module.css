@@ -2218,12 +2218,14 @@
 }
 
 .characterCount {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  font-size: 0.7rem;
-  color: var(--text-muted);
-  font-family: monospace;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 0.7rem;
+    color: var(--c-text3);   /* ← --text-muted yerine --c-text3 (tanımlı) */
+    font-family: monospace;
+    user-select: none;
+    pointer-events: none;
 }
 
 .pdfBtn {
@@ -2251,4 +2253,124 @@
 .pdfBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* ========================================================
+   TABLE BASELINE (standart görünüm + layout stabilizasyonu)
+======================================================== */
+.paper table,
+.previewArea table {
+  border: 1px solid #000;
+  width: 100% !important;
+  max-width: 100% !important;
+  table-layout: fixed !important;
+  border-collapse: collapse;
+  word-wrap: break-word;
+  margin: 0 0 16px 0; 
+  font-size: 14px; 
+  line-height: 1.4;
+}
+
+.paper table th,
+.previewArea table th {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.paper table td,
+.previewArea table td {
+  border: 1px solid #000;
+  padding: 8px;
+  vertical-align: top;
+}
+
+.paper table td,
+.paper table th,
+.previewArea table td,
+.previewArea table th {
+  min-width: 1em;
+  overflow-wrap: break-word !important;
+  white-space: normal !important;
+}
+
+.paper table img,
+.previewArea table img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+.paper .tableWrapper,
+.previewArea .tableWrapper {
+  overflow-x: auto;
+  max-width: 100%;
+  margin: 0 0 16px 0; 
+}
+
+:global(.driver-popover.custom-driver-theme) {
+    background-color: var(--c-surface);
+    color: var(--c-text);
+    border-radius: 16px;
+    border: 1px solid var(--c-blue);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    max-width: 340px;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-title) {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--c-blue);
+    margin-bottom: 8px;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-description) {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--c-text2);
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-description code) {
+    background-color: var(--c-bg);
+    padding: 1px 6px;
+    border-radius: 5px;
+    color: var(--c-blue);
+    font-weight: 700;
+    border: 1px solid var(--c-border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85em;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-footer button) {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    border-radius: 8px;
+    text-shadow: none;
+    border: 1px solid var(--c-border);
+    font-weight: 600;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-family: inherit;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-footer button:hover) {
+    background-color: var(--c-blue-bg);
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-footer button.driver-next-btn) {
+    background-color: var(--c-blue);
+    color: #ffffff;
+    border: none;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-footer button.driver-next-btn:hover) {
+    background-color: #1d4ed8;
+}
+ 
+:global(.driver-popover.custom-driver-theme .driver-popover-progress-text) {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--c-text3);
 }
