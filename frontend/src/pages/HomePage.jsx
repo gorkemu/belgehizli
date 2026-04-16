@@ -235,7 +235,7 @@ function HomePage() {
             </div>
             <div className={styles.heroCtas}>
               <Link to="/kayit-ol" className={styles.ctaPrimary}>Araçları Deneyin</Link>
-              <a href="#sablonlar" className={styles.ctaSecondary}>Hazır Şablonlar</a>
+              <a href="sablonlar" className={styles.ctaSecondary}>Hazır Şablonlar</a>
             </div>
             <p className={styles.microNote}>Kullanım tamamen ücretsizdir, kredi kartı gerekmez.</p>
           </div>
