@@ -117,19 +117,10 @@ const cleanHtmlContent = (html) => html || '';
 
 const insertSignatureBlock = (type) => {
   let html = '';
-  if (type === 'left') { html = `<p style="text-align: left"><strong>[Taraf / Unvan]</strong></p><p style="text-align: left"><br></p><p style="text-align: left">İmza</p><p></p>`; }
-  else if (type === 'right') { html = `<p style="text-align: right"><strong>[Taraf / Unvan]</strong></p><p style="text-align: right"><br></p><p style="text-align: right">İmza</p><p></p>`; }
-  else if (type === 'dual') {
-    html = `
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-top: 2em; gap: 20px;">
-        <div style="flex: 1; text-align: center; padding: 20px; border: 1px dashed var(--border-strong); border-radius: 8px;">
-          <p><strong>[1. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>
-        </div>
-        <div style="flex: 1; text-align: center; padding: 20px; border: 1px dashed var(--border-strong); border-radius: 8px;">
-          <p><strong>[2. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>
-        </div>
-      </div><p></p>
-    `;
+  if (type === 'left') {
+    html = `<p style="text-align: left"><strong>[Taraf / Unvan]</strong></p><p style="text-align: left"><br></p><p style="text-align: left">İmza</p><p></p>`;
+  } else if (type === 'right') {
+    html = `<p style="text-align: right"><strong>[Taraf / Unvan]</strong></p><p style="text-align: right"><br></p><p style="text-align: right">İmza</p><p></p>`;
   }
   return html;
 };
@@ -164,7 +155,6 @@ const SLASH_COMMANDS = [
   { id: 'divider', label: 'Sayfa Sonu', icon: <Scissors size={14} />, action: (ed) => ed.chain().focus().setHorizontalRule().run() },
   { id: 'sig_left', label: 'İmza (Sola)', icon: <AlignLeft size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('left')).run() },
   { id: 'sig_right', label: 'İmza (Sağa)', icon: <AlignRight size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('right')).run() },
-  { id: 'sig_dual', label: 'İmza (Yanyana)', icon: <PenTool size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('dual')).run() },
 ];
 
 const SortableFieldCard = ({ field, index, isExpanded, formErrors, isHighlighted, toggleExpand, updateField, updateFieldLabelAndName, updateFieldName, removeField, addOption, updateOption, removeOption, toggleCondition, getChoiceFields, allFields, onInsertVariable }) => {
@@ -503,14 +493,14 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
     try {
       const sanitizedContent = DOMPurify.sanitize(currentContent);
-      await onSave({ 
-        ...formData, 
-        content: sanitizedContent, 
+      await onSave({
+        ...formData,
+        content: sanitizedContent,
         fields: getCleanFields(),
         settings: {
           ...formData.settings,
           variableTrigger: triggerSymbol
-        } 
+        }
       });
       if (!silent) showToast('Şablon başarıyla kaydedildi!', 'success');
       setSaveStatus('saved');
@@ -903,7 +893,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
               <div className={styles.dropdownMenuFixed}>
                 <button className={styles.dropdownItem} onClick={() => { editor.chain().focus().insertContent(insertSignatureBlock('left')).run(); closePopover(); }}>Sola İmza</button>
                 <button className={styles.dropdownItem} onClick={() => { editor.chain().focus().insertContent(insertSignatureBlock('right')).run(); closePopover(); }}>Sağa İmza</button>
-                <button className={styles.dropdownItem} onClick={() => { editor.chain().focus().insertContent(insertSignatureBlock('dual')).run(); closePopover(); }}>Yanyana İmza</button>
               </div>
             )}
             {popover.type === 'variables' && (
@@ -1202,11 +1191,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
                 <div id="tb-paper" className={styles.paper} onClick={() => { if (editor && !editor.isFocused) editor.chain().focus().run(); }} onScroll={handleEditorScroll}>
                   <EditorContent editor={editor} />
-                  {editor && (
-                    <div className={styles.characterCount}>
-                      {editor.storage.characterCount.characters()} / {EDITOR_LIMITS.MAX_CHARS} karakter
-                    </div>
-                  )}
                 </div>
               </div>
             </main>
@@ -1218,7 +1202,9 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             <aside className={styles.left} style={{ background: 'var(--bg-sidebar)', display: 'flex', flexDirection: 'column' }}>
               <div className={styles.panelHead}><span className={styles.panelTitle}>Test formu</span><span className={styles.stepBadge}>Adım {previewStep}/2</span></div>
               <div className={styles.previewForm} style={{ opacity: previewStep === 2 ? 0.35 : 1, pointerEvents: previewStep === 2 ? 'none' : 'auto', flex: 1, overflowY: 'auto' }}>
-                {formData.fields.length > 0 ? (<DocumentForm templateFields={getCleanFields()} initialData={virtualFormData} onChange={setVirtualFormData} />) : <p className={styles.muted}>Test edilecek alan yok.</p>}
+                <div style={{ padding: '20px' }}>
+                  {formData.fields.length > 0 ? (<DocumentForm templateFields={getCleanFields()} initialData={virtualFormData} onChange={setVirtualFormData} />) : <p className={styles.muted}>Test edilecek alan yok.</p>}
+                </div>
               </div>
               <div className={styles.previewFooter}>
                 {previewStep === 1 ? (<button className={`${styles.nextBtn} ${styles.pulseBtn}`} onClick={() => { if (validatePreviewForm()) { setPreviewStep(2); } else { showToast("Lütfen tüm zorunlu alanları doldurun.", "error"); } }}>Belgeyi İncele <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} /></button>) : (<button className={styles.backFormBtn} onClick={() => setPreviewStep(1)}>← Forma dön ve düzenle</button>)}
