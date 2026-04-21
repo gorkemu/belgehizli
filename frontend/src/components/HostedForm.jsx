@@ -15,8 +15,10 @@ const convertToHandlebars = (html, trigger) => {
     const tempDiv = window.document.createElement('div');
     tempDiv.innerHTML = html;
     let regex;
-    if (trigger === '[') regex = /\[([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\]/g;
-    else if (trigger === '{') regex = /\{([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\}/g;
+    if (trigger === '[') regex = /\[\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*\]/g;
+    else if (trigger === '{') regex = /\{(?!\s*\{)\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*\}(?!\s*\})/g;
+    else if (trigger === '<<') regex = /(?:&lt;|<){2}\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*(?:&gt;|>){2}/g;
+    else if (trigger === '@') regex = /@([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)/g;
     else { const escaped = trigger.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); regex = new RegExp(`${escaped}([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)`, 'g'); }
     const walk = (node) => {
         if (node.nodeType === 3) node.nodeValue = node.nodeValue.replace(regex, '{{$1}}');
@@ -26,11 +28,15 @@ const convertToHandlebars = (html, trigger) => {
     return tempDiv.innerHTML;
 };
 
+// Handlebars Helpers 
+if (!Handlebars.helpers.eq) {
+    Handlebars.registerHelper('eq', function (a, b) { return String(a) === String(b); });
+}
+
 const HostedForm = () => {
     const { slug } = useParams();
 
     const [projectData, setProjectData] = useState(null);
-    const [documents, setDocuments] = useState([]);
 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -44,15 +50,8 @@ const HostedForm = () => {
     useEffect(() => {
         const fetchProjectOrTemplate = async () => {
             try {
-                const isObjectId = /^[0-9a-fA-F]{24}$/.test(slug);
-                if (isObjectId) {
-                    const response = await axios.get(`${API_BASE_URL}/projects/public/${slug}`);
-                    setProjectData(response.data.project);
-                    setDocuments(response.data.documents || []);
-                } else {
-                    const response = await axios.get(`${API_BASE_URL}/sablonlar/detay/${slug}`);
-                    setProjectData(response.data);
-                }
+                const response = await axios.get(`${API_BASE_URL}/projects/public/${slug}`);
+                setProjectData(response.data.project);
                 setLoading(false);
             } catch (err) {
                 console.error("Yükleme hatası:", err);
@@ -75,12 +74,12 @@ const HostedForm = () => {
         setIsSubmitting(true);
 
         try {
-            let fullContent = "";
-            if (documents && documents.length > 0) {
-                fullContent = documents.map(doc => doc.content).join('<hr class="page-break" />');
-            } else if (projectData && projectData.content) {
-                fullContent = projectData.content;
-            }
+            let rawContent = projectData.content || "";
+
+            // Şartlı İfade Temizliği 
+            rawContent = rawContent.replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ');
+            const condRegex = /(?:<p>)?\s*(?:<strong[^>]*>)?\[EĞER:\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*=\s*([^\]]+)\](?:<\/strong>)?\s*(?:<\/p>)?([\s\S]*?)(?:<p>)?\s*(?:<strong[^>]*>)?\[ŞART SONU\](?:<\/strong>)?\s*(?:<\/p>)?/g;
+            rawContent = rawContent.replace(condRegex, '{{#if (eq $1 "$2")}}$3{{/if}}');
 
             const cleanedData = { ...formData };
             Object.keys(cleanedData).forEach(key => {
@@ -90,7 +89,8 @@ const HostedForm = () => {
             });
 
             const currentTrigger = projectData?.settings?.variableTrigger || '{{';
-            const hbHtml = convertToHandlebars(fullContent, currentTrigger);
+            const hbHtml = convertToHandlebars(rawContent, currentTrigger);
+            
             const template = Handlebars.compile(hbHtml);
             const resultHtml = template(cleanedData);
 
@@ -156,7 +156,7 @@ const HostedForm = () => {
                 </div>
                 <h2 className={styles.successTitle}>İşlem Başarılı!</h2>
                 <p className={styles.successMessage}>
-                    Belgeniz başarıyla oluşturuldu ve cihazınıza indirildi. Bilgileriniz ilgili yetkiliye güvenle iletilmiştir.
+                    Belgeniz başarıyla oluşturuldu ve cihazınıza indirildi. 
                 </p>
                 <div className={styles.successNote}>
                     <Download size={18} /> İndirilen PDF dosyasını açarak kontrol edebilirsiniz.
@@ -165,18 +165,10 @@ const HostedForm = () => {
         </div>
     );
 
-    let formFields = [];
-    if (documents && documents.length > 0) {
-        documents.forEach(doc => {
-            if (doc.fields && doc.fields.length > 0) {
-                formFields = [...formFields, ...doc.fields];
-            }
-        });
-    }
-    if (formFields.length === 0 && projectData.fields && projectData.fields.length > 0) {
-        formFields = projectData.fields;
-    }
-    if (formFields.length === 0 && projectData.variables && Object.keys(projectData.variables).length > 0) {
+    let formFields = projectData?.fields || [];
+    
+    // Fallback: Eğer form alanı yoksa ama eski değişkenler varsa
+    if (formFields.length === 0 && projectData?.variables && Object.keys(projectData.variables).length > 0) {
         formFields = Object.keys(projectData.variables)
             .filter(k => k !== '_trigger')
             .map(key => ({
@@ -197,7 +189,7 @@ const HostedForm = () => {
                 <div className={styles.formWrapper}>
                     <div className={styles.formHeader}>
                         <div className={styles.headerBadge}>
-                            <FileText size={16} /> Ücretsiz Belge
+                            <FileText size={16} /> Akıllı Belge
                         </div>
                         <h1 className={styles.title}>{projectData.name}</h1>
                         {projectData.description && (

@@ -21,12 +21,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
-import UserTemplateCreate from './pages/UserTemplateCreate';
 import UserTemplateEdit from './pages/UserTemplateEdit';
-import UserFillTemplate from './pages/UserFillTemplate';
 import { ProjectsManager } from './pages/ProjectsManager';
-import { ProjectDetail } from './pages/ProjectDetail';
-import { FocusEditor } from './pages/FocusEditor';
 import { DashboardLayout } from './components/DashboardLayout';
 import SettingsPage from './pages/SettingsPage';
 import { CommandPalette } from './components/CommandPalette';
@@ -73,7 +69,6 @@ function App() {
                 )}
                 <Router>
                     <CommandPalette />
-
                     <Routes>
                         <Route path="/f/:slug" element={<HostedForm />} />
 
@@ -93,22 +88,15 @@ function App() {
                         </Route>
 
                         <Route element={<ProtectedRoute />}>
-
                             <Route element={<DashboardLayout />}>
                                 <Route path="/panel" element={<Dashboard />} />
                                 <Route path="/panel/projects" element={<ProjectsManager />} />
-                                <Route path="/panel/projects/:id" element={<ProjectDetail />} />
                                 <Route path="/panel/settings" element={<SettingsPage />} />
                             </Route>
 
-                            <Route path="/panel/editor/:id" element={<FocusEditor />} />
-                            <Route path="/panel/yeni-form" element={<UserTemplateCreate />} />
                             <Route path="/panel/duzenle/:id" element={<UserTemplateEdit />} />
-                            <Route path="/panel/doldur/:id" element={<UserFillTemplate />} />
                         </Route>
-
                     </Routes>
-
                 </Router>
             </>
         </AuthProvider>

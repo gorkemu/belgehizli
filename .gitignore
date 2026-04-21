@@ -38,3 +38,11 @@ admin-panel-frontend/.vite/
 /backend/importTemplates.js
 degiskenornegi.json
 kullanimornekleri.md
+
+# Playwright ve Test Çıktıları
+storageState.json
+frontend/storageState.json
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/

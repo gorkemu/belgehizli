@@ -1,23 +1,16 @@
+// backend/models/Project.js
 const mongoose = require('mongoose');
 
 const projectSchema = new mongoose.Schema({
-    userId: { 
-        type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', 
-        required: true 
-    },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
-    description: { type: String },
-    category: { type: String, default: 'general' },
-    
+    description: { type: String, default: '' },
     content: { type: String, default: '' },
-    variables: { type: mongoose.Schema.Types.Mixed, default: {} },
-    
+    fields: { type: Array, default: [] },
     settings: {
-        variableTrigger: { type: String, default: '{{' },
-        isPublic: { type: Boolean, default: false } 
+        isPublic: { type: Boolean, default: false },
+        variableTrigger: { type: String, default: '{{' }
     }
-
 }, { timestamps: true });
 
 module.exports = mongoose.model('Project', projectSchema);

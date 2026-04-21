@@ -1,6 +1,6 @@
 // frontend/src/pages/UserTemplateEdit.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { TemplateBuilder } from '../components/TemplateBuilder';
 import { Loader2, AlertCircle } from 'lucide-react';
@@ -9,6 +9,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080
 
 const UserTemplateEdit = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const [template, setTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -18,16 +19,12 @@ const UserTemplateEdit = () => {
         const fetchTemplate = async () => {
             try {
                 const token = localStorage.getItem('user_token');
-                const response = await axios.get(`${API_BASE_URL}/user-templates/${id}`, {
+                const response = await axios.get(`${API_BASE_URL}/projects/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
                 const data = response.data;
-                data.fields = data.fields.map(f => ({
-                    ...f,
-                    options: Array.isArray(f.options) ? f.options : []
-                }));
-
+                data.fields = Array.isArray(data.fields) ? data.fields : [];
                 setTemplate(data);
             } catch (err) {
                 setError(err.response?.data?.message || 'Şablon yüklenemedi.');
@@ -40,17 +37,9 @@ const UserTemplateEdit = () => {
 
     const handleSave = async (payload) => {
         const token = localStorage.getItem('user_token');
-
-        await axios.put(`${API_BASE_URL}/user-templates/${id}`, payload, {
+        await axios.put(`${API_BASE_URL}/projects/${id}`, payload, {
             headers: { Authorization: `Bearer ${token}` }
         });
-
-        const projectId = payload.projectId || payload.project;
-        if (projectId) {
-            await axios.put(`${API_BASE_URL}/projects/${projectId}`, { name: payload.name }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-        }
     };
 
     if (loading) return (
@@ -64,6 +53,12 @@ const UserTemplateEdit = () => {
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'center', alignItems: 'center', color: '#dc2626' }}>
             <AlertCircle size={36} style={{ marginBottom: 12 }} />
             <p>{error}</p>
+            <button 
+                onClick={() => navigate('/panel/projects')} 
+                style={{ marginTop: '16px', padding: '8px 16px', background: '#1c1917', color: 'white', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
+            >
+                Geri Dön
+            </button>
         </div>
     );
 

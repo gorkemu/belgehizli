@@ -29,7 +29,7 @@ export const DashboardLayout = () => {
 
   const navItems = [
     { path: '/panel',          name: 'Özet',       icon: LayoutDashboard, exact: true  },
-    { path: '/panel/projects', name: 'Belgelerim', icon: FolderKanban,    exact: false },
+    { path: '/panel/projects', name: 'Şablonlarım', icon: FolderKanban,    exact: false },
   ];
 
   return (

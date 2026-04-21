@@ -123,7 +123,6 @@ app.use((req, res, next) => {
 
 app.use('/api/auth', userAuthRoutes);
 app.use('/api/legal', legalRoutes);
-app.use('/api/user-templates', require('./routes/userTemplates'));
 app.use('/api/projects', projectsRoutes);
 app.use('/api/', apiLimiter);
 

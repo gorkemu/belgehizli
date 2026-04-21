@@ -1,5 +1,5 @@
 // frontend/src/components/TemplateBuilder.jsx
-import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './TemplateBuilder.module.css';
 import DocumentForm from './DocumentForm';
@@ -14,12 +14,12 @@ import "driver.js/dist/driver.css";
 import {
   Wrench, Eye, Save, X, Plus, Trash2, CheckCircle2, AlertCircle,
   ArrowLeft, ChevronDown, ChevronUp, Type, AlignLeft, Calendar,
-  CheckSquare, CircleDot, Hash, Settings, GripVertical, FileText,
-  Undo2, Redo2, Bold, Italic, Table as TableIcon, PenTool,
+  CheckSquare, CircleDot, Hash, Settings, GripVertical,
+  Undo2, Redo2, Bold, Italic, PenTool, Link as LinkIcon, Copy,
   AlignCenter, AlignRight, Zap, Heading1, Heading2, Heading3,
   Sparkles, Lightbulb, Wand2, Layers, Loader2, Cloud,
-  Bot, Keyboard, Palette, Highlighter, List, ListOrdered, Quote, Scissors,
-  FileUp, Image as ImageIcon, Printer, Variable, AlignJustify
+  Bot, Palette, Highlighter, List, ListOrdered, Scissors,
+  FileUp, Printer, Variable, AlignJustify
 } from 'lucide-react';
 
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
@@ -34,12 +34,7 @@ import { TextStyle } from '@tiptap/extension-text-style';
 import { Color } from '@tiptap/extension-color';
 import FontFamily from '@tiptap/extension-font-family';
 import { Highlight } from '@tiptap/extension-highlight';
-import { Table } from '@tiptap/extension-table';
-import { TableRow } from '@tiptap/extension-table-row';
-import { TableCell } from '@tiptap/extension-table-cell';
-import { TableHeader } from '@tiptap/extension-table-header';
 import Placeholder from '@tiptap/extension-placeholder';
-import ImageResize from 'tiptap-extension-resize-image';
 import * as mammoth from 'mammoth';
 import axios from 'axios';
 import Handlebars from 'handlebars';
@@ -48,7 +43,17 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080
 
 const EDITOR_LIMITS = { MAX_CHARS: 50000, MAX_IMAGE_SIZE_MB: 2 };
 
-// HANDLEBARS YARDIMCI FONKSİYONU (Şartlı blokların frontend'de de çalışması için)
+const THEMES = [
+  { id: 'default', label: 'Gün Işığı', emoji: '☀️' },
+  { id: 'dark', label: 'Gece Yarısı', emoji: '🌙' },
+  { id: 'amber', label: 'Kütüphane', emoji: '🕯️' },
+  { id: 'forest', label: 'Orman', emoji: '🌲' },
+  { id: 'glacier', label: 'Buzul', emoji: '❄️' },
+  { id: 'sunset', label: 'Günbatımı', emoji: '🌅' },
+  { id: 'ink', label: 'Mürekkep', emoji: '🖋️' },
+  { id: 'lavender', label: 'Lavanta', emoji: '🔮' },
+];
+
 if (!Handlebars.helpers.eq) {
   Handlebars.registerHelper('eq', function (a, b) {
     return String(a) == String(b);
@@ -80,9 +85,6 @@ const LineHeight = Extension.create({
   addCommands() { return { setLineHeight: lineHeight => ({ commands }) => this.options.types.map(type => commands.updateAttributes(type, { lineHeight })).some(Boolean), unsetLineHeight: () => ({ commands }) => this.options.types.map(type => commands.resetAttributes(type, 'lineHeight')).some(Boolean), }; },
 });
 
-const CustomTable = Table.extend({ addAttributes() { return { ...this.parent?.(), 'data-type': { default: null, parseHTML: element => element.getAttribute('data-type'), renderHTML: attributes => attributes['data-type'] ? { 'data-type': attributes['data-type'] } : {} }, style: { default: null, parseHTML: element => element.getAttribute('style'), renderHTML: attributes => attributes.style ? { style: attributes.style } : {} } }; } });
-const CustomTableCell = TableCell.extend({ addAttributes() { return { ...this.parent?.(), style: { default: null, parseHTML: element => element.getAttribute('style'), renderHTML: attributes => attributes.style ? { style: attributes.style } : {} } }; } });
-
 const FIELD_TYPES = [
   { value: 'text', label: 'Kısa Metin', icon: Type }, { value: 'textarea', label: 'Uzun Metin', icon: AlignLeft },
   { value: 'number', label: 'Sayı', icon: Hash }, { value: 'date', label: 'Tarih', icon: Calendar },
@@ -90,11 +92,7 @@ const FIELD_TYPES = [
   { value: 'checkbox', label: 'Çoklu Seçim', icon: CheckSquare }
 ];
 
-// ==========================================
-// GÜVENLİ YARDIMCI FONKSİYONLAR 
-// ==========================================
 const generateVarName = (text) => text.toString().toLowerCase().replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
-const cleanHtmlContent = (html) => html || '';
 
 const getTriggerSymbols = (t) => {
   if (t === '[') return { s: '[', e: ']' };
@@ -111,9 +109,29 @@ const getRegexForTrigger = (trigger) => {
   if (trigger === '{') return /\{(?!\s*\{)\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*\}(?!\s*\})/g;
   if (trigger === '<<') return /(?:<<|&lt;&lt;)\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*(?:>>|&gt;&gt;)/g;
   if (trigger === '@') return /@([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)/g;
-
   const escaped = trigger.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   return new RegExp(`${escaped}([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)`, 'g');
+};
+
+const cleanHtmlContent = (html) => html || '';
+
+const insertSignatureBlock = (type) => {
+  let html = '';
+  if (type === 'left') { html = `<p style="text-align: left"><strong>[Taraf / Unvan]</strong></p><p style="text-align: left"><br></p><p style="text-align: left">İmza</p><p></p>`; }
+  else if (type === 'right') { html = `<p style="text-align: right"><strong>[Taraf / Unvan]</strong></p><p style="text-align: right"><br></p><p style="text-align: right">İmza</p><p></p>`; }
+  else if (type === 'dual') {
+    html = `
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; margin-top: 2em; gap: 20px;">
+        <div style="flex: 1; text-align: center; padding: 20px; border: 1px dashed var(--border-strong); border-radius: 8px;">
+          <p><strong>[1. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>
+        </div>
+        <div style="flex: 1; text-align: center; padding: 20px; border: 1px dashed var(--border-strong); border-radius: 8px;">
+          <p><strong>[2. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>
+        </div>
+      </div><p></p>
+    `;
+  }
+  return html;
 };
 
 const convertToHandlebars = (html, trigger) => {
@@ -126,9 +144,7 @@ const convertToHandlebars = (html, trigger) => {
   if (trigger && trigger !== '{{') {
     const tempDiv = window.document.createElement('div');
     tempDiv.innerHTML = processedHtml;
-
     const regex = getRegexForTrigger(trigger);
-
     const walk = (node) => {
       if (node.nodeType === 3) node.nodeValue = node.nodeValue.replace(regex, '{{$1}}');
       else if (node.nodeType === 1) { for (let child of node.childNodes) walk(child); }
@@ -139,26 +155,12 @@ const convertToHandlebars = (html, trigger) => {
   return processedHtml;
 };
 
-const insertSignatureBlock = (type) => {
-  let html = '';
-  if (type === 'left') { html = `<p style="text-align: left"><strong>[Taraf / Unvan]</strong></p><p style="text-align: left"><br></p><p style="text-align: left">İmza</p><p></p>`; }
-  else if (type === 'right') { html = `<p style="text-align: right"><strong>[Taraf / Unvan]</strong></p><p style="text-align: right"><br></p><p style="text-align: right">İmza</p><p></p>`; }
-  else if (type === 'dual') {
-    const baseStyle = "width: 50%; text-align: center; border: none; padding: 20px;";
-    const content = "<p><strong>[1. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>";
-    const content2 = "<p><strong>[2. Taraf / Unvan]</strong></p><p><br></p><p>İmza</p>";
-    html = `<table data-type="signature" style="width: 100%; border: none; border-collapse: collapse; margin-top: 2em;"><tbody><tr><td style="${baseStyle}">${content}</td><td style="${baseStyle}">${content2}</td></tr></tbody></table><p></p>`;
-  }
-  return html;
-};
-
 const SLASH_COMMANDS = [
   { id: 'h1', label: 'Büyük Başlık', icon: <Heading1 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 1 }).run() },
   { id: 'h2', label: 'Orta Başlık', icon: <Heading2 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 2 }).run() },
   { id: 'h3', label: 'Küçük Başlık', icon: <Heading3 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 3 }).run() },
   { id: 'bullet', label: 'Madde İmleri', icon: <List size={14} />, action: (ed) => ed.chain().focus().toggleBulletList().run() },
   { id: 'ordered', label: 'Numaralı Liste', icon: <ListOrdered size={14} />, action: (ed) => ed.chain().focus().toggleOrderedList().run() },
-  { id: 'table', label: 'Tablo Ekle', icon: <TableIcon size={14} />, action: (ed) => ed.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run() },
   { id: 'divider', label: 'Sayfa Sonu', icon: <Scissors size={14} />, action: (ed) => ed.chain().focus().setHorizontalRule().run() },
   { id: 'sig_left', label: 'İmza (Sola)', icon: <AlignLeft size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('left')).run() },
   { id: 'sig_right', label: 'İmza (Sağa)', icon: <AlignRight size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('right')).run() },
@@ -243,17 +245,20 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [pdfConfirmModal, setPdfConfirmModal] = useState(false);
 
-  const [triggerSymbol, setTriggerSymbol] = useState('{{');
-  const [isTriggerCustom, setIsTriggerCustom] = useState(false);
+  const [triggerSymbol, setTriggerSymbol] = useState(initialData?.settings?.variableTrigger || '{{');
+  const [isTriggerCustom, setIsTriggerCustom] = useState(!['{{', '[', '{', '@', '<<'].includes(initialData?.settings?.variableTrigger || '{{'));
   const [customTriggerInput, setCustomTriggerInput] = useState('');
 
   const [isDraggingFile, setIsDraggingFile] = useState(false);
   const fileInputRef = useRef(null);
-  const imageInputRef = useRef(null);
 
   const [condModal, setCondModal] = useState(false);
   const [condField, setCondField] = useState('');
   const [condValue, setCondValue] = useState('');
+
+  const [editorTheme, setEditorTheme] = useState('default');
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
 
   const [magicModal, setMagicModal] = useState({ show: false, selectedFormat: 'curly2' });
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
@@ -275,6 +280,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
   const previewEditorRef = useRef(null);
   const debounceTimer = useRef(null);
+  const handleSaveRef = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
   const slashMenuStateRef = useRef(slashMenuState);
@@ -284,13 +290,24 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
   const filteredSlashCmds = useMemo(() => SLASH_COMMANDS.filter(cmd => cmd.label.toLowerCase().includes(slashMenuState.query.toLowerCase())), [slashMenuState.query]);
 
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('template_theme');
+    if (savedTheme) setEditorTheme(savedTheme);
+  }, []);
+
+  const handleThemeChange = useCallback((newTheme) => {
+    setEditorTheme(newTheme);
+    localStorage.setItem('template_theme', newTheme);
+    setPopover({ show: false });
+  }, []);
+
   useEffect(() => { slashMenuStateRef.current = slashMenuState; }, [slashMenuState]);
   useEffect(() => { slashSelectedIndexRef.current = slashSelectedIndex; }, [slashSelectedIndex]);
   useEffect(() => { varMenuStateRef.current = varMenuState; }, [varMenuState]);
   useEffect(() => { varSelectedIndexRef.current = varSelectedIndex; }, [varSelectedIndex]);
 
   const [formData, setFormData] = useState(() => {
-    const d = initialData || { name: '', slug: '', category: '', description: '', price: 0, content: '', fields: [] };
+    const d = initialData || { name: '', description: '', content: '', fields: [], settings: {} };
     d.fields = (d.fields || []).map(f => ({ ...f, id: f.id || Math.random().toString(36).substr(2, 9) }));
     if (d.content && d.content.includes('<h1>Bölüm Başlığı</h1>')) d.content = '';
     return d;
@@ -323,7 +340,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
     if (varMatch) {
       const coords = view.coordsAtPos(selection.from);
-      // AKILLI POZİSYONLAMA: Ekranın altında yeterli yer yoksa menüyü ÜSTE aç
       const menuHeight = 320;
       const topPos = (window.innerHeight - coords.bottom < menuHeight) ? coords.top - menuHeight : coords.bottom + 5;
 
@@ -336,7 +352,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     const slashMatch = textBefore.match(slashRegex);
     if (slashMatch) {
       const coords = view.coordsAtPos(selection.from);
-      // AKILLI POZİSYONLAMA
       const menuHeight = 320;
       const topPos = (window.innerHeight - coords.bottom < menuHeight) ? coords.top - menuHeight : coords.bottom + 5;
 
@@ -354,9 +369,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
       StarterKit.configure({ codeBlock: false, blockquote: false }),
       TextStyle, Color, FontFamily, FontSize, LineHeight, Highlight.configure({ multicolor: true }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      CustomTable.configure({ resizable: true }), TableRow, TableHeader, CustomTableCell,
       Placeholder.configure({ placeholder: "Metni yapıştırın veya '/' tuşuna basın..." }),
-      ImageResize.configure({ inline: true, allowBase64: true }),
       CharacterCount.configure({ limit: EDITOR_LIMITS.MAX_CHARS })
     ],
     content: DOMPurify.sanitize(formData.content || ''),
@@ -409,48 +422,108 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
   const previewHtml = useMemo(() => {
     let html = formData.content || '';
     if (!html) return '';
+
+    html = html.replace(/<div[^>]*style="[^"]*(margin:\s*0px auto|margin:\s*0px 0px 0px auto)[^"]*"[^>]*>([\s\S]*?)<img([^>]+)>([\s\S]*?)<\/div>/gi, (match, margin, before, imgAttrs, after) => {
+      const alignClass = margin.includes('0px 0px 0px auto') ? 'tiptap-align-right' : 'tiptap-align-center';
+      let newImgAttrs = imgAttrs;
+      if (newImgAttrs.includes('class="')) {
+        newImgAttrs = newImgAttrs.replace('class="', `class="${alignClass} `);
+      } else {
+        newImgAttrs = ` class="${alignClass}" ` + newImgAttrs;
+      }
+      return `<img${newImgAttrs}>`;
+    });
+
+    html = html.replace(/<div[^>]*style="display:\s*flex[^>]*>\s*(<img[^>]+>)\s*<\/div>/gi, "$1");
+
+    const purifyConfig = {
+      ALLOWED_TAGS: [
+        'b', 'i', 'em', 'strong', 'a', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+        'ul', 'ol', 'li', 'blockquote', 'img', 'table', 'tr', 'td', 'th',
+        'tbody', 'thead', 'tfoot', 'hr', 'br', 'div', 'span', 'iframe', 'figure', 'figcaption'
+      ],
+      ALLOWED_ATTR: [
+        'href', 'src', 'alt', 'class', 'style', 'data-align', 'align',
+        'data-background-color', 'width', 'height', 'allowfullscreen', 'frameborder', 'target'
+      ],
+      FORBID_TAGS: ['script'],
+      KEEP_CONTENT: true
+    };
+
     try {
       const hbHtml = convertToHandlebars(html, triggerSymbol);
       const template = Handlebars.compile(hbHtml);
       const finalHtml = template(virtualFormData || {});
-      return DOMPurify.sanitize(cleanHtmlContent(finalHtml));
+
+      return DOMPurify.sanitize(cleanHtmlContent(finalHtml), purifyConfig);
     } catch (error) {
       console.error("Önizleme derleme hatası:", error);
-      return DOMPurify.sanitize(cleanHtmlContent(html));
+      return DOMPurify.sanitize(cleanHtmlContent(html), purifyConfig);
     }
   }, [formData.content, virtualFormData, triggerSymbol]);
 
   const handleSave = async (silent = false) => {
     const err = {};
+
     if (!formData.name?.trim()) err.name = true;
-    const stripped = cleanHtmlContent(formData.content).replace(/(<([^>]+)>)/gi, '').trim();
+
+    const currentContent = editor ? editor.getHTML() : (formData.content || '');
+    const stripped = currentContent.replace(/(<([^>]+)>)/gi, '').trim();
     if (!stripped) err.content = true;
+
     formData.fields.forEach((f, i) => {
       if (!f.label?.trim()) err[`field_${i}`] = true;
-      if (['select', 'radio', 'checkbox'].includes(f.fieldType) && (!f.options?.length || f.options.some(o => !o.trim()))) err[`options_${i}`] = true;
+      if (
+        ['select', 'radio', 'checkbox'].includes(f.fieldType) &&
+        (!f.options?.length || f.options.some(o => !o.trim()))
+      ) {
+        err[`options_${i}`] = true;
+      }
     });
-    setFormErrors(err);
 
     if (Object.keys(err).length) {
-      if (!silent) showToast('Lütfen eksik alanları (kırmızı) tamamlayın.', 'error');
-      const fi = Object.keys(err).find(k => k.startsWith('field_') || k.startsWith('options_'))?.split('_')[1];
-      if (fi !== undefined) { const id = formData.fields[fi]?.id; if (id && !expandedFields.includes(id)) setExpandedFields(p => [...p, id]); }
+      if (!silent) {
+        setFormErrors(err);
+        showToast('Lütfen eksik alanları (kırmızı) tamamlayın.', 'error');
+        const fi = Object.keys(err)
+          .find(k => k.startsWith('field_') || k.startsWith('options_'))
+          ?.split('_')[1];
+        if (fi !== undefined) {
+          const id = formData.fields[fi]?.id;
+          if (id && !expandedFields.includes(id)) {
+            setExpandedFields(p => [...p, id]);
+          }
+        }
+      }
       return;
     }
 
+    setFormErrors({});
     setSaveStatus('saving');
+
     try {
-      const sanitizedContent = DOMPurify.sanitize(cleanHtmlContent(formData.content));
-      await onSave({ ...formData, content: sanitizedContent, fields: getCleanFields() });
+      const sanitizedContent = DOMPurify.sanitize(currentContent);
+      await onSave({ 
+        ...formData, 
+        content: sanitizedContent, 
+        fields: getCleanFields(),
+        settings: {
+          ...formData.settings,
+          variableTrigger: triggerSymbol
+        } 
+      });
       if (!silent) showToast('Şablon başarıyla kaydedildi!', 'success');
       setSaveStatus('saved');
-    } catch (error) {
+    } catch {
       if (!silent) showToast('Kaydetme başarısız oldu.', 'error');
       setSaveStatus('error');
     }
   };
 
-  // ONBOARDING useEffect
+  useEffect(() => {
+    handleSaveRef.current = handleSave;
+  });
+
   useEffect(() => {
     if (!editor) return;
     const hasSeenTour = localStorage.getItem('template_builder_tour_seen');
@@ -476,11 +549,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             },
           },
           {
-            element: '.ProseMirror',
+            element: '#tb-toolbar',
             popover: {
-              title: '/ Komut Menüsü',
-              description: 'Boş bir satırda <strong>/</strong> yazarak başlık, tablo, liste veya imza bloğu ekleyebilirsiniz. Klavyeden hiç ayrılmanıza gerek yok!',
-              side: 'top',
+              title: '✍️ Düzenleme Araçları',
+              description: 'Yazı tipi, boyut, hizalama, imza ve tablo gibi tüm biçimlendirme araçlarını buradan kullanabilirsiniz.',
+              side: 'bottom',
               align: 'center',
             },
           },
@@ -494,19 +567,10 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             },
           },
           {
-            element: '#tb-trigger-select',
-            popover: {
-              title: '🔧 Değişken Formatı',
-              description: 'Tercih ettiğiniz değişken stilini seçin: <code>{{isim}}</code>, <code>[isim]</code>, <code>@isim</code> veya tamamen özel bir format.',
-              side: 'bottom',
-              align: 'start',
-            },
-          },
-          {
             element: '#field-list',
             popover: {
               title: '📋 Form Alanları',
-              description: 'Kağıtta bir kelimeyi fareyle seçin — beliren menüden <strong>"Soruya Dönüştür"</strong> seçeneği, o kelimeyi otomatik olarak buraya bir soru olarak ekler.',
+              description: 'Kağıtta bir kelimeyi fareyle seçtiğinizde beliren "Soruya Dönüştür" seçeneği, o kelimeyi otomatik olarak form sorusuna çevirir.',
               side: 'right',
               align: 'center',
             },
@@ -515,7 +579,25 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             element: '#tb-cond-btn',
             popover: {
               title: '⚡ Şartlı Blok',
-              description: 'Belirli bir form sorusuna verilen cevaba göre gösterilecek / gizlenecek paragraflar ekleyebilirsiniz. Örneğin yalnızca "Evet" seçildiğinde görünen bir madde.',
+              description: 'Belirli bir form sorusuna verilen cevaba göre gösterilecek / gizlenecek paragraflar ekleyebilirsiniz.',
+              side: 'bottom',
+              align: 'end',
+            },
+          },
+          {
+            element: '#tb-theme-btn',
+            popover: {
+              title: '🎨 Tema Seçici',
+              description: 'Gözünüzü yormaması için çalışma alanınızın temasını (Gece Yarısı, Orman vb.) buradan değiştirebilirsiniz.',
+              side: 'bottom',
+              align: 'end',
+            },
+          },
+          {
+            element: '#tb-share-btn',
+            popover: {
+              title: '🔗 Genel Bağlantı',
+              description: 'Müşterilerinize veya karşı tarafa göndereceğiniz form linkini buradan oluşturup kopyalayabilirsiniz.',
               side: 'bottom',
               align: 'end',
             },
@@ -539,12 +621,15 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     }, 900);
 
     return () => clearTimeout(timer);
-  }, [editor]); // editor mount edildiğinde bir kez çalışır
+  }, [editor]);
 
   useEffect(() => {
     if (!formData.name && formData.fields.length === 0) return;
+
     setSaveStatus('unsaved');
-    const timer = setTimeout(() => { handleSave(true); }, 2000);
+    const timer = setTimeout(() => {
+      handleSaveRef.current?.(true);
+    }, 2000);
     return () => clearTimeout(timer);
   }, [formData]);
 
@@ -600,7 +685,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     if (varMenuState.show) { const el = window.document.getElementById(`var-item-${varSelectedIndex}`); if (el) el.scrollIntoView({ block: 'nearest' }); }
   }, [slashSelectedIndex, slashMenuState.show, varSelectedIndex, varMenuState.show]);
 
-  // 2. Fare ile sayfa kaydırılırsa tüm açık menüleri gizle
   const handleEditorScroll = useCallback(() => {
     if (slashMenuStateRef.current.show) setSlashMenuState(s => ({ ...s, show: false }));
     if (varMenuStateRef.current.show) setVarMenuState(s => ({ ...s, show: false }));
@@ -672,14 +756,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
   const handleDrop = (e) => { e.preventDefault(); setIsDraggingFile(false); if (mode !== 'build') return; processFile(e.dataTransfer.files[0]); };
   const handleFileInputChange = (e) => { processFile(e.target.files[0]); if (fileInputRef.current) fileInputRef.current.value = ""; };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file && editor) {
-      if (file.size / (1024 * 1024) > EDITOR_LIMITS.MAX_IMAGE_SIZE_MB) return showToast(`Resim boyutu çok büyük (Max ${EDITOR_LIMITS.MAX_IMAGE_SIZE_MB}MB).`, 'error');
-      const reader = new FileReader(); reader.onload = (event) => { editor.chain().focus().setImage({ src: event.target.result }).run(); }; reader.readAsDataURL(file);
-    }
-  };
 
   const validatePreviewForm = () => {
     const requiredFields = formData.fields.filter(f => f.required);
@@ -786,20 +862,43 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
   const textColor = editor?.getAttributes('textStyle').color || '';
   const highlightColor = editor?.getAttributes('highlight').color || '';
   const inTable = editor?.isActive('table');
-  const tableCellBgColor = inTable ? (editor?.getAttributes('tableCell').backgroundColor || editor?.getAttributes('tableHeader').backgroundColor || null) : null;
   const currentHeadingLevel = editor?.isActive('heading', { level: 1 }) ? '1' : editor?.isActive('heading', { level: 2 }) ? '2' : editor?.isActive('heading', { level: 3 }) ? '3' : '0';
 
-  const T = ({ onClick, active, icon, title, disabled, customStyle }) => (<button disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={onClick} title={title} className={`${styles.tb} ${active ? styles.tbActive : ''} ${disabled ? styles.tbDisabled : ''}`} style={customStyle}>{icon}</button>);
+  const publicLink = `${window.location.origin}/f/${initialData?._id}`;
+  const copyToClipboard = () => { navigator.clipboard.writeText(publicLink); setIsCopied(true); setTimeout(() => setIsCopied(false), 2000); };
+
+  const T = ({ onClick, active, icon, title, disabled, customStyle }) => (
+    <button
+      disabled={disabled}
+      onMouseDown={e => e.preventDefault()}
+      onClick={onClick}
+      title={title}
+      className={`${styles.tb} ${active ? styles.tbActive : ''} ${disabled ? styles.tbDisabled : ''}`}
+      style={customStyle}
+    >
+      {icon}
+    </button>
+  );
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-theme={editorTheme}>
 
       {popover.show && (
         <>
           <div className={styles.popoverOverlay} onMouseDown={closePopover} />
           <div className={styles.fixedPopover} style={{ top: popover.top, left: popover.left }} onMouseDown={e => e.stopPropagation()}>
             {popover.type === 'textColor' && (<div className={styles.colorPaletteFixed}>{TEXT_COLORS.map(c => (<button key={c} className={styles.colorDot} style={{ backgroundColor: c }} onClick={() => { editor.chain().focus().setColor(c).run(); closePopover(); }} />))}<button className={styles.colorClearDot} onClick={() => { editor.chain().focus().unsetColor().run(); closePopover(); }}><X size={12} /></button></div>)}
-            {popover.type === 'highlightColor' && (<div className={styles.colorPaletteFixed}>{HIGHLIGHT_COLORS.map(c => (<button key={c} className={styles.colorDot} style={{ backgroundColor: c === 'transparent' ? '#eee' : c }} onClick={() => { if (c === 'transparent') editor.chain().focus().unsetHighlight().run(); else editor.chain().focus().toggleHighlight({ color: c }).run(); closePopover(); }} />))}</div>)}
+            {popover.type === 'highlightColor' && (<div className={styles.colorPaletteFixed}>{HIGHLIGHT_COLORS.map(c => (<button key={c} className={styles.colorDot} style={{ backgroundColor: c === 'transparent' ? 'var(--bg-hover)' : c }} onClick={() => { if (c === 'transparent') editor.chain().focus().unsetHighlight().run(); else editor.chain().focus().toggleHighlight({ color: c }).run(); closePopover(); }} />))}</div>)}
+            {popover.type === 'themes' && (
+              <div className={styles.dropdownMenuFixed} style={{ minWidth: '140px' }}>
+                {THEMES.map(t => (
+                  <button key={t.id} onClick={() => handleThemeChange(t.id)} className={styles.dropdownItem} style={{ justifyContent: 'flex-start', gap: '8px' }}>
+                    <span style={{ fontSize: '1.2rem' }}>{t.emoji}</span>
+                    <span style={{ fontWeight: editorTheme === t.id ? '800' : '600', color: editorTheme === t.id ? 'var(--text-primary)' : 'inherit' }}>{t.label}</span>
+                  </button>
+                ))}
+              </div>
+            )}
             {popover.type === 'signature' && (
               <div className={styles.dropdownMenuFixed}>
                 <button className={styles.dropdownItem} onClick={() => { editor.chain().focus().insertContent(insertSignatureBlock('left')).run(); closePopover(); }}>Sola İmza</button>
@@ -809,8 +908,8 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             )}
             {popover.type === 'variables' && (
               <div className={styles.dropdownMenuFixed} style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                <div style={{ fontSize: '0.7rem', fontWeight: 800, padding: '4px 10px', color: 'var(--c-text3)', borderBottom: '1px solid var(--c-border)', marginBottom: '4px' }}>DEĞİŞKENLER</div>
-                {formData.fields.length === 0 ? (<div style={{ padding: '10px', fontSize: '0.8rem', color: 'var(--c-text3)' }}>Soru eklemediniz</div>) : (
+                <div style={{ fontSize: '0.7rem', fontWeight: 800, padding: '4px 10px', color: 'var(--text-muted)', borderBottom: '1px solid var(--border)', marginBottom: '4px' }}>DEĞİŞKENLER</div>
+                {formData.fields.length === 0 ? (<div style={{ padding: '10px', fontSize: '0.8rem', color: 'var(--text-muted)' }}>Soru eklemediniz</div>) : (
                   formData.fields.map(f => (
                     <button key={f.id} className={styles.dropdownItem} onClick={() => { handleInsertVariable(f.name); closePopover(); }}>{f.label || f.name}</button>
                   ))
@@ -826,7 +925,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         <div className={styles.overlay} onClick={() => setCondModal(false)}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHead}>
-              <div className={styles.modalIcon} style={{ background: 'var(--c-amber-bg)', color: 'var(--c-amber)', borderColor: '#fde68a' }}><Zap size={20} /></div>
+              <div className={styles.modalIcon} style={{ background: 'var(--accent-bg)', color: 'var(--accent)', borderColor: 'var(--accent-border)' }}><Zap size={20} /></div>
               <div><h3>Şartlı Blok Ekle</h3><p>Seçilen soruya belirli bir cevap verildiğinde görünecek bir metin bloğu oluşturur.</p></div>
               <button className={styles.modalClose} onClick={() => setCondModal(false)}><X size={18} /></button>
             </div>
@@ -860,12 +959,33 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         </div>
       )}
 
+      {/* GENEL BAĞLANTI MODALI */}
+      {isShareModalOpen && (
+        <div className={styles.overlay} onMouseDown={() => setIsShareModalOpen(false)}>
+          <div className={styles.modal} onMouseDown={e => e.stopPropagation()}>
+            <div className={styles.modalHead}>
+              <div className={styles.modalIcon} style={{ background: 'var(--bg-hover)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}><LinkIcon size={20} /></div>
+              <div><h3>Genel Bağlantı</h3><p>Bu bağlantıyı gönderdiğiniz kişiler formu doldurup anında PDF alabilir.</p></div>
+              <button className={styles.modalClose} onClick={() => setIsShareModalOpen(false)}><X size={18} /></button>
+            </div>
+            <div className={styles.modalBody}>
+              <div className={styles.linkCopyBox} style={{ display: 'flex', gap: '8px', background: 'var(--bg-input)', padding: '10px', borderRadius: '12px', border: '1px solid var(--border)' }}>
+                <input type="text" readOnly value={publicLink} style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', fontFamily: 'monospace' }} />
+                <button onClick={copyToClipboard} className={styles.primaryBtn} style={{ flex: 'none', padding: '8px 16px' }}>
+                  {isCopied ? <CheckCircle2 size={16} /> : <Copy size={16} />} {isCopied ? 'Kopyalandı' : 'Kopyala'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* PDF ONAY MODALI */}
       {pdfConfirmModal && (
         <div className={styles.overlay} onClick={() => setPdfConfirmModal(false)}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHead}>
-              <div className={styles.modalIcon} style={{ background: 'var(--c-bg)', color: 'var(--c-text)', borderColor: 'var(--c-border)' }}><Printer size={20} /></div>
+              <div className={styles.modalIcon} style={{ background: 'var(--bg-hover)', color: 'var(--text-primary)', borderColor: 'var(--border)' }}><Printer size={20} /></div>
               <div><h3>PDF İndir</h3><p>Girdiğiniz verilere göre şablonunuz PDF formatına dönüştürülecektir.</p></div>
               <button className={styles.modalClose} onClick={() => setPdfConfirmModal(false)}><X size={18} /></button>
             </div>
@@ -891,8 +1011,14 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
       </div>
 
       <header className={styles.header}>
-        <button className={styles.backBtn} onClick={() => navigate('/panel')}><ArrowLeft size={16} /> <span>Projeye Dön</span></button>
+        <button className={styles.backBtn} onClick={() => navigate('/panel/projects')}><ArrowLeft size={16} /> <span>Şablonlarım</span></button>
         <input className={`${styles.nameInput} ${formErrors.name ? styles.inpErr : ''}`} value={formData.name || ''} onChange={e => { setFormData(p => ({ ...p, name: e.target.value })); if (formErrors.name) setFormErrors(p => ({ ...p, name: false })); }} placeholder="Şablon adı…" />
+
+        <div className={styles.compactThemeDropdown} id="tb-theme-btn">
+          <button onClick={(e) => popover.show && popover.type === 'themes' ? closePopover() : openPopover(e, 'themes')} className={styles.themeActiveBtn} title="Temayı Değiştir">
+            {THEMES.find(t => t.id === editorTheme)?.emoji}
+          </button>
+        </div>
 
         <div className={styles.modeSwitch}>
           <button className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`} onClick={() => setMode('build')}><Wrench size={15} /> Tasarım</button>
@@ -902,15 +1028,19 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         <div className={styles.headerRight}>
           <div className={styles.autoSaveIndicator}>
             {saveStatus === 'saving' && <><Loader2 size={14} className={styles.spinnerIcon} /> Kaydediliyor...</>}
-            {saveStatus === 'saved' && <><Cloud size={14} style={{ color: '#10b981' }} /> Buluta kaydedildi</>}
-            {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> Kaydedilmemiş değişiklikler</>}
-            {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: '#dc2626' }} /> Kaydedilemedi</>}
+            {saveStatus === 'saved' && <><Cloud size={14} style={{ color: 'var(--success)' }} /> Buluta kaydedildi</>}
+            {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> Değişiklikler var</>}
+            {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: 'var(--danger)' }} /> Kaydedilemedi</>}
           </div>
-          <div className={styles.headerActionsDivider} style={{ width: 1, height: 24, background: 'var(--c-border)', margin: '0 8px' }} />
+          <div className={styles.headerActionsDivider} />
+
+          <button id="tb-share-btn" onClick={() => setIsShareModalOpen(true)} className={styles.pdfBtn} title="Genel Bağlantı">
+            <LinkIcon size={15} /> Paylaş
+          </button>
 
           {mode === 'preview' && (
             <button className={styles.pdfBtn} onClick={() => setPdfConfirmModal(true)} disabled={isGeneratingPdf}>
-              <Printer size={15} /> {isGeneratingPdf ? '...' : 'PDF İndir'}
+              <Printer size={15} /> {isGeneratingPdf ? '...' : 'İndir'}
             </button>
           )}
 
@@ -925,7 +1055,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
               <div className={styles.panelHead}><span className={styles.panelTitle}>Form alanları</span><span className={styles.fieldCount}>{formData.fields.length}</span></div>
               <div className={styles.fieldList} id="field-list">
                 {formData.fields.length === 0 ? (
-                  <div className={styles.emptyFieldsState}><Lightbulb size={32} color="#f59e0b" style={{ marginBottom: 12 }} /><h4>Formunuz henüz boş</h4><p>Sağdaki kağıda metninizi yapıştırın veya belge sürükleyin. Değişecek kelimeleri fareyle seçerek soruya dönüştürün!</p></div>
+                  <div className={styles.emptyFieldsState}><Lightbulb size={32} color="var(--warning)" style={{ marginBottom: 12 }} /><h4>Formunuz henüz boş</h4><p>Sağdaki kağıda metninizi yapıştırın veya belge sürükleyin. Değişecek kelimeleri fareyle seçerek soruya dönüştürün!</p></div>
                 ) : (
                   <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={formData.fields.map(f => f.id)} strategy={verticalListSortingStrategy}>
@@ -944,7 +1074,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                   <span className={styles.smartHint}>Belgenizdeki gizli değişkenleri anında forma çevirin.</span>
                 </div>
                 <div className={styles.smartBarRight}>
-                  {/* TETİKLEYİCİ AYARI */}
                   <select id="tb-trigger-select" value={triggerSymbol} onChange={e => { if (e.target.value === 'custom') { setIsTriggerCustom(true); setCustomTriggerInput(''); } else { setIsTriggerCustom(false); handleTriggerChange(e.target.value); } }} className={styles.triggerSelectSmart} title="Değişken Formatı (Tetikleyici)">
                     <option value="{{">{"{{ }}"}</option>
                     <option value="[">{"[ ]"}</option>
@@ -966,84 +1095,41 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
               </div>
 
               {editor && (
-                <div className={`no-print ${styles.toolbar}`}>
-                  {/* ── Satır 1: Geri al / İleri al · Biçim · Font · Renk · Medya ── */}
-                  <div className={styles.toolbarRow}>
-                    <T onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} icon={<Undo2 size={15} />} title="Geri al" />
-                    <T onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} icon={<Redo2 size={15} />} title="İleri al" />
-                    <div className={styles.tbDivider} />
-                    <T onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} icon={<Bold size={15} />} title="Kalın (Ctrl+B)" />
-                    <T onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} icon={<Italic size={15} />} title="İtalik (Ctrl+I)" />
-                    <div className={styles.tbDivider} />
-                    <select
-                      onChange={e => editor.chain().focus().setFontFamily(e.target.value).run()}
-                      defaultValue=""
-                      className={styles.select}
-                    >
-                      <option value="" disabled>Font</option>
-                      <option value="Inter">Inter</option>
-                      <option value="Helvetica">Helvetica</option>
-                      <option value="Arial">Arial</option>
-                    </select>
-                    <select onChange={e => e.target.value ? editor.chain().focus().setFontSize(e.target.value).run() : editor.chain().focus().unsetFontSize().run()} value={currentFontSize || ''} className={styles.select}>
-                      <option value="">Boyut</option>
-                      {[10, 12, 14, 16, 18, 20, 24, 28].map(s => <option key={s} value={`${s}px`}>{s}</option>)}
-                    </select>
-                    <select onChange={e => e.target.value ? editor.chain().focus().setLineHeight(e.target.value).run() : editor.chain().focus().unsetLineHeight().run()} value={currentLineHeight || ''} className={styles.select}>
-                      <option value="">Satır</option>
-                      <option value="1.4">1.4</option><option value="1.5">1.5</option>
-                      <option value="1.6">1.6</option><option value="1.7">1.7</option>
-                      <option value="1.8">1.8</option>
-                    </select>
-                    <div className={styles.tbDivider} />
-                    <T onClick={e => popover.show && popover.type === 'textColor' ? closePopover() : openPopover(e, 'textColor')} variant={textColor ? 'active' : 'default'} icon={<Palette size={16} />} title="Yazı Rengi" />
-                    <T onClick={e => popover.show && popover.type === 'highlightColor' ? closePopover() : openPopover(e, 'highlightColor')} variant={highlightColor && highlightColor !== 'transparent' ? 'active' : 'default'} icon={<Highlighter size={16} />} title="Vurgu Rengi" />
-                    <div className={styles.tbDivider} />
-                    <input type="file" ref={imageInputRef} onChange={handleImageUpload} accept="image/*" style={{ display: 'none' }} />
-                    <T onClick={() => imageInputRef.current.click()} icon={<ImageIcon size={15} />} title="Resim Ekle" />
-                  </div>
-
-                  {/* ── Satır 2: Başlık · Hizalama · Listeler · Değişken · İmza · Tablo ── */}
-                  <div className={styles.toolbarRow}>
-                    <select onChange={e => {
-                      const val = parseInt(e.target.value);
-                      val === 0
-                        ? editor.chain().focus().unsetFontSize().setParagraph().run()
-                        : editor.chain().focus().unsetFontSize().toggleHeading({ level: val }).run();
-                    }} value={currentHeadingLevel} className={styles.select}>
-                      <option value="0">Normal</option>
-                      <option value="1">Başlık 1</option>
-                      <option value="2">Başlık 2</option>
-                      <option value="3">Başlık 3</option>
-                    </select>
-                    <div className={styles.tbDivider} />
-                    <T onClick={() => editor.chain().focus().setTextAlign('left').run()} active={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={15} />} title="Sola Hizala" />
-                    <T onClick={() => editor.chain().focus().setTextAlign('center').run()} active={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={15} />} title="Ortala" />
-                    <T onClick={() => editor.chain().focus().setTextAlign('right').run()} active={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={15} />} title="Sağa Hizala" />
-                    <T onClick={() => editor.chain().focus().setTextAlign('justify').run()} active={editor.isActive({ textAlign: 'justify' })} icon={<AlignJustify size={15} />} title="İki Yana Hizala" />
-                    <div className={styles.tbDivider} />
-                    <T onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} icon={<List size={15} />} title="Madde İşaretli Liste" />
-                    <T onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} icon={<ListOrdered size={15} />} title="Numaralı Liste" />
-                    <div className={styles.tbDivider} />
-                    <T
-                      onClick={e => popover.show && popover.type === 'variables' ? closePopover() : openPopover(e, 'variables')}
-                      icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><Variable size={14} /><span style={{ fontSize: '14px' }}>Değişken Ekle</span><ChevronDown size={12} /></div>}
-                      title="Değişken Ekle"
-                    />
-                    <div className={styles.tbDivider} />
-                    <T
-                      onClick={e => popover.show && popover.type === 'signature' ? closePopover() : openPopover(e, 'signature')}
-                      active={popover.show && popover.type === 'signature'}
-                      icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><PenTool size={15} /><span style={{ fontSize: '14px' }}>İmza Ekle</span><ChevronDown size={12} /></div>}
-                      title="İmza Ekle"
-                    />
-                    {inTable && (
-                      <>
-                        <div className={styles.tbDivider} />
-                        <T onClick={() => editor.chain().focus().deleteTable().run()} title="Tabloyu Sil" icon={<Trash2 size={15} />} customStyle={{ color: '#dc2626', background: '#fef2f2', border: '1px solid #fecaca' }} />
-                      </>
-                    )}
-                  </div>
+                <div id="tb-toolbar" className={`no-print ${styles.toolbar}`}>
+                  <T onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()} icon={<Undo2 size={15} />} title="Geri al" />
+                  <T onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().redo()} icon={<Redo2 size={15} />} title="İleri al" />
+                  <div className={styles.tbDivider} />
+                  <T onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} icon={<Bold size={15} />} title="Kalın (Ctrl+B)" />
+                  <T onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} icon={<Italic size={15} />} title="İtalik (Ctrl+I)" />
+                  <div className={styles.tbDivider} />
+                  <select onChange={e => editor.chain().focus().setFontFamily(e.target.value).run()} defaultValue="" className={styles.select}>
+                    <option value="" disabled>Font</option><option value="Inter">Inter</option><option value="Helvetica">Helvetica</option><option value="Arial">Arial</option>
+                  </select>
+                  <select onChange={e => e.target.value ? editor.chain().focus().setFontSize(e.target.value).run() : editor.chain().focus().unsetFontSize().run()} value={currentFontSize || ''} className={styles.select}>
+                    <option value="">Boyut</option>{[10, 12, 14, 16, 18, 20, 24, 28].map(s => <option key={s} value={`${s}px`}>{s}</option>)}
+                  </select>
+                  <select onChange={e => e.target.value ? editor.chain().focus().setLineHeight(e.target.value).run() : editor.chain().focus().unsetLineHeight().run()} value={currentLineHeight || ''} className={styles.select}>
+                    <option value="">Satır</option><option value="1.4">1.4</option><option value="1.5">1.5</option><option value="1.6">1.6</option><option value="1.7">1.7</option><option value="1.8">1.8</option>
+                  </select>
+                  <div className={styles.tbDivider} />
+                  <T onClick={e => popover.show && popover.type === 'textColor' ? closePopover() : openPopover(e, 'textColor')} active={!!textColor} icon={<Palette size={16} />} title="Yazı Rengi" />
+                  <T onClick={e => popover.show && popover.type === 'highlightColor' ? closePopover() : openPopover(e, 'highlightColor')} active={highlightColor && highlightColor !== 'transparent'} icon={<Highlighter size={16} />} title="Vurgu Rengi" />
+                  <div className={styles.tbDivider} />
+                  <select onChange={e => { const val = parseInt(e.target.value); val === 0 ? editor.chain().focus().unsetFontSize().setParagraph().run() : editor.chain().focus().unsetFontSize().toggleHeading({ level: val }).run(); }} value={currentHeadingLevel} className={styles.select}>
+                    <option value="0">Normal</option><option value="1">Başlık 1</option><option value="2">Başlık 2</option><option value="3">Başlık 3</option>
+                  </select>
+                  <div className={styles.tbDivider} />
+                  <T onClick={() => editor.chain().focus().setTextAlign('left').run()} active={editor.isActive({ textAlign: 'left' })} icon={<AlignLeft size={15} />} title="Sola Hizala" />
+                  <T onClick={() => editor.chain().focus().setTextAlign('center').run()} active={editor.isActive({ textAlign: 'center' })} icon={<AlignCenter size={15} />} title="Ortala" />
+                  <T onClick={() => editor.chain().focus().setTextAlign('right').run()} active={editor.isActive({ textAlign: 'right' })} icon={<AlignRight size={15} />} title="Sağa Hizala" />
+                  <T onClick={() => editor.chain().focus().setTextAlign('justify').run()} active={editor.isActive({ textAlign: 'justify' })} icon={<AlignJustify size={15} />} title="İki Yana Hizala" />
+                  <div className={styles.tbDivider} />
+                  <T onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} icon={<List size={15} />} title="Madde İşaretli Liste" />
+                  <T onClick={() => editor.chain().focus().toggleOrderedList().run()} active={editor.isActive('orderedList')} icon={<ListOrdered size={15} />} title="Numaralı Liste" />
+                  <div className={styles.tbDivider} />
+                  <T onClick={e => popover.show && popover.type === 'variables' ? closePopover() : openPopover(e, 'variables')} icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><Variable size={14} /><span style={{ fontSize: '14px' }}>Değişken Ekle</span><ChevronDown size={12} /></div>} title="Değişken Ekle" />
+                  <div className={styles.tbDivider} />
+                  <T onClick={e => popover.show && popover.type === 'signature' ? closePopover() : openPopover(e, 'signature')} active={popover.show && popover.type === 'signature'} icon={<div style={{ display: 'flex', alignItems: 'center', gap: '2px' }}><PenTool size={15} /><span style={{ fontSize: '14px' }}>İmza Ekle</span> <ChevronDown size={12} /></div>} title="İmza Ekle" />
                 </div>
               )}
 
@@ -1056,13 +1142,12 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
               >
                 {isDraggingFile && (
                   <div className={styles.dragOverlay}>
-                    <FileUp size={48} color="#2563eb" />
+                    <FileUp size={48} color="var(--accent)" />
                     <h2>Belgeyi Buraya Bırakın</h2>
                     <p>.txt, .docx veya .pdf desteklenir</p>
                   </div>
                 )}
 
-                {/* KLAVYEDEN DEĞİŞKEN EKLEME MENÜSÜ */}
                 {varMenuState.show && mode === 'build' && (
                   <div className={`no-print ${styles.slashMenu}`} style={{ top: varMenuState.pos.top, left: varMenuState.pos.left }}>
                     <div className={styles.autocompleteHeader}>DEĞİŞKENLER</div>
@@ -1091,7 +1176,6 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                   </div>
                 )}
 
-                {/* Combined Bubble Menu */}
                 {formatMenu.show && selectionMenu.show && mode === 'build' && (
                   <div className={styles.combinedBubbleMenu} style={{ top: formatMenu.top, left: formatMenu.left }} onMouseDown={e => e.preventDefault()}>
                     <div className={styles.bubbleFormatGroup}>
@@ -1131,7 +1215,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
 
         {mode === 'preview' && (
           <div className={styles.split}>
-            <aside className={styles.left} style={{ background: '#fafafa', display: 'flex', flexDirection: 'column' }}>
+            <aside className={styles.left} style={{ background: 'var(--bg-sidebar)', display: 'flex', flexDirection: 'column' }}>
               <div className={styles.panelHead}><span className={styles.panelTitle}>Test formu</span><span className={styles.stepBadge}>Adım {previewStep}/2</span></div>
               <div className={styles.previewForm} style={{ opacity: previewStep === 2 ? 0.35 : 1, pointerEvents: previewStep === 2 ? 'none' : 'auto', flex: 1, overflowY: 'auto' }}>
                 {formData.fields.length > 0 ? (<DocumentForm templateFields={getCleanFields()} initialData={virtualFormData} onChange={setVirtualFormData} />) : <p className={styles.muted}>Test edilecek alan yok.</p>}
@@ -1156,7 +1240,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         <div className={styles.overlay} onClick={() => setMagicModal({ show: false })}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHead}>
-              <div className={styles.modalIcon} style={{ background: 'var(--c-text)', color: 'white', borderColor: 'var(--border)' }}><Wand2 size={20} /></div>
+              <div className={styles.modalIcon} style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', borderColor: 'var(--border)' }}><Wand2 size={20} /></div>
               <div><h3>Sihirli Algılama</h3><p>Belgenizde daha önceden kullandığınız boşluk/değişken formatını seçin.</p></div>
               <button className={styles.modalClose} onClick={() => setMagicModal({ show: false })}><X size={18} /></button>
             </div>
@@ -1169,7 +1253,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                 ))}
               </div>
               <div className={styles.magicInfoBox}>
-                <Sparkles size={14} color="#d97706" style={{ flexShrink: 0, marginTop: 2 }} />
+                <Sparkles size={14} color="var(--warning)" style={{ flexShrink: 0, marginTop: 2 }} />
                 <p>Seçtiğiniz formattaki tüm kelimeler bulunacak, sol tarafa <b>Soru</b> olarak eklenecek ve metin içindekiler standart <b>{"{{değişken}}"}</b> formatına otomatik çevrilecektir.</p>
               </div>
             </div>
@@ -1186,12 +1270,12 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         <div className={styles.overlay}>
           <div className={styles.modal} style={{ maxWidth: '560px' }}>
             <div className={styles.modalHead}>
-              <div className={styles.modalIcon} style={{ background: 'var(--c-text)', color: 'white', borderColor: 'var(--border)' }}><Layers size={20} /></div>
+              <div className={styles.modalIcon} style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', borderColor: 'var(--border)' }}><Layers size={20} /></div>
               <div><h3>Çoklu Eşleşme Bulundu</h3><p><b>"{multiReplace.searchText}"</b> ifadesi belgede toplam {multiReplace.occurrences.length} kez geçiyor.</p></div>
               <button className={styles.modalClose} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}><X size={18} /></button>
             </div>
             <div className={styles.modalBody}>
-              <p style={{ fontSize: '0.85rem', color: 'var(--c-text2)', marginBottom: '8px' }}>Hangi cümlelerdeki kelimelerin <b>{"{{"}{multiReplace.finalVarName}{"}}"}</b> değişkenine dönüştürüleceğini seçin:</p>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '8px' }}>Hangi cümlelerdeki kelimelerin <b>{"{{"}{multiReplace.finalVarName}{"}}"}</b> değişkenine dönüştürüleceğini seçin:</p>
               <div className={styles.multiReplaceList}>
                 {multiReplace.occurrences.map((occ, idx) => (
                   <div key={idx} className={`${styles.occurrenceItem} ${occ.selected ? styles.occurrenceSelected : ''}`} onClick={() => toggleOccurrence(idx)}>
@@ -1209,7 +1293,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
         </div>
       )}
 
-      {toast.show && (<div className={`${styles.toast} ${toast.type === 'error' ? styles.toastErr : styles.toastOk}`}> {toast.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle2 size={16} />} {toast.message} </div>)}
+      {toast.show && (
+        <div className={`${styles.toast} ${toast.type === 'error' ? styles.toastError : styles.toastSuccess}`}>
+          {toast.type === 'error' ? <AlertCircle size={16} /> : <CheckCircle2 size={16} />} {toast.message}
+        </div>
+      )}
     </div>
   );
 };
