@@ -53,6 +53,13 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
   test('Slash (/) komutları ve klavye etkileşimleri kusursuz çalışmalı', async ({ page }) => {
     const editor = page.locator('.ProseMirror');
     
+     // Eğitim turunun (Driver.js) açılmasını engelle
+    await page.evaluate(() => {
+      localStorage.setItem('template_builder_tour_seen', 'true');
+    });
+    // Sayfayı yenile ki React state'i bu değeri en baştan okusun
+    await page.reload();
+    
     await editor.pressSequentially('/ba', { delay: 20 });
     await page.waitForTimeout(200);
     await page.getByText('Büyük Başlık').click();
