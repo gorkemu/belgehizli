@@ -9,7 +9,10 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   // CI ortamında sunucuyu yormamak için testleri tek koldan çalıştır
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: [
+    ['html'], 
+    ['json', { outputFile: 'test-results.json' }] 
+  ],
   
   globalSetup: './tests/global-setup.js',
 
