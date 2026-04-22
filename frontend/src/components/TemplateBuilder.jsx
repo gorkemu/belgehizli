@@ -92,7 +92,18 @@ const FIELD_TYPES = [
   { value: 'checkbox', label: 'Çoklu Seçim', icon: CheckSquare }
 ];
 
-const generateVarName = (text) => text.toString().toLowerCase().replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').replace(/^_|_$/g, '');
+const generateVarName = (text) => text.toString()
+  // 1. ÖNCE BÜYÜK TÜRKÇE KARAKTERLERİ DÜZELT
+  .replace(/Ğ/g, 'g').replace(/Ü/g, 'u').replace(/Ş/g, 's')
+  .replace(/I/g, 'i').replace(/İ/g, 'i').replace(/Ö/g, 'o').replace(/Ç/g, 'c')
+  // 2. KÜÇÜK TÜRKÇE KARAKTERLERİ DÜZELT
+  .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+  .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+  // 3. ŞİMDİ KÜÇÜLT VE İSTENMEYENLERİ TEMİZLE
+  .toLowerCase()
+  .replace(/[^a-z0-9]/g, '_')
+  .replace(/_+/g, '_')
+  .replace(/^_|_$/g, '');
 
 const getTriggerSymbols = (t) => {
   if (t === '[') return { s: '[', e: ']' };
@@ -836,7 +847,34 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
     setExpandedFields([id]); setHighlightedField(id); setTimeout(() => setHighlightedField(null), 2500); setTimeout(() => { const el = document.getElementById('field-list'); if (el) el.scrollTop = el.scrollHeight; }, 80);
   };
 
-  const updateFieldLabelAndName = (i, v) => { setFormData(p => { const fs = [...p.fields]; fs[i] = { ...fs[i], label: v, ...(!fs[i].nameEdited ? { name: generateVarName(v) } : {}) }; return { ...p, fields: fs }; }); if (formErrors[`field_${i}`]) setFormErrors(p => ({ ...p, [`field_${i}`]: false })); };
+  const updateFieldLabelAndName = (i, v) => { 
+    setFormData(p => { 
+      const fs = [...p.fields]; 
+      let nextName = fs[i].name;
+
+      // Eğer kullanıcı değişken adını manuel değiştirmediyse otomatik üret
+      if (!fs[i].nameEdited) {
+        const baseVarName = generateVarName(v);
+        let finalName = baseVarName;
+        let counter = 1;
+
+        // Kendisi hariç diğer alanlarda bu isim kullanılmış mı kontrol et
+        // Kullanıldıysa sonuna _1, _2 gibi sayılar ekle
+        while (fs.some((f, idx) => idx !== i && f.name === finalName)) {
+          finalName = `${baseVarName}_${counter}`;
+          counter++;
+        }
+        nextName = finalName;
+      }
+
+      fs[i] = { ...fs[i], label: v, name: nextName }; 
+      return { ...p, fields: fs }; 
+    }); 
+    
+    if (formErrors[`field_${i}`]) {
+      setFormErrors(p => ({ ...p, [`field_${i}`]: false })); 
+    }
+  };
   const updateFieldName = (i, v) => setFormData(p => { const fs = [...p.fields]; fs[i] = { ...fs[i], name: v, nameEdited: true }; return { ...p, fields: fs }; });
   const updateField = (i, k, v) => setFormData(p => { const fs = [...p.fields]; fs[i] = { ...fs[i], [k]: v }; if (k === 'fieldType' && !['select', 'radio', 'checkbox'].includes(v)) fs[i].options = []; return { ...p, fields: fs }; });
   const removeField = i => setFormData(p => ({ ...p, fields: p.fields.filter((_, idx) => idx !== i) }));
@@ -1138,7 +1176,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                 )}
 
                 {varMenuState.show && mode === 'build' && (
-                  <div className={`no-print ${styles.slashMenu}`} style={{ top: varMenuState.pos.top, left: varMenuState.pos.left }}>
+                  <div
+                    className={`no-print ${styles.slashMenu}`}
+                    data-testid="variable-menu"
+                    style={{ top: varMenuState.pos.top, left: varMenuState.pos.left }}
+                  >
                     <div className={styles.autocompleteHeader}>DEĞİŞKENLER</div>
                     {formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).length > 0 ? (
                       formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).map((f, index) => (
@@ -1155,7 +1197,11 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                 )}
 
                 {slashMenuState.show && mode === 'build' && (
-                  <div className={`no-print ${styles.slashMenu}`} style={{ top: slashMenuState.pos.top, left: slashMenuState.pos.left }}>
+                  <div
+                    className={`no-print ${styles.slashMenu}`}
+                    data-testid="slash-menu"
+                    style={{ top: slashMenuState.pos.top, left: slashMenuState.pos.left }}
+                  >
                     <div className={styles.autocompleteHeader}>TEMEL BLOKLAR</div>
                     {filteredSlashCmds.length > 0 ? filteredSlashCmds.map((cmd, index) => (
                       <div key={cmd.id} id={`slash-item-${index}`} onClick={() => executeSlashCommand(cmd)} onMouseMove={(e) => { if (Math.abs(e.clientX - mousePosRef.current.x) > 2 || Math.abs(e.clientY - mousePosRef.current.y) > 2) { mousePosRef.current = { x: e.clientX, y: e.clientY }; if (slashSelectedIndex !== index) setSlashSelectedIndex(index); } }} className={`${styles.slashItem} ${index === slashSelectedIndex ? styles.slashItemActive : ''}`}>
@@ -1180,7 +1226,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                         <button type="button" onClick={handleConvertClick} className={styles.bubbleBtn}><Sparkles size={14} /> Soruya Dönüştür</button>
                       ) : (
                         <div className={styles.bubbleInputRow}>
-                          <input autoFocus placeholder="Soru Başlığı" value={varNameInput} onChange={e => setVarNameInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') confirmConversion(); if (e.key === 'Escape') setSelectionMenu(p => ({ ...p, mode: 'button' })); }} className={styles.bubbleInput} />
+                          <input autoFocus placeholder="Soru Başlığı" value={varNameInput} onChange={e => setVarNameInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') confirmConversion(); if (e.key === 'Escape') setSelectionMenu(p => ({ ...p, mode: 'button' })); }} data-testid="bubble-input" className={styles.bubbleInput} />
                           <select value={selectionMenu.fieldType} onChange={e => setSelectionMenu(p => ({ ...p, fieldType: e.target.value }))} className={styles.bubbleSelect}>{FIELD_TYPES.map(type => (<option key={type.value} value={type.value}>{type.label}</option>))}</select>
                           <button onClick={confirmConversion} className={styles.bubbleConfirmBtn}>Ekle</button>
                         </div>
