@@ -153,49 +153,49 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   });
 
   test('Form alanları sürükle-bırak ile sıralanabilmeli', async ({ page }) => {
-    // 1. Alanları Ekle
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('Birinci Alan');
-
+    
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('İkinci Alan');
 
     const card1 = page.locator('[class*="fieldCard"]').filter({ hasText: 'Birinci Alan' });
     const dragHandle1 = card1.locator('[class*="dragHandle"]');
 
-    // Sadece ilk kartın koordinatını al
+    // 🔥 ÇÖZÜM 1: Sürükleme yapmadan önce elementin ekranda (viewport) tam göründüğünden emin ol. 
+    // Headless tarayıcılarda ekran küçük açılabilir ve fare dışarı sürüklendiğinde işlem iptal olur.
+    await dragHandle1.scrollIntoViewIfNeeded();
+
     const box = await dragHandle1.boundingBox();
 
     if (box) {
-      // Tutamağın tam orta noktası
       const startX = box.x + box.width / 2;
       const startY = box.y + box.height / 2;
 
-      // 1. Fareyi tutamağa götür ve tıkla
       await page.mouse.move(startX, startY);
       await page.mouse.down();
-      await page.waitForTimeout(200); // Uygulamanın tıklamayı algılaması için bekle
+      
+      // 🔥 ÇÖZÜM 2: GitHub sanal makineleri (VM) yavaş olduğu için bekleme sürelerini artırıyoruz (200 -> 400ms)
+      await page.waitForTimeout(400); 
 
-      // 2. 5 piksel kuralını aşmak için yavaşça aşağı çek
-      await page.mouse.move(startX, startY + 10, { steps: 3 });
-      await page.waitForTimeout(200); // DOM'un güncellenmesini (havaya kalkmasını) bekle
+      // 5px dnd-kit barajını aşmak için yavaşça tetiği çek
+      await page.mouse.move(startX, startY + 15, { steps: 5 });
+      await page.waitForTimeout(400);
 
-      // 3. Doğrudan 120 piksel aşağıya çek
-      await page.mouse.move(startX, startY + 120, { steps: 10 });
-      await page.waitForTimeout(200); // Çarpışma hesaplaması (Collision Detection) için bekle
+      // 🔥 ÇÖZÜM 3: Font render farklılıklarını aşmak için 120px yerine garanti olsun diye 250px aşağı çekiyoruz.
+      // Adım sayısını (steps: 25) artırarak farenin Linux üzerinde kaybolmasını/atlamasını engelliyoruz.
+      await page.mouse.move(startX, startY + 250, { steps: 25 });
+      await page.waitForTimeout(400);
 
-      // 4. Fareyi bırak
       await page.mouse.up();
     }
 
-    // Sürükleme animasyonunun ve React render'ının bitmesi için bekle
-    await page.waitForTimeout(600);
+    // Animasyonun tamamlanması için CI ortamına bolca zaman tanı
+    await page.waitForTimeout(1000);
 
-    // Kontroller
     const allCards = page.locator('[class*="fieldCard"]');
     const totalCount = await allCards.count();
 
-    // Sondan 2. kart "İkinci Alan", en sondaki kart "Birinci Alan" olmalı
     await expect(allCards.nth(totalCount - 2)).toContainText('İkinci Alan');
     await expect(allCards.nth(totalCount - 1)).toContainText('Birinci Alan');
   });
