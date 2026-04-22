@@ -1,3 +1,4 @@
+// frontend/src/hooks/usePdfGeneration.js
 import { useState } from 'react';
 import axios from 'axios';
 
@@ -12,7 +13,7 @@ function usePdfGeneration(templateId) {
             const response = await axios.post(`/api/templates/${templateId}/generate-pdf`, { formData }, { responseType: 'blob' });
             const blob = new Blob([response.data], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
-            window.open(url); // Yeni sekmede aç veya indir
+            window.open(url);
             window.URL.revokeObjectURL(url);
             setLoadingPdf(false);
         } catch (error) {

@@ -1,3 +1,4 @@
+// backend/routes/templates.js
 const express = require('express');
 const router = express.Router();
 const Template = require('../models/template');
@@ -87,7 +88,14 @@ try {
 
 router.get('/sablonlar', async (req, res) => {
     try {
-        const templates = await Template.find({}, '_id name description price slug');
+        const templates = await Template.find(
+            { 
+                isSystem: true, 
+                isActive: true 
+            }, 
+            '_id name description price slug'
+        );
+        
         res.json(templates);
     } catch (error) {
         console.error('Şablonlar alınırken hata oluştu:', error);
@@ -223,57 +231,45 @@ router.post('/templates/:id/generate-document', async (req, res) => {
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
 
         if (userEmailForLog !== 'unknown@example.com' && pdfBuffer) {
-            const emailSubject = `Belge Hızlı - ${template.name} Belgeniz 🎉`;
+            const emailSubject = `[Sistem Bildirimi] Belgeniz Hazır: ${template.name}`;
 
             const emailHtml = `
-              <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1e293b; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
+              <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1c1917; max-width: 560px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; background-color: #ffffff;">
                 
-                <div style="background-color: #2563eb; padding: 24px; text-align: center;">
-                  <h1 style="color: #ffffff; margin: 0; font-size: 20px; font-weight: 600;">Belgeniz Hazır!</h1>
+                <div style="background-color: #f5f5f4; padding: 24px; border-bottom: 1px solid #e7e5e4; text-align: left;">
+                  <span style="font-size: 16px; font-weight: 800; color: #1c1917; letter-spacing: -0.02em;">BELGE <span style="color: #a8a29e;">HIZLI</span></span>
                 </div>
                 
-                <div style="padding: 32px; background-color: #ffffff;">
-                  <p style="font-size: 16px; line-height: 1.6; color: #334155;">Merhaba,</p>
-                  <p style="font-size: 16px; line-height: 1.6; color: #334155;">
-                    Belge Hızlı kullanarak oluşturduğunuz <strong>${template.name || 'Belge'}</strong> başarıyla hazırlandı ve ekte tarafınıza sunuldu.
+                <div style="padding: 32px 24px;">
+                  <p style="font-size: 15px; line-height: 1.6; color: #57534e; margin-top: 0;">Sayın İlgili,</p>
+                  
+                  <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
+                    Sistemimiz üzerinden başarıyla oluşturduğunuz <strong>"${template.name || 'Belge'}"</strong> adlı PDF dokümanı ekte tarafınıza sunulmuştur.
                   </p>
                   
-                  <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 32px 0;" />
+                  <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
+                    İhtiyacınız halinde kendi şablonlarınızı oluşturmak, çalışma alanınızı yönetmek ve belgelerinizi güvenle saklamak için ücretsiz hesabınızı aktifleştirebilirsiniz.
+                  </p>
                   
-                  <div style="background-color: #ffffff; border: 2px solid #fde68a; border-radius: 16px; padding: 32px 24px; text-align: center;">
-                    
-                    <div style="display: inline-block; background-color: #fffbeb; width: 64px; height: 64px; border-radius: 50%; line-height: 64px; font-size: 28px; margin-bottom: 16px;">
-                      ☕
-                    </div>
-                    
-                    <h3 style="margin: 0 0 12px 0; color: #0f172a; font-size: 18px; font-weight: 800;">Bu Projeye Destek Olun 🎉</h3>
-                    
-                    <p style="font-size: 15px; color: #475569; margin-bottom: 24px; line-height: 1.6;">
-                      Belge Hızlı'yı reklamsız, aboneliksiz ve tamamen ücretsiz tutmak için çalışıyorum. 
-                      Eğer bu belge işinizi çözdüyse ve bu amme hizmetinin devam etmesini isterseniz, 
-                      bana bir kahve ısmarlayarak destek olabilirsiniz. 💛
-                    </p>
-                    
-                    <a href="https://www.shopier.com/belgehizli/45489886" 
-                       style="display: inline-block; background-color: #fffbeb; color: #b45309; border: 1px solid #fcd34d; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px;">
-                       Bana Bir Kahve Ismarla
+                  <div style="margin: 32px 0 16px 0;">
+                    <a href="https://www.belgehizli.com/kayit-ol" 
+                       style="display: inline-block; background-color: #1c1917; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">
+                       Ücretsiz Çalışma Alanı Oluştur
                     </a>
-                    
                   </div>
                 </div>
                 
-                <div style="background-color: #f8fafc; padding: 16px; text-align: center; border-top: 1px solid #e2e8f0;">
-                  <p style="font-size: 12px; color: #94a3b8; margin: 0;">© ${new Date().getFullYear()} Belge Hızlı - Hızlı, Güvenilir, Ücretsiz.</p>
-                  
-                  <span style="display: none !important; opacity: 0; font-size: 0px; color: #f8fafc; max-height: 0; line-height: 0; overflow: hidden;">
-                    ${Date.now()}
-                  </span>
+                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4;">
+                  <p style="font-size: 12px; color: #a8a29e; margin: 0; line-height: 1.5;">
+                    Bu otomatik bir sistem bildirimdir, lütfen bu mesaja yanıt vermeyiniz.<br>
+                    © ${new Date().getFullYear()} Belge Hızlı. Tüm hakları saklıdır.
+                  </p>
                 </div>
                 
               </div>
             `;
 
-            const emailText = `Merhaba, ${template.name} belgeniz ektedir. Geliştiriciye destek olmak için: https://www.shopier.com/belgehizli/45489886`;
+            const emailText = `Sayın İlgili, "${template.name}" adlı belgeniz ekte yer almaktadır. Kendi şablonlarınızı oluşturmak için platformumuzu ücretsiz deneyebilirsiniz: https://www.belgehizli.com/kayit-ol`;
 
             sendPdfEmail(userEmailForLog, emailSubject, emailText, emailHtml, pdfBuffer, safeFilename)
                 .catch(err => console.error("E-posta gönderilemedi:", err));
@@ -298,17 +294,10 @@ router.post('/templates/:id/generate-document', async (req, res) => {
     }
 });
 
-// ==========================================
-// ADMIN PANEL ROUTES FOR TEMPLATE MANAGEMENT
-// ==========================================
-
-// 1. Create Template (SUPER_ADMIN and TEMPLATE_EDITOR can do)
 router.post('/admin/sablonlar', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), createTemplate);
 
-// 2. Update Template (SUPER_ADMIN and TEMPLATE_EDITOR can do)
 router.put('/admin/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN', 'TEMPLATE_EDITOR'), updateTemplate);
 
-// 3. Delete Template (ONLY SUPER_ADMIN can do)
 router.delete('/admin/sablonlar/:id', protectAdmin, authorizeRole('SUPER_ADMIN'), deleteTemplate);
 
 module.exports = router;

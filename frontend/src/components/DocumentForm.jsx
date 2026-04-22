@@ -1,3 +1,4 @@
+// frontend/src/components/DocumentForm.jsx
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { IMaskInput } from 'react-imask';
 import styles from './DocumentForm.module.css';
@@ -9,15 +10,22 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
     const isInitialized = useRef(false);
     const isBlurValidating = useRef(false);
 
+    const isEmpty = (val) => {
+        if (Array.isArray(val)) return val.length === 0;
+        return val === undefined || val === null || String(val).trim() === '';
+    };
+
     const isFieldVisible = (field, currentFormValues) => {
-        if (!field.condition) return true;
+        if (!field.condition || !field.condition.field) return true;
         const controllingFieldValue = currentFormValues[field.condition.field];
         return String(controllingFieldValue) === String(field.condition.value);
     };
 
     const createEmptyBlock = (subfields) => {
         const block = {};
-        subfields.forEach(subfield => { block[subfield.name] = ''; });
+        subfields.forEach(subfield => {
+            block[subfield.name] = subfield.fieldType === 'checkbox' ? [] : '';
+        });
         return block;
     };
 
@@ -29,12 +37,9 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             const isVisible = isFieldVisible(field, formValues);
             if (!isVisible) return;
 
-            if (field.fieldType !== 'repeatable') {
-                if (field.required) {
-                    const v = formValues[field.name];
-                    if (v === undefined || v === null || String(v).trim() === '') {
-                        formIsValid = false;
-                    }
+            if (field.fieldType !== 'repeating_block') {
+                if (field.required && isEmpty(formValues[field.name])) {
+                    formIsValid = false;
                 }
                 if (!formIsValid) return;
                 if (field.fieldType === 'email' && formValues[field.name] && !/\S+@\S+\.\S+/.test(formValues[field.name])) {
@@ -46,15 +51,11 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             } else {
                 const blocks = formValues[field.name] || [];
                 blocks.forEach(block => {
-                    field.subfields.forEach(subfield => {
-                        if (subfield.required) {
-                            const sv = block[subfield.name];
-                            if (sv === undefined || sv === null || String(sv).trim() === '') {
-                                formIsValid = false;
-                            }
+                    field.subfields?.forEach(subfield => {
+                        if (subfield.required && isEmpty(block[subfield.name])) {
+                            formIsValid = false;
                         }
                     });
-                    if (!formIsValid) return;
                 });
             }
         });
@@ -69,7 +70,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
         const initialErrors = {};
 
         templateFields.forEach(field => {
-            if (field.fieldType === 'repeatable') {
+            if (field.fieldType === 'repeating_block') {
                 if (initialData && Array.isArray(initialData[field.name]) && initialData[field.name].length > 0) {
                     initialValues[field.name] = initialData[field.name];
                     initialErrors[field.name] = initialData[field.name].map(() => ({}));
@@ -78,12 +79,13 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                     initialErrors[field.name] = [];
                     const minInstances = field.minInstances || 1;
                     for (let i = 0; i < minInstances; i++) {
-                        initialValues[field.name].push(createEmptyBlock(field.subfields));
+                        initialValues[field.name].push(createEmptyBlock(field.subfields || []));
                         initialErrors[field.name].push({});
                     }
                 }
             } else {
-                initialValues[field.name] = initialData?.[field.name] !== undefined ? initialData[field.name] : '';
+                const fallbackValue = field.fieldType === 'checkbox' ? [] : '';
+                initialValues[field.name] = initialData?.[field.name] !== undefined ? initialData[field.name] : fallbackValue;
             }
         });
 
@@ -99,24 +101,24 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
 
     const updateFormValue = (name, newValue) => {
         const match = name.match(/^([a-zA-Z0-9_]+)\[(\d+)\]\[([a-zA-Z0-9_]+)\]$/);
+
         if (match) {
             const [blockName, indexStr, subfieldName] = match.slice(1);
             const index = parseInt(indexStr, 10);
-            setFormValues(prev => ({ ...prev, [blockName]: prev[blockName]?.map((item, i) => i === index ? { ...item, [subfieldName]: newValue } : item) ?? [] }));
+            setFormValues(prev => ({
+                ...prev,
+                [blockName]: prev[blockName]?.map((item, i) => i === index ? { ...item, [subfieldName]: newValue } : item) ?? []
+            }));
             setErrors(prev => {
                 const newErrors = { ...prev };
-                if (newErrors[name]) {
-                    delete newErrors[name];
-                }
+                if (newErrors[name]) delete newErrors[name];
                 return newErrors;
             });
         } else {
             setFormValues(prev => ({ ...prev, [name]: newValue }));
             setErrors(prev => {
                 const newErrors = { ...prev };
-                if (newErrors[name]) {
-                    delete newErrors[name];
-                }
+                if (newErrors[name]) delete newErrors[name];
                 return newErrors;
             });
 
@@ -124,21 +126,17 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                 const updated = { ...current };
                 templateFields.forEach(f => {
                     if (f.condition?.field === name && !isFieldVisible(f, updated)) {
-                        if (f.fieldType === 'repeatable') {
+                        if (f.fieldType === 'repeating_block') {
                             if (updated[f.name]?.length > 0) updated[f.name] = [];
-                            if (errors[f.name]) setErrors(prev => {
-                                const ne = { ...prev };
-                                delete ne[f.name];
-                                return ne;
-                            });
                         } else {
-                            if (updated[f.name] !== '') updated[f.name] = '';
-                            if (errors[f.name]) setErrors(prev => {
-                                const ne = { ...prev };
-                                delete ne[f.name];
-                                return ne;
-                            });
+                            const emptyVal = f.fieldType === 'checkbox' ? [] : '';
+                            if (updated[f.name] !== emptyVal) updated[f.name] = emptyVal;
                         }
+                        if (errors[f.name]) setErrors(prev => {
+                            const ne = { ...prev };
+                            delete ne[f.name];
+                            return ne;
+                        });
                     }
                 });
                 return updated;
@@ -147,7 +145,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
     };
 
     const handleInputChange = (event) => {
-        updateFormValue(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+        updateFormValue(event.target.name, event.target.value);
     };
 
     const handleFieldBlur = (event) => {
@@ -160,27 +158,21 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
     const handleAddBlock = (blockName, subfields, maxInstances) => {
         setFormValues(prev => {
             const curr = prev[blockName] || [];
-            if (maxInstances && curr.length >= maxInstances) {
-                return prev;
-            }
-            return { ...prev, [blockName]: [...curr, createEmptyBlock(subfields)] };
+            if (maxInstances && curr.length >= maxInstances) return prev;
+            return { ...prev, [blockName]: [...curr, createEmptyBlock(subfields || [])] };
         });
     };
 
     const handleRemoveBlock = (blockName, index, minInstances) => {
         setFormValues(prev => {
             const curr = prev[blockName] || [];
-            if (curr.length <= (minInstances || 0)) {
-                return prev;
-            }
+            if (curr.length <= (minInstances || 0)) return prev;
             return { ...prev, [blockName]: curr.filter((_, i) => i !== index) };
         });
         setErrors(prev => {
             const newErrors = { ...prev };
             Object.keys(newErrors).forEach(key => {
-                if (key.startsWith(`${blockName}[${index}]`)) {
-                    delete newErrors[key];
-                }
+                if (key.startsWith(`${blockName}[${index}]`)) delete newErrors[key];
             });
             return newErrors;
         });
@@ -198,7 +190,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
 
         if (match) {
             const [blockName, index, subName] = [match[1], parseInt(match[2]), match[3]];
-            field = templateFields.find(f => f.name === blockName)?.subfields.find(sf => sf.name === subName);
+            field = templateFields.find(f => f.name === blockName)?.subfields?.find(sf => sf.name === subName);
             value = formValues[blockName]?.[index]?.[subName];
         } else {
             field = templateFields.find(f => f.name === name);
@@ -208,8 +200,8 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
         if (!field) return;
 
         let fieldError = '';
-        if (field.required && (!value || String(value).trim() === '')) {
-            fieldError = `${field.label || field.name} alanı zorunludur.`;
+        if (field.required && isEmpty(value)) {
+            fieldError = `Bu alan zorunludur.`;
         } else if (!fieldError && field.fieldType === 'email' && value && !/\S+@\S+\.\S+/.test(value)) {
             fieldError = `Geçerli bir e-posta adresi girin.`;
         } else if (!fieldError && field.fieldType === 'number' && value && isNaN(Number(value))) {
@@ -218,11 +210,8 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
 
         setErrors(prev => {
             const newErrors = { ...prev };
-            if (fieldError) {
-                newErrors[name] = fieldError;
-            } else {
-                delete newErrors[name];
-            }
+            if (fieldError) newErrors[name] = fieldError;
+            else delete newErrors[name];
             return newErrors;
         });
     };
@@ -235,11 +224,11 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             const isVisible = isFieldVisible(field, formValues);
             if (!isVisible) return;
 
-            if (field.fieldType !== 'repeatable') {
+            if (field.fieldType !== 'repeating_block') {
                 const value = formValues[field.name];
                 let fieldError = '';
-                if (field.required && (!value || String(value).trim() === '')) {
-                    fieldError = `${field.label || field.name} alanı zorunludur.`;
+                if (field.required && isEmpty(value)) {
+                    fieldError = `Bu alan zorunludur.`;
                     formIsValid = false;
                 } else if (field.fieldType === 'email' && value && !/\S+@\S+\.\S+/.test(value)) {
                     fieldError = `Geçerli bir e-posta adresi girin.`;
@@ -249,11 +238,11 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             } else {
                 const blocks = formValues[field.name] || [];
                 blocks.forEach((block, index) => {
-                    field.subfields.forEach(subfield => {
+                    field.subfields?.forEach(subfield => {
                         const inputName = `${field.name}[${index}][${subfield.name}]`;
                         const value = block[subfield.name];
-                        if (subfield.required && (!value || String(value).trim() === '')) {
-                            newErrors[inputName] = `${subfield.label || subfield.name} zorunludur.`;
+                        if (subfield.required && isEmpty(value)) {
+                            newErrors[inputName] = `Zorunlu alan.`;
                             formIsValid = false;
                         }
                     });
@@ -268,7 +257,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
     const renderInputField = (field, blockIndex = null) => {
         if (!field || !field.name) return null;
         const inputName = blockIndex !== null ? `${field.blockName}[${blockIndex}][${field.name}]` : field.name;
-        const value = blockIndex !== null ? formValues[field.blockName]?.[blockIndex]?.[field.name] || '' : formValues[field.name] || '';
+        const value = blockIndex !== null ? formValues[field.blockName]?.[blockIndex]?.[field.name] : formValues[field.name];
         const errorMessage = errors[inputName] || '';
 
         const inputClass = errorMessage ? `${styles.formInput} ${styles.inputError}` : styles.formInput;
@@ -302,19 +291,23 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             case 'email':
             case 'tel':
                 if (maskOptions) {
-                    return <IMaskInput {...maskOptions} type={inputType} {...commonProps} className={inputClass} value={value} placeholder={placeholderText} unmask={true} onAccept={(unmaskedValue) => { updateFormValue(inputName, unmaskedValue); }} />;
+                    return <IMaskInput {...maskOptions} type={inputType} {...commonProps} className={inputClass} value={value || ''} placeholder={placeholderText} unmask={true} onAccept={(unmaskedValue) => { updateFormValue(inputName, unmaskedValue); }} />;
                 } else {
-                    return <input type={inputType} {...commonProps} className={inputClass} onChange={handleInputChange} placeholder={placeholderText} value={value} />;
+                    return <input type={inputType} {...commonProps} className={inputClass} onChange={handleInputChange} placeholder={placeholderText} value={value || ''} />;
                 }
             case 'date':
-                return <input type="date" {...commonProps} className={inputClass} onChange={handleInputChange} value={value} />;
+                return <input type="date" {...commonProps} className={inputClass} onChange={handleInputChange} value={value || ''} />;
             case 'textarea':
-                return <textarea {...commonProps} className={textareaClass} onChange={handleInputChange} placeholder={placeholderText} value={value} rows={field.rows || 3} />;
+                return <textarea {...commonProps} className={textareaClass} onChange={handleInputChange} placeholder={placeholderText} value={value || ''} rows={field.rows || 3} />;
             case 'select':
                 return (
-                    <select {...commonProps} className={selectClass} onChange={handleInputChange} value={value}>
+                    <select {...commonProps} className={selectClass} onChange={handleInputChange} value={value || ''}>
                         <option value="">{placeholderText || 'Seçiniz...'}</option>
-                        {field.options?.map((opt, idx) => typeof opt === 'string' ? <option key={`${inputName}-opt-${idx}`} value={opt}>{opt}</option> : <option key={`${inputName}-opt-${idx}`} value={opt.value}>{opt.label}</option>)}
+                        {field.options?.map((opt, idx) => {
+                            const val = typeof opt === 'string' ? opt : opt.value;
+                            const lbl = typeof opt === 'string' ? opt : opt.label;
+                            return <option key={`${inputName}-opt-${idx}`} value={val}>{lbl}</option>;
+                        })}
                     </select>
                 );
             case 'radio':
@@ -333,8 +326,37 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                         })}
                     </div>
                 );
+            case 'checkbox':
+                const currentArray = Array.isArray(value) ? value : (value ? [value] : []);
+                return (
+                    <div className={styles.checkboxGroup}>
+                        {field.options?.map((opt, idx) => {
+                            const val = typeof opt === 'string' ? opt : opt.value;
+                            const lbl = typeof opt === 'string' ? opt : opt.label;
+                            const id = `${inputName}-opt-${idx}`;
+                            const isChecked = currentArray.includes(val);
+
+                            const handleCheckboxToggle = (e) => {
+                                let newArray = [...currentArray];
+                                if (e.target.checked) {
+                                    newArray.push(val);
+                                } else {
+                                    newArray = newArray.filter(item => item !== val);
+                                }
+                                updateFormValue(inputName, newArray);
+                            };
+
+                            return (
+                                <label key={id} className={styles.checkboxContainer}>
+                                    <input type="checkbox" id={id} name={inputName} value={val} checked={isChecked} onChange={handleCheckboxToggle} className={styles.checkboxInput} onBlur={handleFieldBlur} />
+                                    <span className={styles.checkboxLabel}>{lbl}</span>
+                                </label>
+                            );
+                        })}
+                    </div>
+                );
             default:
-                return <input type="text" {...commonProps} className={inputClass} onChange={handleInputChange} placeholder={placeholderText} value={value} />;
+                return <input type="text" {...commonProps} className={inputClass} onChange={handleInputChange} placeholder={placeholderText} value={value || ''} />;
         }
     };
 
@@ -345,7 +367,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                     const visible = isFieldVisible(field, formValues);
                     if (!visible) return null;
 
-                    if (field.fieldType === 'repeatable') {
+                    if (field.fieldType === 'repeating_block') {
                         const blocks = formValues[field.name] || [];
                         const minInstances = field.minInstances || 1;
                         const maxInstances = field.maxInstances;
@@ -358,27 +380,27 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                                 {blocks.map((blockData, index) => (
                                     <div key={`${field.name}-${index}`} className={styles.repeatableBlockInstance}>
                                         <div className={styles.blockHeader}>
-                                            <h4>{field.blockTitle || 'Blok'} {index + 1}</h4>
+                                            <h4>{field.blockTitle || 'Grup'} {index + 1}</h4>
                                             {canRemove && (
                                                 <button type="button" onClick={() => handleRemoveBlock(field.name, index, minInstances)} className={styles.removeButton}>
-                                                    <Trash2 size={14} /> {field.removeLabel || 'Sil'}
+                                                    <Trash2 size={14} /> {field.removeLabel || 'Kaldır'}
                                                 </button>
                                             )}
                                         </div>
-                                        {field.subfields.map(subfield => {
+                                        {field.subfields?.map(subfield => {
                                             const inputName = `${field.name}[${index}][${subfield.name}]`;
                                             const subfieldError = errors[inputName];
                                             return (
                                                 <div key={subfield.name} className={styles.formGroup}>
                                                     <label className={styles.formLabel}>
                                                         {subfield.label || subfield.name}
-                                                        {subfield.required && <span>*</span>}
+                                                        {subfield.required && <span className={styles.requiredAsterisk}>*</span>}
                                                     </label>
                                                     {renderInputField({ ...subfield, blockName: field.name }, index)}
                                                     {subfieldError && (
-                                                        <p className={styles.errorMessage}>
-                                                            <AlertCircle size={12} /> {subfieldError}
-                                                        </p>
+                                                        <div className={styles.errorMessage}>
+                                                            <AlertCircle size={14} /> <span>{subfieldError}</span>
+                                                        </div>
                                                     )}
                                                 </div>
                                             );
@@ -396,17 +418,15 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                         const fieldError = errors[field.name];
                         return (
                             <div key={field.name} className={styles.formGroup}>
-                                {field.fieldType !== 'checkbox' && (
-                                    <label className={styles.formLabel}>
-                                        {field.label || field.name}
-                                        {field.required && <span>*</span>}
-                                    </label>
-                                )}
+                                <label className={styles.formLabel}>
+                                    {field.label || field.name}
+                                    {field.required && <span className={styles.requiredAsterisk}>*</span>}
+                                </label>
                                 {renderInputField(field)}
                                 {fieldError && (
-                                    <p className={styles.errorMessage}>
-                                        <AlertCircle size={12} /> {fieldError}
-                                    </p>
+                                    <div className={styles.errorMessage}>
+                                        <AlertCircle size={14} /> <span>{fieldError}</span>
+                                    </div>
                                 )}
                                 {field.name === 'belge_email' && (
                                     <small className={styles.emailInfoText}>

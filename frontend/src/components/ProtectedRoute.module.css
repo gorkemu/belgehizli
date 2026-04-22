@@ -1,0 +1,122 @@
+/* ProtectedRoute.module.css */
+.loadingContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f4;
+    color: #57534e;
+    gap: 16px;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.spinner {
+    color: #a8a29e;
+    animation: spin 1s linear infinite;
+}
+
+.loadingText {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #57534e;
+}
+
+.unauthorizedContainer {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f4;
+    padding: 20px;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.unauthorizedCard {
+    background-color: #ffffff;
+    padding: 48px 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+    border: 1px solid #e7e5e4;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    animation: slideDown 0.25s ease-out;
+}
+
+.iconWrapper {
+    width: 72px;
+    height: 72px;
+    background-color: #fef2f2;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+}
+
+.shieldIcon {
+    color: #dc2626;
+}
+
+.unauthorizedTitle {
+    margin: 0 0 12px 0;
+    color: #1c1917;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.unauthorizedMessage {
+    margin: 0 0 28px 0;
+    color: #57534e;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.logoutButton {
+    padding: 14px 28px;
+    background-color: #1c1917;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.15s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+}
+
+.logoutButton:hover {
+    background-color: #292524;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.logoutButton:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+@keyframes spin {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
