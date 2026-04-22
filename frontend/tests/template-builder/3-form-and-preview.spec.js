@@ -8,14 +8,11 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     await page.goto('/panel');
-    await page.getByRole('button', { name: 'Yeni Belge Oluştur' }).click();
+    await page.getByRole('button', { name: 'Yeni Şablon Oluştur' }).click();
     await page.waitForURL(/\/panel\/projects/);
-    await page.getByRole('button', { name: 'Yeni Belge' }).click();
-    await page.getByPlaceholder('Örn: Kira Sözleşmesi').fill(DOC_NAME);
-    await page.getByText('Şablon Modu (Akıllı Form)').click();
+    await page.getByRole('button', { name: 'Yeni Şablon' }).click();
+    await page.getByPlaceholder('Örn: İş Sözleşmesi').fill(DOC_NAME);
     await page.getByRole('button', { name: 'Oluştur ve Başla' }).click();
-    await page.waitForURL(/\/panel\/projects\/.+/);
-    await page.getByRole('button', { name: 'Tasarımcıyı Başlat' }).click();
     await page.waitForURL(/\/panel\/duzenle\/.+/);
     const match = page.url().match(/\/panel\/duzenle\/([a-f0-9]+)/i);
     if (match && match[1]) TEST_DOC_ID = match[1];
@@ -27,7 +24,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     const page = await browser.newPage();
     await page.goto('/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
-    await projectCard.getByTitle('Belgeyi Sil').click();
+    await projectCard.getByTitle('Sil').click();
     await page.getByRole('button', { name: 'Kalıcı Olarak Sil' }).click(); 
     await page.waitForTimeout(500);
     await page.close();
@@ -47,6 +44,14 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
 
   test('Çoklu Değişken Doldurma ve Önizlemede PDF İndirme', async ({ page }) => {
     await page.goto(`/panel/duzenle/${TEST_DOC_ID}`);
+    
+    // Eğitim turunun (Driver.js) açılmasını engelle
+    await page.evaluate(() => {
+      localStorage.setItem('template_builder_tour_seen', 'true');
+    });
+    // Sayfayı yenile ki React state'i bu değeri en baştan okusun
+    await page.reload();
+
     const editor = page.locator('.ProseMirror');
     await expect(editor).toBeVisible();
     await editor.click();
@@ -90,7 +95,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     await expect(previewPaper).toContainText('Görkem Yılmaz');
     await expect(previewPaper).toContainText('14.04.2026');
 
-    await page.getByRole('button', { name: 'PDF İndir' }).click();
+    await page.getByRole('button', { name: 'İndir' }).click();
     const downloadPromise = page.waitForEvent('download');
     await page.getByRole('button', { name: 'Onayla ve İndir' }).click();
     

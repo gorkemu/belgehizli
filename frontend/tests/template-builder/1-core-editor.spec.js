@@ -9,16 +9,13 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     await page.goto('/panel');
-    await page.getByRole('button', { name: 'Yeni Belge Oluştur' }).click();
+    await page.getByRole('button', { name: 'Yeni Şablon Oluştur' }).click();
     await page.waitForURL(/\/panel\/projects/);
-    await page.getByRole('button', { name: 'Yeni Belge' }).click();
+    await page.getByRole('button', { name: 'Yeni Şablon' }).click();
     
     // Benzersiz ismi doldur
-    await page.getByPlaceholder('Örn: Kira Sözleşmesi').fill(DOC_NAME);
-    await page.getByText('Şablon Modu (Akıllı Form)').click();
+    await page.getByPlaceholder('Örn: İş Sözleşmesi').fill(DOC_NAME);
     await page.getByRole('button', { name: 'Oluştur ve Başla' }).click();
-    await page.waitForURL(/\/panel\/projects\/.+/);
-    await page.getByRole('button', { name: 'Tasarımcıyı Başlat' }).click();
     await page.waitForURL(/\/panel\/duzenle\/.+/);
 
     const match = page.url().match(/\/panel\/duzenle\/([a-f0-9]+)/i);
@@ -35,7 +32,7 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
     
     // O kartın içindeki çöp kutusu ikonuna tıkla
-    await projectCard.getByTitle('Belgeyi Sil').click();
+    await projectCard.getByTitle('Sil').click();
 
     // "Belgeyi Sil" modalında "Kalıcı Olarak Sil" butonuna tıkla
     await page.getByRole('button', { name: 'Kalıcı Olarak Sil' }).click();

@@ -8,14 +8,11 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
   test.beforeAll(async ({ browser }) => {
     const page = await browser.newPage();
     await page.goto('/panel');
-    await page.getByRole('button', { name: 'Yeni Belge Oluştur' }).click();
+    await page.getByRole('button', { name: 'Yeni Şablon Oluştur' }).click();
     await page.waitForURL(/\/panel\/projects/);
-    await page.getByRole('button', { name: 'Yeni Belge' }).click();
-    await page.getByPlaceholder('Örn: Kira Sözleşmesi').fill(DOC_NAME);
-    await page.getByText('Şablon Modu (Akıllı Form)').click();
+    await page.getByRole('button', { name: 'Yeni Şablon' }).click();
+    await page.getByPlaceholder('Örn: İş Sözleşmesi').fill(DOC_NAME);
     await page.getByRole('button', { name: 'Oluştur ve Başla' }).click();
-    await page.waitForURL(/\/panel\/projects\/.+/);
-    await page.getByRole('button', { name: 'Tasarımcıyı Başlat' }).click();
     await page.waitForURL(/\/panel\/duzenle\/.+/);
     const match = page.url().match(/\/panel\/duzenle\/([a-f0-9]+)/i);
     if (match && match[1]) TEST_DOC_ID = match[1];
@@ -27,7 +24,7 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     const page = await browser.newPage();
     await page.goto('/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
-    await projectCard.getByTitle('Belgeyi Sil').click();
+    await projectCard.getByTitle('Sil').click();
     await page.getByRole('button', { name: 'Kalıcı Olarak Sil' }).click(); 
     await page.waitForTimeout(500);
     await page.close();
