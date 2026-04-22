@@ -53,7 +53,7 @@ jobs:
       env:
         TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
         TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
-        VITE_API_BASE_URL: http://localhost:8080/api
+        VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
       run: npx playwright test
 
     # --- HATA DURUMUNDA RAPORLARI KAYDET ---

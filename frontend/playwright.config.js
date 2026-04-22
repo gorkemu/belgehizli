@@ -31,7 +31,7 @@ export default defineConfig({
 
   // GitHub Actions'ın uygulamayı testten önce ayağa kaldırması için
   webServer: {
-    command: 'npm run dev',
+    command: process.env.CI ? 'npm run dev:ci' : 'npm run dev', // Eğer GitHub (CI) ortamındaysa saf komutu çalıştır, lokaldeyse Infisical'ı çalıştır
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // Sunucunun kalkması için 2 dakika süre tanı
