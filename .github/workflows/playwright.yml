@@ -57,21 +57,36 @@ jobs:
       run: npx playwright test
 
     - name: Slack Bildirimi Gönder
-      if: always() # Testler çökse bile bu adımın çalışmasını sağlar.
+      if: always()
       run: |
-        # GitHub'ın sunduğu iş durumu (success/failure) değişkenini yakala
         JOB_STATUS="${{ job.status }}"
         
-        # Duruma göre emoji belirle
-        if [ "$JOB_STATUS" = "success" ]; then
-          EMOJI="✅"
-          TEXT_COLOR="#2eb886" # Yeşil
-        else
-          EMOJI="❌"
-          TEXT_COLOR="#a30200" # Kırmızı
+        # 1. Commit/PR Başlığını Al (Sadece ilk satırı alır ve JSON'ı bozmaması için tırnakları temizler)
+        RAW_TITLE="${{ github.event.pull_request.title || github.event.head_commit.message || github.ref_name }}"
+        COMMIT_TITLE=$(echo "$RAW_TITLE" | head -n 1 | sed 's/"/\\"/g')
+
+        # 2. Başarısız Testleri Bul (Sadece testler patladıysa ve rapor oluştuysa çalışır)
+        FAILED_TESTS_MSG=""
+        if [ "$JOB_STATUS" != "success" ] && [ -f frontend/test-results.json ]; then
+          # jq aracı ile JSON'un içine girip fail olan ilk 3 testin ismini çekiyoruz
+          FAILED_LIST=$(jq -r '.. | .specs? | arrays | .[] | select(.tests[].results[]?.status == "failed") | .title' frontend/test-results.json | head -n 3 | sed 's/"/\\"/g' | awk '{printf "• %s\\n", $0}')
+          
+          # Eğer başarısız test bulduysa mesaja ekle
+          if [ -n "$FAILED_LIST" ]; then
+            FAILED_TESTS_MSG="\n\n*🔴 Başarısız Testler:*\n${FAILED_LIST}"
+          fi
         fi
 
-        # Slack Webhook URL'ine JSON payload'unu POST et
+        # 3. Renk ve İkon Ayarı
+        if [ "$JOB_STATUS" = "success" ]; then
+          EMOJI="✅"
+          TEXT_COLOR="#2eb886"
+        else
+          EMOJI="❌"
+          TEXT_COLOR="#a30200"
+        fi
+
+        # 4. JSON Payload'unu Oluştur ve Slack'e Gönder (Tıklanabilir şık buton ile)
         curl -X POST -H 'Content-type: application/json' \
         --data "{
           \"attachments\": [
@@ -89,8 +104,21 @@ jobs:
                   \"type\": \"section\",
                   \"text\": {
                     \"type\": \"mrkdwn\",
-                    \"text\": \"*Branch:* \`${{ github.ref_name }}\`\n*Tetikleyen:* ${{ github.actor }}\n👉 <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Tıklayarak GitHub Actions Raporunu İncele>\"
+                    \"text\": \"*Yapılan İşlem:* \`$COMMIT_TITLE\`\n*Branch:* \`${{ github.ref_name }}\`\n*Tetikleyen:* ${{ github.actor }}${FAILED_TESTS_MSG}\"
                   }
+                },
+                {
+                  \"type\": \"actions\",
+                  \"elements\": [
+                    {
+                      \"type\": \"button\",
+                      \"text\": {
+                        \"type\": \"plain_text\",
+                        \"text\": \"Raporu İncele\"
+                      },
+                      \"url\": \"https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}\"
+                    }
+                  ]
                 }
               ]
             }
