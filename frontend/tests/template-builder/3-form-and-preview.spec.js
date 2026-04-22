@@ -153,62 +153,75 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   });
 
   test('Form alanları sürükle-bırak ile sıralanabilmeli', async ({ page }) => {
+    // 1. Alanları Ekle
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('Birinci Alan');
+    await page.keyboard.press('Tab'); // Input'tan çık (blur)
     
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('İkinci Alan');
+    await page.keyboard.press('Tab');
 
     const card1 = page.locator('[class*="fieldCard"]').filter({ hasText: 'Birinci Alan' });
-    const dragHandle1 = card1.locator('[class*="dragHandle"]');
+    const card2 = page.locator('[class*="fieldCard"]').filter({ hasText: 'İkinci Alan' });
 
-    // 🔥 ÇÖZÜM 1: Sürükleme yapmadan önce elementin ekranda (viewport) tam göründüğünden emin ol. 
-    // Headless tarayıcılarda ekran küçük açılabilir ve fare dışarı sürüklendiğinde işlem iptal olur.
-    await dragHandle1.scrollIntoViewIfNeeded();
+    const handle1 = card1.locator('[class*="dragHandle"]');
+    
+    await handle1.scrollIntoViewIfNeeded();
+    await card2.scrollIntoViewIfNeeded();
 
-    const box = await dragHandle1.boundingBox();
+    const box1 = await handle1.boundingBox();
+    // İkinci kartın KENDİSİNİ (daha geniş alan) hedef al
+    const box2 = await card2.boundingBox(); 
 
-    if (box) {
-      const startX = box.x + box.width / 2;
-      const startY = box.y + box.height / 2;
+    if (box1 && box2) {
+      const startX = box1.x + box1.width / 2;
+      const startY = box1.y + box1.height / 2;
 
       await page.mouse.move(startX, startY);
       await page.mouse.down();
-      
-      // 🔥 ÇÖZÜM 2: GitHub sanal makineleri (VM) yavaş olduğu için bekleme sürelerini artırıyoruz (200 -> 400ms)
-      await page.waitForTimeout(400); 
+      await page.waitForTimeout(200);
 
-      // 5px dnd-kit barajını aşmak için yavaşça tetiği çek
-      await page.mouse.move(startX, startY + 15, { steps: 5 });
-      await page.waitForTimeout(400);
+      // 5px kuralını tetikle
+      await page.mouse.move(startX, startY + 15, { steps: 3 });
+      await page.waitForTimeout(200);
 
-      // 🔥 ÇÖZÜM 3: Font render farklılıklarını aşmak için 120px yerine garanti olsun diye 250px aşağı çekiyoruz.
-      // Adım sayısını (steps: 25) artırarak farenin Linux üzerinde kaybolmasını/atlamasını engelliyoruz.
-      await page.mouse.move(startX, startY + 250, { steps: 25 });
+      // İkinci kartın ortasına değil, dnd-kit'in yer değiştirmeyi anlaması için 
+      // ikinci kartın EN ALT SINIRINA kadar sürükle
+      await page.mouse.move(startX, box2.y + box2.height - 5, { steps: 15 });
       await page.waitForTimeout(400);
 
       await page.mouse.up();
     }
 
-    // Animasyonun tamamlanması için CI ortamına bolca zaman tanı
-    await page.waitForTimeout(1000);
+    // "toPass" Bloğu 
+    // "5 saniye boyunca sürekli kontrol et. Ne zaman Birinci Alan, İkinci Alanın altına düşerse testi başarılı say."
+    await expect(async () => {
+      const cards = page.locator('[class*="fieldCard"]');
+      const texts = await cards.allInnerTexts();
 
-    const allCards = page.locator('[class*="fieldCard"]');
-    const totalCount = await allCards.count();
+      // İsimlerin dizideki yerlerini (index) bul
+      const indexBirinci = texts.findIndex(t => t.includes('Birinci Alan'));
+      const indexIkinci = texts.findIndex(t => t.includes('İkinci Alan'));
 
-    await expect(allCards.nth(totalCount - 2)).toContainText('İkinci Alan');
-    await expect(allCards.nth(totalCount - 1)).toContainText('Birinci Alan');
+      // Her iki kartın da sayfada bulunduğundan emin ol
+      expect(indexBirinci).toBeGreaterThan(-1);
+      expect(indexIkinci).toBeGreaterThan(-1);
+
+      // Birinci alan sürüklendiği için İkinci alanın ALTINDA (indeksi daha büyük) olmalı
+      expect(indexBirinci).toBeGreaterThan(indexIkinci);
+    }).toPass({ timeout: 5000 });
   });
 
   test('Paylaşım linki kopyalanabilmeli', async ({ page }) => {
     await page.getByRole('button', { name: 'Paylaş' }).click();
-    
+
     // Modalı "Heading" (Başlık) üzerinden bul
     const modalHeading = page.getByRole('heading', { name: 'Genel Bağlantı' });
-    
+
     // İçinde bu başlığı barındıran İLK .modal div'ini seç
     const modal = page.locator('[class*="modal"]').filter({ has: modalHeading }).first();
-    
+
     // Önce başlığın görünür olmasını bekle
     await expect(modalHeading).toBeVisible();
 
