@@ -544,8 +544,17 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             element: '#tb-paper',
             popover: {
               title: '📄 Beyaz Kağıt',
-              description: 'Belge içeriğinizi buraya yazın. Mevcut bir Word / .txt dosyasını doğrudan kağıdın üzerine sürükleyip bırakabilirsiniz.',
+              description: 'Şablon içeriğinizi buraya yazın. Mevcut şablonunuz varsa içeriğini kopyalayıp buraya yapıştırabilir veya dosyanızı doğrudan sürükleyip bırakabilirsiniz.',
               side: 'top',
+              align: 'center',
+            },
+          },
+          {
+            element: '#tb-import',
+            popover: {
+              title: '📂 İçe Aktar',
+              description: 'Dilerseniz buradaki İçe Aktar butonunu kullanarak da mevcutta kullandığınız dosyayı aktarabilirsiniz',
+              side: 'bottom',
               align: 'center',
             },
           },
@@ -553,7 +562,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             element: '#tb-toolbar',
             popover: {
               title: '✍️ Düzenleme Araçları',
-              description: 'Yazı tipi, boyut, hizalama, imza ve tablo gibi tüm biçimlendirme araçlarını buradan kullanabilirsiniz.',
+              description: 'Yazı tipi, boyut, hizalama ve renk gibi biçimlendirme araçlarını buradan kullanabilirsiniz.',
               side: 'bottom',
               align: 'center',
             },
@@ -562,7 +571,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             element: '#tb-magic-btn',
             popover: {
               title: '✨ Sihirli Algılama',
-              description: 'Daha önce <code>{{isim}}</code>, <code>[tarih]</code> gibi formatlar kullandıysanız bu buton hepsini otomatik bulur ve sol panele form alanı olarak ekler.',
+              description: 'Yapıştırdığınız şablonda <code>{{isim}}</code>, <code>[tarih]</code> gibi formatlar kullandıysanız bu buton hepsini otomatik bulur ve sol panele form alanı olarak ekler.',
               side: 'bottom',
               align: 'start',
             },
@@ -571,7 +580,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
             element: '#field-list',
             popover: {
               title: '📋 Form Alanları',
-              description: 'Kağıtta bir kelimeyi fareyle seçtiğinizde beliren "Soruya Dönüştür" seçeneği, o kelimeyi otomatik olarak form sorusuna çevirir.',
+              description: 'Kağıtta bir kelimeyi fareyle seçtiğinizde beliren "Soruya Dönüştür" seçeneği, o kelimeyi otomatik olarak form sorusuna çevirir. Buradan manuel ekleme de yapabilirsiniz.',
               side: 'right',
               align: 'center',
             },
@@ -606,8 +615,8 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
           {
             element: '#tb-preview-btn',
             popover: {
-              title: '👁 Önizleme & Test',
-              description: 'Formu test verileriyle doldurun, belgenizin nasıl görüneceğini canlı izleyin ve PDF olarak indirin.',
+              title: '👁 Önizleme & İndirme',
+              description: 'Oluşturduğunuz form sorularını doldurup, belgenizin son halini görüntüleyebilir, manuel değişiklikler yapabilir ve PDF olarak indirebilirsiniz.',
               side: 'bottom',
               align: 'center',
             },
@@ -1116,7 +1125,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                   )}
 
                   <input type="file" ref={fileInputRef} onChange={handleFileInputChange} accept=".txt,.html,.docx,.pdf" style={{ display: 'none' }} />
-                  <button className={styles.actionBtn} onClick={() => fileInputRef.current?.click()}><FileUp size={16} /> İçe Aktar</button>
+                  <button id="tb-import" className={styles.actionBtn} onClick={() => fileInputRef.current?.click()}><FileUp size={16} /> İçe Aktar</button>
                   <button id="tb-cond-btn" className={styles.condBtn} onClick={() => setCondModal(true)}><Zap size={14} /> Şartlı Blok</button>
                 </div>
               </div>
@@ -1171,7 +1180,7 @@ export const TemplateBuilder = ({ initialData, onSave }) => {
                   <div className={styles.dragOverlay}>
                     <FileUp size={48} color="var(--accent)" />
                     <h2>Belgeyi Buraya Bırakın</h2>
-                    <p>.txt, .docx veya .pdf desteklenir</p>
+                    <p>.txt ve .docx desteklenir</p>
                   </div>
                 )}
 

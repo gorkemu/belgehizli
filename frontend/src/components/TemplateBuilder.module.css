@@ -906,6 +906,41 @@
   color: var(--text-editor);
 }
 
+/* Drag Overlay */
+.dragOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: inherit;              
+  pointer-events: none;                
+  text-align: center;
+  gap: 0.75rem;
+  color: var(--text-editor);
+  backdrop-filter: blur(4px);
+}
+
+.dragOverlay h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.dragOverlay p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.dragOverlay svg {
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
 /* Popover & Dropdown */
 .popoverOverlay {
   position: fixed;
@@ -1233,6 +1268,14 @@
   border-left-color: var(--accent-border);
   background: var(--accent-bg);
 }
+
+:global(.ProseMirror) ul,
+:global(.ProseMirror) ol {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 1.8rem;
+}
+
 :global(.ProseMirror) pre {
   background: var(--bg-toolbar);
   color: var(--text-primary);
