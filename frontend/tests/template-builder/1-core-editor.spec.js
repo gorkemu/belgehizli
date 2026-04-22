@@ -169,9 +169,6 @@ test('Slash menüsünde ok tuşları ile gezinme ve Enter ile seçim', async ({ 
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
 
-    // bilinçli hata
-    await editor.click();
-    
     // h2'nin DOM'a işlenmesini bekle
     const heading2 = editor.locator('h2');
     await expect(heading2).toBeVisible({ timeout: 5000 });
