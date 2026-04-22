@@ -56,6 +56,48 @@ jobs:
         VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
       run: npx playwright test
 
+    - name: Slack Bildirimi Gönder
+      if: always() # Testler çökse bile bu adımın çalışmasını sağlar.
+      run: |
+        # GitHub'ın sunduğu iş durumu (success/failure) değişkenini yakala
+        JOB_STATUS="${{ job.status }}"
+        
+        # Duruma göre emoji belirle
+        if [ "$JOB_STATUS" = "success" ]; then
+          EMOJI="✅"
+          TEXT_COLOR="#2eb886" # Yeşil
+        else
+          EMOJI="❌"
+          TEXT_COLOR="#a30200" # Kırmızı
+        fi
+
+        # Slack Webhook URL'ine JSON payload'unu POST et
+        curl -X POST -H 'Content-type: application/json' \
+        --data "{
+          \"attachments\": [
+            {
+              \"color\": \"$TEXT_COLOR\",
+              \"blocks\": [
+                {
+                  \"type\": \"header\",
+                  \"text\": {
+                    \"type\": \"plain_text\",
+                    \"text\": \"$EMOJI Playwright Test Sonucu: $JOB_STATUS\"
+                  }
+                },
+                {
+                  \"type\": \"section\",
+                  \"text\": {
+                    \"type\": \"mrkdwn\",
+                    \"text\": \"*Branch:* \`${{ github.ref_name }}\`\n*Tetikleyen:* ${{ github.actor }}\n👉 <https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}|Tıklayarak GitHub Actions Raporunu İncele>\"
+                  }
+                }
+              ]
+            }
+          ]
+        }" \
+        ${{ secrets.SLACK_WEBHOOK_URL }}
+
     # --- HATA DURUMUNDA RAPORLARI KAYDET ---
     - name: Test Raporlarını Yükle
       uses: actions/upload-artifact@v4
