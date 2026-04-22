@@ -1233,6 +1233,14 @@
   border-left-color: var(--accent-border);
   background: var(--accent-bg);
 }
+
+:global(.ProseMirror) ul,
+:global(.ProseMirror) ol {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    padding-left: 1.8rem;
+}
+
 :global(.ProseMirror) pre {
   background: var(--bg-toolbar);
   color: var(--text-primary);
