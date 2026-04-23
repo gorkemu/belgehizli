@@ -59,7 +59,9 @@ function Header() {
 
               <Button
                 variant="primary"
+                size="lg"
                 onClick={() => navigate('/panel')}
+                style={{width: '240px', height: '50px'}}
                 leftIcon={<LayoutDashboard size={16} />}
               >
                 <span>Çalışma Alanı</span>
@@ -68,13 +70,17 @@ function Header() {
               <div className={styles.authButtons}>
                 <Button
                 variant="secondary"
+                size="lg"
                 onClick={() => navigate('/giris-yap')}
+                style={{width: '160px', height: '40px'}}
               >
                 <span>Giriş</span>
               </Button>
               <Button
                 variant="primary"
+                size="lg"
                 onClick={() => navigate('/kayit-ol')}
+                style={{width: '160px', height: '40px'}}
               >
                 <span>Kayıt Ol</span>
               </Button>

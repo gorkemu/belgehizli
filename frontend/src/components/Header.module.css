@@ -163,14 +163,14 @@
 }
 
 .logoFull {
-  height: 34px;
+  height: 40px;
   width: auto;
   display: block;
   object-fit: contain;
 }
 
 .logoIcon {
-  height: 34px;
+  height: 40px;
   width: auto;
   display: none;
   object-fit: contain;
