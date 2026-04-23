@@ -1,0 +1,201 @@
+/* frontend/src/features/TemplateBuilder/components/Header.module.css */
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-header);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 58px;
+  flex-shrink: 0;
+}
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .15s;
+}
+.backBtn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+.nameInput {
+  flex: 1;
+  max-width: 380px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  padding: 7px 12px;
+  font-size: .975rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  transition: all .15s;
+}
+.nameInput:hover { background: var(--bg-hover); }
+.nameInput:focus {
+  outline: none;
+  background: var(--bg-surface);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+.modeSwitch {
+  display: flex;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+  gap: 2px;
+  margin: 0 auto;
+}
+.modeBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 18px;
+  border: none;
+  background: transparent;
+  border-radius: 7px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all .18s;
+}
+.modeOn {
+  background: var(--bg-surface);
+  color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.saveBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border: none;
+  border-radius: var(--radius);
+  font-size: .875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s;
+}
+.saveBtn:hover { opacity: 0.9; }
+.autoSaveIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-right: 12px;
+}
+.unsavedDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--warning);
+}
+.spinnerIcon { 
+  animation: headerSpin 1s linear infinite; 
+  color: var(--accent); 
+}
+
+@keyframes headerSpin { 
+  to { transform: rotate(360deg); } 
+}
+
+.headerActionsDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 8px;
+}
+.pdfBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: .875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .18s;
+}
+.pdfBtn:hover:not(:disabled) {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+/* Compact Theme Dropdown */
+.compactThemeDropdown { position: relative; display: inline-block; }
+.themeActiveBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.themeActiveBtn:hover {
+  background: var(--bg-active);
+  border-color: var(--accent);
+}
+
+.inpErr {
+  border-color: var(--danger) !important;
+  background: var(--btn-danger-bg) !important;
+}
+
+@media (max-width: 1200px) {
+  .header {
+    padding: 0 12px;
+  }
+  .nameInput {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .modeBtn span {
+    display: none; 
+  }
+  .modeBtn {
+    padding: 6px 12px;
+  }
+  .headerRight .saveBtn span,
+  .headerRight .pdfBtn span {
+    display: none;
+  }
+  .headerRight .saveBtn,
+  .headerRight .pdfBtn {
+    padding: 8px 12px;
+  }
+  .autoSaveIndicator span {
+    display: none;
+  }
+}
