@@ -1,19 +1,21 @@
+// frontend/src/features/TemplateBuilder/components/PreviewMode.jsx
 import React, { useMemo, useRef } from 'react';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
-import sidebarStyles from './Sidebar/Sidebar.module.css'; 
-import styles from './PreviewMode.module.css'; 
-import { ArrowLeft } from 'lucide-react';
+import sidebarStyles from './Sidebar/Sidebar.module.css';
+import styles from './PreviewMode.module.css';
+import { ArrowLeft, Edit3 } from 'lucide-react';
 import Handlebars from 'handlebars';
 import DOMPurify from 'dompurify';
 import { convertToHandlebars } from '../utils/helpers';
-import DocumentForm from '../../../components/DocumentForm'; 
+import DocumentForm from '../../../components/DocumentForm';
 import DocumentPreview from '../../../components/DocumentPreview';
+import Button from '../../../components/ui/Button';
 
 const PreviewMode = () => {
-  const { 
-    formData, virtualFormData, setVirtualFormData, 
-    previewStep, setPreviewStep, triggerSymbol, showToast, getCleanFields 
+  const {
+    formData, virtualFormData, setVirtualFormData,
+    previewStep, setPreviewStep, triggerSymbol, showToast, getCleanFields, setShowBackWarning
   } = useTemplateBuilder();
 
   const previewEditorRef = useRef(null);
@@ -29,7 +31,7 @@ const PreviewMode = () => {
       const val = virtualFormData[field.name];
       if (val === undefined || val === null || val === '') return false;
       if (Array.isArray(val) && val.length === 0) return false;
-    } 
+    }
     return true;
   };
 
@@ -83,7 +85,7 @@ const PreviewMode = () => {
           <span className={sidebarStyles.panelTitle}>Test formu</span>
           <span className={styles.stepBadge}>Adım {previewStep}/2</span>
         </div>
-        
+
         <div style={{ opacity: previewStep === 2 ? 0.35 : 1, pointerEvents: previewStep === 2 ? 'none' : 'auto', flex: 1, overflowY: 'auto' }}>
           <div style={{ padding: '20px' }}>
             {formData.fields.length > 0 ? (
@@ -94,21 +96,39 @@ const PreviewMode = () => {
 
         <div className={styles.previewFooter}>
           {previewStep === 1 ? (
-            <button className={`${styles.nextBtn} ${styles.pulseBtn}`} onClick={() => { if (validatePreviewForm()) { setPreviewStep(2); } else { showToast("Lütfen tüm zorunlu alanları doldurun.", "error"); } }}>
-              Belgeyi İncele <ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />
-            </button>
+            <Button
+              variant="primary"
+              className={styles.pulseBtn} 
+              onClick={() => {
+                if (validatePreviewForm()) { setPreviewStep(2); }
+                else { showToast("Lütfen tüm zorunlu alanları doldurun.", "error"); }
+              }}
+              rightIcon={<ArrowLeft size={16} style={{ transform: 'rotate(180deg)' }} />}
+            >
+              Belgeyi İncele
+            </Button>
           ) : (
-            <button className={styles.backFormBtn} onClick={() => setPreviewStep(1)}>
-              ← Forma dön ve düzenle
-            </button>
+            <Button
+              variant="secondary"
+              onClick={() => setShowBackWarning('form')} 
+              leftIcon={<Edit3 size={16} />}
+            >
+              Forma Dön ve Düzenle
+            </Button>
           )}
         </div>
       </aside>
-      
+
       <main className={globalStyles.right} style={{ padding: '40px', alignItems: 'center', overflowY: 'auto' }}>
         <div className={globalStyles.canvas} style={{ width: '100%', padding: '0 40px' }}>
           <div className={globalStyles.paper}>
-            <DocumentPreview templateContent={previewHtml} formData={virtualFormData} editorRef={previewEditorRef} currentStep={previewStep} />
+            <DocumentPreview 
+              key={`preview-editor-reset-${previewStep}`} 
+              templateContent={previewHtml} 
+              formData={virtualFormData} 
+              editorRef={previewEditorRef} 
+              currentStep={previewStep} 
+            />
           </div>
         </div>
       </main>

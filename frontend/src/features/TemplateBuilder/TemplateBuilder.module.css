@@ -803,3 +803,46 @@
     min-width: 800px; 
   }
 }
+
+.warningModal {
+  background: var(--bg-card);
+  padding: 2.5rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  cursor: default;
+  animation: slideUp 0.2s ease-out;
+}
+
+.warningIcon {
+  color: var(--danger);
+  margin-bottom: 1.25rem;
+}
+
+.warningModal h3 {
+  margin: 0 0 0.8rem 0;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.warningModal p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.warningActions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
