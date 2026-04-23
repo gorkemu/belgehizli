@@ -170,7 +170,7 @@ const Dashboard = () => {
                   <button onClick={e => { e.stopPropagation(); setRowMenuOpen(rowMenuOpen === project._id ? null : project._id); }} className={styles.menuTrigger}><MoreHorizontal size={18} /></button>
                   {rowMenuOpen === project._id && (
                     <div className={styles.menuDropdown} onClick={e => e.stopPropagation()}>
-                      <button onClick={() => { navigate(`/panel/projects/${project._id}`); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> Düzenlemeye Devam Et</button>
+                      <button onClick={() => { navigate(`/panel/duzenle/${project._id}`); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> Düzenlemeye Devam Et</button>
                       <button onClick={() => { setEditingProjectId(project._id); setEditingProjectName(project.name); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> Yeniden Adlandır</button>
                       <div className={styles.menuDivider}></div>
                       <button onClick={() => { setDeleteProjectTarget(project._id); setRowMenuOpen(null); }} className={`${styles.menuItem} ${styles.menuItemDanger}`}><Trash2 size={14} /> Kalıcı Olarak Sil</button>
