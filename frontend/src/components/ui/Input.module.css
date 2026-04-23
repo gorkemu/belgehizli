@@ -1,0 +1,66 @@
+/* frontend/src/components/ui/Input.module.css */
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  transition: all 0.2s ease;
+  font-family: inherit;
+  outline: none;
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.input:focus:not(.errorInput) {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.input:disabled {
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.errorInput {
+  border-color: var(--danger) !important;
+  background: color-mix(in srgb, var(--danger) 5%, transparent) !important;
+}
+.errorInput:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 15%, transparent);
+}
+
+.errorText {
+  font-size: 0.75rem;
+  color: var(--danger);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.helperText {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}

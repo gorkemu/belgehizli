@@ -331,60 +331,6 @@
   color: var(--text-primary);
 }
 
-.nextStepButton {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 1.2rem 1.5rem;
-  background-color: var(--text-primary);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
-}
-
-.nextStepButton:hover:not(.disabledButton) {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.nextStepButton.disabledButton {
-  background: var(--border-strong);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-  color: #fafaf9;
-}
-
-.btnInner {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.btnMainText {
-  display: block;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.btnSubText {
-  display: block;
-  font-size: 0.8rem;
-  color: #d6d3d1;
-  margin-top: 0.2rem;
-  font-weight: 400;
-}
-
-.btnArrow {
-  flex-shrink: 0;
-  color: #d6d3d1;
-}
-
 .actionSection {
   background-color: #fafaf9;
   border: 1px solid var(--border);
@@ -431,37 +377,6 @@
   color: var(--text-primary);
   text-decoration: underline;
   font-weight: 600;
-}
-
-.payDownloadButton {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  width: 100%;
-  padding: 1.2rem;
-  background-color: var(--text-primary);
-  color: #ffffff;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-family: inherit;
-}
-
-.payDownloadButton:hover:not(.disabledButton) {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-.disabledButton {
-  background-color: var(--border-strong) !important;
-  color: #fafaf9 !important;
-  cursor: not-allowed;
-  box-shadow: none !important;
 }
 
 .previewNotes {
@@ -558,39 +473,6 @@
   display: flex;
   gap: 0.8rem;
   flex-direction: column;
-}
-
-.confirmBtn {
-  background: #dc2626;
-  color: white;
-  padding: 0.9rem;
-  border-radius: 10px;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.confirmBtn:hover {
-  background: #b91c1c;
-}
-
-.cancelBtn {
-  background: #ffffff;
-  color: var(--text-primary);
-  padding: 0.9rem;
-  border-radius: 10px;
-  border: 1px solid var(--border-strong);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.cancelBtn:hover {
-  background: #fafaf9;
-  border-color: var(--text-muted);
 }
 
 .mobilePreviewNotice {

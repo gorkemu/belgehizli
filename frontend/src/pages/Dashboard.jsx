@@ -8,6 +8,7 @@ import {
   Loader2, BookOpen, LayoutTemplate, MoreHorizontal
 } from 'lucide-react';
 import styles from './Dashboard.module.css';
+import Button from '../components/ui/Button';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
@@ -110,11 +111,26 @@ const Dashboard = () => {
           <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
             <div className={styles.modalIconBox}><AlertTriangle size={24} color="#dc2626" /></div>
             <h2 className={styles.modalTitle}>Belgeyi Sil</h2>
-            <p className={styles.modalText}>Bu belgeyi ve içerdiği tüm verileri kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.</p>
+            <p className={styles.modalText}>
+              Bu belgeyi ve içerdiği tüm verileri kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+            </p>
             <div className={styles.modalActions}>
-              <button onClick={() => setDeleteProjectTarget(null)} className={styles.cancelModalBtn}>Vazgeç</button>
-              <button onClick={handleDeleteProject} className={styles.confirmDeleteBtn}>Kalıcı Olarak Sil</button>
+              <Button 
+                variant="secondary" 
+                onClick={() => setDeleteProjectTarget(null)}
+                style={{"flex":1}}
+              >
+                Vazgeç
+              </Button>
+              <Button 
+                variant="danger" 
+                onClick={handleDeleteProject}
+                style={{"flex":1}}
+              >
+                Kalıcı Olarak Sil
+              </Button>
             </div>
+            
           </div>
         </div>
       )}
@@ -170,7 +186,6 @@ const Dashboard = () => {
                   <button onClick={e => { e.stopPropagation(); setRowMenuOpen(rowMenuOpen === project._id ? null : project._id); }} className={styles.menuTrigger}><MoreHorizontal size={18} /></button>
                   {rowMenuOpen === project._id && (
                     <div className={styles.menuDropdown} onClick={e => e.stopPropagation()}>
-                      <button onClick={() => { navigate(`/panel/projects/${project._id}`); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> Düzenlemeye Devam Et</button>
                       <button onClick={() => { setEditingProjectId(project._id); setEditingProjectName(project.name); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> Yeniden Adlandır</button>
                       <div className={styles.menuDivider}></div>
                       <button onClick={() => { setDeleteProjectTarget(project._id); setRowMenuOpen(null); }} className={`${styles.menuItem} ${styles.menuItemDanger}`}><Trash2 size={14} /> Kalıcı Olarak Sil</button>

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate } from 'lucide-react';
 import styles from './ProjectsManager.module.css';
+import Button from '../components/ui/Button';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
@@ -67,7 +68,7 @@ export const ProjectsManager = () => {
       const payload = {
         name: formData.name,
         description: formData.description,
-        category: 'form_builder', // Artık her şey form_builder
+        category: 'form_builder',
         settings: { mode: 'FREE' }
       };
 
@@ -113,9 +114,13 @@ export const ProjectsManager = () => {
           <h1 className={styles.pageTitle}>Tüm Şablonlar</h1>
           <p className={styles.pageSubtitle}>Sözleşme ve form şablonlarınızı tek bir yerden yönetin.</p>
         </div>
-        <button onClick={() => setIsModalOpen(true)} className={styles.addButton}>
-          <Plus size={18} /> Yeni Şablon
-        </button>
+        <Button
+          variant="primary"
+          onClick={() => setIsModalOpen(true)}
+          leftIcon={<Plus size={18} />}
+        >
+          Yeni Şablon
+        </Button>
       </div>
 
       {loading ? (
@@ -125,7 +130,13 @@ export const ProjectsManager = () => {
           <div className={styles.emptyIconBox}><LayoutTemplate size={32} color="#a8a29e" /></div>
           <h3 className={styles.emptyTitle}>Henüz bir şablonunuz yok</h3>
           <p className={styles.emptyText}>Hemen yeni bir akıllı form şablonu oluşturarak çalışmaya başlayın.</p>
-          <button onClick={() => setIsModalOpen(true)} className={styles.emptyButton}>İlk Şablonunuzu Oluşturun</button>
+          <Button
+          variant="primary"
+          size= "lg"
+          onClick={() => setIsModalOpen(true)}
+        >
+          İlk Şablonunuzu Oluşturun
+        </Button>
         </div>
       ) : (
         <div className={styles.projectGrid}>
@@ -163,8 +174,23 @@ export const ProjectsManager = () => {
                 <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Bu şablon ne hakkında?" className={styles.formTextarea} />
               </div>
               <div className={styles.modalActions}>
-                <button type="button" onClick={() => setIsModalOpen(false)} className={styles.cancelBtn}>Vazgeç</button>
-                <button type="submit" disabled={isSubmitting} className={styles.submitBtn}>{isSubmitting ? 'Oluşturuluyor...' : 'Oluştur ve Başla'}</button>
+                <Button
+                  variant="secondary"
+                  size= "lg"
+                  onClick={() => setIsModalOpen(false)}
+                  style={{ flex: '1' }}
+                >
+                  Vazgeç
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size= "lg"
+                  disabled={isSubmitting}
+                  style={{ flex: '1' }}
+                >
+                  {isSubmitting ? 'Oluşturuluyor...' : 'Oluştur ve Başla'}
+                </Button>
               </div>
             </form>
           </div>
@@ -178,8 +204,22 @@ export const ProjectsManager = () => {
             <h2 className={styles.confirmTitle}>Şablonu Sil</h2>
             <p className={styles.confirmText}><strong>"{docToDelete.name}"</strong> adlı şablonu silmek istediğinize emin misiniz?</p>
             <div className={styles.confirmActions}>
-              <button onClick={() => setDocToDelete(null)} className={styles.cancelBtn}>Vazgeç</button>
-              <button onClick={handleDeleteDocument} disabled={isDeleting} className={styles.dangerBtn}>{isDeleting ? 'Siliniyor...' : 'Kalıcı Olarak Sil'}</button>
+              <Button
+                  variant="secondary"
+                  onClick={() => setDocToDelete(null)}
+                  style={{ flex: '1' }}
+                >
+                  Vazgeç
+                </Button>
+              <Button
+                  type="submit"
+                  variant="danger"
+                  onClick={handleDeleteDocument}
+                  disabled={isDeleting}
+                  style={{ flex: '1' }}
+                >
+                  {isDeleting ? 'Siliniyor...' : 'Kalıcı Olarak Sil'}
+                </Button>
             </div>
           </div>
         </div>

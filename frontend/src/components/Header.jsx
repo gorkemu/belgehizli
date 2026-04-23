@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Search, LayoutDashboard } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import styles from './Header.module.css';
+import Button from '../components/ui/Button';
 
 function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -55,14 +56,28 @@ function Header() {
 
           <div className={styles.rightSpacer}>
             {user ? (
-              <Link to={dashboardPath} className={styles.dashboardBtn}>
-                <LayoutDashboard size={16} />
+
+              <Button
+                variant="primary"
+                onClick={() => navigate('/panel')}
+                leftIcon={<LayoutDashboard size={16} />}
+              >
                 <span>Çalışma Alanı</span>
-              </Link>
+              </Button>
             ) : (
               <div className={styles.authButtons}>
-                <Link to="/giris-yap" className={styles.loginLink}>Giriş</Link>
-                <Link to="/kayit-ol" className={styles.registerLink}>Ücretsiz Başla</Link>
+                <Button
+                variant="secondary"
+                onClick={() => navigate('/giris-yap')}
+              >
+                <span>Giriş</span>
+              </Button>
+              <Button
+                variant="primary"
+                onClick={() => navigate('/kayit-ol')}
+              >
+                <span>Kayıt Ol</span>
+              </Button>
               </div>
             )}
           </div>

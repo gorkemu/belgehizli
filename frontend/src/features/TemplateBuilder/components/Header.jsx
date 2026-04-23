@@ -4,6 +4,7 @@ import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
 import styles from './Header.module.css';
 import DOMPurify from 'dompurify';
+import Button from '../../../components/ui/Button';
 
 import {
   ArrowLeft, Wrench, Eye, Save, Cloud,
@@ -150,9 +151,13 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <button className={styles.backBtn} onClick={() => navigate('/panel/projects')}>
-        <ArrowLeft size={16} /> <span>Şablonlarım</span>
-      </button>
+      <Button 
+        variant="secondary" 
+        onClick={() => navigate('/panel/projects')} 
+        leftIcon={<ArrowLeft size={16} />}
+      >
+        <span>Şablonlarım</span>
+      </Button>
 
       <input
         className={`${styles.nameInput} ${formErrors.name ? styles.inpErr : ''}`}
@@ -212,19 +217,35 @@ const Header = () => {
 
         <div className={styles.headerActionsDivider} />
 
-        <button id="tb-share-btn" onClick={() => setIsShareModalOpen(true)} className={styles.pdfBtn} title="Genel Bağlantı">
-          <LinkIcon size={15} /> <span>Paylaş</span>
-        </button>
+        <Button 
+          id="tb-share-btn" 
+          variant="secondary" 
+          onClick={() => setIsShareModalOpen(true)} 
+          title="Genel Bağlantı"
+          leftIcon={<LinkIcon size={15} />}
+        >
+          <span>Paylaş</span>
+        </Button>
 
         {mode === 'preview' && (
-          <button className={styles.pdfBtn} onClick={() => setPdfConfirmModal(true)}>
-            <Printer size={15} /> <span>{isGeneratingPdf ? '...' : 'İndir'}</span>
-          </button>
+          <Button 
+            variant="secondary" 
+            onClick={() => setPdfConfirmModal(true)} 
+            isLoading={isGeneratingPdf}
+            leftIcon={!isGeneratingPdf && <Printer size={15} />}
+          >
+            <span>İndir</span>
+          </Button>
         )}
 
-        <button className={styles.saveBtn} onClick={handleSaveClick} disabled={saveStatus === 'saving'}>
-          <Save size={15} /> <span>Kaydet</span>
-        </button>
+        <Button 
+          variant="primary" 
+          onClick={handleSaveClick} 
+          isLoading={saveStatus === 'saving'}
+          leftIcon={<Save size={15} />}
+        >
+          <span>Kaydet</span>
+        </Button>
       </div>
     </header>
   );

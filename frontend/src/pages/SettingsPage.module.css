@@ -225,40 +225,6 @@
   margin-top: 16px;
 }
 
-.submitBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background-color: #1c1917;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-size: 0.95rem;
-  font-family: inherit;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.submitBtn:hover:not(:disabled) {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.submitBtn:disabled {
-  background-color: #e7e5e4;
-  color: #a8a29e;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.spinner {
-  animation: spin 1s linear infinite;
-}
-
 @keyframes slideDown {
   from { transform: translateX(-50%) translateY(-8px); opacity: 0; }
   to { transform: translateX(-50%) translateY(0); opacity: 1; }

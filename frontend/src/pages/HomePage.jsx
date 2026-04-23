@@ -7,8 +7,9 @@ import {
   Check, Bold, Italic, Palette,
   Highlighter, Building2, Briefcase, Scale,
   GraduationCap, Heart, ShoppingCart,
-  Type, Calendar, Hash, Wand2, ChevronDown
+  Type, Calendar, Hash, Wand2, ChevronDown, ArrowLeft
 } from 'lucide-react';
+import Button from '../components/ui/Button';
 
 const POPULAR_CHIPS = [
   { name: 'Kira Sözleşmesi', slug: 'konut-kira-sozlesmesi', icon: <HomeIcon size={13} /> },
@@ -174,8 +175,20 @@ function HomePage() {
               <div className={styles.stat}><strong>{slide.trigger}</strong><span>Akıllı değişkenler</span></div>
             </div>
             <div className={styles.heroCtas}>
-              <Link to="/kayit-ol" className={styles.ctaPrimary}>Hemen Ücretsiz Başlayın</Link>
-              <a href="#sablonlar" className={styles.ctaSecondary}>Hazır Şablonlar</a>
+              <Button
+                variant="primary"
+                size="lg"
+                onClick={() => navigate('/kayit-ol')}
+              >
+                <span>Hemen Başlayın</span>
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={() => navigate('/sablonlar')}
+              >
+                <span>Hazır Şablonlar</span>
+              </Button>
             </div>
             <p className={styles.microNote}>Kredi kartı gerekmez, hemen denemeye başlayın.</p>
           </div>
@@ -284,10 +297,10 @@ function HomePage() {
                 </div>
                 <div className={styles.mvPaper}>
                   <h3 className={styles.mvTitle}>KİRA SÖZLEŞMESİ</h3>
-                  <div className={styles.mvPara}> 
+                  <div className={styles.mvPara}>
                     İşbu sözleşme, bir tarafta mülk sahibi ile diğer tarafta kiracı sıfatıyla <span className={styles.mvVar}>{'{{'}kiraci_adi{'}}'}</span> (TC: <span className={styles.mvVar}>{'{{'}tc_kimlik{'}}'}</span>) arasında akdedilmiştir.
                   </div>
-                  <div className={styles.mvPara}> 
+                  <div className={styles.mvPara}>
                     Sözleşme <span className={styles.mvVar}>{'{{'}baslangic_tarihi{'}}'}</span> tarihinde yürürlüğe girecek olup, aylık kira bedeli <span className={styles.mvVar}>{'{{'}kira_bedeli{'}}'}</span> TL olarak belirlenmiştir.
                   </div>
                 </div>
@@ -323,7 +336,7 @@ function HomePage() {
             <div className={styles.bvPaper}>
               <h3 className={styles.bvTitle}>HİZMET SÖZLEŞMESİ</h3>
               <p>Madde 1</p>
-              <div className={styles.bvPara}> 
+              <div className={styles.bvPara}>
                 İşbu hizmet sözleşmesi, bir tarafta hizmet sağlayıcı konumundaki{' '}
                 <span className={styles.bvSelection}>Ahmet Yılmaz</span>{' '}
                 ile diğer tarafta hizmet alıcı konumundaki TechBrand arasında...
@@ -450,7 +463,13 @@ function HomePage() {
           <div className={styles.ctaContent}>
             <h2>Çalışma alanınızı oluşturun</h2>
             <p>Araçları test etmek ve kendi şablonlarınızı buluta kaydetmek için ücretsiz hesabınızı açın.</p>
-            <Link to="/kayit-ol" className={styles.ctaPrimaryLg}>Ücretsiz Başlayın</Link>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => navigate('/kayit-ol')}
+            >
+              <span>Hemen Başlayın</span>
+            </Button>
           </div>
         </div>
       </section>

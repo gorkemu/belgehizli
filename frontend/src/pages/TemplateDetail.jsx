@@ -12,6 +12,7 @@ import {
     ArrowLeft, CheckCircle2, AlertCircle, Download,
     Loader2, X, ArrowDown, Edit2, ArrowRight, FileText, CheckSquare
 } from 'lucide-react';
+import Button from '../components/ui/Button';
 
 function TemplateDetail() {
     const { slug } = useParams();
@@ -307,9 +308,14 @@ function TemplateDetail() {
 
             <div className={styles.workspaceContainer}>
                 <div className={styles.workspaceHeader}>
-                    <button onClick={() => navigate(-1)} className={styles.backButton}>
-                        <ArrowLeft size={16} /> Geri Dön
-                    </button>
+                    <Button
+                        variant="secondary" 
+                        onClick={() => navigate(-1)}
+                        leftIcon={<ArrowLeft size={16} />}
+                        className={styles.backButton} 
+                    >
+                        Geri Dön
+                    </Button>
                     <div className={styles.headerTitles}>
                         <div className={styles.freeBadge}>
                             <FileText size={14} /> Açık Kütüphane Şablonu
@@ -376,20 +382,18 @@ function TemplateDetail() {
                                         <CheckCircle2 size={16} className={styles.progressIcon} />
                                         Zorunlu alanları doldurduktan sonra ilerleyebilirsiniz.
                                     </div>
-                                    <button
+
+                                    <Button
+                                        variant="primary"
+                                        size="lg"
                                         onClick={handleNextStep}
                                         disabled={!isFormValid}
-                                        className={`${styles.nextStepButton} ${!isFormValid ? styles.disabledButton : ''}`}
+                                        fullWidth={isMobile}
+                                        leftIcon={<Edit2 size={20} />}
+                                        rightIcon={<ArrowRight size={18} />}
                                     >
-                                        <span className={styles.btnInner}>
-                                            <Edit2 size={20} />
-                                            <span>
-                                                <span className={styles.btnMainText}>Sonraki Adım: İncele</span>
-                                                <span className={styles.btnSubText}>Belgeyi kontrol edip indirebilirsiniz</span>
-                                            </span>
-                                        </span>
-                                        <ArrowRight size={18} className={styles.btnArrow} />
-                                    </button>
+                                        Sonraki Adım: İncele
+                                    </Button>
                                 </div>
                             )}
                         </div>
@@ -435,14 +439,16 @@ function TemplateDetail() {
                             )}
 
                             <div className={styles.ctaWrapper}>
-                                <button
+                                <Button
+                                    variant="primary"
+                                    size="lg"
                                     onClick={handleDownload}
-                                    disabled={loadingDownload || !agreedToTerms}
-                                    className={`${styles.payDownloadButton} ${(loadingDownload || !agreedToTerms) ? styles.disabledButton : ''}`}
+                                    disabled={!agreedToTerms}
+                                    isLoading={loadingDownload}
+                                    leftIcon={!loadingDownload && <Download size={18} />}
                                 >
-                                    <Download size={18} />
                                     {loadingDownload ? 'Belge İşleniyor...' : 'PDF Olarak İndir'}
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>
@@ -456,8 +462,8 @@ function TemplateDetail() {
                         <h3>Forma Geri Dön?</h3>
                         <p>Eğer forma geri dönerseniz <strong>canlı önizleme üzerinde manuel olarak</strong> yaptığınız metin düzenlemeleri silinecektir.</p>
                         <div className={styles.warningActions}>
-                            <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>Önizlemede Kal</button>
-                            <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>Yine De Dön</button>
+                            <Button variant="secondary" onClick={() => setShowBackWarning(false)}>Önizlemede Kal</Button>
+                            <Button variant="danger" onClick={confirmGoBackToForm}>Yine De Dön</Button>
                         </div>
                     </div>
                 </div>

@@ -65,31 +65,6 @@ a {
   transition: color 0.2s ease;
 }
 
-button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  cursor: pointer;
-  border-radius: var(--radius-md);
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: inherit;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm);
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: translateY(0);
-}
-
 input,
 select,
 textarea {

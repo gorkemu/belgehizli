@@ -46,7 +46,6 @@
   flex: 0 0 auto;
 }
 
-
 .searchWrapper {
   flex: 1;
   display: flex;
@@ -141,60 +140,6 @@
   gap: 8px;
 }
 
-.loginLink {
-  padding: 0.6rem 1.2rem;
-  color: #57534e;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.15s;
-  font-size: 0.9rem;
-}
-
-.loginLink:hover {
-  background-color: #f5f5f4;
-  color: #1c1917;
-}
-
-.registerLink {
-  padding: 0.6rem 1.5rem;
-  background-color: #1c1917;
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.15s;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.registerLink:hover {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-}
-
-.dashboardBtn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0.6rem 1.5rem;
-  background-color: #1c1917;
-  color: white;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 8px;
-  transition: all 0.15s;
-  font-size: 0.9rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-}
-
-.dashboardBtn:hover {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
-}
-
 @media (max-width: 768px) {
   .headerInner {
     padding: 0 1rem;
@@ -208,34 +153,9 @@
   .searchBtn {
     padding: 0.4rem 1rem;
   }
-
-  .dashboardBtn span,
-  .registerLink span {
-    display: none;
-  }
-
-  .registerLink::after {
-    content: "Başla";
-  }
-
-  .dashboardBtn::after {
-    content: "Panel";
-  }
-
-  .dashboardBtn {
-    padding: 0.6rem 1rem;
-  }
-
-  .loginLink {
-    padding: 0.5rem 0.8rem;
-  }
-
-  .registerLink {
-    padding: 0.6rem 1rem;
-  }
 }
 
-logoContainer {
+.logoContainer {
   display: flex;
   align-items: center;
   text-decoration: none;

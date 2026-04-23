@@ -10,25 +10,7 @@
   height: 58px;
   flex-shrink: 0;
 }
-.backBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px 6px 10px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .15s;
-}
-.backBtn:hover {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
+
 .nameInput {
   flex: 1;
   max-width: 380px;
@@ -81,21 +63,7 @@
   align-items: center;
   gap: 12px;
 }
-.saveBtn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 18px;
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border: none;
-  border-radius: var(--radius);
-  font-size: .875rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all .18s;
-}
-.saveBtn:hover { opacity: 0.9; }
+
 .autoSaveIndicator {
   display: flex;
   align-items: center;
@@ -126,25 +94,6 @@
   background: var(--border);
   margin: 0 8px;
 }
-.pdfBtn {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 18px;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  font-size: .875rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all .18s;
-}
-.pdfBtn:hover:not(:disabled) {
-  background: var(--bg-hover);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
 
 /* Compact Theme Dropdown */
 .compactThemeDropdown { position: relative; display: inline-block; }
@@ -160,10 +109,10 @@
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s;
+  padding: 1.25rem 1.5rem;
 }
 .themeActiveBtn:hover {
   background: var(--bg-active);
-  border-color: var(--accent);
 }
 
 .inpErr {

@@ -6,6 +6,7 @@ import { Wand2, Zap, FileUp } from 'lucide-react';
 import * as mammoth from 'mammoth';
 import DOMPurify from 'dompurify';
 import { getTriggerSymbols, getRegexForTrigger } from '../utils/helpers';
+import Button from '../../../components/ui/Button';
 
 const SmartBar = () => {
   const {
@@ -81,9 +82,15 @@ const SmartBar = () => {
   return (
     <div className={styles.smartBar}>
       <div className={styles.smartBarLeft}>
-        <button id="tb-magic-btn" onClick={() => setMagicModal({ show: true, selectedFormat: 'curly2' })} className={styles.magicBtn} title="Farklı formatlardaki değişkenleri otomatik bulur">
-          <Wand2 size={16} /> Tümünü Algıla
-        </button>
+        <Button 
+          id="tb-magic-btn" 
+          variant="primary" 
+          onClick={() => setMagicModal({ show: true, selectedFormat: 'curly2' })} 
+          title="Farklı formatlardaki değişkenleri otomatik bulur"
+          leftIcon={<Wand2 size={16} />}
+        >
+          Tümünü Algıla
+        </Button>
         <span className={styles.smartHint}>Belgenizdeki gizli değişkenleri anında forma çevirin.</span>
       </div>
 
@@ -107,18 +114,38 @@ const SmartBar = () => {
         {isTriggerCustom && (
           <div style={{ display: 'flex', gap: '4px' }}>
             <input type="text" maxLength={5} value={customTriggerInput} onChange={e => setCustomTriggerInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); } }} placeholder="Örn: //" className={globalStyles.inp} style={{ width: '60px', padding: '6px' }} />
-            <button onClick={() => { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); }} className={styles.actionBtn}>Seç</button>
+            {/* SEÇ BUTONU */}
+            <Button 
+              variant="secondary" 
+              size="sm" 
+              onClick={() => { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); }}
+            >
+              Seç
+            </Button>
           </div>
         )}
 
         <input type="file" ref={fileInputRef} onChange={e => { processFile(e.target.files[0]); if (fileInputRef.current) fileInputRef.current.value = ""; }} accept=".txt,.html,.docx,.pdf" style={{ display: 'none' }} />
-        <button id="tb-import" className={styles.actionBtn} onClick={() => fileInputRef.current?.click()}>
-          <FileUp size={16} /> İçe Aktar
-        </button>
+        
+        {/* İÇE AKTAR BUTONU */}
+        <Button 
+          id="tb-import" 
+          variant="secondary" 
+          onClick={() => fileInputRef.current?.click()}
+          leftIcon={<FileUp size={16} />}
+        >
+          İçe Aktar
+        </Button>
 
-        <button id="tb-cond-btn" className={styles.condBtn} onClick={() => setCondModal(true)}>
-          <Zap size={14} /> Şartlı Blok
-        </button>
+        {/* ŞARTLI BLOK BUTONU */}
+        <Button 
+          id="tb-cond-btn" 
+          variant="warning" 
+          onClick={() => setCondModal(true)}
+          leftIcon={<Zap size={14} />}
+        >
+          Şartlı Blok
+        </Button>
       </div>
     </div>
   );
