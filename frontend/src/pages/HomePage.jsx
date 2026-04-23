@@ -46,6 +46,32 @@ const HERO_SLIDES = [
     bubbleMenu: { state: 'button' },
   },
   {
+    theme: 'default',
+    tag: 'Hukuki Sözleşme',
+    trigger: '{ }',
+    title: 'Konut Kira Sözleşmesi',
+    vars: ['kiralayan_isim', 'kiralayan_tc', 'kiraci_isim', 'kiraci_tc'],
+    body: [
+      { type: 'heading', text: 'KONUT KİRA SÖZLEŞMESİ' },
+      { type: 'label', text: 'Madde 1 - Taraflar' },
+      {
+        type: 'para', parts: [
+          { t: 'Bir tarafta kiralayan sıfatıyla ' }, { t: '{kiralayan_isim}', var: true },
+          { t: ' (TC: ' }, { t: '{kiralayan_tc}', var: true }, { t: ') ile diğer tarafta kiracı sıfatıyla ' },
+          { t: '{kiraci_isim}', var: true }, { t: ' (TC: ' }, { t: '{kiraci_tc}', var: true }, { t: ') arasında işbu sözleşme akdedilmiştir.' },
+        ],
+      },
+      { type: 'label', text: 'Madde 2 - Kapsam ve Bedel' },
+      {
+        type: 'para', parts: [
+          { t: 'Aylık kira bedeli net ' }, { t: '50.000', highlightTrigger: true },
+          { t: ' TL olup, her ayın 5. günü ilgili banka hesabına peşin olarak yatırılacaktır.' },
+        ],
+      },
+    ],
+    bubbleMenu: { state: 'input', inputText: 'Kira Bedeli' },
+  },
+  {
     theme: 'ink',
     tag: 'Ticari Sözleşme',
     trigger: '<< >>',
@@ -70,12 +96,39 @@ const HERO_SLIDES = [
         ],
       },
     ],
-    bubbleMenu: { state: 'input', inputText: 'Ceza Şart Oranı', fieldType: 'Sayı' },
+    bubbleMenu: { state: 'button' },
+  },
+  {
+    theme: 'ink',
+    tag: 'Ticari Sözleşme',
+    trigger: '<< >>',
+    title: 'Ticari Alım Satım Sözleşmesi',
+    vars: ['satici_firma', 'alici_firma', 'teslim_sekli'],
+    body: [
+      { type: 'heading', text: 'TİCARİ MAL ALIM SATIM SÖZLEŞMESİ' },
+      { type: 'label', text: 'Madde 1 - Sözleşmenin Konusu' },
+      {
+        type: 'para', parts: [
+          { t: 'İşbu sözleşme, satıcı ' }, { t: '<<satici_firma>>', var: true },
+          { t: ' ile alıcı ' }, { t: '<<alici_firma>>', var: true },
+          { t: ' arasında emtianın alım satım şartlarını düzenler.' },
+        ],
+      },
+      { type: 'label', text: 'Madde 2 - Gecikme Cezası' },
+      {
+        type: 'para', parts: [
+          { t: 'Gecikilen her gün için toplam sipariş bedelinin %' },
+          { t: '0.5', highlightTrigger: true },
+          { t: '\'i oranında cezai şart ödenir.' },
+        ],
+      },
+    ],
+    bubbleMenu: { state: 'input', inputText: 'Ceza Şart Oranı' },
   },
   {
     theme: 'dark',
     tag: 'Teknik Sözleşme',
-    trigger: '{{ }}',
+    trigger: '@',
     title: 'Yazılım Geliştirme Sözleşmesi',
     vars: ['proje_adi', 'gelistirici_unvan', 'musteri_unvan'],
     body: [
@@ -83,9 +136,9 @@ const HERO_SLIDES = [
       { type: 'label', text: '1. Proje Tanımı' },
       {
         type: 'para', parts: [
-          { t: 'Bu sözleşme, ' }, { t: '{{musteri_unvan}}', var: true },
-          { t: ' için ' }, { t: '{{gelistirici_unvan}}', var: true },
-          { t: ' tarafından kodlanacak olan ' }, { t: '{{proje_adi}}', var: true },
+          { t: 'Bu sözleşme, ' }, { t: '@musteri_unvan', var: true },
+          { t: ' için ' }, { t: '@gelistirici_unvan', var: true },
+          { t: ' tarafından kodlanacak olan ' }, { t: '@proje_adi', var: true },
           { t: ' sisteminin şartlarını belirler.' },
         ],
       },
@@ -94,6 +147,53 @@ const HERO_SLIDES = [
         type: 'para', parts: [
           { t: 'Canlıya alımın ardından ' }, { t: '6 Ay', highlightTrigger: true },
           { t: ' boyunca yazılımsal hatalar ücretsiz giderilir.' },
+        ],
+      },
+    ],
+    bubbleMenu: { state: 'button' },
+  },
+  {
+    theme: 'dark',
+    tag: 'Teknik Sözleşme',
+    trigger: '@',
+    title: 'Yazılım Geliştirme Sözleşmesi',
+    vars: ['proje_adi', 'gelistirici_unvan', 'musteri_unvan'],
+    body: [
+      { type: 'heading', text: 'YAZILIM GELİŞTİRME VE LİSANS SÖZLEŞMESİ' },
+      { type: 'label', text: '1. Proje Tanımı' },
+      {
+        type: 'para', parts: [
+          { t: 'Bu sözleşme, ' }, { t: '@musteri_unvan', var: true },
+          { t: ' için ' }, { t: '@gelistirici_unvan', var: true },
+          { t: ' tarafından kodlanacak olan ' }, { t: '@proje_adi', var: true },
+          { t: ' sisteminin şartlarını belirler.' },
+        ],
+      },
+      { type: 'label', text: '2. Bakım ve Destek' },
+      {
+        type: 'para', parts: [
+          { t: 'Canlıya alımın ardından ' }, { t: '6 Ay', highlightTrigger: true },
+          { t: ' boyunca yazılımsal hatalar ücretsiz giderilir.' },
+        ],
+      },
+    ],
+    bubbleMenu: { state: 'input', inputText: 'Bakım Süresi' },
+  },
+  {
+    theme: 'forest',
+    tag: 'Sağlık & Klinik',
+    trigger: '[ ]',
+    title: 'Aydınlatılmış Onam Formu',
+    vars: ['hasta_adi_soyadi', 'hasta_tc', 'doktor_adi'],
+    body: [
+      { type: 'heading', text: 'AYDINLATILMIŞ ONAM VE RIZA BELGESİ' },
+      { type: 'label', text: 'I. Hasta Bilgileri' },
+      {
+        type: 'para', parts: [
+          { t: 'Ben, ' }, { t: '[hasta_adi_soyadi]', var: true }, { t: ' (TC: ' }, { t: '[hasta_tc]', var: true },
+          { t: '), hastaneniz bünyesinde ' }, { t: '[doktor_adi]', var: true },
+          { t: ' tarafından gerçekleştirilecek olan ' }, { t: 'Ortopedik Cerrahi', highlightTrigger: true },
+          { t: ' operasyonuna onay veriyorum.' },
         ],
       },
     ],
@@ -117,7 +217,7 @@ const HERO_SLIDES = [
         ],
       },
     ],
-    bubbleMenu: { state: 'button' },
+    bubbleMenu: { state: 'input', inputText: 'Operasyon Adı' },
   }
 ];
 
@@ -155,10 +255,6 @@ function HomePage() {
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
-            <div className={styles.badge}>
-              <FileText size={13} />
-              <span>Dinamik, akıllı ve hızlı çalışma alanı</span>
-            </div>
             <h1 className={styles.heroTitle}>
               Belge ve sözleşmeleri hazırlamanın<br />
               <span className={styles.heroAccent}>akıllı yolu</span>
@@ -167,13 +263,6 @@ function HomePage() {
               Sık kullandığınız bir sözleşme, ihtarname veya teknik bir döküman...
               Ne yazıyor olursanız olun, metninizi saniyeler içinde doldurulabilir bir akıllı forma dönüştürün.
             </p>
-            <div className={styles.heroStats}>
-              <div className={styles.stat}><strong>8</strong><span>Tema ve atmosfer</span></div>
-              <div className={styles.statDivider} />
-              <div className={styles.stat}><strong>/</strong><span>Hızlı komut menüsü</span></div>
-              <div className={styles.statDivider} />
-              <div className={styles.stat}><strong>{slide.trigger}</strong><span>Akıllı değişkenler</span></div>
-            </div>
             <div className={styles.heroCtas}>
               <Button
                 variant="primary"
@@ -190,7 +279,6 @@ function HomePage() {
                 <span>Hazır Şablonlar</span>
               </Button>
             </div>
-            <p className={styles.microNote}>Kredi kartı gerekmez, hemen denemeye başlayın.</p>
           </div>
 
           <div className={styles.heroMockup} data-theme={slide.theme}>
@@ -225,14 +313,6 @@ function HomePage() {
                             {part.t}
                             {slide.bubbleMenu && (
                               <div className={styles.mockCombinedBubble}>
-                                <div className={styles.bubbleFormatGroup}>
-                                  <div className={styles.bubbleActionBtn}><Bold size={12} /></div>
-                                  <div className={styles.bubbleActionBtn}><Italic size={12} /></div>
-                                  <div className={styles.bubbleDivider} />
-                                  <div className={styles.bubbleActionBtn}><Palette size={12} /></div>
-                                  <div className={styles.bubbleActionBtn}><Highlighter size={12} /></div>
-                                </div>
-                                <div className={styles.bubbleDivider} />
                                 {slide.bubbleMenu.state === 'button' ? (
                                   <div className={styles.bubbleMagicBtn}>
                                     <Sparkles size={12} color="#fde047" /> Soruya Dönüştür
@@ -240,7 +320,6 @@ function HomePage() {
                                 ) : (
                                   <div className={styles.bubbleInputRow}>
                                     <div className={styles.bubbleInput}>{slide.bubbleMenu.inputText}</div>
-                                    <div className={styles.bubbleSelect}>{slide.bubbleMenu.fieldType}</div>
                                     <div className={styles.bubbleConfirmBtn}>Ekle</div>
                                   </div>
                                 )}
@@ -298,24 +377,28 @@ function HomePage() {
                 <div className={styles.mvPaper}>
                   <h3 className={styles.mvTitle}>KİRA SÖZLEŞMESİ</h3>
                   <div className={styles.mvPara}>
-                    İşbu sözleşme, bir tarafta mülk sahibi ile diğer tarafta kiracı sıfatıyla <span className={styles.mvVar}>{'{{'}kiraci_adi{'}}'}</span> (TC: <span className={styles.mvVar}>{'{{'}tc_kimlik{'}}'}</span>) arasında akdedilmiştir.
+                    İşbu sözleşme, bir tarafta mülk sahibi ile diğer tarafta kiracı sıfatıyla <span className={styles.mvVar}>{'@'}kiraci_adi</span> (TC: <span className={styles.mvVar}>{'@'}tc_kimlik</span>) arasında akdedilmiştir.
                   </div>
                   <div className={styles.mvPara}>
-                    Sözleşme <span className={styles.mvVar}>{'{{'}baslangic_tarihi{'}}'}</span> tarihinde yürürlüğe girecek olup, aylık kira bedeli <span className={styles.mvVar}>{'{{'}kira_bedeli{'}}'}</span> TL olarak belirlenmiştir.
+                    Sözleşme <span className={styles.mvVar}>{'@'}baslangic_tarihi</span> tarihinde yürürlüğe girecek olup, aylık kira bedeli <span className={styles.mvVar}>{'@'}kira_bedeli</span> TL olarak belirlenmiştir.
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div className={styles.magicText}>
-            <div className={styles.sectionEyebrow}>Evrensel Uyumluluk</div>
             <h2>Saniyeler içinde form oluşturun</h2>
-            <p>Zaten hazırladığınız bir Word veya PDF taslağınız mı var? Metni çalışma alanına yapıştırın ve <strong>"Tümünü Algıla"</strong> butonuna tıklayın. Sistem, metninizdeki tüm değişkenleri otomatik bulur ve formunuzu sizin yerinize kurar.</p>
-            <ul className={styles.bubbleFeatureList}>
-              <li><Check size={16} className={styles.checkIcon} /> <code className={styles.inlineCode}>{'{{ }}'}</code>, <code className={styles.inlineCode}>{'[ ]'}</code> veya özel karakter desteği.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Aynı değişkenin kopyalarını otomatik gruplama yeteneği.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Yüzlerce boşluğu tek tıklamayla akıllı sorulara dönüştürme.</li>
-            </ul>
+            <p>
+              Zaten hazırladığınız bir taslağınız mı var? Metni çalışma alanına yapıştırın veya sürükleyerek bırakın.{' '}
+              <span
+                className={styles.mvMagicBtn}
+                style={{ display: 'inline-flex', animation: 'none' }}
+              >
+                <Wand2 size={13} />
+                Tümünü Algıla
+              </span>{' '}
+              butonu ile sistem, metninizdeki tüm değişkenleri otomatik bulur ve formunuzu sizin yerinize kurar.
+            </p>
           </div>
         </div>
       </section>
@@ -323,14 +406,8 @@ function HomePage() {
       <section className={styles.bubbleSection}>
         <div className={styles.bubbleInner}>
           <div className={styles.bubbleText}>
-            <div className={styles.sectionEyebrow}>Akıcı İş Akışı</div>
             <h2>Metni seçin, soruya dönüşsün</h2>
-            <p>Karmaşık form oluşturucularla zaman kaybetmeyin. İhtiyacınız olan araçlar, tam olarak imlecinizin ucunda belirir. Değişecek kelimeyi farenizle seçin ve tek tıkla dinamik bir form sorusuna çevirin.</p>
-            <ul className={styles.bubbleFeatureList}>
-              <li><Check size={16} className={styles.checkIcon} /> Kesintiye uğramadan metin üzerinde çalışın.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Biçimlendirme ve form yapılandırması aynı menüde.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Paylaşılabilir link sayesinde formu müşterinize doldurtun.</li>
-            </ul>
+            <p>Her belgede değişecek olan kelimeleri seçin ve tek tıkla dinamik bir form sorusuna çevirin.</p>
           </div>
           <div className={styles.bubbleVisual}>
             <div className={styles.bvPaper}>
@@ -342,14 +419,6 @@ function HomePage() {
                 ile diğer tarafta hizmet alıcı konumundaki TechBrand arasında...
               </div>
               <div className={styles.bvBubbleMenu}>
-                <div className={styles.bvFormatGroup}>
-                  <div className={styles.bvBtn}><Bold size={14} /></div>
-                  <div className={styles.bvBtn}><Italic size={14} /></div>
-                  <div className={styles.bvDivider} />
-                  <div className={styles.bvBtn}><Palette size={14} /></div>
-                  <div className={styles.bvBtn}><Highlighter size={14} /></div>
-                </div>
-                <div className={styles.bvDivider} />
                 <div className={styles.bvMagicBtn}><Sparkles size={14} color="#fde047" /> Soruya Dönüştür</div>
               </div>
             </div>
@@ -359,16 +428,7 @@ function HomePage() {
 
       <section className={styles.logicSection}>
         <div className={styles.logicInner}>
-          <div className={styles.logicText}>
-            <div className={styles.sectionEyebrow}>Akıllı Belge Mantığı</div>
-            <h2>Sorulara göre şekillenen belgeler</h2>
-            <p>Her müşteri veya durum için ayrı sözleşme taslakları hazırlamanıza gerek yok. "Şartlı Bloklar" sayesinde, formdaki bir cevaba göre belgenizin belirli bölümlerini otomatik olarak gizleyin veya gösterin.</p>
-            <ul className={styles.bubbleFeatureList}>
-              <li><Check size={16} className={styles.checkIcon} /> Form yanıtlarına göre beliren veya kaybolan dinamik paragraflar.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Yüzlerce farklı senaryoyu tek bir ana şablonda birleştirme imkanı.</li>
-              <li><Check size={16} className={styles.checkIcon} /> Sıfır kodlama ile kolayca "Eğer - İse" (If-Else) mantığı kurma.</li>
-            </ul>
-          </div>
+          
           <div className={styles.logicVisual}>
             <div className={styles.lvWindow}>
               <div className={styles.lvSidebar}>
@@ -401,13 +461,16 @@ function HomePage() {
               </div>
             </div>
           </div>
+          <div className={styles.logicText}>
+            <h2>Sorulara göre şekillenen belgeler</h2>
+            <p>Her müşteri veya durum için ayrı sözleşme taslakları hazırlamanıza gerek yok. "Şartlı Bloklar" sayesinde, formdaki bir cevaba göre belgenizin belirli bölümlerini otomatik olarak gizleyin veya gösterin.</p>
+          </div>
         </div>
       </section>
 
       <section className={styles.useCasesSection}>
         <div className={styles.useCasesInner}>
           <div className={styles.sectionHead}>
-            <div className={styles.sectionEyebrow}>Kullanım Alanları</div>
             <h2>Her Sektöre Uygun Çözümler</h2>
             <p>Değişkenler ve formlar sayesinde hangi alanda olursanız olun operasyonel yükünüzü hafifletin.</p>
           </div>
@@ -433,7 +496,6 @@ function HomePage() {
       <section id="sablonlar" className={styles.searchSection}>
         <div className={styles.searchInner}>
           <div className={styles.sectionHead}>
-            <div className={styles.sectionEyebrow}>Açık Kütüphane</div>
             <h2>Hazır bir taslak mı arıyorsunuz?</h2>
             <p>Sıfırdan başlamak istemiyorsanız, önceden hazırlanmış genel geçer şablonlarımıza göz atıp anında PDF çıktısı alabilirsiniz.</p>
           </div>
@@ -462,7 +524,7 @@ function HomePage() {
         <div className={styles.ctaInner}>
           <div className={styles.ctaContent}>
             <h2>Çalışma alanınızı oluşturun</h2>
-            <p>Araçları test etmek ve kendi şablonlarınızı buluta kaydetmek için ücretsiz hesabınızı açın.</p>
+            <p>Kendi şablonlarınızı oluşturup kaydetmek için hesap açın.</p>
             <Button
               variant="primary"
               size="lg"
