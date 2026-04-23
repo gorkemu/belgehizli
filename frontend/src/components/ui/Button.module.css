@@ -1,0 +1,66 @@
+/* frontend/src/components/ui/Button.module.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Boyutlar (Sizes) */
+.sm { padding: 6px 12px; font-size: 0.8rem; border-radius: var(--radius-sm); }
+.md { padding: 8px 16px; font-size: 0.875rem; }
+.lg { padding: 12px 24px; font-size: 1rem; border-radius: var(--radius-lg); }
+
+/* Varyasyonlar (Variants) */
+.primary {
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+.primary:hover:not(:disabled) { opacity: 0.9; box-shadow: var(--shadow-sm); }
+
+.secondary {
+  background: var(--bg-surface);
+  border-color: var(--border);
+  color: var(--text-secondary);
+}
+.secondary:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
+
+.danger {
+  background: var(--btn-danger-bg, #fee2e2);
+  color: var(--danger, #dc2626);
+}
+.danger:hover:not(:disabled) { background: #fecaca; }
+
+.warning {
+  background: var(--accent-bg, #fef3c7);
+  color: var(--warning, #d97706);
+  border-color: var(--accent-border, #fde68a);
+}
+.warning:hover:not(:disabled) { 
+  background: color-mix(in srgb, var(--warning) 15%, transparent); 
+  border-color: var(--warning);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.ghost:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); }
+
+/* Ekstralar */
+.fullWidth { width: 100%; }
+.spinner { animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }

@@ -59,25 +59,6 @@
   font-size: 0.95rem;
 }
 
-.emptyButton {
-  padding: 12px 24px;
-  background-color: #1c1917;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.emptyButton:hover {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
 .toast {
   position: fixed;
   top: 24px;
@@ -132,29 +113,6 @@
   line-height: 1.6;
 }
 
-.addButton {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  background-color: #1c1917;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  font-size: 0.95rem;
-  font-family: inherit;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.addButton:hover {
-  background-color: #292524;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
 .projectGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -176,7 +134,6 @@
 
 .projectCard:hover {
   border-color: #d6d3d1;
-  transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
 }
 
@@ -490,47 +447,6 @@
   margin-top: 8px;
 }
 
-.cancelBtn {
-  padding: 10px 20px;
-  background-color: #ffffff;
-  border: 1px solid #d6d3d1;
-  color: #44403c;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 8px;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.cancelBtn:hover {
-  background-color: #fafaf9;
-  color: #1c1917;
-  border-color: #a8a29e;
-}
-
-.submitBtn {
-  padding: 10px 24px;
-  background-color: #1c1917;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.submitBtn:hover:not(:disabled) {
-  background-color: #292524;
-}
-
-.submitBtn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .confirmModal {
   background-color: #ffffff;
   padding: 32px;
@@ -578,33 +494,6 @@
 .confirmActions {
   display: flex;
   gap: 12px;
-}
-
-.confirmActions .cancelBtn,
-.confirmActions .dangerBtn {
-  flex: 1;
-  padding: 10px;
-  font-size: 0.9rem;
-}
-
-.dangerBtn {
-  background-color: #dc2626;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s;
-  font-family: inherit;
-}
-
-.dangerBtn:hover:not(:disabled) {
-  background-color: #b91c1c;
-}
-
-.dangerBtn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
 }
 
 @keyframes slideDown {

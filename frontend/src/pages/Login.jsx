@@ -4,6 +4,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import styles from './Auth.module.css';
+import Button from '../components/ui/Button';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,7 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Giriş başarısız oldu. Bilgilerinizi kontrol edin.');
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -73,11 +74,16 @@ const Login = () => {
               placeholder="••••••••"
             />
           </div>
-          <button type="submit" className={styles.submitBtn} disabled={isLoading}>
-            {isLoading ? (
-              <><Loader2 size={18} className={styles.spinner} /> Giriş Yapılıyor...</>
-            ) : 'Giriş Yap'}
-          </button>
+          <Button
+          type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth 
+            disabled={isLoading}
+          >
+            {isLoading ?  'Giriş Yapılıyor...' : 'Giriş Yap'}
+          </Button>
+         
         </form>
 
         <p className={styles.switchText}>

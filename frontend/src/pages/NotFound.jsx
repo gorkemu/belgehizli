@@ -1,11 +1,14 @@
 // frontend/src/pages/NotFound.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from './NotFound.module.css';
 import { Helmet } from 'react-helmet-async';
 import { FileQuestion, ArrowLeft, Home } from 'lucide-react';
+import Button from '../components/ui/Button';
 
 function NotFound() {
+  const navigate = useNavigate();
+
   return (
     <>
       <Helmet>
@@ -28,12 +31,22 @@ function NotFound() {
           </p>
 
           <div className={styles.actions}>
-            <Link to="/" className={styles.homeLink}>
-              <Home size={18} /> Ana Sayfa
-            </Link>
-            <button onClick={() => window.history.back()} className={styles.backLink}>
-              <ArrowLeft size={18} /> Geri Dön
-            </button>
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => navigate('/')}
+              leftIcon={<Home size={18} />}
+            >
+              <span>Ana Sayfa</span>
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => window.history.back()}
+              leftIcon={<ArrowLeft size={18} />}
+            >
+              <span>Geri Dön</span>
+            </Button>
           </div>
         </div>
       </div>

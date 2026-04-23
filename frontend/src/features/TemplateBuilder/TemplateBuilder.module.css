@@ -518,33 +518,6 @@
   border-top: 1px solid var(--border);
   background: var(--bg-sidebar);
 }
-.cancelBtn {
-  padding: 8px 16px;
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: .875rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all .15s;
-}
-.cancelBtn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
-}
-.primaryBtn {
-  padding: 8px 16px;
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
-  border: none;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.15s;
-}
-.primaryBtn:hover:not(:disabled) { opacity: 0.9; }
-.primaryBtn:disabled { opacity: 0.5; cursor: not-allowed; }
 
 /* Workspace */
 .workspace {

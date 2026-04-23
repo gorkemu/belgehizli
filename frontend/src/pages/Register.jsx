@@ -4,6 +4,7 @@ import { useNavigate, Link, Navigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import styles from './Auth.module.css';
+import Button from '../components/ui/Button';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -96,11 +97,15 @@ const Register = () => {
             />
           </div>
 
-          <button type="submit" className={styles.submitBtn} disabled={isLoading}>
-            {isLoading ? (
-              <><Loader2 size={18} className={styles.spinner} /> Hesap Oluşturuluyor...</>
-            ) : 'Ücretsiz Kayıt Ol'}
-          </button>
+          <Button 
+            type="submit" 
+            variant="primary" 
+            size="lg" 
+            fullWidth 
+            isLoading={isLoading}
+          >
+            {isLoading ? 'Hesap Oluşturuluyor...' : 'Ücretsiz Kayıt Ol'}
+          </Button>
         </form>
 
         <p className={styles.switchText}>

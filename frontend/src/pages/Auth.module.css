@@ -98,47 +98,6 @@
     font-weight: 400;
 }
 
-.submitBtn {
-    width: 100%;
-    background-color: #1c1917;
-    color: white;
-    border: none;
-    padding: 16px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 14px;
-    cursor: pointer;
-    margin-top: 28px;
-    transition: all 0.15s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    position: relative;
-    overflow: hidden;
-    font-family: inherit;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.submitBtn:hover:not(:disabled) {
-    background-color: #292524;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-}
-
-.submitBtn:active:not(:disabled) {
-    transform: translateY(1px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-.submitBtn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    background-color: #a8a29e;
-    box-shadow: none;
-    transform: none;
-}
-
 .errorBox {
     background-color: #fef2f2;
     color: #dc2626;

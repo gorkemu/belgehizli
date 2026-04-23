@@ -25,19 +25,7 @@
 }
 
 .menuBtn {
-    background: none;
-    border: none;
     padding: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: background-color 0.15s;
-}
-
-.menuBtn:hover {
-    background-color: #f5f5f4;
 }
 
 .mobileLogoLink {
@@ -127,21 +115,7 @@
 }
 
 .closeBtn {
-    background: none;
-    border: none;
-    color: #a8a29e;
     padding: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    transition: all 0.15s;
-}
-
-.closeBtn:hover {
-    background-color: #292524;
-    color: #ffffff;
 }
 
 .nav {
@@ -262,8 +236,9 @@
     gap: 2px;
 }
 
-.footerLink {
+.footerLink, .logoutBtn {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
     gap: 12px;
     padding: 8px 12px;
@@ -285,27 +260,9 @@
     color: #ffffff;
 }
 
-.logoutBtn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    background-color: transparent;
-    border: none;
-    color: #a8a29e;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.85rem;
-    text-align: left;
-    font-family: inherit;
-}
-
 .logoutBtn:hover {
-    background-color: #fef2f2;
-    color: #dc2626;
+    background-color: #292524 !important;
+    color: #e7e5e4 !important;
 }
 
 .logoutBtn:hover .logoutIcon {

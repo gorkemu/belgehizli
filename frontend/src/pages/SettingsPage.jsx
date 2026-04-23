@@ -2,8 +2,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
-import { Settings, User, Lock, CheckCircle2, AlertTriangle, Building2, Save, Loader2, ShieldCheck } from 'lucide-react';
+import { User, CheckCircle2, AlertTriangle, Building2, Save, ShieldCheck } from 'lucide-react';
 import styles from './SettingsPage.module.css';
+import Button from '../components/ui/Button';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
@@ -184,21 +185,16 @@ const SettingsPage = () => {
                     </div>
 
                     <div className={styles.formFooter}>
-                        <button 
+                        <Button 
                             type="submit" 
-                            disabled={isSubmitting || !fullName.trim()}
-                            className={styles.submitBtn}
+                            variant="primary"
+                            size="lg"
+                            disabled={!fullName.trim()} 
+                            isLoading={isSubmitting}
+                            leftIcon={!isSubmitting && <Save size={16} />}
                         >
-                            {isSubmitting ? (
-                                <>
-                                    <Loader2 size={16} className={styles.spinner} /> Kaydediliyor...
-                                </>
-                            ) : (
-                                <>
-                                    <Save size={16} /> Değişiklikleri Kaydet
-                                </>
-                            )}
-                        </button>
+                            {isSubmitting ? 'Kaydediliyor...' : 'Değişiklikleri Kaydet'}
+                        </Button>
                     </div>
 
                 </form>

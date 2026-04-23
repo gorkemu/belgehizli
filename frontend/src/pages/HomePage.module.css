@@ -173,45 +173,6 @@
   flex-wrap: wrap;
 }
 
-.ctaPrimary {
-  display: inline-flex;
-  align-items: center;
-  background: var(--text);
-  color: #fff;
-  padding: .9rem 2rem;
-  border-radius: var(--r);
-  font-weight: 700;
-  font-size: .95rem;
-  text-decoration: none;
-  letter-spacing: -.01em;
-  transition: background .2s, transform .15s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-}
-
-.ctaPrimary:hover {
-  background: #292524;
-  transform: translateY(-1px);
-}
-
-.ctaSecondary {
-  display: inline-flex;
-  align-items: center;
-  color: var(--text);
-  font-weight: 600;
-  font-size: .95rem;
-  text-decoration: none;
-  padding: .9rem 1.5rem;
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  background: transparent;
-  transition: background .2s, border-color .2s;
-}
-
-.ctaSecondary:hover {
-  background: var(--surface);
-  border-color: var(--text3);
-}
-
 .microNote {
   font-size: .78rem;
   color: var(--text3);
@@ -926,26 +887,6 @@
   line-height: 1.65;
 }
 
-.ctaPrimaryLg {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--text);
-  color: #fff;
-  padding: .95rem 2.25rem;
-  border-radius: var(--r);
-  font-weight: 700;
-  font-size: .95rem;
-  text-decoration: none;
-  transition: background .2s, transform .15s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-}
-
-.ctaPrimaryLg:hover {
-  background: #292524;
-  transform: translateY(-1px);
-}
-
 @media (max-width: 1100px) {
   .heroInner {
     gap: 3rem;
@@ -1051,12 +992,6 @@
   .heroCtas {
     flex-direction: column;
     width: 100%;
-  }
-
-  .ctaPrimary,
-  .ctaSecondary {
-    width: 100%;
-    justify-content: center;
   }
 
   .heroMockup {

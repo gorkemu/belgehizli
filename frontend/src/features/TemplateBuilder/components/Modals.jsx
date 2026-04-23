@@ -6,6 +6,7 @@ import styles from '../TemplateBuilder.module.css';
 import { Wand2, Zap, Link as LinkIcon, CheckCircle2, Copy, Printer, X, Sparkles } from 'lucide-react';
 import { VARIABLE_FORMATS } from '../utils/constants';
 import { getTriggerSymbols, generateVarName, convertToHandlebars } from '../utils/helpers';
+import Button from '../../../components/ui/Button';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
@@ -133,8 +134,8 @@ const Modals = () => {
               </div>
             </div>
             <div className={styles.modalFoot}>
-              <button className={styles.cancelBtn} onClick={() => setMagicModal({ show: false })}>Vazgeç</button>
-              <button className={styles.primaryBtn} onClick={executeMagicExtract}>Uygula</button>
+              <Button variant="ghost" onClick={() => setMagicModal({ show: false })}>Vazgeç</Button>
+              <Button variant="primary" onClick={executeMagicExtract}>Uygula</Button>
             </div>
           </div>
         </div>
@@ -172,8 +173,8 @@ const Modals = () => {
               )}
             </div>
             <div className={styles.modalFoot}>
-              <button className={styles.cancelBtn} onClick={() => setCondModal(false)}>Vazgeç</button>
-              <button className={styles.primaryBtn} disabled={!condField || !condValue} onClick={insertConditional}>Bloğu Ekle</button>
+              <Button variant="ghost" onClick={() => setCondModal(false)}>Vazgeç</Button>
+              <Button variant="primary" disabled={!condField || !condValue} onClick={insertConditional}>Bloğu Ekle</Button>
             </div>
           </div>
         </div>
@@ -191,9 +192,14 @@ const Modals = () => {
             <div className={styles.modalBody}>
               <div className={styles.linkCopyBox} style={{ display: 'flex', gap: '8px', background: 'var(--bg-input)', padding: '10px', borderRadius: '12px', border: '1px solid var(--border)' }}>
                 <input type="text" readOnly value={publicLink} style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', fontFamily: 'monospace' }} />
-                <button onClick={copyToClipboard} className={styles.primaryBtn} style={{ flex: 'none', padding: '8px 16px' }}>
-                  {isCopied ? <CheckCircle2 size={16} /> : <Copy size={16} />} {isCopied ? 'Kopyalandı' : 'Kopyala'}
-                </button>
+                <Button 
+                  variant="primary" 
+                  onClick={copyToClipboard} 
+                  leftIcon={isCopied ? <CheckCircle2 size={16} /> : <Copy size={16} />}
+                  style={{ flex: 'none' }} 
+                >
+                  {isCopied ? 'Kopyalandı' : 'Kopyala'}
+                </Button>
               </div>
             </div>
           </div>
@@ -210,10 +216,10 @@ const Modals = () => {
               <button className={styles.modalClose} onClick={() => setPdfConfirmModal(false)}><X size={18} /></button>
             </div>
             <div className={styles.modalFoot}>
-              <button className={styles.cancelBtn} onClick={() => setPdfConfirmModal(false)}>İptal</button>
-              <button className={styles.primaryBtn} disabled={isGeneratingPdf} onClick={handlePrintPDF}>
-                {isGeneratingPdf ? 'Hazırlanıyor...' : 'Onayla ve İndir'}
-              </button>
+              <Button variant="ghost" onClick={() => setPdfConfirmModal(false)}>İptal</Button>
+              <Button variant="primary" isLoading={isGeneratingPdf} onClick={handlePrintPDF}>
+                Onayla ve İndir
+              </Button>
             </div>
           </div>
         </div>

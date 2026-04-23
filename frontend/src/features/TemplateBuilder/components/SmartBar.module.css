@@ -12,48 +12,7 @@
 .smartBarLeft { display: flex; align-items: center; gap: 16px; }
 .smartHint { font-size: 0.85rem; color: var(--text-muted); }
 .smartBarRight { display: flex; align-items: center; gap: 12px; }
-.magicBtn {
-  background: var(--text-primary);
-  color: var(--bg-surface);
-  display: flex;
-  font-size: 0.8rem;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 18px;
-  border-radius: 12px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.magicBtn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-.actionBtn, .condBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--bg-hover);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.actionBtn:hover {
-  background: var(--bg-surface);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
-.condBtn {
-  color: var(--warning);
-  background: var(--accent-bg);
-  border-color: var(--accent-border);
-}
+
 .triggerSelectSmart {
   background: var(--bg-surface);
   border: 1px solid var(--border);

@@ -8,6 +8,7 @@ import {
   Menu, X, ChevronRight,
 } from 'lucide-react';
 import styles from './DashboardLayout.module.css';
+import Button from '../components/ui/Button';
 
 export const DashboardLayout = () => {
   const { user, logout } = useContext(AuthContext);
@@ -44,13 +45,14 @@ export const DashboardLayout = () => {
             />
             <span className={styles.mobileLogoText}>BelgeHızlı</span>
           </Link>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => setIsMobileMenuOpen(true)}
-            className={styles.menuBtn}
+            className={styles.menuBtn} 
             aria-label="Menüyü aç"
           >
             <Menu size={24} color="#1c1917" />
-          </button>
+          </Button>
         </div>
       )}
 
@@ -78,13 +80,14 @@ export const DashboardLayout = () => {
             />
           </Link>
           {isMobile && (
-            <button
+            <Button
+              variant="ghost"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={styles.closeBtn}
+              className={styles.closeBtn} 
               aria-label="Menüyü kapat"
             >
               <X size={20} />
-            </button>
+            </Button>
           )}
         </div>
 
@@ -134,10 +137,15 @@ export const DashboardLayout = () => {
               />
               <span>Hesap Ayarları</span>
             </Link>
-            <button onClick={logout} className={styles.logoutBtn}>
-              <LogOut size={16} className={styles.logoutIcon} />
+            <Button 
+              variant="ghost" 
+              fullWidth 
+              onClick={logout} 
+              className={styles.logoutBtn} 
+              leftIcon={<LogOut size={16} className={styles.logoutIcon} />}
+            >
               <span>Güvenli Çıkış</span>
-            </button>
+            </Button>
           </div>
         </div>
       </aside>

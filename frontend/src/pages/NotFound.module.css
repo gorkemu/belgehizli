@@ -86,24 +86,3 @@
   background-color: #292524;
   transform: translateY(-1px);
 }
-
-.backLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 24px;
-  background-color: #ffffff;
-  color: #1c1917;
-  border: 1px solid #d6d3d1;
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-
-.backLink:hover {
-  background-color: #fafaf9;
-  border-color: #a8a29e;
-}
