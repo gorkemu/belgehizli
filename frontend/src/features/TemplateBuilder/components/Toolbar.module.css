@@ -1,0 +1,63 @@
+/* frontend/src/features/TemplateBuilder/components/Toolbar.module.css */
+
+.toolbar {
+  background: var(--bg-toolbar);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  padding: 8px 16px;
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 8px 4px; 
+  align-items: center;
+  z-index: 5;
+}
+.toolbarRow {
+  display: contents; 
+}
+.toolbarRow:last-child { border-bottom: none; }
+.tbDivider {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+  margin: 0 4px;
+}
+.tb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--btn-text);
+  cursor: pointer;
+  transition: all .12s;
+}
+.tb:hover { background: var(--btn-hover-bg); color: var(--text-primary); }
+.tbActive {
+  background: var(--btn-active-bg);
+  color: var(--btn-active-text);
+  border-color: var(--accent-border);
+}
+.select {
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  outline: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--select-text);
+  background-color: var(--select-bg);
+  flex-shrink: 0;
+  width: unset;
+}
+.select:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+
+@media (max-width: 1200px) {
+  .toolbar {
+    padding: 8px 12px;
+  }
+}
