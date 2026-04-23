@@ -1,7 +1,6 @@
 // frontend/src/App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Outlet } from 'react-router-dom';
-import CookieConsent from "react-cookie-consent";
 import styles from './App.module.css';
 import { Helmet } from 'react-helmet-async';
 import NotFound from './pages/NotFound';
@@ -26,6 +25,7 @@ import { ProjectsManager } from './pages/ProjectsManager';
 import { DashboardLayout } from './components/DashboardLayout';
 import SettingsPage from './pages/SettingsPage';
 import { CommandPalette } from './components/CommandPalette';
+import CookieBanner from './components/CookieBanner';
 
 const MainLayout = () => {
     return (
@@ -35,23 +35,7 @@ const MainLayout = () => {
                 <Outlet />
             </main>
             <Footer />
-            <CookieConsent
-                location="bottom"
-                buttonText="Kabul Et"
-                declineButtonText="Reddet"
-                cookieName="belgeHizliCookieConsent"
-                style={{ background: "var(--gray-900)", color: "var(--gray-100)", fontSize: "0.9rem", padding: "10px 20px", alignItems: "center" }}
-                buttonStyle={{ background: "var(--primary-color)", color: "white", fontSize: "0.9rem", fontWeight: "600", borderRadius: "var(--radius-md)", padding: "10px 20px", margin: "0 10px 0 0" }}
-                declineButtonStyle={{ background: "transparent", color: "var(--gray-300)", border: "1px solid var(--gray-600)", fontSize: "0.9rem", borderRadius: "var(--radius-md)", padding: "9px 20px" }}
-                expires={150}
-                enableDeclineButton
-            >
-                Bu web sitesi, kullanıcı deneyimini geliştirmek ve site trafiğini analiz etmek için çerezleri kullanır. Daha fazla bilgi için{" "}
-                <Link to="/gizlilik-politikasi" style={{ color: "var(--gray-300)", textDecoration: "underline" }}>
-                    Gizlilik Politikamızı
-                </Link>{" "}
-                okuyun.
-            </CookieConsent>
+            <CookieBanner />
         </div>
     );
 };
