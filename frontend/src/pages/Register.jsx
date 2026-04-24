@@ -29,7 +29,7 @@ const Register = () => {
 
     try {
       await register(formData.fullName, formData.email, formData.password);
-      navigate('/panel/projects', { replace: true });
+      navigate('/panel', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Kayıt işlemi başarısız oldu.');
       setIsLoading(false); 
