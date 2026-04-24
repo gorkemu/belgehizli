@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 const { protectUser } = require('../middleware/userAuthMiddleware');
+const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../utils/mailer');
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '30d' });
@@ -127,6 +129,43 @@ router.get('/me', protectUser, async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: 'Kullanıcı bilgileri alınamadı.' });
+    }
+});
+
+router.post('/forgot-password', authLimiter, async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Lütfen e-posta adresinizi girin.' });
+        }
+
+        const user = await User.findOne({ email: email.toLowerCase() });
+
+        const successMessage = 'Şifre sıfırlama bağlantısı gönderildi';
+
+        if (!user) {
+            return res.status(200).json({ message: successMessage });
+        }
+
+        const resetToken = crypto.randomBytes(32).toString('hex');
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000;
+        
+        await user.save();
+
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const resetLink = `${frontendUrl}/sifre-belirle?token=${resetToken}`;
+
+        // MAİL GÖNDERME İŞLEMİ
+        await sendPasswordResetEmail(user.email, resetLink);
+
+        res.status(200).json({ message: successMessage });
+
+    } catch (error) {
+        console.error("Şifremi unuttum hatası:", error);
+        res.status(500).json({ message: 'İşlem sırasında bir hata oluştu.' });
     }
 });
 

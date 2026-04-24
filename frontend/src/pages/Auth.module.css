@@ -175,6 +175,22 @@
     100% { transform: rotate(360deg); }
 }
 
+.successBox {
+    background-color: #f0fdf4;   
+    color: #166534;              
+    padding: 14px 18px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #bbf7d0;   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
 @media (max-width: 480px) {
     .authCard {
         padding: 32px 24px;

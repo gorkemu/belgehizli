@@ -56,8 +56,18 @@ export const AuthProvider = ({ children }) => {
         window.location.href = '/giris-yap';
     };
 
+    const forgotPassword = async (email) => {
+        const response = await axios.post(`${API_BASE_URL}/auth/forgot-password`, { email });
+        return response.data;
+    };
+
+    const resetPassword = async (token, newPassword) => {
+        const response = await axios.post(`${API_BASE_URL}/auth/set-password`, { token, newPassword });
+        return response.data;
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout, loading, forgotPassword, resetPassword }}>
             {!loading && children}
         </AuthContext.Provider>
     );

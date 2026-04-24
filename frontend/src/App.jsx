@@ -26,6 +26,8 @@ import { DashboardLayout } from './components/DashboardLayout';
 import SettingsPage from './pages/SettingsPage';
 import { CommandPalette } from './components/CommandPalette';
 import CookieBanner from './components/CookieBanner';
+import ForgotPassword from './pages/ForgotPassword';
+import SetPassword from './pages/SetPassword';
 
 const MainLayout = () => {
     return (
@@ -69,6 +71,8 @@ function App() {
                             <Route path="/iletisim" element={<ContactUs />} />
                             <Route path="/iletisim/:status" element={<ContactUs />} />
                             <Route path="*" element={<NotFound />} />
+                            <Route path="/sifremi-unuttum" element={<ForgotPassword />} />
+                            <Route path="/sifre-belirle" element={<SetPassword />} />
                         </Route>
 
                         <Route element={<ProtectedRoute />}>
