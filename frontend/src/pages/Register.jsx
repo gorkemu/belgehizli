@@ -18,10 +18,6 @@ const Register = () => {
   const { register, user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (user && !loading) {
-    return <Navigate to="/panel" replace />;
-  }
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,16 +28,11 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      await register(
-        formData.fullName,
-        formData.email,
-        formData.password
-      );
-      navigate('/panel/projects');
+      await register(formData.fullName, formData.email, formData.password);
+      navigate('/panel/projects', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Kayıt işlemi başarısız oldu.');
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); 
     }
   };
 
