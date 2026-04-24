@@ -2,7 +2,7 @@
 import { chromium } from '@playwright/test';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ path: './frontend/.env' });
 
 async function globalSetup(config) {
   const { baseURL, storageState } = config.projects[0].use;
