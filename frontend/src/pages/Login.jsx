@@ -75,17 +75,21 @@ const Login = () => {
             />
           </div>
           <Button
-          type="submit"
+            type="submit"
             variant="primary"
             size="lg"
-            fullWidth 
+            fullWidth
             disabled={isLoading}
           >
-            {isLoading ?  'Giriş Yapılıyor...' : 'Giriş Yap'}
+            {isLoading ? 'Giriş Yapılıyor...' : 'Giriş Yap'}
           </Button>
-         
+
         </form>
 
+        <div style={{ textAlign: 'center', marginTop: '10px', marginBottom: '20px' }}>
+          <Link to="/sifremi-unuttum" className={styles.switchLink} style={{ fontSize: '0.85rem', fontWeight: '600' }}>Şifremi Unuttum</Link>
+        </div>
+        
         <p className={styles.switchText}>
           Henüz hesabınız yok mu?
           <Link to="/kayit-ol" className={styles.switchLink}>Hemen Kayıt Olun</Link>

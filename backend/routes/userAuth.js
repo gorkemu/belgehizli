@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 const { protectUser } = require('../middleware/userAuthMiddleware');
+const crypto = require('crypto');
+const { sendPasswordResetEmail } = require('../utils/mailer');
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '30d' });
@@ -74,22 +76,44 @@ router.post('/login', authLimiter, async (req, res) => {
             return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
         }
 
+        // 1. KONTROL: Hesap Kilitli mi?
+        // lockUntil değeri var mı ve şu anki zamandan büyük mü?
+        if (user.lockUntil && user.lockUntil > Date.now()) {
+            return res.status(403).json({ message: 'Hesabınız çok fazla hatalı giriş denemesi nedeniyle geçici olarak kilitlendi. Lütfen 30 dakika sonra tekrar deneyin.' });
+        }
+
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
-        if (isMatch) {
-            if (!user.isActive) {
-                return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
+        if (!isMatch) {
+            // 2. KONTROL: Şifre yanlışsa deneme sayacını artır
+            user.loginAttempts += 1;
+            
+            // 5 kez yanlış girildiyse hesabı 30 dakika kilitle
+            if (user.loginAttempts >= 5) {
+                user.lockUntil = Date.now() + 30 * 60 * 1000; // Şu an + 30 dakika
             }
-
-            res.json({
-                _id: user.id,
-                fullName: user.fullName,
-                email: user.email,
-                token: generateToken(user._id),
-            });
-        } else {
-            res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
+            
+            await user.save();
+            return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
         }
+
+        // 3. KONTROL: Şifre doğruysa sayaçları sıfırla ve içeri al
+        if (!user.isActive) {
+            return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
+        }
+
+        // Başarılı giriş: Kilidi ve sayacı temizle
+        user.loginAttempts = 0;
+        user.lockUntil = undefined;
+        await user.save();
+
+        res.json({
+            _id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            token: generateToken(user._id),
+        });
+
     } catch (error) {
         console.error("Giriş hatası:", error);
         res.status(500).json({ message: 'Sunucu hatası.' });
@@ -105,6 +129,43 @@ router.get('/me', protectUser, async (req, res) => {
         });
     } catch (error) {
         res.status(500).json({ message: 'Kullanıcı bilgileri alınamadı.' });
+    }
+});
+
+router.post('/forgot-password', authLimiter, async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: 'Lütfen e-posta adresinizi girin.' });
+        }
+
+        const user = await User.findOne({ email: email.toLowerCase() });
+
+        const successMessage = 'Şifre sıfırlama bağlantısı gönderildi';
+
+        if (!user) {
+            return res.status(200).json({ message: successMessage });
+        }
+
+        const resetToken = crypto.randomBytes(32).toString('hex');
+
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = Date.now() + 3600000;
+        
+        await user.save();
+
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const resetLink = `${frontendUrl}/sifre-belirle?token=${resetToken}`;
+
+        // MAİL GÖNDERME İŞLEMİ
+        await sendPasswordResetEmail(user.email, resetLink);
+
+        res.status(200).json({ message: successMessage });
+
+    } catch (error) {
+        console.error("Şifremi unuttum hatası:", error);
+        res.status(500).json({ message: 'İşlem sırasında bir hata oluştu.' });
     }
 });
 

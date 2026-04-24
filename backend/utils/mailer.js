@@ -41,5 +41,41 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
     }
 };
 
+const sendPasswordResetEmail = async (to, resetLink) => {
+    try {
+        const resend = getResendClient();
+        
+        // E-posta tasarımı (HTML)
+        const htmlContent = `
+            <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e7e5e4; border-radius: 12px;">
+                <h2 style="color: #1c1917; margin-bottom: 20px;">Şifre Sıfırlama Talebi</h2>
+                <p style="color: #57534e; font-size: 16px; line-height: 1.5;">Merhaba,</p>
+                <p style="color: #57534e; font-size: 16px; line-height: 1.5;">Hesabınızın şifresini sıfırlamak için bir talepte bulundunuz. Aşağıdaki butona tıklayarak yeni şifrenizi güvenle belirleyebilirsiniz:</p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <a href="${resetLink}" style="background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">Şifremi Sıfırla</a>
+                </div>
+                
+                <p style="color: #57534e; font-size: 14px; line-height: 1.5;">Eğer bu talebi siz yapmadıysanız, bu e-postayı güvenle görmezden gelebilirsiniz. Şifreniz siz değiştirene kadar aynı kalacaktır.</p>
+                <p style="color: #a8a29e; font-size: 12px; margin-top: 30px; text-align: center;">Bu bağlantı güvenlik amacıyla 1 saat sonra geçersiz olacaktır.</p>
+            </div>
+        `;
 
-module.exports = { sendPdfEmail };
+        const { data, error } = await resend.emails.send({
+            from: process.env.EMAIL_FROM, 
+            to: to,
+            subject: 'Belge Hızlı - Şifre Sıfırlama Talebiniz',
+            html: htmlContent,
+        });
+
+        if (error) throw new Error(error.message);
+        
+        console.log('Şifre sıfırlama e-postası başarıyla gönderildi. İşlem ID:', data.id);
+        return data;
+    } catch (error) {
+        console.error('Şifre sıfırlama e-postası gönderim hatası:', error.message);
+        throw error;
+    }
+};
+
+module.exports = { sendPdfEmail, sendPasswordResetEmail }; 
