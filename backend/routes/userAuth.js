@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 const User = require('../models/User');
 const { protectUser } = require('../middleware/userAuthMiddleware');
 
@@ -10,7 +11,23 @@ const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '30d' });
 };
 
-router.post('/register', async (req, res) => {
+const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 dakika
+    max: 10,
+    message: { success: false, message: 'Çok fazla başarısız deneme yaptınız. Lütfen 15 dakika sonra tekrar deneyin.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+const registerLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 saat
+    max: 3,
+    message: { success: false, message: 'Çok fazla hesap oluşturma isteği. Lütfen bir saat sonra tekrar deneyin.' },
+    standardHeaders: true,
+    legacyHeaders: false,
+});
+
+router.post('/register', registerLimiter, async (req, res) => {
     try {
         const { fullName, email, password } = req.body;
 
@@ -47,7 +64,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', authLimiter, async (req, res) => {
     try {
         const { email, password } = req.body;
         
@@ -91,7 +108,7 @@ router.get('/me', protectUser, async (req, res) => {
     }
 });
 
-router.post('/set-password', async (req, res) => {
+router.post('/set-password', authLimiter, async (req, res) => {
     try {
         const { token, newPassword } = req.body;
 

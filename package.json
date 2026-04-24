@@ -1,5 +1,18 @@
 {
+  "name": "belgehizli-root",
+  "private": true,
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test --project=e2e",
+    "test:api": "playwright test --project=api",
+    "test:api:auth": "playwright test tests/api/auth",
+    "dev:all": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\""
+  },
   "dependencies": {
     "react-quill": "^2.0.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "dotenv": "^17.4.2"
   }
 }
