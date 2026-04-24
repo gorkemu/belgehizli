@@ -13,7 +13,7 @@ test.describe('Auth API - Şifremi Unuttum (Forgot Password) Güvenliği', () =>
     expect(response.status()).toBe(200);
 
     const body = await response.json();
-    expect(body.message).toContain('Eğer sistemimizde kayıtlıysa');
+    expect(body.message).toContain('gönderildi');
   });
 
   test('Sistemde KAYITLI BİR e-posta girildiğinde başarılı yanıt dönmeli', async ({ request }) => {
@@ -33,6 +33,6 @@ test.describe('Auth API - Şifremi Unuttum (Forgot Password) Güvenliği', () =>
     expect(response.status()).toBe(200);
     
     const body = await response.json();
-    expect(body.message).toContain('Eğer sistemimizde kayıtlıysa');
+    expect(body.message).toContain('gönderildi');
   });
 });

@@ -1,11 +1,12 @@
-// tests/api/auth/account-lockout.spec.js
 import { test, expect } from '@playwright/test';
 
 test.describe('Auth API - Hesap Kilitleme (Account Lockout)', () => {
   const registerUrl = '/api/auth/register';
   const loginUrl = '/api/auth/login';
   
-  // Testlerin çakışmaması için her test koşusunda benzersiz bir kullanıcı üretiyoruz
+  // Diğer testlerle çakışmamak için bu dosyaya özel sahte IP
+  const fakeIp = `192.168.20.${Math.floor(Math.random() * 255)}`;
+
   const testUser = {
     fullName: 'Lockout Test User',
     email: `lockout_${Date.now()}@test.com`,
@@ -13,37 +14,38 @@ test.describe('Auth API - Hesap Kilitleme (Account Lockout)', () => {
   };
 
   test.beforeAll(async ({ request }) => {
-    // Test başlamadan önce hedef kullanıcıyı sisteme kayıt ediyoruz
-    await request.post(registerUrl, { data: testUser });
+    await request.post(registerUrl, { 
+      headers: { 'X-Forwarded-For': fakeIp },
+      data: testUser 
+    });
   });
 
   test('Bir hesaba 5 kez hatalı giriş yapıldığında hesap kilitlenmeli (403 Forbidden)', async ({ request }) => {
     
-    // 1. Aşama: 5 kez KASTEN YANLIŞ şifre ile giriş yapıyoruz
+    // 1. Aşama: 5 kez YANLIŞ şifre
     for (let i = 1; i <= 5; i++) {
       const response = await request.post(loginUrl, {
+        headers: { 'X-Forwarded-For': fakeIp },
         data: {
           email: testUser.email,
-          password: 'YanlisSifre123!' // Kasten yanlış
+          password: 'YanlisSifre123!' 
         }
       });
-      // Şifre yanlış olduğu için 401 dönmeli
       expect(response.status()).toBe(401); 
     }
 
-    // 2. Aşama: Hesap kilitlendi! Şimdi DOĞRU şifreyle bile girsek bizi almamalı
+    // 2. Aşama: DOĞRU şifreyle deneme (Kilitli olmalı)
     const lockedResponse = await request.post(loginUrl, {
+      headers: { 'X-Forwarded-For': fakeIp },
       data: {
         email: testUser.email,
-        password: testUser.password // Bu sefer şifre DOĞRU!
+        password: testUser.password 
       }
     });
 
-    // Hesap kilitli olduğu için 403 (Forbidden) dönmeli
     expect(lockedResponse.status()).toBe(403);
 
     const body = await lockedResponse.json();
     expect(body.message).toContain('geçici olarak kilitlendi');
   });
-
 });

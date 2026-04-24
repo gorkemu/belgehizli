@@ -82,9 +82,12 @@ const Register = () => {
               name="password"
               className={styles.input}
               required
+              minLength={8} 
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+              title="Şifreniz en az 8 karakter olmalı, büyük harf, küçük harf ve rakam içermelidir." 
               value={formData.password}
               onChange={handleChange}
-              placeholder="En az 6 karakter"
+              placeholder="En az 8 karakter (Büyük/Küçük/Rakam)"
             />
           </div>
 
