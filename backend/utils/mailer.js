@@ -3,11 +3,11 @@ const { Resend } = require('resend');
 
 const getResendClient = () => {
     const apiKey = process.env.EMAIL_PASS || process.env.RESEND_API_KEY;
-    
+
     if (!apiKey) {
         throw new Error("KRİTİK HATA: Resend API Key bulunamadı! Lütfen .env dosyasını kontrol edin.");
     }
-    
+
     return new Resend(apiKey);
 };
 
@@ -22,7 +22,7 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
             from: process.env.EMAIL_FROM,
             to: to,
             subject: subject,
-            html: html, 
+            html: html,
             attachments: [
                 {
                     filename: pdfFilename,
@@ -32,7 +32,7 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
         });
 
         if (error) throw new Error(error.message);
-        
+
         console.log('E-posta başarıyla gönderildi. İşlem ID:', data.id);
         return data;
     } catch (error) {
@@ -44,7 +44,7 @@ const sendPdfEmail = async (to, subject, text, html, pdfBuffer, pdfFilename) => 
 const sendPasswordResetEmail = async (to, resetLink) => {
     try {
         const resend = getResendClient();
-        
+
         // E-posta tasarımı (HTML)
         const htmlContent = `
             <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e7e5e4; border-radius: 12px;">
@@ -62,14 +62,14 @@ const sendPasswordResetEmail = async (to, resetLink) => {
         `;
 
         const { data, error } = await resend.emails.send({
-            from: process.env.EMAIL_FROM, 
+            from: process.env.EMAIL_FROM,
             to: to,
             subject: 'Belge Hızlı - Şifre Sıfırlama Talebiniz',
             html: htmlContent,
         });
 
         if (error) throw new Error(error.message);
-        
+
         console.log('Şifre sıfırlama e-postası başarıyla gönderildi. İşlem ID:', data.id);
         return data;
     } catch (error) {
@@ -78,4 +78,34 @@ const sendPasswordResetEmail = async (to, resetLink) => {
     }
 };
 
-module.exports = { sendPdfEmail, sendPasswordResetEmail }; 
+const sendMfaEmail = async (to, otpCode) => {
+    try {
+        const resend = getResendClient();
+        const htmlContent = `
+            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e7e5e4; border-radius: 12px; text-align: center;">
+                <h2 style="color: #1c1917; margin-bottom: 20px;">Giriş Doğrulama Kodu</h2>
+                <p style="color: #57534e; font-size: 16px;">Belge Hızlı hesabınıza giriş yapmak için tek kullanımlık doğrulama kodunuz:</p>
+                <div style="margin: 30px 0; font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">
+                    ${otpCode}
+                </div>
+                <p style="color: #a8a29e; font-size: 14px;">Bu kodun geçerlilik süresi 5 dakikadır. Eğer giriş yapmaya çalışmıyorsanız, şifrenizi hemen değiştirin.</p>
+            </div>
+        `;
+
+        const { data, error } = await resend.emails.send({
+            from: process.env.EMAIL_FROM,
+            to: to,
+            subject: 'Belge Hızlı - Giriş Doğrulama Kodunuz',
+            html: htmlContent,
+        });
+
+        if (error) throw new Error(error.message);
+        console.log(`MFA e-postası başarıyla gönderildi (${otpCode}). İşlem ID:`, data.id);
+        return data;
+    } catch (error) {
+        console.error('MFA e-postası gönderim hatası:', error.message);
+        throw error;
+    }
+};
+
+module.exports = { sendPdfEmail, sendPasswordResetEmail, sendMfaEmail };

@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 2
+      "actualWorkers": 5
     },
     "preserveOutput": "always",
     "projects": [
@@ -20,7 +20,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "e2e",
         "name": "e2e",
@@ -36,7 +36,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 2
+          "actualWorkers": 5
         },
         "id": "api",
         "name": "api",
@@ -84,7 +84,7 @@
         {
           "title": "Auth API - Hesap Kilitleme (Account Lockout)",
           "file": "api/auth/account-lockout.spec.js",
-          "line": 4,
+          "line": 3,
           "column": 6,
           "specs": [
             {
@@ -103,12 +103,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1055,
+                      "duration": 1022,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T14:16:39.566Z",
+                      "startTime": "2026-04-24T19:45:01.453Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -118,7 +118,177 @@
               ],
               "id": "aca62ffc35b717c47523-c32305e435246ff2e9ec",
               "file": "api/auth/account-lockout.spec.js",
-              "line": 20,
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/auth/forgot-password.spec.js",
+      "file": "api/auth/forgot-password.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Şifremi Unuttum (Forgot Password) Güvenliği",
+          "file": "api/auth/forgot-password.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Sistemde KAYITLI OLMAYAN bir e-posta girildiğinde bile 200 dönmeli (Enumeration Koruması)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 536,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T19:45:01.457Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-3531122b07260a11784f",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 7,
+              "column": 7
+            },
+            {
+              "title": "Sistemde KAYITLI BİR e-posta girildiğinde başarılı yanıt dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1423,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T19:45:01.453Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-492f944afe1d534ec3d0",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 19,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/auth/mfa.spec.js",
+      "file": "api/auth/mfa.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - MFA (Çok Faktörlü Doğrulama) Güvenliği",
+          "file": "api/auth/mfa.spec.js",
+          "line": 4,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Doğru şifreyle giriş yapıldığında doğrudan giriş YAPILAMAMALI, MFA kodu talep edilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 462,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T19:45:01.459Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-e6c314a49a9709209c08",
+              "file": "api/auth/mfa.spec.js",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "Yanlış MFA kodu girildiğinde 400 (Bad Request) dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 72,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T19:45:02.595Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-87f26451922eb70e5739",
+              "file": "api/auth/mfa.spec.js",
+              "line": 43,
               "column": 7
             }
           ]
@@ -151,15 +321,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 1204,
+                      "duration": 1375,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T14:16:39.567Z",
+                      "startTime": "2026-04-24T19:45:01.465Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -179,9 +349,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-04-24T14:16:37.507Z",
-    "duration": 3667.054,
-    "expected": 2,
+    "startTime": "2026-04-24T19:44:59.258Z",
+    "duration": 3854.723,
+    "expected": 6,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
