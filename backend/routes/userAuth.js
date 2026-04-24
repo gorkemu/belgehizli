@@ -74,22 +74,44 @@ router.post('/login', authLimiter, async (req, res) => {
             return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
         }
 
+        // 1. KONTROL: Hesap Kilitli mi?
+        // lockUntil değeri var mı ve şu anki zamandan büyük mü?
+        if (user.lockUntil && user.lockUntil > Date.now()) {
+            return res.status(403).json({ message: 'Hesabınız çok fazla hatalı giriş denemesi nedeniyle geçici olarak kilitlendi. Lütfen 30 dakika sonra tekrar deneyin.' });
+        }
+
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
-        if (isMatch) {
-            if (!user.isActive) {
-                return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
+        if (!isMatch) {
+            // 2. KONTROL: Şifre yanlışsa deneme sayacını artır
+            user.loginAttempts += 1;
+            
+            // 5 kez yanlış girildiyse hesabı 30 dakika kilitle
+            if (user.loginAttempts >= 5) {
+                user.lockUntil = Date.now() + 30 * 60 * 1000; // Şu an + 30 dakika
             }
-
-            res.json({
-                _id: user.id,
-                fullName: user.fullName,
-                email: user.email,
-                token: generateToken(user._id),
-            });
-        } else {
-            res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
+            
+            await user.save();
+            return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
         }
+
+        // 3. KONTROL: Şifre doğruysa sayaçları sıfırla ve içeri al
+        if (!user.isActive) {
+            return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
+        }
+
+        // Başarılı giriş: Kilidi ve sayacı temizle
+        user.loginAttempts = 0;
+        user.lockUntil = undefined;
+        await user.save();
+
+        res.json({
+            _id: user.id,
+            fullName: user.fullName,
+            email: user.email,
+            token: generateToken(user._id),
+        });
+
     } catch (error) {
         console.error("Giriş hatası:", error);
         res.status(500).json({ message: 'Sunucu hatası.' });
