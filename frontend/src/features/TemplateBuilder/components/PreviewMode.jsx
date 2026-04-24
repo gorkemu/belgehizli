@@ -1,5 +1,5 @@
 // frontend/src/features/TemplateBuilder/components/PreviewMode.jsx
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
 import sidebarStyles from './Sidebar/Sidebar.module.css';
@@ -20,6 +20,7 @@ const PreviewMode = () => {
 
   const previewEditorRef = useRef(null);
 
+  
   // Form doğrulama
   const validatePreviewForm = () => {
     const requiredFields = formData.fields.filter(f => f.required);
@@ -78,6 +79,13 @@ const PreviewMode = () => {
     }
   }, [formData.content, virtualFormData, triggerSymbol]);
 
+  useEffect(() => {
+    // Kullanıcı Forma (Adım 1) geri döndüğünde, editörün içini orijinal HTML ile ez
+    if (previewStep === 1 && previewEditorRef.current?.commands) {
+      previewEditorRef.current.commands.setContent(previewHtml);
+    }
+  }, [previewStep, previewHtml]);
+
   return (
     <div className={globalStyles.split}>
       <aside className={sidebarStyles.left} style={{ background: 'var(--bg-sidebar)', display: 'flex', flexDirection: 'column' }}>
@@ -98,7 +106,7 @@ const PreviewMode = () => {
           {previewStep === 1 ? (
             <Button
               variant="primary"
-              className={styles.pulseBtn} 
+              className={styles.pulseBtn}
               onClick={() => {
                 if (validatePreviewForm()) { setPreviewStep(2); }
                 else { showToast("Lütfen tüm zorunlu alanları doldurun.", "error"); }
@@ -110,7 +118,7 @@ const PreviewMode = () => {
           ) : (
             <Button
               variant="secondary"
-              onClick={() => setShowBackWarning('form')} 
+              onClick={() => setShowBackWarning('form')}
               leftIcon={<Edit3 size={16} />}
             >
               Forma Dön ve Düzenle
@@ -122,12 +130,11 @@ const PreviewMode = () => {
       <main className={globalStyles.right} style={{ padding: '40px', alignItems: 'center', overflowY: 'auto' }}>
         <div className={globalStyles.canvas} style={{ width: '100%', padding: '0 40px' }}>
           <div className={globalStyles.paper}>
-            <DocumentPreview 
-              key={`preview-editor-reset-${previewStep}`} 
-              templateContent={previewHtml} 
-              formData={virtualFormData} 
-              editorRef={previewEditorRef} 
-              currentStep={previewStep} 
+            <DocumentPreview
+              templateContent={previewHtml}
+              formData={virtualFormData}
+              editorRef={previewEditorRef}
+              currentStep={previewStep}
             />
           </div>
         </div>
