@@ -1,6 +1,9 @@
 // playwright.config.js (Ana Dizinde)
 import { defineConfig, devices } from '@playwright/test';
 
+// Sadece CI değişkenine değil, GitHub'ın kendi özel değişkenine de bakıyoruz
+const isCI = !!process.env.CI || !!process.env.GITHUB_ACTIONS;
+
 export default defineConfig({
   testDir: './tests', // Tüm testlerin ana klasörü
   fullyParallel: true,
@@ -46,17 +49,17 @@ export default defineConfig({
   // Playwright array kullanarak birden fazla sunucu başlatabilir
   webServer: [
     {
-      // 1. Backend'i Başlat
-      command: 'cd backend && npm run dev', 
-      url: 'http://localhost:8080/api/ping', // Backend'in ayakta olduğunu bu URL'den anlar
-      reuseExistingServer: !process.env.CI,
+      // 1. BACKEND: GitHub'daysa (isCI) start, lokaldeyse dev
+      command: isCI ? 'cd backend && npm run start' : 'cd backend && npm run dev',
+      url: 'http://localhost:8080/api/ping',
+      reuseExistingServer: !isCI,
       timeout: 120 * 1000,
     },
     {
-      // 2. Frontend'i Başlat
-      command: process.env.CI ? 'cd frontend && npm run dev:ci' : 'cd frontend && npm run dev',
+      // 2. FRONTEND: GitHub'daysa (isCI) dev:ci, lokaldeyse dev
+      command: isCI ? 'cd frontend && npm run dev:ci' : 'cd frontend && npm run dev',
       url: 'http://localhost:5173',
-      reuseExistingServer: !process.env.CI,
+      reuseExistingServer: !isCI,
       timeout: 120 * 1000,
     }
   ],

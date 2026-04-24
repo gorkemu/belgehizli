@@ -36,9 +36,10 @@ jobs:
     - name: Playwright Tarayıcılarını Yükle
       run: npx playwright install --with-deps
 
-    # 3. TESTLERİN ÇALIŞTIRILMASI (Playwright her iki sunucuyu kendi başlatacak)
+    # 3. TESTLERİN ÇALIŞTIRILMASI
     - name: Playwright Testlerini Çalıştır (E2E ve API)
       env:
+        CI: "true"  
         # Backend Değişkenleri
         ATLAS_URI: ${{ secrets.ATLAS_URI }}
         MONGO_URI: ${{ secrets.ATLAS_URI }} 
