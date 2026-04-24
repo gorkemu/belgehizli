@@ -82,7 +82,7 @@ router.post('/register', registerLimiter, async (req, res) => {
 router.post('/login', authLimiter, async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        
         const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
@@ -90,7 +90,6 @@ router.post('/login', authLimiter, async (req, res) => {
         }
 
         // 1. KONTROL: Hesap Kilitli mi?
-        // lockUntil değeri var mı ve şu anki zamandan büyük mü?
         if (user.lockUntil && user.lockUntil > Date.now()) {
             return res.status(403).json({ message: 'Hesabınız çok fazla hatalı giriş denemesi nedeniyle geçici olarak kilitlendi. Lütfen 30 dakika sonra tekrar deneyin.' });
         }
@@ -100,17 +99,17 @@ router.post('/login', authLimiter, async (req, res) => {
         if (!isMatch) {
             // 2. KONTROL: Şifre yanlışsa deneme sayacını artır
             user.loginAttempts += 1;
-
+            
             // 5 kez yanlış girildiyse hesabı 30 dakika kilitle
             if (user.loginAttempts >= 5) {
-                user.lockUntil = Date.now() + 30 * 60 * 1000; // Şu an + 30 dakika
+                user.lockUntil = Date.now() + 30 * 60 * 1000;
             }
-
+            
             await user.save();
             return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
         }
 
-        // 3. KONTROL: Şifre doğruysa MFA sürecini başlat
+        // 3. KONTROL: Şifre doğruysa sayaçları sıfırla
         if (!user.isActive) {
             return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
         }
@@ -118,9 +117,23 @@ router.post('/login', authLimiter, async (req, res) => {
         user.loginAttempts = 0;
         user.lockUntil = undefined;
 
-        // 6 haneli rastgele OTP üret (örn: 482915)
-        const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        // E2E TEST BOTU İÇİN TAMAMEN SECRET TABANLI ARKA KAPI (MFA BYPASS)
+        const testUserEmail = process.env.TEST_USER_EMAIL ? process.env.TEST_USER_EMAIL.toLowerCase() : null;
 
+        // Eğer production ortamında değilsek VE secret tanımlıysa VE giriş yapan kişi test botuysa
+        if (process.env.NODE_ENV !== 'production' && testUserEmail && user.email === testUserEmail) {
+            await user.save();
+            return res.json({
+                _id: user.id,
+                fullName: user.fullName,
+                email: user.email,
+                token: generateToken(user._id), // MFA sormadan direkt asıl token'ı ver
+            });
+        }
+
+        // GERÇEK KULLANICILAR İÇİN NORMAL MFA AKIŞI
+        const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+        
         user.mfaOtp = otpCode;
         user.mfaOtpExpires = Date.now() + 5 * 60 * 1000; // 5 dakika geçerli
         await user.save();
