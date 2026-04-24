@@ -13,7 +13,12 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: String,
     resetPasswordExpires: Date,
     lastLoginAt: Date,
-    isActive: { type: Boolean, default: true }
+    isActive: { type: Boolean, default: true },
+
+    // Hesap Kilitleme Alanları
+    loginAttempts: { type: Number, required: true, default: 0 },
+    lockUntil: { type: Number },
+    
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);
