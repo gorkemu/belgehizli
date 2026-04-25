@@ -18,10 +18,6 @@ const Register = () => {
   const { register, user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  if (user && !loading) {
-    return <Navigate to="/panel" replace />;
-  }
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -32,16 +28,11 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      await register(
-        formData.fullName,
-        formData.email,
-        formData.password
-      );
-      navigate('/panel/projects');
+      await register(formData.fullName, formData.email, formData.password);
+      navigate('/panel', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Kayıt işlemi başarısız oldu.');
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false); 
     }
   };
 
@@ -91,9 +82,12 @@ const Register = () => {
               name="password"
               className={styles.input}
               required
+              minLength={8} 
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+              title="Şifreniz en az 8 karakter olmalı, büyük harf, küçük harf ve rakam içermelidir." 
               value={formData.password}
               onChange={handleChange}
-              placeholder="En az 6 karakter"
+              placeholder="En az 8 karakter (Büyük/Küçük/Rakam)"
             />
           </div>
 

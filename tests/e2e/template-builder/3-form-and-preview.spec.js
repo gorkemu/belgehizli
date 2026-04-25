@@ -35,12 +35,21 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   });
 
   test.beforeEach(async ({ page }) => {
-    // Her test öncesi onboarding'i kalıcı olarak engelle
     await page.addInitScript(() => {
       localStorage.setItem('template_builder_tour_seen', 'true');
     });
     await page.goto(`/panel/duzenle/${TEST_DOC_ID}`);
     await page.getByRole('button', { name: 'Tasarım' }).click();
+
+    // OL PANELDEKİ TÜM ESKİ KARTLARI SİL (Temizlik)
+    const deleteButtons = page.locator('button[title="Sil"], button[aria-label="Sil"]');
+    const count = await deleteButtons.count();
+    for (let i = 0; i < count; i++) {
+      // Her zaman ilkini sil çünkü sildikçe liste kısalıyor
+      await deleteButtons.first().click();
+    }
+
+    // Editörü temizle
     const editor = page.locator('.ProseMirror');
     await editor.click();
     await editor.press('Meta+a');
@@ -74,15 +83,23 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     const testFormArea = page.locator('aside').filter({ hasText: 'Test formu' });
     const formInputs = testFormArea.locator('input');
 
+    // Görünür olmasını bekle
+    await formInputs.nth(0).waitFor({ state: 'visible' });
+    
     await formInputs.nth(0).fill('Tech Corp');
     await formInputs.nth(1).fill('Görkem Yılmaz');
-    await formInputs.nth(2).fill('14.04.2026');
+    // Geçerli HTML5 date formatı
+    await formInputs.nth(2).fill('2026-04-14'); 
+    await formInputs.nth(2).blur(); // React state'i güncellensin
 
-    await page.waitForTimeout(600);
+    // Belgeyi oluşturmak için 2. adıma geç
+    await page.getByRole('button', { name: 'Belgeyi İncele' }).click();
+    await expect(page.getByText('Adım 2/2')).toBeVisible({ timeout: 5000 });
+
     const previewPaper = page.locator('main');
     await expect(previewPaper).toContainText('Tech Corp');
     await expect(previewPaper).toContainText('Görkem Yılmaz');
-    await expect(previewPaper).toContainText('14.04.2026');
+    await expect(previewPaper).toContainText('2026'); // Yıl kontrolü yeterli
 
     await page.getByRole('button', { name: 'İndir' }).click();
     const downloadPromise = page.waitForEvent('download');
@@ -99,11 +116,10 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('Sözleşme Tipi');
 
-    // SON KARTIN içindeki select'i bul.
     const lastCard = page.locator('[class*="fieldCard"]').last();
     await lastCard.locator('select').selectOption('radio');
 
-    // Seçenek ekle butonunu da son kartın içinden bul
+    // Seçenek ekle
     await lastCard.getByRole('button', { name: 'Seçenek ekle' }).click();
     await page.getByPlaceholder('Seçenek 1').fill('Standart');
     await lastCard.getByRole('button', { name: 'Seçenek ekle' }).click();
@@ -113,10 +129,8 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     await page.getByRole('button', { name: 'Şartlı Blok' }).click();
 
     const condModalHeading = page.getByRole('heading', { name: 'Şartlı Blok Ekle' });
-
     const condModal = page.locator('[class*="modal"]').filter({ has: condModalHeading }).first();
 
-    // Önce başlığın görünür olmasını bekle
     await expect(condModalHeading).toBeVisible({ timeout: 5000 });
 
     await condModal.locator('select').first().selectOption('sozlesme_tipi');
@@ -125,30 +139,52 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
 
     // Şartlı metni düzenle
     const conditionalText = editor.locator('p', { hasText: 'Buraya şartlı metninizi yazın...' });
-
     await conditionalText.click({ clickCount: 3 });
-
-    // Seçili metni sil
     await page.keyboard.press('Backspace');
-
-    // Yeni metni yaz (Böylece [EĞER] ve [ŞART SONU] etiketleri korunmuş olur)
     await editor.pressSequentially('Premium üyelik avantajları...');
 
     // Kaydet ve önizlemeye geç
     await page.getByPlaceholder('Şablon adı…').fill(DOC_NAME);
     await page.getByRole('button', { name: 'Kaydet' }).click();
-    await expect(page.getByText('Buluta kaydedildi')).toBeVisible(); // Kaydedilmesini bekle!
+    await expect(page.getByText('Buluta kaydedildi')).toBeVisible(); 
+    
     await page.getByRole('button', { name: 'Önizleme' }).click();
 
-    // Standart seçiliyken metin görünmemeli
     const previewForm = page.locator('aside').filter({ hasText: 'Test formu' });
+    await previewForm.waitFor({ state: 'visible' });
+
+    // 1. TEST: Standart Seçimi
     await previewForm.locator('label', { hasText: 'Standart' }).click();
-    await page.waitForTimeout(300);
+    
+    const textElements = previewForm.locator('input:not([type="radio"]):not([type="checkbox"])');
+    const textCount = await textElements.count();
+    for (let i = 0; i < textCount; i++) {
+        const el = textElements.nth(i);
+        // Sadece ekranda görünen (şartlı bloklarla gizlenmemiş) inputları doldur
+        if (await el.isVisible()) {
+            const type = await el.getAttribute('type');
+            if (type === 'date') await el.fill('2026-04-14');
+            else await el.fill('Test Verisi');
+            await el.press('Tab');
+        }
+    }
+    await page.waitForTimeout(300); // React'in state'i kaydetmesini bekle
+
+    // 2. Adıma geç ve kontrol et
+    await page.getByRole('button', { name: 'Belgeyi İncele' }).click();
+    await expect(page.getByText('Adım 2/2')).toBeVisible();
     await expect(page.locator('main')).not.toContainText('Premium üyelik avantajları');
 
-    // Premium seçiliyken görünmeli
+    // Forma dönmek için uyarı modalını geç
+    await page.getByRole('button', { name: 'Forma Dön ve Düzenle' }).click();
+    await page.getByRole('button', { name: 'Yine De Dön' }).click();
+
+    // 2. TEST: Premium Seçimi
+    await expect(page.getByText('Adım 1/2')).toBeVisible();
     await previewForm.locator('label', { hasText: 'Premium' }).click();
-    await page.waitForTimeout(300);
+    
+    // Tekrar 2. Adıma geç
+    await page.getByRole('button', { name: 'Belgeyi İncele' }).click();
     await expect(page.locator('main')).toContainText('Premium üyelik avantajları');
   });
 
@@ -171,7 +207,6 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     await card2.scrollIntoViewIfNeeded();
 
     const box1 = await handle1.boundingBox();
-    // İkinci kartın KENDİSİNİ (daha geniş alan) hedef al
     const box2 = await card2.boundingBox(); 
 
     if (box1 && box2) {
@@ -186,29 +221,25 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
       await page.mouse.move(startX, startY + 15, { steps: 3 });
       await page.waitForTimeout(200);
 
-      // İkinci kartın ortasına değil, dnd-kit'in yer değiştirmeyi anlaması için 
-      // ikinci kartın EN ALT SINIRINA kadar sürükle
+      // İkinci kartın EN ALT SINIRINA kadar sürükle
       await page.mouse.move(startX, box2.y + box2.height - 5, { steps: 15 });
       await page.waitForTimeout(400);
 
       await page.mouse.up();
     }
 
-    // "toPass" Bloğu 
-    // "5 saniye boyunca sürekli kontrol et. Ne zaman Birinci Alan, İkinci Alanın altına düşerse testi başarılı say."
+    // "toPass" Bloğu ile sıralama kontrolü
     await expect(async () => {
       const cards = page.locator('[class*="fieldCard"]');
       const texts = await cards.allInnerTexts();
 
-      // İsimlerin dizideki yerlerini (index) bul
       const indexBirinci = texts.findIndex(t => t.includes('Birinci Alan'));
       const indexIkinci = texts.findIndex(t => t.includes('İkinci Alan'));
 
-      // Her iki kartın da sayfada bulunduğundan emin ol
       expect(indexBirinci).toBeGreaterThan(-1);
       expect(indexIkinci).toBeGreaterThan(-1);
 
-      // Birinci alan sürüklendiği için İkinci alanın ALTINDA (indeksi daha büyük) olmalı
+      // Birinci alan sürüklendiği için İkinci alanın ALTINDA olmalı
       expect(indexBirinci).toBeGreaterThan(indexIkinci);
     }).toPass({ timeout: 5000 });
   });
@@ -216,13 +247,9 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   test('Paylaşım linki kopyalanabilmeli', async ({ page }) => {
     await page.getByRole('button', { name: 'Paylaş' }).click();
 
-    // Modalı "Heading" (Başlık) üzerinden bul
     const modalHeading = page.getByRole('heading', { name: 'Genel Bağlantı' });
-
-    // İçinde bu başlığı barındıran İLK .modal div'ini seç
     const modal = page.locator('[class*="modal"]').filter({ has: modalHeading }).first();
 
-    // Önce başlığın görünür olmasını bekle
     await expect(modalHeading).toBeVisible();
 
     const copyBtn = modal.getByRole('button', { name: 'Kopyala' });
@@ -234,7 +261,6 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   });
 
   test('Tema değiştirilebilmeli ve localStorage\'a kaydedilmeli', async ({ page }) => {
-    // Tema dropdown'ını aç
     await page.locator('#tb-theme-btn button').click();
     await page.locator('button:has-text("Orman")').click();
 

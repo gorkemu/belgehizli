@@ -1,3 +1,4 @@
+// frontend/src/features/TemplateBuilder/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
@@ -24,7 +25,9 @@ const Header = () => {
     editorInstance, getCleanFields, triggerSymbol, showToast,
     expandedFields, setExpandedFields,
     setIsShareModalOpen, 
-    setPdfConfirmModal  
+    setPdfConfirmModal,
+    showBackWarning, setShowBackWarning,  
+    previewStep
   } = useTemplateBuilder();
 
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
@@ -40,7 +43,10 @@ const Header = () => {
     if (!formData.name?.trim()) err.name = true;
 
     // 2. İçerik (Editör) Kontrolü
-    const currentContent = editorInstance ? editorInstance.getHTML() : (formData.content || '');
+    // SADECE Tasarım modundaysak editörden veri al, Önizlemedeysek şablonun orijinal halini koru!
+    const currentContent = (mode === 'build' && editorInstance) 
+      ? editorInstance.getHTML() 
+      : (formData.content || '');
     const stripped = currentContent.replace(/(<([^>]+)>)/gi, '').trim(); // Sadece HTML etiketlerini değil, içindeki metni kontrol eder
     if (!stripped) err.content = true;
 
@@ -199,10 +205,25 @@ const Header = () => {
       </div>
 
       <div className={styles.modeSwitch}>
-        <button className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`} onClick={() => setMode('build')}>
+        <button 
+          className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`} 
+          onClick={() => {
+            // Önizlemenin hangi adımında olursa olsun, tasarıma geçerken uyar
+            if (mode === 'preview') {
+              setShowBackWarning('build');
+            } else {
+              setMode('build');
+            }
+          }}
+        >
           <Wrench size={15} /> Tasarım
         </button>
-        <button id="tb-preview-btn" className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`} onClick={() => setMode('preview')}>
+        
+        <button 
+          id="tb-preview-btn" 
+          className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`} 
+          onClick={() => setMode('preview')}
+        >
           <Eye size={15} /> Önizleme
         </button>
       </div>

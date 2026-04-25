@@ -1,0 +1,359 @@
+{
+  "config": {
+    "configFile": "/Users/gorkem/Desktop/Projects/belge-hizli/playwright.config.js",
+    "rootDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/e2e/global-setup.js",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 5
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/gorkem/Desktop/Projects/belge-hizli/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/Users/gorkem/Desktop/Projects/belge-hizli/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 5
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/api",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 5,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "api/auth/account-lockout.spec.js",
+      "file": "api/auth/account-lockout.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Hesap Kilitleme (Account Lockout)",
+          "file": "api/auth/account-lockout.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Bir hesaba 5 kez hatalı giriş yapıldığında hesap kilitlenmeli (403 Forbidden)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1137,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:07.848Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aca62ffc35b717c47523-c32305e435246ff2e9ec",
+              "file": "api/auth/account-lockout.spec.js",
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/auth/forgot-password.spec.js",
+      "file": "api/auth/forgot-password.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Şifremi Unuttum (Forgot Password) Güvenliği",
+          "file": "api/auth/forgot-password.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Sistemde KAYITLI OLMAYAN bir e-posta girildiğinde bile 200 dönmeli (Enumeration Koruması)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 470,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:07.855Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-3531122b07260a11784f",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 7,
+              "column": 7
+            },
+            {
+              "title": "Sistemde KAYITLI BİR e-posta girildiğinde başarılı yanıt dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 1654,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:07.853Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-492f944afe1d534ec3d0",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 19,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/auth/mfa.spec.js",
+      "file": "api/auth/mfa.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - MFA (Çok Faktörlü Doğrulama) Güvenliği",
+          "file": "api/auth/mfa.spec.js",
+          "line": 4,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Doğru şifreyle giriş yapıldığında doğrudan giriş YAPILAMAMALI, MFA kodu talep edilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1082,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:07.846Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-e6c314a49a9709209c08",
+              "file": "api/auth/mfa.spec.js",
+              "line": 27,
+              "column": 7
+            },
+            {
+              "title": "Yanlış MFA kodu girildiğinde 400 (Bad Request) dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 69,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:09.525Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-87f26451922eb70e5739",
+              "file": "api/auth/mfa.spec.js",
+              "line": 43,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api/auth/rate-limit.spec.js",
+      "file": "api/auth/rate-limit.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Brute Force Koruması (Rate Limiting)",
+          "file": "api/auth/rate-limit.spec.js",
+          "line": 3,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Giriş (login) rotasında arka arkaya 10 hatalı denemeden sonra IP engellenmeli (429 Too Many Requests)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 1310,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-04-24T20:32:07.843Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83817046f7c55ac6b21b-0f7bf828305a5ccb3fd5",
+              "file": "api/auth/rate-limit.spec.js",
+              "line": 5,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-04-24T20:32:06.625Z",
+    "duration": 3029.6800000000003,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

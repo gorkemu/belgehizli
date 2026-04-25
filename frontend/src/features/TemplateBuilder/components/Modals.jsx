@@ -3,7 +3,7 @@ import axios from 'axios';
 import Handlebars from 'handlebars';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import styles from '../TemplateBuilder.module.css';
-import { Wand2, Zap, Link as LinkIcon, CheckCircle2, Copy, Printer, X, Sparkles } from 'lucide-react';
+import { Wand2, Zap, Link as LinkIcon, CheckCircle2, Copy, Printer, X, Sparkles, AlertCircle } from 'lucide-react';
 import { VARIABLE_FORMATS } from '../utils/constants';
 import { getTriggerSymbols, generateVarName, convertToHandlebars } from '../utils/helpers';
 import Button from '../../../components/ui/Button';
@@ -15,9 +15,12 @@ const Modals = () => {
     formData, setFormData, editorInstance, showToast, 
     triggerSymbol, virtualFormData, setExpandedFields,
     magicModal, setMagicModal,
+    mode, setMode,
     condModal, setCondModal,
     isShareModalOpen, setIsShareModalOpen,
-    pdfConfirmModal, setPdfConfirmModal
+    pdfConfirmModal, setPdfConfirmModal,
+    showBackWarning, setShowBackWarning,
+    previewStep, setPreviewStep
   } = useTemplateBuilder();
 
   // --- Local State for Modals ---
@@ -219,6 +222,42 @@ const Modals = () => {
               <Button variant="ghost" onClick={() => setPdfConfirmModal(false)}>İptal</Button>
               <Button variant="primary" isLoading={isGeneratingPdf} onClick={handlePrintPDF}>
                 Onayla ve İndir
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* İKİ FONKSİYONLU UYARI MODALI */}
+      {showBackWarning !== null && (
+        <div className={styles.overlay} onClick={() => setShowBackWarning(null)}>
+          <div className={styles.warningModal} onClick={(e) => e.stopPropagation()}>
+            <AlertCircle size={40} className={styles.warningIcon} />
+            
+            <h3>
+              {showBackWarning === 'build' ? 'Tasarım Moduna Dön?' : 'Forma Geri Dön?'}
+            </h3>
+            
+            <p>
+              Eğer <strong>{showBackWarning === 'build' ? 'tasarım moduna' : 'forma'}</strong> geri dönerseniz, 
+              {previewStep === 2 ? ' canlı önizleme üzerinde manuel olarak yaptığınız metin düzenlemeleri silinecektir.' : ' önizleme testini yarıda kesmiş olacaksınız.'}
+            </p>
+            
+            <div className={styles.warningActions}>
+              <Button variant="ghost" onClick={() => setShowBackWarning(null)}>
+                Önizlemede Kal
+              </Button>
+              
+              <Button variant="danger" onClick={() => {
+                if (showBackWarning === 'build') {
+                  setMode('build'); // Tasarıma git
+                  setPreviewStep(1); // Bir sonraki geliş için formu sıfırla
+                } else {
+                  setPreviewStep(1); // Sadece forma dön
+                }
+                setShowBackWarning(null);
+              }}>
+                Yine De Dön
               </Button>
             </div>
           </div>

@@ -34,6 +34,21 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
+        
+        // Eğer MFA gerekmiyorsa (eski usül direkt girişse) token'ı kaydet
+        if (!response.data.requiresMfa) {
+            localStorage.setItem('user_token', response.data.token);
+            setUser(response.data);
+        }
+        
+        // Her halükarda veriyi Login.jsx'e döndür (requiresMfa bayrağını okuması için)
+        return response.data;
+    };
+
+    const verifyMfa = async (tempToken, otp) => {
+        const response = await axios.post(`${API_BASE_URL}/auth/verify-mfa`, { tempToken, otp });
+        
+        // Doğrulama başarılıysa GERÇEK token'ı kaydet ve kullanıcıyı içeri al
         localStorage.setItem('user_token', response.data.token);
         setUser(response.data);
         return response.data;
@@ -56,8 +71,18 @@ export const AuthProvider = ({ children }) => {
         window.location.href = '/giris-yap';
     };
 
+    const forgotPassword = async (email) => {
+        const response = await axios.post(`${API_BASE_URL}/auth/forgot-password`, { email });
+        return response.data;
+    };
+
+    const resetPassword = async (token, newPassword) => {
+        const response = await axios.post(`${API_BASE_URL}/auth/set-password`, { token, newPassword });
+        return response.data;
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout, loading, forgotPassword, resetPassword, verifyMfa }}>
             {!loading && children}
         </AuthContext.Provider>
     );

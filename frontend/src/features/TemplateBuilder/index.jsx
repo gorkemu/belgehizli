@@ -1,3 +1,4 @@
+// frontend/src/features/TemplateBuilder/index.jsx
 import React from 'react';
 import { TemplateBuilderProvider } from './context/TemplateBuilderContext';
 import { useTemplateBuilder } from './hooks/useTemplateBuilder'; 

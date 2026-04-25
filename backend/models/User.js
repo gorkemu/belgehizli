@@ -12,8 +12,15 @@ const userSchema = new mongoose.Schema({
     emailVerificationExpires: Date,
     resetPasswordToken: String,
     resetPasswordExpires: Date,
+    mfaOtp: String,
+    mfaOtpExpires: Date,
     lastLoginAt: Date,
-    isActive: { type: Boolean, default: true }
+    isActive: { type: Boolean, default: true },
+
+    // Hesap Kilitleme Alanları
+    loginAttempts: { type: Number, required: true, default: 0 },
+    lockUntil: { type: Number },
+    
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema);

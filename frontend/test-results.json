@@ -11,7 +11,7 @@
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 5
+      "actualWorkers": 1
     },
     "preserveOutput": "always",
     "projects": [
@@ -20,7 +20,7 @@
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 5
+          "actualWorkers": 1
         },
         "id": "chromium",
         "name": "chromium",
@@ -64,560 +64,6 @@
   },
   "suites": [
     {
-      "title": "template-builder/1-core-editor.spec.js",
-      "file": "template-builder/1-core-editor.spec.js",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "1. Çekirdek Editör İşlevleri",
-          "file": "template-builder/1-core-editor.spec.js",
-          "line": 4,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Slash (/) komutları: Madde İmleri doğru çalışmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 1708,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:21.881Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-6a195-adde-İmleri-doğru-çalışmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-543a839f6442fd9d15e0",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 47,
-              "column": 3
-            },
-            {
-              "title": "Metin formatlama araçları (Bold, Italic, Renk, Hizalama) çalışmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
-                      "status": "passed",
-                      "duration": 2216,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:26.236Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-f6f46-lic-Renk-Hizalama-çalışmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-325ab82903ff4d7319c0",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 67,
-              "column": 3
-            },
-            {
-              "title": "Undo / Redo işlemleri doğru çalışmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 3337,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:21.918Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-4c2a9-o-işlemleri-doğru-çalışmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-c82cba9a3f56f1635f13",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 95,
-              "column": 3
-            },
-            {
-              "title": "Başlık seviyeleri ve liste iç içe geçme çalışmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
-                      "status": "passed",
-                      "duration": 1710,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:27.558Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-d7449-iste-iç-içe-geçme-çalışmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-093901aae5c529f80fa0",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 108,
-              "column": 3
-            },
-            {
-              "title": "Font boyutu ve satır yüksekliği değiştirilebilmeli",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1667,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:21.878Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-33949-ksekliği-değiştirilebilmeli-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-4a9120ee72a9d92ae3ad",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 141,
-              "column": 3
-            },
-            {
-              "title": "Slash menüsünde ok tuşları ile gezinme ve Enter ile seçim",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
-                      "status": "passed",
-                      "duration": 1666,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:25.846Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-06788--gezinme-ve-Enter-ile-seçim-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-e4c64dbeb3da919581d5",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 160,
-              "column": 1
-            },
-            {
-              "title": "Değişken menüsü tetikleyici ile açılıp seçim yapılabilmeli",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1715,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:21.894Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-1-core-ed-cfe28--açılıp-seçim-yapılabilmeli-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "63a92d60ddc539656cb3-d012c6ef6b9f01603514",
-              "file": "template-builder/1-core-editor.spec.js",
-              "line": 188,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "title": "template-builder/2-variables.spec.js",
-      "file": "template-builder/2-variables.spec.js",
-      "column": 0,
-      "line": 0,
-      "specs": [],
-      "suites": [
-        {
-          "title": "2. Değişkenler ve Tetikleyiciler (Triggers)",
-          "file": "template-builder/2-variables.spec.js",
-          "line": 4,
-          "column": 6,
-          "specs": [
-            {
-              "title": "Sol panelden manuel değişken eklenip Regex tetikleyicileri çalışmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
-                      "status": "passed",
-                      "duration": 1543,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:21.887Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-92a33-x-tetikleyicileri-çalışmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-c5ce57876c6b45d7bc05",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 55,
-              "column": 3
-            },
-            {
-              "title": "Özel tetikleyici ile mevcut değişkenler dönüşmeli",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
-                      "status": "passed",
-                      "duration": 1207,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:25.834Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-453a7-evcut-değişkenler-dönüşmeli-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-ac2442b8a7518c37911c",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 77,
-              "column": 3
-            },
-            {
-              "title": "Sihirli Algılama Modalından farklı formatlar seçilebilmeli",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 1590,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:28.038Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-b0e7f-klı-formatlar-seçilebilmeli-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-10f33ac9810e3309bc2d",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 90,
-              "column": 3
-            },
-            {
-              "title": "Çoklu eşleşme modalı: aynı kelime birden fazla yerde değiştirilebilmeli",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
-                      "status": "passed",
-                      "duration": 2691,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:31.127Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-9ff39-la-yerde-değiştirilebilmeli-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-147c1ad6f4d0c4594030",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 108,
-              "column": 3
-            },
-            {
-              "title": "Değişken adı düzenlenebilmeli ve çakışma durumunda numaralandırılmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
-                      "status": "passed",
-                      "duration": 1177,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:29.071Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-6225f-urumunda-numaralandırılmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-d1d8bcac81e178e6630e",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 173,
-              "column": 3
-            },
-            {
-              "title": "Değişken silindiğinde form alanı kaldırılmalı",
-              "ok": true,
-              "tags": [],
-              "tests": [
-                {
-                  "timeout": 30000,
-                  "annotations": [],
-                  "expectedStatus": "passed",
-                  "projectId": "chromium",
-                  "projectName": "chromium",
-                  "results": [
-                    {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
-                      "status": "passed",
-                      "duration": 935,
-                      "errors": [],
-                      "stdout": [],
-                      "stderr": [],
-                      "retry": 0,
-                      "startTime": "2026-04-23T14:47:31.910Z",
-                      "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "/Users/gorkem/Desktop/Projects/belge-hizli/frontend/test-results/template-builder-2-variabl-dd498-nde-form-alanı-kaldırılmalı-chromium/trace.zip"
-                        }
-                      ]
-                    }
-                  ],
-                  "status": "expected"
-                }
-              ],
-              "id": "6de98e812cf8e05b3f00-072d1213d9e5238fe859",
-              "file": "template-builder/2-variables.spec.js",
-              "line": 196,
-              "column": 3
-            }
-          ]
-        }
-      ]
-    },
-    {
       "title": "template-builder/3-form-and-preview.spec.js",
       "file": "template-builder/3-form-and-preview.spec.js",
       "column": 0,
@@ -643,15 +89,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 841,
+                      "duration": 791,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:29.796Z",
+                      "startTime": "2026-04-24T00:09:17.519Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -667,7 +113,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-faf4de3158667d364e7f",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 51,
+              "line": 60,
               "column": 3
             },
             {
@@ -683,15 +129,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5191,
+                      "duration": 4158,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:32.137Z",
+                      "startTime": "2026-04-24T00:09:19.528Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -707,7 +153,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-f947a0662939ae035faf",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 60,
+              "line": 69,
               "column": 3
             },
             {
@@ -723,15 +169,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2703,
+                      "duration": 2910,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:37.526Z",
+                      "startTime": "2026-04-24T00:09:23.869Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -747,7 +193,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-1ac9fe229ff829c072aa",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 95,
+              "line": 112,
               "column": 3
             },
             {
@@ -763,15 +209,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2003,
+                      "duration": 2178,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:40.433Z",
+                      "startTime": "2026-04-24T00:09:26.975Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -787,7 +233,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-1d1bd10bec2fcbbfe625",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 155,
+              "line": 191,
               "column": 3
             },
             {
@@ -803,15 +249,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 843,
+                      "duration": 825,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:42.599Z",
+                      "startTime": "2026-04-24T00:09:29.328Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -827,7 +273,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-65140dec5a2d0d40f040",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 216,
+              "line": 247,
               "column": 3
             },
             {
@@ -843,15 +289,15 @@
                   "projectName": "chromium",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1306,
+                      "duration": 1330,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-23T14:47:43.570Z",
+                      "startTime": "2026-04-24T00:09:30.269Z",
                       "annotations": [],
                       "attachments": [
                         {
@@ -867,7 +313,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-cf2c4328b526aa3579a5",
               "file": "template-builder/3-form-and-preview.spec.js",
-              "line": 236,
+              "line": 263,
               "column": 3
             }
           ]
@@ -877,9 +323,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-04-23T14:47:21.214Z",
-    "duration": 25361.266,
-    "expected": 19,
+    "startTime": "2026-04-24T00:09:17.023Z",
+    "duration": 16279.527000000002,
+    "expected": 6,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0
