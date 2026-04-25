@@ -131,12 +131,12 @@ export const ProjectsManager = () => {
           <h3 className={styles.emptyTitle}>Henüz bir şablonunuz yok</h3>
           <p className={styles.emptyText}>Hemen yeni bir akıllı form şablonu oluşturarak çalışmaya başlayın.</p>
           <Button
-          variant="primary"
-          size= "lg"
-          onClick={() => setIsModalOpen(true)}
-        >
-          İlk Şablonunuzu Oluşturun
-        </Button>
+            variant="primary"
+            size="lg"
+            onClick={() => setIsModalOpen(true)}
+          >
+            İlk Şablonunuzu Oluşturun
+          </Button>
         </div>
       ) : (
         <div className={styles.projectGrid}>
@@ -175,8 +175,9 @@ export const ProjectsManager = () => {
               </div>
               <div className={styles.modalActions}>
                 <Button
+                  type="button"
                   variant="secondary"
-                  size= "lg"
+                  size="lg"
                   onClick={() => setIsModalOpen(false)}
                   style={{ flex: '1' }}
                 >
@@ -185,7 +186,7 @@ export const ProjectsManager = () => {
                 <Button
                   type="submit"
                   variant="primary"
-                  size= "lg"
+                  size="lg"
                   disabled={isSubmitting}
                   style={{ flex: '1' }}
                 >
@@ -205,21 +206,22 @@ export const ProjectsManager = () => {
             <p className={styles.confirmText}><strong>"{docToDelete.name}"</strong> adlı şablonu silmek istediğinize emin misiniz?</p>
             <div className={styles.confirmActions}>
               <Button
-                  variant="secondary"
-                  onClick={() => setDocToDelete(null)}
-                  style={{ flex: '1' }}
-                >
-                  Vazgeç
-                </Button>
+                type="button"
+                variant="secondary"
+                onClick={() => setDocToDelete(null)}
+                style={{ flex: '1' }}
+              >
+                Vazgeç
+              </Button>
               <Button
-                  type="submit"
-                  variant="danger"
-                  onClick={handleDeleteDocument}
-                  disabled={isDeleting}
-                  style={{ flex: '1' }}
-                >
-                  {isDeleting ? 'Siliniyor...' : 'Kalıcı Olarak Sil'}
-                </Button>
+                type="submit"
+                variant="danger"
+                onClick={handleDeleteDocument}
+                disabled={isDeleting}
+                style={{ flex: '1' }}
+              >
+                {isDeleting ? 'Siliniyor...' : 'Kalıcı Olarak Sil'}
+              </Button>
             </div>
           </div>
         </div>
