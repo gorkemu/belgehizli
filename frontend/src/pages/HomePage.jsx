@@ -257,7 +257,7 @@ function HomePage() {
           <div className={styles.heroText}>
             <h1 className={styles.heroTitle}>
               Belge ve sözleşmeleri hazırlamanın<br />
-              <span className={styles.heroAccent}>akıllı yolu</span>
+              <span className={styles.heroAccent}>pratik yolu</span>
             </h1>
             <p className={styles.heroSub}>
               Sık kullandığınız bir sözleşme, ihtarname veya teknik bir döküman...
