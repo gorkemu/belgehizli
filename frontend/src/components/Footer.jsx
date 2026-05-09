@@ -1,9 +1,12 @@
 // frontend/src/components/Footer.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styles from './Footer.module.css';
 
 function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className={styles.appFooter}>
       <div className={styles.footerContent}>
@@ -17,31 +20,30 @@ function Footer() {
             />
           </Link>
           <p className={styles.footerDesc}>
-            Sözleşme, dilekçe ve rutin yazışmalarınızı hazırlamanın en yalın hali.
-            Dikkatinizi dağıtmayan, tekrarı ortadan kaldıran ücretsiz çalışma alanınız.
+            {t('footer.description')}
           </p>
         </div>
 
         <div className={styles.footerLinksWrapper}>
 
           <div className={styles.linkColumn}>
-            <h4 className={styles.columnTitle}>Platform</h4>
+            <h4 className={styles.columnTitle}>{t('footer.platform')}</h4>
             <nav className={styles.footerNav}>
               <ul>
-                <li><Link to="/sablonlar">Açık Kütüphane</Link></li>
-                <li><Link to="/kayit-ol">Ücretsiz Kayıt Ol</Link></li>
-                <li><Link to="/giris-yap">Giriş Yap</Link></li>
+                <li><Link to="/sablonlar">{t('footer.publicLibrary')}</Link></li>
+                <li><Link to="/kayit-ol">{t('footer.signUpFree')}</Link></li>
+                <li><Link to="/giris-yap">{t('footer.login')}</Link></li>
               </ul>
             </nav>
           </div>
 
           <div className={styles.linkColumn}>
-            <h4 className={styles.columnTitle}>Yasal & Destek</h4>
+            <h4 className={styles.columnTitle}>{t('footer.legal')}</h4>
             <nav className={styles.footerNav}>
               <ul>
-                <li><Link to="/gizlilik-politikasi">Gizlilik Politikası</Link></li>
-                <li><Link to="/kullanim-sartlari">Kullanım Şartları</Link></li>
-                <li><Link to="/on-bilgilendirme-formu">Ön Bilgilendirme</Link></li>
+                <li><Link to="/gizlilik-politikasi">{t('footer.privacy')}</Link></li>
+                <li><Link to="/kullanim-sartlari">{t('footer.terms')}</Link></li>
+                <li><Link to="/on-bilgilendirme-formu">{t('footer.disclaimer')}</Link></li>
               </ul>
             </nav>
           </div>
@@ -50,7 +52,7 @@ function Footer() {
       </div>
 
       <div className={styles.footerBottom}>
-        <p>© {new Date().getFullYear()} Belge Hızlı. Tüm hakları saklıdır.</p>
+        <p>© {new Date().getFullYear()} Belge Hızlı. {t('footer.rights')}</p>
       </div>
     </footer>
   );

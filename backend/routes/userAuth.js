@@ -14,22 +14,31 @@ const generateToken = (id) => {
 };
 
 const generateTempMfaToken = (id) => {
-    // Sadece 5 dakika geçerli, kısıtlı bir token
     return jwt.sign({ id, isMfaTemp: true }, process.env.JWT_SECRET || 'secretkey', { expiresIn: '5m' });
 };
 
 const authLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 dakika
+    windowMs: 15 * 60 * 1000,
     max: 10,
-    message: { success: false, message: 'Çok fazla başarısız deneme yaptınız. Lütfen 15 dakika sonra tekrar deneyin.' },
+    message: {
+        success: false,
+        messageKey: 'auth.tooManyFailedAttempts',
+        params: { minutes: 15 },
+        message: 'Too many failed login attempts. Please try again after 15 minutes.'
+    },
     standardHeaders: true,
     legacyHeaders: false,
 });
 
 const registerLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 saat
+    windowMs: 60 * 60 * 1000,
     max: 3,
-    message: { success: false, message: 'Çok fazla hesap oluşturma isteği. Lütfen bir saat sonra tekrar deneyin.' },
+    message: {
+        success: false,
+        messageKey: 'auth.tooManyRegistrations',
+        params: { hours: 1 },
+        message: 'Too many registration requests. Please try again after 1 hour.'
+    },
     standardHeaders: true,
     legacyHeaders: false,
 });
@@ -39,20 +48,26 @@ router.post('/register', registerLimiter, async (req, res) => {
         const { fullName, email, password } = req.body;
 
         if (!fullName || !email || !password) {
-            return res.status(400).json({ message: 'Lütfen zorunlu alanları doldurun.' });
+            return res.status(400).json({
+                messageKey: 'auth.requiredFieldsMissing',
+                message: 'Please fill in all required fields.'
+            });
         }
 
-        // Şifre Karmaşıklık Kontrolü (Register İçin)
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
         if (!passwordRegex.test(password)) {
-            return res.status(400).json({ 
-                message: 'Şifreniz en az 8 karakter uzunluğunda olmalı, en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.' 
+            return res.status(400).json({
+                messageKey: 'auth.passwordTooWeak',
+                message: 'Password must be at least 8 characters and include uppercase, lowercase, and a digit.'
             });
         }
 
         const userExists = await User.findOne({ email: email.toLowerCase() });
         if (userExists) {
-            return res.status(400).json({ message: 'Bu e-posta adresi zaten kullanımda.' });
+            return res.status(400).json({
+                messageKey: 'auth.emailAlreadyUsed',
+                message: 'This email address is already in use.'
+            });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -75,7 +90,10 @@ router.post('/register', registerLimiter, async (req, res) => {
 
     } catch (error) {
         console.error("Kayıt hatası:", error);
-        res.status(500).json({ message: 'Hesabınız oluşturulurken sistemsel bir hata meydana geldi.' });
+        res.status(500).json({
+            messageKey: 'auth.registrationFailed',
+            message: 'An error occurred while creating your account.'
+        });
     }
 });
 
@@ -86,62 +104,68 @@ router.post('/login', authLimiter, async (req, res) => {
         const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
-            return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
+            return res.status(401).json({
+                messageKey: 'auth.invalidCredentials',
+                message: 'Invalid email or password.'
+            });
         }
 
-        // 1. KONTROL: Hesap Kilitli mi?
         if (user.lockUntil && user.lockUntil > Date.now()) {
-            return res.status(403).json({ message: 'Hesabınız çok fazla hatalı giriş denemesi nedeniyle geçici olarak kilitlendi. Lütfen 30 dakika sonra tekrar deneyin.' });
+            const remainingMs = user.lockUntil - Date.now();
+            const remainingMinutes = Math.ceil(remainingMs / 60000);
+            return res.status(403).json({
+                messageKey: 'auth.accountLocked',
+                params: { minutes: remainingMinutes },
+                message: `Your account is temporarily locked. Try again after ${remainingMinutes} minutes.`
+            });
         }
 
         const isMatch = await bcrypt.compare(password, user.passwordHash);
 
         if (!isMatch) {
-            // 2. KONTROL: Şifre yanlışsa deneme sayacını artır
             user.loginAttempts += 1;
-            
-            // 5 kez yanlış girildiyse hesabı 30 dakika kilitle
             if (user.loginAttempts >= 5) {
                 user.lockUntil = Date.now() + 30 * 60 * 1000;
             }
-            
             await user.save();
-            return res.status(401).json({ message: 'Geçersiz e-posta veya şifre.' });
+            return res.status(401).json({
+                messageKey: 'auth.invalidCredentials',
+                message: 'Invalid email or password.'
+            });
         }
 
-        // 3. KONTROL: Şifre doğruysa sayaçları sıfırla
         if (!user.isActive) {
-            return res.status(403).json({ message: 'Hesabınız askıya alınmış.' });
+            return res.status(403).json({
+                messageKey: 'auth.accountSuspended',
+                message: 'Your account has been suspended.'
+            });
         }
 
         user.loginAttempts = 0;
         user.lockUntil = undefined;
 
-        // E2E TEST BOTU İÇİN TAMAMEN SECRET TABANLI ARKA KAPI (MFA BYPASS)
-        const testUserEmail = process.env.TEST_USER_EMAIL ? process.env.TEST_USER_EMAIL.toLowerCase() : null;
+        const testUserEmail = process.env.TEST_USER_EMAIL
+            ? process.env.TEST_USER_EMAIL.toLowerCase()
+            : null;
 
-        // Eğer production ortamında değilsek VE secret tanımlıysa VE giriş yapan kişi test botuysa
         if (process.env.NODE_ENV !== 'production' && testUserEmail && user.email === testUserEmail) {
             await user.save();
             return res.json({
                 _id: user.id,
                 fullName: user.fullName,
                 email: user.email,
-                token: generateToken(user._id), // MFA sormadan direkt asıl token'ı ver
+                token: generateToken(user._id),
             });
         }
 
-        // GERÇEK KULLANICILAR İÇİN NORMAL MFA AKIŞI
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
         
         user.mfaOtp = otpCode;
-        user.mfaOtpExpires = Date.now() + 5 * 60 * 1000; // 5 dakika geçerli
+        user.mfaOtpExpires = Date.now() + 5 * 60 * 1000;
         await user.save();
 
-        // E-postayı arka planda gönder
         await sendMfaEmail(user.email, otpCode);
 
-        // Kullanıcıya gerçek token yerine geçici token ve MFA bayrağı dön
         res.json({
             requiresMfa: true,
             email: user.email,
@@ -150,38 +174,49 @@ router.post('/login', authLimiter, async (req, res) => {
 
     } catch (error) {
         console.error("Giriş hatası:", error);
-        res.status(500).json({ message: 'Sunucu hatası.' });
+        res.status(500).json({
+            messageKey: 'auth.serverError',
+            message: 'Server error.'
+        });
     }
 });
 
-// MFA Doğrulama Rotası
 router.post('/verify-mfa', authLimiter, async (req, res) => {
     try {
         const { tempToken, otp } = req.body;
 
         if (!tempToken || !otp) {
-            return res.status(400).json({ message: 'Eksik bilgi gönderildi.' });
+            return res.status(400).json({
+                messageKey: 'auth.missingMfaFields',
+                message: 'Missing information.'
+            });
         }
 
-        // Geçici token'ı çöz
         const decoded = jwt.verify(tempToken, process.env.JWT_SECRET || 'secretkey');
 
         if (!decoded.isMfaTemp) {
-            return res.status(401).json({ message: 'Geçersiz doğrulama jetonu.' });
+            return res.status(401).json({
+                messageKey: 'auth.invalidToken',
+                message: 'Invalid verification token.'
+            });
         }
 
         const user = await User.findById(decoded.id);
 
         if (!user) {
-            return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
+            return res.status(404).json({
+                messageKey: 'auth.userNotFound',
+                message: 'User not found.'
+            });
         }
 
-        // OTP Doğrulaması
         if (user.mfaOtp !== otp || user.mfaOtpExpires < Date.now()) {
-            return res.status(400).json({ message: 'Geçersiz veya süresi dolmuş kod. Lütfen tekrar giriş yapın.' });
+            return res.status(400).json({
+                messageKey: 'auth.invalidOtp',
+                message: 'Invalid or expired code. Please log in again.'
+            });
         }
 
-        // Doğrulama başarılı! OTP'yi temizle ve GERÇEK Token'ı ver
         user.mfaOtp = undefined;
         user.mfaOtpExpires = undefined;
         user.lastLoginAt = Date.now();
@@ -191,12 +226,15 @@ router.post('/verify-mfa', authLimiter, async (req, res) => {
             _id: user.id,
             fullName: user.fullName,
             email: user.email,
-            token: generateToken(user._id), // Artık tam yetkili
+            token: generateToken(user._id),
         });
 
     } catch (error) {
         console.error("MFA Doğrulama Hatası:", error.message);
-        res.status(401).json({ message: 'Doğrulama oturumunun süresi dolmuş. Lütfen tekrar giriş yapın.' });
+        res.status(401).json({
+            messageKey: 'auth.mfaSessionExpired',
+            message: 'Verification session expired. Please log in again.'
+        });
     }
 });
 
@@ -208,7 +246,10 @@ router.get('/me', protectUser, async (req, res) => {
             email: req.user.email
         });
     } catch (error) {
-        res.status(500).json({ message: 'Kullanıcı bilgileri alınamadı.' });
+        res.status(500).json({
+            messageKey: 'auth.userInfoFetchFailed',
+            message: 'Could not fetch user information.'
+        });
     }
 });
 
@@ -217,15 +258,22 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
         const { email } = req.body;
 
         if (!email) {
-            return res.status(400).json({ message: 'Lütfen e-posta adresinizi girin.' });
+            return res.status(400).json({
+                messageKey: 'auth.enterEmail',
+                message: 'Please enter your email address.'
+            });
         }
 
         const user = await User.findOne({ email: email.toLowerCase() });
 
-        const successMessage = 'Şifre sıfırlama bağlantısı gönderildi';
+        const successMessageKey = 'auth.resetLinkSent';
+        const successMessage = 'Password reset link sent.';
 
         if (!user) {
-            return res.status(200).json({ message: successMessage });
+            return res.status(200).json({
+                messageKey: successMessageKey,
+                message: successMessage
+            });
         }
 
         const resetToken = crypto.randomBytes(32).toString('hex');
@@ -238,14 +286,19 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
         const resetLink = `${frontendUrl}/sifre-belirle?token=${resetToken}`;
 
-        // MAİL GÖNDERME İŞLEMİ
         await sendPasswordResetEmail(user.email, resetLink);
 
-        res.status(200).json({ message: successMessage });
+        res.status(200).json({
+            messageKey: successMessageKey,
+            message: successMessage
+        });
 
     } catch (error) {
         console.error("Şifremi unuttum hatası:", error);
-        res.status(500).json({ message: 'İşlem sırasında bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'auth.forgotPasswordError',
+            message: 'An error occurred during the password reset process.'
+        });
     }
 });
 
@@ -254,11 +307,18 @@ router.post('/set-password', authLimiter, async (req, res) => {
         const { token, newPassword } = req.body;
 
         if (!token || !newPassword) {
-            return res.status(400).json({ message: 'Geçersiz istek. Lütfen tüm alanları doldurun.' });
+            return res.status(400).json({
+                messageKey: 'auth.invalidRequest',
+                message: 'Invalid request. Please fill in all fields.'
+            });
         }
 
         if (newPassword.length < 6) {
-            return res.status(400).json({ message: 'Şifreniz en az 6 karakter olmalıdır.' });
+            return res.status(400).json({
+                messageKey: 'auth.passwordMinLength',
+                params: { min: 6 },
+                message: 'Password must be at least 6 characters.'
+            });
         }
 
         const user = await User.findOne({
@@ -267,7 +327,10 @@ router.post('/set-password', authLimiter, async (req, res) => {
         });
 
         if (!user) {
-            return res.status(400).json({ message: 'Sıfırlama bağlantınız geçersiz veya süresi dolmuş.' });
+            return res.status(400).json({
+                messageKey: 'auth.resetLinkInvalid',
+                message: 'Reset link is invalid or expired.'
+            });
         }
 
         const salt = await bcrypt.genSalt(10);
@@ -278,11 +341,17 @@ router.post('/set-password', authLimiter, async (req, res) => {
 
         await user.save();
 
-        res.json({ message: 'Şifreniz başarıyla oluşturuldu. Artık giriş yapabilirsiniz.' });
+        res.json({
+            messageKey: 'auth.passwordSetSuccess',
+            message: 'Password has been set successfully. You can now log in.'
+        });
 
     } catch (error) {
         console.error("Şifre belirleme hatası:", error);
-        res.status(500).json({ message: 'Şifre güncellenirken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'auth.passwordUpdateError',
+            message: 'An error occurred while updating the password.'
+        });
     }
 });
 
@@ -292,7 +361,10 @@ router.put('/update-profile', protectUser, async (req, res) => {
         const user = await User.findById(req.user._id);
 
         if (!user) {
-            return res.status(404).json({ message: 'Kullanıcı bulunamadı.' });
+            return res.status(404).json({
+                messageKey: 'auth.userNotFound',
+                message: 'User not found.'
+            });
         }
 
         if (fullName) {
@@ -302,7 +374,10 @@ router.put('/update-profile', protectUser, async (req, res) => {
         if (currentPassword && newPassword) {
             const isMatch = await bcrypt.compare(currentPassword, user.passwordHash);
             if (!isMatch) {
-                return res.status(400).json({ message: 'Mevcut şifreniz hatalı.' });
+                return res.status(400).json({
+                    messageKey: 'auth.incorrectCurrentPassword',
+                    message: 'Current password is incorrect.'
+                });
             }
 
             const salt = await bcrypt.genSalt(10);
@@ -319,7 +394,10 @@ router.put('/update-profile', protectUser, async (req, res) => {
 
     } catch (error) {
         console.error("Profil güncelleme hatası:", error);
-        res.status(500).json({ message: 'Profil güncellenirken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'auth.profileUpdateFailed',
+            message: 'An error occurred while updating profile.'
+        });
     }
 });
 

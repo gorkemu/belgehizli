@@ -18,20 +18,32 @@ try {
 router.post('/create', protectUser, async (req, res) => {
     try {
         const { name, description } = req.body;
-        if (!name) return res.status(400).json({ message: 'Belge adı zorunludur.' });
+        if (!name) {
+            return res.status(400).json({
+                messageKey: 'projects.requiredName',
+                message: 'Document name is required.'
+            });
+        }
 
         const newProject = new Project({
-            userId: req.user._id, 
+            userId: req.user._id,
             name,
             description: description || '',
             content: '',
             fields: []
         });
-
         await newProject.save();
-        res.status(201).json(newProject);
+
+        res.status(201).json({
+            ...newProject.toObject(),
+            messageKey: 'projects.createdSuccess',
+            message: 'Template created successfully.'
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Belge oluşturulurken bir hata meydana geldi.' });
+        res.status(500).json({
+            messageKey: 'projects.createError',
+            message: 'An error occurred while creating the document.'
+        });
     }
 });
 
@@ -41,22 +53,33 @@ router.get('/my-projects', protectUser, async (req, res) => {
         const projects = await Project.find({ userId: req.user._id }).sort({ updatedAt: -1 });
         res.json(projects);
     } catch (error) {
-        res.status(500).json({ message: 'Belgeler alınırken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.fetchError',
+            message: 'An error occurred while fetching documents.'
+        });
     }
 });
 
-// TEKİL ŞABLON DETAYINI GETİR (Tasarımcı ve Frontend için)
+// TEKİL ŞABLON DETAYINI GETİR
 router.get('/:id', protectUser, async (req, res) => {
     try {
         const project = await Project.findOne({ _id: req.params.id, userId: req.user._id });
-        if (!project) return res.status(404).json({ message: 'Belge bulunamadı veya yetkiniz yok.' });
+        if (!project) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found or you do not have permission.'
+            });
+        }
         res.json(project);
     } catch (error) {
-        res.status(500).json({ message: 'Belge detayları alınırken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.fetchDetailError',
+            message: 'An error occurred while fetching document details.'
+        });
     }
 });
 
-// ŞABLONU GÜNCELLE 
+// ŞABLONU GÜNCELLE
 router.put('/:id', protectUser, async (req, res) => {
     try {
         const { name, description, content, fields, settings } = req.body;
@@ -65,10 +88,22 @@ router.put('/:id', protectUser, async (req, res) => {
             { $set: { name, description, content, fields, settings } },
             { new: true, runValidators: true }
         );
-        if (!updatedProject) return res.status(404).json({ message: 'Güncellenecek belge bulunamadı.' });
-        res.json(updatedProject);
+        if (!updatedProject) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found or you do not have permission.'
+            });
+        }
+        res.json({
+            ...updatedProject.toObject(),
+            messageKey: 'projects.updatedSuccess',
+            message: 'Template updated successfully.'
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Belge güncellenirken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.updateError',
+            message: 'An error occurred while updating the document.'
+        });
     }
 });
 
@@ -76,74 +111,94 @@ router.put('/:id', protectUser, async (req, res) => {
 router.delete('/:id', protectUser, async (req, res) => {
     try {
         const project = await Project.findOneAndDelete({ _id: req.params.id, userId: req.user._id });
-        if (!project) return res.status(404).json({ message: 'Silinecek belge bulunamadı.' });
-        res.json({ message: 'Belge başarıyla silindi.' });
+        if (!project) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found or you do not have permission.'
+            });
+        }
+        res.json({
+            messageKey: 'projects.deletedSuccess',
+            message: 'Document successfully deleted.'
+        });
     } catch (error) {
-        res.status(500).json({ message: 'Belge silinirken bir hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.deleteError',
+            message: 'An error occurred while deleting the document.'
+        });
     }
 });
 
-// PDF OLUŞTURMA 
+// PDF OLUŞTURMA
 router.post('/:id/generate-pdf', protectUser, async (req, res) => {
     try {
         const { html, documentName } = req.body;
         const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8" />${pdfStyles}</head><body><div class="preview-document">${html}</div></body></html>`;
         const pdfBuffer = await generatePdf(fullHtml);
-        const safeName = (documentName || 'Belge').replace(/[^a-zA-Z0-9_\-]/g, '_');
+        const safeName = (documentName || 'Document').replace(/[^a-zA-Z0-9_\-]/g, '_');
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${safeName}.pdf"`);
         res.send(pdfBuffer);
     } catch (error) {
-        res.status(500).json({ message: 'PDF oluşturulamadı.' });
+        res.status(500).json({
+            messageKey: 'projects.pdfGenerationError',
+            message: 'PDF could not be generated.'
+        });
     }
 });
 
-// 7. PUBLIC LİNK GETİR (HostedForm /f/:id)
+// PUBLIC LİNK GETİR
 router.get('/public/:id', async (req, res) => {
     try {
         const project = await Project.findById(req.params.id);
-        if (!project) return res.status(404).json({ message: 'Belge bulunamadı.' });
-        res.json({ project }); 
+        if (!project) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found.'
+            });
+        }
+        res.json({ project });
     } catch (error) {
-        res.status(500).json({ message: 'Belge yüklenirken hata oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.loadError',
+            message: 'An error occurred while loading the document.'
+        });
     }
 });
 
-// PUBLIC FORM TAMAMLAMA VE PDF OLUŞTURMA (HostedForm Submit)
+// PUBLIC FORM TAMAMLAMA VE PDF OLUŞTURMA
 router.post('/public/:id/complete', async (req, res) => {
     try {
-        const { html } = req.body; 
+        const { html } = req.body;
         const projectId = req.params.id;
 
         const project = await Project.findById(projectId);
-        if (!project) return res.status(404).json({ message: 'Belge bulunamadı.' });
+        if (!project) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found.'
+            });
+        }
+        if (!html) {
+            return res.status(400).json({
+                messageKey: 'projects.htmlMissing',
+                message: 'HTML content is missing for PDF generation.'
+            });
+        }
 
-        if (!html) return res.status(400).json({ message: 'PDF oluşturmak için HTML içeriği eksik.' });
-
-        const fullHtml = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <meta charset="utf-8" />
-                <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Comic+Neue&display=swap" rel="stylesheet">
-                ${pdfStyles}
-            </head>
-            <body>
-                <div class="preview-document">${html}</div>
-            </body>
-            </html>
-        `;
-
+        const fullHtml = `<!DOCTYPE html><html><head><meta charset="utf-8" /><link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Comic+Neue&display=swap" rel="stylesheet">${pdfStyles}</head><body><div class="preview-document">${html}</div></body></html>`;
         const pdfBuffer = await generatePdf(fullHtml);
-        const safeName = (project.name || 'Belge').replace(/[^a-zA-Z0-9_\-]/g, '_');
+        const safeName = (project.name || 'Document').replace(/[^a-zA-Z0-9_\-]/g, '_');
 
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', `attachment; filename="${safeName}.pdf"`);
         res.send(pdfBuffer);
-
     } catch (error) {
         console.error("Public PDF üretim hatası:", error);
-        res.status(500).json({ message: 'Sunucu hatası oluştu.' });
+        res.status(500).json({
+            messageKey: 'projects.serverError',
+            message: 'A server error occurred.'
+        });
     }
 });
 

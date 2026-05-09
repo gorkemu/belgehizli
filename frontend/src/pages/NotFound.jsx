@@ -1,18 +1,20 @@
 // frontend/src/pages/NotFound.jsx
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styles from './NotFound.module.css';
 import { Helmet } from 'react-helmet-async';
 import { FileQuestion, ArrowLeft, Home } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 function NotFound() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   return (
     <>
       <Helmet>
-        <title>Sayfa Bulunamadı (404) - Belge Hızlı</title>
+        <title>{t('notFound.pageTitle')}</title>
       </Helmet>
 
       <div className={styles.container}>
@@ -24,10 +26,10 @@ function NotFound() {
           </div>
 
           <h1 className={styles.errorCode}>404</h1>
-          <h2 className={styles.title}>Sayfa Bulunamadı</h2>
+          <h2 className={styles.title}>{t('notFound.title')}</h2>
 
           <p className={styles.message}>
-            Üzgünüz, aradığınız sayfa mevcut değil, ismi değiştirilmiş veya geçici olarak kullanım dışı olabilir.
+            {t('notFound.message')}
           </p>
 
           <div className={styles.actions}>
@@ -37,7 +39,7 @@ function NotFound() {
               onClick={() => navigate('/')}
               leftIcon={<Home size={18} />}
             >
-              <span>Ana Sayfa</span>
+              <span>{t('notFound.home')}</span>
             </Button>
             <Button
               variant="secondary"
@@ -45,7 +47,7 @@ function NotFound() {
               onClick={() => window.history.back()}
               leftIcon={<ArrowLeft size={18} />}
             >
-              <span>Geri Dön</span>
+              <span>{t('notFound.goBack')}</span>
             </Button>
           </div>
         </div>

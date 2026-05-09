@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
 import styles from './SmartBar.module.css';
@@ -9,6 +10,7 @@ import { getTriggerSymbols, getRegexForTrigger } from '../utils/helpers';
 import Button from '../../../components/ui/Button';
 
 const SmartBar = () => {
+  const { t } = useTranslation();
   const {
     editorInstance, triggerSymbol, setTriggerSymbol,
     showToast, setMagicModal, setCondModal
@@ -21,8 +23,8 @@ const SmartBar = () => {
   // Tetikleyici Değiştirme Mantığı
   const handleTriggerChange = (newTrigger) => {
     if (!newTrigger || !newTrigger.trim() || newTrigger === triggerSymbol) return;
-    if (newTrigger.length > 5) return showToast('Tetikleyici en fazla 5 karakter olabilir.', 'error');
-    if (newTrigger.includes('/')) return showToast(" '/' işareti komut menüsü için ayrılmıştır.", "error");
+    if (newTrigger.length > 5) return showToast(t('templateBuilder.smartBar.toast.triggerTooLong'), 'error');
+    if (newTrigger.includes('/')) return showToast(t('templateBuilder.smartBar.toast.slashReserved'), 'error');
 
     if (editorInstance) {
       let currentHtml = editorInstance.getHTML();
@@ -43,14 +45,14 @@ const SmartBar = () => {
       editorInstance.commands.setContent(tempDiv.innerHTML, false);
     }
     setTriggerSymbol(newTrigger);
-    showToast('Değişken formatı güncellendi.', 'success');
+    showToast(t('templateBuilder.smartBar.toast.triggerUpdated'), 'success');
   };
 
   // Dosya İçe Aktarma Mantığı
   const processFile = (file) => {
     if (!file || !editorInstance) return;
     const fileSizeMB = file.size / (1024 * 1024);
-    if (fileSizeMB > 2) return showToast("Dosya boyutu çok büyük (Max 2MB).", "error");
+    if (fileSizeMB > 2) return showToast(t('templateBuilder.smartBar.toast.fileTooLarge'), 'error');
 
     if (file.type === "text/plain" || file.type === "text/html") {
       const reader = new FileReader();
@@ -58,24 +60,24 @@ const SmartBar = () => {
         const text = e.target.result;
         const contentToInsert = file.type === "text/plain" ? text.split('\n').map(line => `<p>${line}</p>`).join('') : DOMPurify.sanitize(text);
         editorInstance.commands.setContent(contentToInsert);
-        showToast("Belge başarıyla içe aktarıldı!", "success");
+        showToast(t('templateBuilder.smartBar.toast.fileImported'), 'success');
       };
       reader.readAsText(file);
     } else if (file.name.endsWith('.docx')) {
-      showToast(`${file.name} ayrıştırılıyor...`, "success", false);
+      showToast(t('templateBuilder.smartBar.toast.parsingDocx', { fileName: file.name }), 'success', false);
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
           const result = await mammoth.convertToHtml({ arrayBuffer: e.target.result });
           editorInstance.commands.setContent(DOMPurify.sanitize(result.value));
-          showToast("Word dosyası başarıyla aktarıldı!", "success");
-        } catch { showToast("Word dosyası okunurken hata oluştu.", "error"); }
+          showToast(t('templateBuilder.smartBar.toast.wordImported'), 'success');
+        } catch { showToast(t('templateBuilder.smartBar.toast.wordError'), 'error'); }
       };
       reader.readAsArrayBuffer(file);
     } else if (file.type === "application/pdf") {
-      showToast("PDF ayrıştırma servisi şu an aktif değil. Lütfen .docx kullanın.", "error");
+      showToast(t('templateBuilder.smartBar.toast.pdfNotSupported'), 'error');
     } else {
-      showToast("Lütfen sadece .txt, .html veya .docx dosyası yükleyin.", "error");
+      showToast(t('templateBuilder.smartBar.toast.unsupportedFile'), 'error');
     }
   };
 
@@ -86,12 +88,12 @@ const SmartBar = () => {
           id="tb-magic-btn" 
           variant="primary" 
           onClick={() => setMagicModal({ show: true, selectedFormat: 'curly2' })} 
-          title="Farklı formatlardaki değişkenleri otomatik bulur"
+          title={t('templateBuilder.smartBar.magicTitle')}
           leftIcon={<Wand2 size={16} />}
         >
-          Tümünü Algıla
+          {t('templateBuilder.smartBar.detectAll')}
         </Button>
-        <span className={styles.smartHint}>Belgenizdeki gizli değişkenleri anında forma çevirin.</span>
+        <span className={styles.smartHint}>{t('templateBuilder.smartBar.magicHint')}</span>
       </div>
 
       <div className={styles.smartBarRight}>
@@ -102,49 +104,46 @@ const SmartBar = () => {
             if (e.target.value === 'custom') { setIsTriggerCustom(true); setCustomTriggerInput(''); }
             else { setIsTriggerCustom(false); handleTriggerChange(e.target.value); }
           }}
-          className={styles.triggerSelectSmart} title="Değişken Formatı (Tetikleyici)"
+          className={styles.triggerSelectSmart} title={t('templateBuilder.smartBar.triggerTitle')}
         >
           <option value="{{">{"{{ }}"}</option>
           <option value="[">{"[ ]"}</option>
           <option value="<<">{"<< >>"}</option>
-          <option value="@">{"@isim"}</option>
-          <option value="custom">Özel...</option>
+          <option value="@">{"@"}</option>
+          <option value="custom">{t('templateBuilder.smartBar.custom')}</option>
         </select>
 
         {isTriggerCustom && (
           <div style={{ display: 'flex', gap: '4px' }}>
-            <input type="text" maxLength={5} value={customTriggerInput} onChange={e => setCustomTriggerInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); } }} placeholder="Örn: //" className={globalStyles.inp} style={{ width: '60px', padding: '6px' }} />
-            {/* SEÇ BUTONU */}
+            <input type="text" maxLength={5} value={customTriggerInput} onChange={e => setCustomTriggerInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); } }} placeholder={t('templateBuilder.smartBar.customPlaceholder')} className={globalStyles.inp} style={{ width: '60px', padding: '6px' }} />
             <Button 
               variant="secondary" 
               size="sm" 
               onClick={() => { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); }}
             >
-              Seç
+              {t('templateBuilder.smartBar.select')}
             </Button>
           </div>
         )}
 
         <input type="file" ref={fileInputRef} onChange={e => { processFile(e.target.files[0]); if (fileInputRef.current) fileInputRef.current.value = ""; }} accept=".txt,.html,.docx,.pdf" style={{ display: 'none' }} />
         
-        {/* İÇE AKTAR BUTONU */}
         <Button 
           id="tb-import" 
           variant="secondary" 
           onClick={() => fileInputRef.current?.click()}
           leftIcon={<FileUp size={16} />}
         >
-          İçe Aktar
+          {t('templateBuilder.smartBar.import')}
         </Button>
 
-        {/* ŞARTLI BLOK BUTONU */}
         <Button 
           id="tb-cond-btn" 
           variant="warning" 
           onClick={() => setCondModal(true)}
           leftIcon={<Zap size={14} />}
         >
-          Şartlı Blok
+          {t('templateBuilder.smartBar.conditionalBlock')}
         </Button>
       </div>
     </div>

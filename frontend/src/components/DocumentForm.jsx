@@ -1,10 +1,12 @@
 // frontend/src/components/DocumentForm.jsx
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IMaskInput } from 'react-imask';
 import styles from './DocumentForm.module.css';
 import { Plus, Trash2, AlertCircle } from 'lucide-react';
 
 const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, initialData }, ref) => {
+    const { t } = useTranslation();
     const [formValues, setFormValues] = useState({});
     const [errors, setErrors] = useState({});
     const isInitialized = useRef(false);
@@ -201,11 +203,11 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
 
         let fieldError = '';
         if (field.required && isEmpty(value)) {
-            fieldError = `Bu alan zorunludur.`;
+            fieldError = t('documentForm.requiredField');
         } else if (!fieldError && field.fieldType === 'email' && value && !/\S+@\S+\.\S+/.test(value)) {
-            fieldError = `Geçerli bir e-posta adresi girin.`;
+            fieldError = t('documentForm.invalidEmail');
         } else if (!fieldError && field.fieldType === 'number' && value && isNaN(Number(value))) {
-            fieldError = `Bir sayı girmelisiniz.`;
+            fieldError = t('documentForm.invalidNumber');
         }
 
         setErrors(prev => {
@@ -228,10 +230,10 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                 const value = formValues[field.name];
                 let fieldError = '';
                 if (field.required && isEmpty(value)) {
-                    fieldError = `Bu alan zorunludur.`;
+                    fieldError = t('documentForm.requiredField');
                     formIsValid = false;
                 } else if (field.fieldType === 'email' && value && !/\S+@\S+\.\S+/.test(value)) {
-                    fieldError = `Geçerli bir e-posta adresi girin.`;
+                    fieldError = t('documentForm.invalidEmail');
                     formIsValid = false;
                 }
                 if (fieldError) newErrors[field.name] = fieldError;
@@ -242,7 +244,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                         const inputName = `${field.name}[${index}][${subfield.name}]`;
                         const value = block[subfield.name];
                         if (subfield.required && isEmpty(value)) {
-                            newErrors[inputName] = `Zorunlu alan.`;
+                            newErrors[inputName] = t('documentForm.requiredField');
                             formIsValid = false;
                         }
                     });
@@ -302,7 +304,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
             case 'select':
                 return (
                     <select {...commonProps} className={selectClass} onChange={handleInputChange} value={value || ''}>
-                        <option value="">{placeholderText || 'Seçiniz...'}</option>
+                        <option value="">{placeholderText || t('documentForm.selectPlaceholder')}</option>
                         {field.options?.map((opt, idx) => {
                             const val = typeof opt === 'string' ? opt : opt.value;
                             const lbl = typeof opt === 'string' ? opt : opt.label;
@@ -380,10 +382,10 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                                 {blocks.map((blockData, index) => (
                                     <div key={`${field.name}-${index}`} className={styles.repeatableBlockInstance}>
                                         <div className={styles.blockHeader}>
-                                            <h4>{field.blockTitle || 'Grup'} {index + 1}</h4>
+                                            <h4>{field.blockTitle || t('documentForm.group')} {index + 1}</h4>
                                             {canRemove && (
                                                 <button type="button" onClick={() => handleRemoveBlock(field.name, index, minInstances)} className={styles.removeButton}>
-                                                    <Trash2 size={14} /> {field.removeLabel || 'Kaldır'}
+                                                    <Trash2 size={14} /> {field.removeLabel || t('documentForm.remove')}
                                                 </button>
                                             )}
                                         </div>
@@ -409,7 +411,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                                 ))}
                                 {canAdd && (
                                     <button type="button" onClick={() => handleAddBlock(field.name, field.subfields, maxInstances)} className={styles.addButton}>
-                                        <Plus size={16} /> {field.addLabel || 'Yeni Ekle'}
+                                        <Plus size={16} /> {field.addLabel || t('documentForm.addNew')}
                                     </button>
                                 )}
                             </div>
@@ -430,7 +432,7 @@ const DocumentForm = forwardRef(({ templateFields, onChange, onValidChange, init
                                 )}
                                 {field.name === 'belge_email' && (
                                     <small className={styles.emailInfoText}>
-                                        Orijinal PDF belgenizin bir kopyası bu adrese gönderilecektir.
+                                        {t('documentForm.emailCopyInfo')}
                                     </small>
                                 )}
                             </div>

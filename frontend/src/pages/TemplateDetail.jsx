@@ -13,8 +13,11 @@ import {
     Loader2, X, ArrowDown, Edit2, ArrowRight, FileText, CheckSquare
 } from 'lucide-react';
 import Button from '../components/ui/Button';
+import { useTranslation } from 'react-i18next';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 function TemplateDetail() {
+    const { t } = useTranslation();
     const { slug } = useParams();
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
@@ -70,10 +73,19 @@ function TemplateDetail() {
                 setLoading(false);
             })
             .catch(error => {
-                setError(error.response?.status === 404 ? 'Şablon bulunamadı.' : 'Şablon yüklenirken bir sorun oluştu. Lütfen sayfayı yenileyin.');
+                if (error.response?.status === 404) {
+                    setError(t('templateDetail.notFound'));
+                } else {
+                    const message = getUserFriendlyMessage(
+                        error.response?.data,
+                        'templateDetail.loadError',
+                        t
+                    );
+                    setError(message);
+                }
                 setLoading(false);
             });
-    }, [slug]);
+    }, [slug, t]);
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
@@ -188,17 +200,17 @@ function TemplateDetail() {
         let detectedError = null;
 
         if (!agreedToTerms) {
-            detectedError = 'Lütfen indirme işlemine geçmeden önce Kullanım Şartları ve Gizlilik Politikası\'nı onaylayın.';
+            detectedError = t('templateDetail.termsNotAccepted');
         }
 
         if (!detectedError && !formRef.current) {
-            detectedError = "Form verileri doğrulanamadı. Lütfen sayfayı yenileyin.";
+            detectedError = t('templateDetail.formValidationFailed');
         }
 
         if (!detectedError && formRef.current) {
             const isDocumentFormValid = await formRef.current.handleSubmit();
             if (!isDocumentFormValid) {
-                detectedError = 'Lütfen formdaki zorunlu alanları doldurun veya hatalı girişleri düzeltin.';
+                detectedError = t('templateDetail.fillRequiredFields');
             }
         }
 
@@ -264,14 +276,21 @@ function TemplateDetail() {
         } catch (error) {
             console.error('İndirme hatası:', error);
 
-            let message = 'İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.';
+            let message = getUserFriendlyMessage(
+                error.response?.data,
+                'templateDetail.downloadError',
+                t
+            );
 
-            if (error.response?.status === 429) {
-                message = 'Çok fazla istek yapıldı, lütfen kısa bir süre bekleyip tekrar deneyin.';
-            } else if (error.response?.status === 500) {
-                message = 'Sunucu kaynaklı bir hata oluştu, lütfen daha sonra tekrar deneyin.';
-            } else if (error.code === 'ERR_NETWORK') {
-                message = 'Lütfen internet bağlantınızı kontrol edip tekrar deneyin.';
+            if (message === t('templateDetail.downloadError')) {
+                // özel durumlar için ek kontrol
+                if (error.response?.status === 429) {
+                    message = t('templateDetail.tooManyRequests');
+                } else if (error.response?.status === 500) {
+                    message = t('templateDetail.serverError');
+                } else if (error.code === 'ERR_NETWORK') {
+                    message = t('templateDetail.networkError');
+                }
             }
 
             setDownloadError(message);
@@ -284,7 +303,7 @@ function TemplateDetail() {
         return (
             <div className={styles.statusContainer}>
                 <Loader2 size={40} className={styles.spinner} />
-                <p>Şablon hazırlanıyor...</p>
+                <p>{t('templateDetail.preparing')}</p>
             </div>
         );
     }
@@ -293,7 +312,7 @@ function TemplateDetail() {
         <div className={styles.errorScreen}>
             <AlertCircle size={48} />
             <p>{error}</p>
-            <button onClick={() => window.location.reload()}>Sayfayı Yenile</button>
+            <button onClick={() => window.location.reload()}>{t('templateDetail.refreshPage')}</button>
         </div>
     );
     if (!template) return null;
@@ -303,22 +322,22 @@ function TemplateDetail() {
     return (
         <div className={styles.root}>
             <Helmet>
-                <title>{template.name ? `${template.name} - Belge Hızlı` : 'Şablon Doldur'}</title>
+                <title>{template.name ? `${template.name} - Belge Hızlı` : t('templateDetail.defaultTitle')}</title>
             </Helmet>
 
             <div className={styles.workspaceContainer}>
                 <div className={styles.workspaceHeader}>
                     <Button
-                        variant="secondary" 
+                        variant="secondary"
                         onClick={() => navigate(-1)}
                         leftIcon={<ArrowLeft size={16} />}
-                        className={styles.backButton} 
+                        className={styles.backButton}
                     >
-                        Geri Dön
+                        {t('templateDetail.back')}
                     </Button>
                     <div className={styles.headerTitles}>
                         <div className={styles.freeBadge}>
-                            <FileText size={14} /> Açık Kütüphane Şablonu
+                            <FileText size={14} /> {t('templateDetail.publicTemplateBadge')}
                         </div>
                         <h1 className={styles.title}>{template.name}</h1>
                         <p className={styles.description}>{template.description}</p>
@@ -328,12 +347,12 @@ function TemplateDetail() {
                 <div className={styles.stepperWrapper}>
                     <div className={`${styles.stepItem} ${currentStep === 1 ? styles.stepActive : ''}`}>
                         <div className={styles.stepNumber}>1</div>
-                        <span>Formu Doldur</span>
+                        <span>{t('templateDetail.stepFillForm')}</span>
                     </div>
                     <div className={`${styles.stepConnector} ${currentStep === 2 ? styles.connectorDone : ''}`} />
                     <div className={`${styles.stepItem} ${currentStep === 2 ? styles.stepActive : styles.stepPassive}`}>
                         <div className={styles.stepNumber}>2</div>
-                        <span>İncele ve İndir</span>
+                        <span>{t('templateDetail.stepReviewDownload')}</span>
                     </div>
                 </div>
 
@@ -345,9 +364,9 @@ function TemplateDetail() {
                     <div className={styles.formColumn}>
                         {currentStep === 1 && (
                             <div className={styles.formColumnHeader}>
-                                <div className={styles.formStepTag}>Adım 1</div>
+                                <div className={styles.formStepTag}>{t('templateDetail.step1Tag')}</div>
                                 <p className={styles.formColumnHint}>
-                                    İlgili alanları doldurun, sağ taraftaki önizlemede belgenizi görün. Gerekli yerleri tamamladıktan sonra <strong>“Sonraki Adım”</strong> ile önizleme moduna geçebilirsiniz.
+                                    {t('templateDetail.step1Hint')}
                                 </p>
                             </div>
                         )}
@@ -355,10 +374,10 @@ function TemplateDetail() {
                         {currentStep === 2 && (
                             <div className={styles.formOverlay} onClick={() => setShowBackWarning(true)}>
                                 <div className={styles.overlayContent}>
-                                    <div className={styles.overlayStep}>Adım 2</div>
+                                    <div className={styles.overlayStep}>{t('templateDetail.step2Tag')}</div>
                                     <CheckSquare size={32} className={styles.overlayIconSuccess} />
-                                    <h4>Belgenizi İnceleyin</h4>
-                                    <p>Sağdaki önizleme üzerinden son manuel düzenlemelerinizi yapabilir ve PDF olarak indirebilirsiniz.</p>
+                                    <h4>{t('templateDetail.reviewDocument')}</h4>
+                                    <p>{t('templateDetail.reviewDescription')}</p>
                                 </div>
                             </div>
                         )}
@@ -373,14 +392,14 @@ function TemplateDetail() {
                                     initialData={formData}
                                 />
                             ) : (
-                                <div className={styles.emptyFormNotice}>Bu şablon için doldurulacak özel bir form alanı bulunmamaktadır.</div>
+                                <div className={styles.emptyFormNotice}>{t('templateDetail.noFormFields')}</div>
                             )}
 
                             {currentStep === 1 && (
                                 <div className={`${styles.step1ActionContainer} ${isMobile ? styles.stickyMobileButton : ''}`}>
                                     <div className={styles.progressHint}>
                                         <CheckCircle2 size={16} className={styles.progressIcon} />
-                                        Zorunlu alanları doldurduktan sonra ilerleyebilirsiniz.
+                                        {t('templateDetail.fillRequiredHint')}
                                     </div>
 
                                     <Button
@@ -392,7 +411,7 @@ function TemplateDetail() {
                                         leftIcon={<Edit2 size={20} />}
                                         rightIcon={<ArrowRight size={18} />}
                                     >
-                                        Sonraki Adım: İncele
+                                        {t('templateDetail.nextStepReview')}
                                     </Button>
                                 </div>
                             )}
@@ -410,15 +429,15 @@ function TemplateDetail() {
                                 />
                                 {currentStep === 2 && (
                                     <div className={styles.previewNotes}>
-                                        <p className={styles.secureNote}>Önizleme üzerinde yaptığınız tüm manuel düzenlemeler doğrudan PDF dosyasına yansıtılacaktır.</p>
+                                        <p className={styles.secureNote}>{t('templateDetail.manualEditsNote')}</p>
                                         <p className={styles.highlightNote}>
-                                            Sarı renkli değişken vurguları yalnızca kontrol amaçlıdır, indirilen dosyada görünmez.
+                                            {t('templateDetail.highlightNote')}
                                         </p>
                                     </div>
                                 )}
                             </>
                         ) : (
-                            <div className={styles.emptyPreviewNotice}>Önizleme içeriği tanımlanmamış.</div>
+                            <div className={styles.emptyPreviewNotice}>{t('templateDetail.noPreviewContent')}</div>
                         )}
                     </div>
                 </div>
@@ -429,8 +448,10 @@ function TemplateDetail() {
                             <label className={styles.termsCheckboxContainer}>
                                 <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
                                 <span className={styles.termsLabel}>
-                                    <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>Kullanım Şartları</Link>'nı
-                                    ve <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>Gizlilik Politikası</Link>'nı okudum.
+                                    <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>{t('templateDetail.termsOfService')}</Link>
+                                    {' '}{t('templateDetail.and')}{' '}
+                                    <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>{t('templateDetail.privacyPolicy')}</Link>
+                                    {' '}{t('templateDetail.termsSuffix')}
                                 </span>
                             </label>
 
@@ -447,7 +468,7 @@ function TemplateDetail() {
                                     isLoading={loadingDownload}
                                     leftIcon={!loadingDownload && <Download size={18} />}
                                 >
-                                    {loadingDownload ? 'Belge İşleniyor...' : 'PDF Olarak İndir'}
+                                    {loadingDownload ? t('templateDetail.processing') : t('templateDetail.downloadPdf')}
                                 </Button>
                             </div>
                         </div>
@@ -459,11 +480,11 @@ function TemplateDetail() {
                 <div className={styles.modalOverlay} onClick={() => setShowBackWarning(false)}>
                     <div className={styles.warningModal} onClick={(e) => e.stopPropagation()}>
                         <AlertCircle size={40} className={styles.warningIcon} />
-                        <h3>Forma Geri Dön?</h3>
-                        <p>Eğer forma geri dönerseniz <strong>canlı önizleme üzerinde manuel olarak</strong> yaptığınız metin düzenlemeleri silinecektir.</p>
+                        <h3>{t('templateDetail.backToFormTitle')}</h3>
+                        <p>{t('templateDetail.backToFormWarning')}</p>
                         <div className={styles.warningActions}>
-                            <Button variant="secondary" onClick={() => setShowBackWarning(false)}>Önizlemede Kal</Button>
-                            <Button variant="danger" onClick={confirmGoBackToForm}>Yine De Dön</Button>
+                            <Button variant="secondary" onClick={() => setShowBackWarning(false)}>{t('templateDetail.stayInPreview')}</Button>
+                            <Button variant="danger" onClick={confirmGoBackToForm}>{t('templateDetail.goBackAnyway')}</Button>
                         </div>
                     </div>
                 </div>
@@ -472,8 +493,8 @@ function TemplateDetail() {
             {isMobile && !isNoticeDismissed && isNoticeVisibleByScroll && currentStep === 1 && (
                 <div className={styles.mobilePreviewNotice} onClick={scrollToPreview}>
                     <div className={styles.noticeIconCircle}><ArrowDown size={16} className={styles.noticeIcon} /></div>
-                    <span className={styles.noticeText}>Canlı önizleme aşağıda</span>
-                    <button onClick={(e) => { e.stopPropagation(); setIsNoticeDismissed(true); }} className={styles.noticeCloseBtn} aria-label="Kapat"><X size={14} /></button>
+                    <span className={styles.noticeText}>{t('templateDetail.livePreviewBelow')}</span>
+                    <button onClick={(e) => { e.stopPropagation(); setIsNoticeDismissed(true); }} className={styles.noticeCloseBtn} aria-label={t('templateDetail.close')}><X size={14} /></button>
                 </div>
             )}
 
