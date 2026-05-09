@@ -271,12 +271,10 @@ function HomePage() {
                   <div className={styles.lvH1}>{t('homePage.logicPaperTitle')}</div>
                   <div className={styles.lvPara}>{t('homePage.logicPaperPara1')}</div>
                   <div className={styles.lvCondBlock}>
-                    <div className={styles.lvCondTag}>
-                      <Zap size={10} /> {t('homePage.logicConditionText', { question: t('homePage.logicQuestion'), answer: t('homePage.yes') })}
-                    </div>
                     <div className={styles.lvPara} style={{ color: '#1e40af' }}>{t('homePage.logicConditionPara')}</div>
                   </div>
                   <div className={styles.lvPara}>{t('homePage.logicPaperPara2')}</div>
+                  <div className={styles.lvSpacer}></div>
                 </div>
               </div>
             </div>
