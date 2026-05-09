@@ -1,30 +1,30 @@
 {
   "config": {
-    "configFile": "/Users/gorkem/Desktop/Projects/belge-hizli/playwright.config.js",
-    "rootDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests",
+    "configFile": "C:\\Users\\gorke\\belgehizli\\playwright.config.js",
+    "rootDir": "C:/Users/gorke/belgehizli/tests",
     "forbidOnly": false,
     "fullyParallel": true,
-    "globalSetup": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/e2e/global-setup.js",
+    "globalSetup": "C:\\Users\\gorke\\belgehizli\\tests\\e2e\\global-setup.js",
     "globalTeardown": null,
     "globalTimeout": 0,
     "grep": {},
     "grepInvert": null,
     "maxFailures": 0,
     "metadata": {
-      "actualWorkers": 5
+      "actualWorkers": 8
     },
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "/Users/gorkem/Desktop/Projects/belge-hizli/test-results",
+        "outputDir": "C:/Users/gorke/belgehizli/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 5
+          "actualWorkers": 8
         },
         "id": "e2e",
         "name": "e2e",
-        "testDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/e2e",
+        "testDir": "C:/Users/gorke/belgehizli/tests/e2e",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -32,15 +32,15 @@
         "timeout": 30000
       },
       {
-        "outputDir": "/Users/gorkem/Desktop/Projects/belge-hizli/test-results",
+        "outputDir": "C:/Users/gorke/belgehizli/test-results",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
-          "actualWorkers": 5
+          "actualWorkers": 8
         },
         "id": "api",
         "name": "api",
-        "testDir": "/Users/gorkem/Desktop/Projects/belge-hizli/tests/api",
+        "testDir": "C:/Users/gorke/belgehizli/tests/api",
         "testIgnore": [],
         "testMatch": [
           "**/*.@(spec|test).?(c|m)[jt]s?(x)"
@@ -70,12 +70,709 @@
     "updateSnapshots": "missing",
     "updateSourceMethod": "patch",
     "version": "1.59.1",
-    "workers": 5,
+    "workers": 8,
     "webServer": null
   },
   "suites": [
     {
-      "title": "api/auth/account-lockout.spec.js",
+      "title": "e2e\\template-builder\\1-core-editor.spec.js",
+      "file": "e2e/template-builder/1-core-editor.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "1. Çekirdek Editör İşlevleri",
+          "file": "e2e/template-builder/1-core-editor.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Slash (/) komutları: Madde İmleri doğru çalışmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8770,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.126Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-7d58569e1dff39b627bd",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 57,
+              "column": 7
+            },
+            {
+              "title": "Metin formatlama araçları (Bold, Italic, Renk, Hizalama) çalışmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 9354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.136Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-5ac8b8ede2c4055e35f7",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 77,
+              "column": 7
+            },
+            {
+              "title": "Undo / Redo işlemleri doğru çalışmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 8157,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.102Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-d4f30336d19521a637cc",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 105,
+              "column": 7
+            },
+            {
+              "title": "Başlık seviyeleri ve liste iç içe geçme çalışmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 9306,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.162Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-b3502f03e4d5eb051915",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 118,
+              "column": 7
+            },
+            {
+              "title": "Font boyutu ve satır yüksekliği değiştirilebilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 7103,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.153Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-e77a4a6ef57feb7547b7",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 150,
+              "column": 7
+            },
+            {
+              "title": "Slash menüsünde ok tuşları ile gezinme ve Enter ile seçim",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 8325,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.184Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-7f67c7fb28080dee677d",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 167,
+              "column": 7
+            },
+            {
+              "title": "Değişken menüsü tetikleyici ile açılıp seçim yapılabilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 8729,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "63a92d60ddc539656cb3-04ced13f76f5342d543e",
+              "file": "e2e/template-builder/1-core-editor.spec.js",
+              "line": 190,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\template-builder\\2-variables.spec.js",
+      "file": "e2e/template-builder/2-variables.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "2. Değişkenler ve Tetikleyiciler (Triggers)",
+          "file": "e2e/template-builder/2-variables.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Sol panelden manuel değişken eklenip Regex tetikleyicileri çalışmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
+                      "status": "passed",
+                      "duration": 7238,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:15.228Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-072c67392e810de5e15a",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 61,
+              "column": 7
+            },
+            {
+              "title": "Özel tetikleyici ile mevcut değişkenler dönüşmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
+                      "status": "passed",
+                      "duration": 4127,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:32.292Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-fef1a793a3e9eb539729",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 83,
+              "column": 7
+            },
+            {
+              "title": "Sihirli Algılama Modalından farklı formatlar seçilebilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
+                      "status": "passed",
+                      "duration": 6356,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:32.964Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-f96e34d73f0f743500f8",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 96,
+              "column": 7
+            },
+            {
+              "title": "Çoklu eşleşme modalı: aynı kelime birden fazla yerde değiştirilebilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
+                      "status": "passed",
+                      "duration": 7856,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:33.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-272302159133b4257869",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 115,
+              "column": 7
+            },
+            {
+              "title": "Değişken adı düzenlenebilmeli ve çakışma durumunda numaralandırılmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
+                      "status": "passed",
+                      "duration": 5082,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:34.006Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-9bb941c34d7e435548ec",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 166,
+              "column": 7
+            },
+            {
+              "title": "Değişken silindiğinde form alanı kaldırılmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
+                      "status": "passed",
+                      "duration": 4947,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:34.338Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "6de98e812cf8e05b3f00-7d075bdcbfcfb5d17849",
+              "file": "e2e/template-builder/2-variables.spec.js",
+              "line": 183,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e\\template-builder\\3-form-and-preview.spec.js",
+      "file": "e2e/template-builder/3-form-and-preview.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "3. Form Mantığı, Şartlı Blok ve Önizleme",
+          "file": "e2e/template-builder/3-form-and-preview.spec.js",
+          "line": 4,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Hatalı / Boş form kaydetmeye çalışıldığında sistem uyarmalı",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4735,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:34.643Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-2913efa28d8ace78a5be",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 64,
+              "column": 7
+            },
+            {
+              "title": "Çoklu Değişken Doldurma ve Önizlemede PDF İndirme",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7777,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:43.530Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-579d919d815e8dad610d",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 73,
+              "column": 7
+            },
+            {
+              "title": "Şartlı blok eklenip önizlemede koşula göre gösterilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:51.361Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-a8540461c6496637ad66",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 113,
+              "column": 7
+            },
+            {
+              "title": "Form alanları sürükle-bırak ile sıralanabilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3107,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:55.809Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-84c1ce0fed571f5a2e3e",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 181,
+              "column": 7
+            },
+            {
+              "title": "Paylaşım linki kopyalanabilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1665,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:58.933Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-059a42301b94cf4f1a1c",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 231,
+              "column": 7
+            },
+            {
+              "title": "Tema değiştirilebilmeli ve localStorage'a kaydedilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "e2e",
+                  "projectName": "e2e",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2230,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:22:00.613Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f56b8c2b7540796d4f75-0c2a3bbb48253f638268",
+              "file": "e2e/template-builder/3-form-and-preview.spec.js",
+              "line": 247,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\auth\\account-lockout.spec.js",
       "file": "api/auth/account-lockout.spec.js",
       "column": 0,
       "line": 0,
@@ -84,7 +781,7 @@
         {
           "title": "Auth API - Hesap Kilitleme (Account Lockout)",
           "file": "api/auth/account-lockout.spec.js",
-          "line": 3,
+          "line": 4,
           "column": 6,
           "specs": [
             {
@@ -100,15 +797,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1137,
+                      "duration": 1637,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:07.848Z",
+                      "startTime": "2026-05-09T14:21:38.810Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -126,7 +823,7 @@
       ]
     },
     {
-      "title": "api/auth/forgot-password.spec.js",
+      "title": "api\\auth\\forgot-password.spec.js",
       "file": "api/auth/forgot-password.spec.js",
       "column": 0,
       "line": 0,
@@ -151,15 +848,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 470,
+                      "duration": 707,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:07.855Z",
+                      "startTime": "2026-05-09T14:21:38.837Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -185,15 +882,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 2,
-                      "parallelIndex": 2,
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1654,
+                      "duration": 1549,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:07.853Z",
+                      "startTime": "2026-05-09T14:21:39.778Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -203,7 +900,7 @@
               ],
               "id": "2ba00858970829ed2f51-492f944afe1d534ec3d0",
               "file": "api/auth/forgot-password.spec.js",
-              "line": 19,
+              "line": 21,
               "column": 7
             }
           ]
@@ -211,7 +908,7 @@
       ]
     },
     {
-      "title": "api/auth/mfa.spec.js",
+      "title": "api\\auth\\mfa.spec.js",
       "file": "api/auth/mfa.spec.js",
       "column": 0,
       "line": 0,
@@ -236,15 +933,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 3,
+                      "workerIndex": 9,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 1082,
+                      "duration": 1059,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:07.846Z",
+                      "startTime": "2026-05-09T14:21:41.435Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -254,7 +951,7 @@
               ],
               "id": "a05b884873a10853f9b2-e6c314a49a9709209c08",
               "file": "api/auth/mfa.spec.js",
-              "line": 27,
+              "line": 26,
               "column": 7
             },
             {
@@ -270,15 +967,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 3,
+                      "workerIndex": 9,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 69,
+                      "duration": 185,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:09.525Z",
+                      "startTime": "2026-05-09T14:21:43.066Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -288,7 +985,7 @@
               ],
               "id": "a05b884873a10853f9b2-87f26451922eb70e5739",
               "file": "api/auth/mfa.spec.js",
-              "line": 43,
+              "line": 42,
               "column": 7
             }
           ]
@@ -296,7 +993,7 @@
       ]
     },
     {
-      "title": "api/auth/rate-limit.spec.js",
+      "title": "api\\auth\\rate-limit.spec.js",
       "file": "api/auth/rate-limit.spec.js",
       "column": 0,
       "line": 0,
@@ -305,7 +1002,7 @@
         {
           "title": "Auth API - Brute Force Koruması (Rate Limiting)",
           "file": "api/auth/rate-limit.spec.js",
-          "line": 3,
+          "line": 4,
           "column": 6,
           "specs": [
             {
@@ -321,15 +1018,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1310,
+                      "duration": 1108,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-04-24T20:32:07.843Z",
+                      "startTime": "2026-05-09T14:21:41.668Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -339,7 +1036,7 @@
               ],
               "id": "83817046f7c55ac6b21b-0f7bf828305a5ccb3fd5",
               "file": "api/auth/rate-limit.spec.js",
-              "line": 5,
+              "line": 6,
               "column": 7
             }
           ]
@@ -349,9 +1046,9 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-04-24T20:32:06.625Z",
-    "duration": 3029.6800000000003,
-    "expected": 6,
+    "startTime": "2026-05-09T14:21:11.694Z",
+    "duration": 53450.958999999995,
+    "expected": 25,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

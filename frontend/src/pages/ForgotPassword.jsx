@@ -1,11 +1,15 @@
+// frontend/src/pages/ForgotPassword.jsx
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const ForgotPassword = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -18,11 +22,20 @@ const ForgotPassword = () => {
 
     try {
       const response = await forgotPassword(email);
-      // Başarılı da olsa başarısız da olsa güvenlik gereği aynı mesaj dönecek
-      setStatus({ type: 'success', message: response.message });
-      setEmail(''); // Formu temizle
+      const successMessage = getUserFriendlyMessage(
+        response?.data || response,
+        'forgotPassword.successFallback',
+        t
+      );
+      setStatus({ type: 'success', message: successMessage });
+      setEmail('');
     } catch (err) {
-      setStatus({ type: 'error', message: err.response?.data?.message || 'Bir hata oluştu. Lütfen tekrar deneyin.' });
+      const errorMessage = getUserFriendlyMessage(
+        err.response?.data,
+        'forgotPassword.errorFallback',
+        t
+      );
+      setStatus({ type: 'error', message: errorMessage });
     } finally {
       setIsLoading(false);
     }
@@ -31,8 +44,8 @@ const ForgotPassword = () => {
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
-        <h2 className={styles.authTitle}>Şifremi Unuttum</h2>
-        <p className={styles.authSubtitle}>E-posta adresinizi girin, size şifre sıfırlama bağlantısı gönderelim.</p>
+        <h2 className={styles.authTitle}>{t('forgotPassword.title')}</h2>
+        <p className={styles.authSubtitle}>{t('forgotPassword.subtitle')}</p>
 
         {status.message && (
           <div className={status.type === 'success' ? styles.successBox : styles.errorBox}>
@@ -43,25 +56,25 @@ const ForgotPassword = () => {
 
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>E-posta Adresi</label>
+            <label className={styles.label}>{t('forgotPassword.email')}</label>
             <input
               type="email"
               className={styles.input}
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="ornek@email.com"
+              placeholder={t('forgotPassword.emailPlaceholder')}
             />
           </div>
 
           <Button type="submit" variant="primary" size="lg" fullWidth disabled={isLoading || status.type === 'success'}>
-            {isLoading ? 'Gönderiliyor...' : 'Sıfırlama Bağlantısı Gönder'}
+            {isLoading ? t('forgotPassword.sending') : t('forgotPassword.submit')}
           </Button>
         </form>
 
         <p className={styles.switchText}>
-          Şifrenizi hatırladınız mı?
-          <Link to="/giris-yap" className={styles.switchLink}>Giriş Yapın</Link>
+          {t('forgotPassword.remembered')}{' '}
+          <Link to="/giris-yap" className={styles.switchLink}>{t('forgotPassword.signIn')}</Link>
         </p>
       </div>
     </div>

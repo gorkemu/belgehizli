@@ -1,3 +1,4 @@
+// backend\server.js
 process.on('uncaughtException', (error) => {
     console.error('UNCAUGHT EXCEPTION! Shutting down...');
     console.error(error.stack || error);
@@ -76,7 +77,12 @@ app.get('/sitemap.xml', async (req, res) => {
 const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 200,
-    message: { success: false, message: 'Çok fazla istek yaptınız, lütfen daha sonra tekrar deneyin.' },
+    message: {
+        success: false,
+        messageKey: 'server.tooManyRequests',
+        params: { minutes: 15 },
+        message: 'Too many requests. Please try again later.'
+    },
     standardHeaders: true,
     legacyHeaders: false,
 });
@@ -84,15 +90,20 @@ const apiLimiter = rateLimit({
 const pdfLimiter = rateLimit({
     windowMs: 60 * 60 * 1000,
     max: 20,
-    message: { success: false, message: 'Saatlik belge oluşturma sınırına ulaştınız. Lütfen daha sonra tekrar deneyin.' }
+    message: {
+        success: false,
+        messageKey: 'server.pdfLimitReached',
+        params: { hours: 1 },
+        message: 'Hourly document generation limit reached. Please try again later.'
+    }
 });
 
 const allowedOrigins = [
     process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/$/, '') : null,
     process.env.ADMIN_URL ? process.env.ADMIN_URL.replace(/\/$/, '') : null,
-    'https://www.belgehizli.com',  
-    'https://belgehizli.com',      
-    'https://staging.belgehizli.com', 
+    'https://www.belgehizli.com',
+    'https://belgehizli.com',
+    'https://staging.belgehizli.com',
     process.env.NODE_ENV === 'development' ? 'http://localhost:5173' : null,
     process.env.NODE_ENV === 'development' ? 'http://localhost:5174' : null
 ].filter(Boolean);
@@ -210,10 +221,16 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use((err, req, res, next) => {
     console.error("Beklenmeyen Hata:", err.stack || err);
     if (err.message === 'Not allowed by CORS') {
-        return res.status(403).json({ message: 'CORS policy violation' });
+        return res.status(403).json({
+            messageKey: 'server.corsPolicyViolation',
+            message: 'CORS policy violation'
+        });
     }
     res.status(err.status || 500).json({
-        message: process.env.NODE_ENV !== 'production' ? err.message : 'Sunucuda bir hata oluştu.',
+        messageKey: 'server.unexpectedError',
+        message: process.env.NODE_ENV !== 'production'
+            ? err.message
+            : 'An unexpected server error occurred.',
         error: process.env.NODE_ENV !== 'production' ? err : {}
     });
 });

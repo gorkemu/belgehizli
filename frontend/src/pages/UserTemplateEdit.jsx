@@ -1,13 +1,16 @@
 // frontend/src/pages/UserTemplateEdit.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import TemplateBuilder from '../features/TemplateBuilder';
 import { Loader2, AlertCircle } from 'lucide-react';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 const UserTemplateEdit = () => {
+    const { t } = useTranslation();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -27,13 +30,18 @@ const UserTemplateEdit = () => {
                 data.fields = Array.isArray(data.fields) ? data.fields : [];
                 setTemplate(data);
             } catch (err) {
-                setError(err.response?.data?.message || 'Şablon yüklenemedi.');
+                const message = getUserFriendlyMessage(
+                    err.response?.data,
+                    'userTemplateEdit.errorLoading',
+                    t
+                );
+                setError(message);
             } finally {
                 setLoading(false);
             }
         };
         fetchTemplate();
-    }, [id]);
+    }, [id, t]);
 
     const handleSave = async (payload) => {
         const token = localStorage.getItem('user_token');
@@ -45,7 +53,7 @@ const UserTemplateEdit = () => {
     if (loading) return (
         <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', justifyContent: 'center', alignItems: 'center', color: '#57534e' }}>
             <Loader2 size={36} className="spinner" style={{ animation: 'spin 1s linear infinite', marginBottom: 12, color: '#a8a29e' }} />
-            <p>Şablon yükleniyor...</p>
+            <p>{t('userTemplateEdit.loading')}</p>
         </div>
     );
 
@@ -57,7 +65,7 @@ const UserTemplateEdit = () => {
                 onClick={() => navigate('/panel/projects')} 
                 style={{ marginTop: '16px', padding: '8px 16px', background: '#1c1917', color: 'white', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
             >
-                Geri Dön
+                {t('userTemplateEdit.back')}
             </button>
         </div>
     );

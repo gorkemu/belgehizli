@@ -1,11 +1,10 @@
+// frontend/src/features/TemplateBuilder/utils/helpers.js
+
 const generateVarName = (text) => text.toString()
-  // 1. ÖNCE BÜYÜK TÜRKÇE KARAKTERLERİ DÜZELT
   .replace(/Ğ/g, 'g').replace(/Ü/g, 'u').replace(/Ş/g, 's')
   .replace(/I/g, 'i').replace(/İ/g, 'i').replace(/Ö/g, 'o').replace(/Ç/g, 'c')
-  // 2. KÜÇÜK TÜRKÇE KARAKTERLERİ DÜZELT
   .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
   .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
-  // 3. ŞİMDİ KÜÇÜLT VE İSTENMEYENLERİ TEMİZLE
   .toLowerCase()
   .replace(/[^a-z0-9]/g, '_')
   .replace(/_+/g, '_')
@@ -32,12 +31,22 @@ const getRegexForTrigger = (trigger) => {
 
 const cleanHtmlContent = (html) => html || '';
 
-const insertSignatureBlock = (type) => {
+/**
+ * Çeviri fonksiyonu ve tetikleyici sembolünü kullanarak imza bloğu oluşturur.
+ * @param {string} type - 'left' veya 'right'
+ * @param {function} t - i18n çeviri fonksiyonu
+ * @param {string} triggerSymbol - değişken tetikleyicisi
+ * @returns {string} HTML içeriği
+ */
+const insertSignatureBlock = (type, t, triggerSymbol = '{{') => {
+  const sym = getTriggerSymbols(triggerSymbol);
+  const partyPlaceholder = t('templateBuilder.helpers.signatureParty', { trigger: triggerSymbol });
+
   let html = '';
   if (type === 'left') {
-    html = `<p style="text-align: left"><strong>[Taraf / Unvan]</strong></p><p style="text-align: left"><br></p><p style="text-align: left">İmza</p><p></p>`;
+    html = `<p style="text-align: left"><strong>${partyPlaceholder}</strong></p><p style="text-align: left"><br></p><p style="text-align: left">${t('templateBuilder.helpers.signature')}</p><p></p>`;
   } else if (type === 'right') {
-    html = `<p style="text-align: right"><strong>[Taraf / Unvan]</strong></p><p style="text-align: right"><br></p><p style="text-align: right">İmza</p><p></p>`;
+    html = `<p style="text-align: right"><strong>${partyPlaceholder}</strong></p><p style="text-align: right"><br></p><p style="text-align: right">${t('templateBuilder.helpers.signature')}</p><p></p>`;
   }
   return html;
 };

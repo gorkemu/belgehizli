@@ -1,6 +1,7 @@
 // frontend/src/components/DashboardLayout.jsx
 import React, { useContext, useState, useEffect } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import {
   LayoutDashboard, FolderKanban,
@@ -11,6 +12,7 @@ import styles from './DashboardLayout.module.css';
 import Button from '../components/ui/Button';
 
 export const DashboardLayout = () => {
+  const { t } = useTranslation();
   const { user, logout } = useContext(AuthContext);
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,8 +31,8 @@ export const DashboardLayout = () => {
   useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
 
   const navItems = [
-    { path: '/panel',          name: 'Özet',       icon: LayoutDashboard, exact: true  },
-    { path: '/panel/projects', name: 'Şablonlarım', icon: FolderKanban,    exact: false },
+    { path: '/panel',          name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true  },
+    { path: '/panel/projects', name: t('dashboardLayout.myTemplates'), icon: FolderKanban,    exact: false },
   ];
 
   return (
@@ -49,7 +51,7 @@ export const DashboardLayout = () => {
             variant="ghost"
             onClick={() => setIsMobileMenuOpen(true)}
             className={styles.menuBtn} 
-            aria-label="Menüyü aç"
+            aria-label={t('dashboardLayout.openMenu')}
           >
             <Menu size={24} color="#1c1917" />
           </Button>
@@ -84,7 +86,7 @@ export const DashboardLayout = () => {
               variant="ghost"
               onClick={() => setIsMobileMenuOpen(false)}
               className={styles.closeBtn} 
-              aria-label="Menüyü kapat"
+              aria-label={t('dashboardLayout.closeMenu')}
             >
               <X size={20} />
             </Button>
@@ -118,14 +120,14 @@ export const DashboardLayout = () => {
             </div>
             <div className={styles.userDetails}>
               <p className={styles.userName}>{user?.fullName}</p>
-              <p className={styles.userOrg}>Kişisel Çalışma Alanı</p>
+              <p className={styles.userOrg}>{t('dashboardLayout.personalWorkspace')}</p>
             </div>
           </div>
 
           <div className={styles.footerLinksGroup}>
             <Link to="/" className={styles.footerLink}>
               <Globe size={16} className={styles.icon} />
-              <span>Ana Sayfaya Dön</span>
+              <span>{t('dashboardLayout.backToHome')}</span>
             </Link>
             <Link
               to="/panel/settings"
@@ -135,7 +137,7 @@ export const DashboardLayout = () => {
                 size={16}
                 className={location.pathname === '/panel/settings' ? styles.iconActive : styles.icon}
               />
-              <span>Hesap Ayarları</span>
+              <span>{t('dashboardLayout.accountSettings')}</span>
             </Link>
             <Button 
               variant="ghost" 
@@ -144,7 +146,7 @@ export const DashboardLayout = () => {
               className={styles.logoutBtn} 
               leftIcon={<LogOut size={16} className={styles.logoutIcon} />}
             >
-              <span>Güvenli Çıkış</span>
+              <span>{t('dashboardLayout.logout')}</span>
             </Button>
           </div>
         </div>

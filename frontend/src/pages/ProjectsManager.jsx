@@ -5,10 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate } from 'lucide-react';
 import styles from './ProjectsManager.module.css';
 import Button from '../components/ui/Button';
+import { useTranslation } from 'react-i18next';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 export const ProjectsManager = () => {
+  const { t, i18n } = useTranslation();
+
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -43,6 +47,16 @@ export const ProjectsManager = () => {
     };
   }, []);
 
+  const getUserFriendlyMessage = (body, defaultKey) => {
+    if (body?.messageKey) {
+      return t(body.messageKey, body.params || {});
+    }
+    if (body?.message) {
+      return body.message;
+    }
+    return t(defaultKey);
+  };
+
   const fetchDocuments = async () => {
     try {
       const token = localStorage.getItem('user_token');
@@ -52,7 +66,7 @@ export const ProjectsManager = () => {
       });
       setDocuments(response.data);
     } catch (err) {
-      setError('Belgeler yüklenirken bir hata oluştu.');
+      setError(getUserFriendlyMessage(err.response?.data, 'projects.errorLoading', t));
     } finally {
       setLoading(false);
     }
@@ -78,10 +92,10 @@ export const ProjectsManager = () => {
 
       setIsModalOpen(false);
       setFormData({ name: '', description: '' });
-      showToast('Şablon başarıyla oluşturuldu.');
+      showToast(t('projects.successCreated'));
       navigate(`/panel/duzenle/${response.data._id}`);
     } catch (err) {
-      setError(err.response?.data?.message || 'Oluşturulurken hata oluştu.');
+      setError(getUserFriendlyMessage(err.response?.data, 'projects.errorCreating', t));
     } finally {
       setIsSubmitting(false);
     }
@@ -97,12 +111,18 @@ export const ProjectsManager = () => {
       });
       setDocuments(documents.filter(p => p._id !== docToDelete._id));
       setDocToDelete(null);
-      showToast('Şablon kalıcı olarak silindi.');
+      showToast(t('projects.toastDeleted'));
     } catch (err) {
-      showToast('Silinirken bir hata oluştu.', 'error');
+      showToast(getUserFriendlyMessage(err.response?.data, 'projects.toastDeleteError', t), 'error');
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  // Tarih formatını dile göre ayarla
+  const formatDate = (dateString) => {
+    const locale = i18n.language.startsWith('tr') ? 'tr-TR' : 'en-US';
+    return new Date(dateString).toLocaleDateString(locale);
   };
 
   return (
@@ -111,31 +131,27 @@ export const ProjectsManager = () => {
 
       <div className={styles.header}>
         <div className={styles.headerText}>
-          <h1 className={styles.pageTitle}>Tüm Şablonlar</h1>
-          <p className={styles.pageSubtitle}>Sözleşme ve form şablonlarınızı tek bir yerden yönetin.</p>
+          <h1 className={styles.pageTitle}>{t('projects.title')}</h1>
+          <p className={styles.pageSubtitle}>{t('projects.subtitle')}</p>
         </div>
-        <Button
-          variant="primary"
-          onClick={() => setIsModalOpen(true)}
-          leftIcon={<Plus size={18} />}
-        >
-          Yeni Şablon
+        <Button variant="primary" onClick={() => setIsModalOpen(true)} leftIcon={<Plus size={18} />}>
+          {t('projects.newTemplate')}
         </Button>
       </div>
 
+      {/* Yükleniyor Durumu */}
       {loading ? (
-        <div className={styles.loadingState}><Loader2 size={24} className={styles.spinnerIcon} /><p>Şablonlarınız yükleniyor...</p></div>
+        <div className={styles.loadingState}>
+          <Loader2 size={24} className={styles.spinnerIcon} />
+          <p>{t('projects.loading')}</p>
+        </div>
       ) : documents.length === 0 ? (
         <div className={styles.emptyState}>
           <div className={styles.emptyIconBox}><LayoutTemplate size={32} color="#a8a29e" /></div>
-          <h3 className={styles.emptyTitle}>Henüz bir şablonunuz yok</h3>
-          <p className={styles.emptyText}>Hemen yeni bir akıllı form şablonu oluşturarak çalışmaya başlayın.</p>
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => setIsModalOpen(true)}
-          >
-            İlk Şablonunuzu Oluşturun
+          <h3 className={styles.emptyTitle}>{t('projects.emptyTitle')}</h3>
+          <p className={styles.emptyText}>{t('projects.emptyText')}</p>
+          <Button variant="primary" size="lg" onClick={() => setIsModalOpen(true)}>
+            {t('projects.createFirst')}
           </Button>
         </div>
       ) : (
@@ -144,34 +160,41 @@ export const ProjectsManager = () => {
             <div key={doc._id} onClick={() => navigate(`/panel/duzenle/${doc._id}`)} className={styles.projectCard}>
               <div className={styles.cardHeader}>
                 <div className={styles.categoryIcon}><LayoutTemplate size={18} color="#57534e" /></div>
-                <button onClick={(e) => { e.stopPropagation(); setDocToDelete(doc); }} className={styles.deleteButton} title="Sil"><Trash2 size={16} /></button>
+                <button onClick={(e) => { e.stopPropagation(); setDocToDelete(doc); }} className={styles.deleteButton} title={t('projects.deleteTooltip')}><Trash2 size={16} /></button>
               </div>
               <h3 className={styles.projectName}>{doc.name}</h3>
-              <p className={styles.projectDesc}>{doc.description || 'Açıklama girilmemiş.'}</p>
+              <p className={styles.projectDesc}>{doc.description || t('projects.noDescription')}</p>
               <div className={styles.cardFooter}>
-                <span className={styles.projectDate}><Calendar size={12} /> {new Date(doc.updatedAt || doc.createdAt).toLocaleDateString('tr-TR')}</span>
+                <span className={styles.projectDate}><Calendar size={12} /> {formatDate(doc.updatedAt || doc.createdAt)}</span>
               </div>
             </div>
           ))}
         </div>
       )}
 
+      {/* MODAL */}
       {isModalOpen && (
         <div className={styles.modalOverlay} onMouseDown={() => setIsModalOpen(false)}>
           <div className={styles.modal} onMouseDown={e => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h2 className={styles.modalTitle}>Yeni Şablon Oluştur</h2>
+              <h2 className={styles.modalTitle}>{t('projects.modalCreateTitle')}</h2>
               <button onClick={() => setIsModalOpen(false)} className={styles.modalClose}><X size={20} /></button>
             </div>
             {error && <div className={styles.modalError}><AlertTriangle size={16} /> {error}</div>}
             <form onSubmit={handleCreateDocument} className={styles.modalForm}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Şablon Adı *</label>
-                <input type="text" required value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} placeholder="Örn: İş Sözleşmesi" className={styles.formInput} autoFocus />
+                <label className={styles.formLabel}>{t('projects.templateName')}</label>
+                <input
+                  type="text"
+                  required
+                  placeholder={t('projects.templateNamePlaceholder')}
+                  value={formData.name}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
+                />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Açıklama (Opsiyonel)</label>
-                <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder="Bu şablon ne hakkında?" className={styles.formTextarea} />
+                <label className={styles.formLabel}>{t('projects.description')}</label>
+                <textarea value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} placeholder={t('projects.descriptionPlaceholder')} className={styles.formTextarea} />
               </div>
               <div className={styles.modalActions}>
                 <Button
@@ -181,7 +204,7 @@ export const ProjectsManager = () => {
                   onClick={() => setIsModalOpen(false)}
                   style={{ flex: '1' }}
                 >
-                  Vazgeç
+                  {t('projects.cancel')}
                 </Button>
                 <Button
                   type="submit"
@@ -190,7 +213,7 @@ export const ProjectsManager = () => {
                   disabled={isSubmitting}
                   style={{ flex: '1' }}
                 >
-                  {isSubmitting ? 'Oluşturuluyor...' : 'Oluştur ve Başla'}
+                  {isSubmitting ? t('projects.creating') : t('projects.createAndStart')}
                 </Button>
               </div>
             </form>
@@ -202,8 +225,8 @@ export const ProjectsManager = () => {
         <div className={styles.modalOverlay} onMouseDown={() => setDocToDelete(null)}>
           <div className={styles.confirmModal} onMouseDown={e => e.stopPropagation()}>
             <div className={styles.confirmIcon}><AlertTriangle size={24} color="#dc2626" /></div>
-            <h2 className={styles.confirmTitle}>Şablonu Sil</h2>
-            <p className={styles.confirmText}><strong>"{docToDelete.name}"</strong> adlı şablonu silmek istediğinize emin misiniz?</p>
+            <h2 className={styles.confirmTitle}>{t('projects.deleteConfirmTitle')}</h2>
+            <p className={styles.confirmText}>{t('projects.deleteConfirmText', { name: docToDelete.name })}</p>
             <div className={styles.confirmActions}>
               <Button
                 type="button"
@@ -211,7 +234,7 @@ export const ProjectsManager = () => {
                 onClick={() => setDocToDelete(null)}
                 style={{ flex: '1' }}
               >
-                Vazgeç
+                {t('projects.cancel')}
               </Button>
               <Button
                 type="submit"
@@ -220,7 +243,7 @@ export const ProjectsManager = () => {
                 disabled={isDeleting}
                 style={{ flex: '1' }}
               >
-                {isDeleting ? 'Siliniyor...' : 'Kalıcı Olarak Sil'}
+                {isDeleting ? t('projects.deleting') : t('projects.deleteConfirm')}
               </Button>
             </div>
           </div>

@@ -6,21 +6,19 @@
   flex-shrink: 0;
   padding: 8px 16px;
   display: flex;
-  flex-wrap: wrap; 
-  gap: 8px 4px; 
+  flex-wrap: wrap;
+  gap: 8px 4px;
   align-items: center;
   z-index: 5;
 }
-.toolbarRow {
-  display: contents; 
-}
-.toolbarRow:last-child { border-bottom: none; }
+
 .tbDivider {
   width: 1px;
   height: 24px;
   background: var(--border);
   margin: 0 4px;
 }
+
 .tb {
   display: flex;
   align-items: center;
@@ -35,12 +33,23 @@
   cursor: pointer;
   transition: all .12s;
 }
-.tb:hover { background: var(--btn-hover-bg); color: var(--text-primary); }
+
+.tb:hover {
+  background: var(--btn-hover-bg);
+  color: var(--text-primary);
+}
+
 .tbActive {
   background: var(--btn-active-bg);
   color: var(--btn-active-text);
   border-color: var(--accent-border);
 }
+
+.tbDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 .select {
   padding: 6px 8px;
   border-radius: 8px;
@@ -53,8 +62,22 @@
   background-color: var(--select-bg);
   flex-shrink: 0;
   width: unset;
+  transition: background .12s, border-color .12s;
 }
-.select:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+
+.select:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-strong);
+}
+
+.selectInner {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
 
 @media (max-width: 1200px) {
   .toolbar {

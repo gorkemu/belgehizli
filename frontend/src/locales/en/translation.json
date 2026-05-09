@@ -1,0 +1,930 @@
+{
+  "header": {
+    "searchPlaceholder": "Search templates (e.g., lease, petition)...",
+    "find": "Find",
+    "workspace": "Workspace",
+    "login": "Login",
+    "register": "Sign Up"
+  },
+  "projects": {
+    "title": "All Templates",
+    "subtitle": "Manage your contracts and form templates in one place.",
+    "newTemplate": "New Template",
+    "loading": "Loading your templates...",
+    "emptyTitle": "You don't have any templates yet",
+    "emptyText": "Start working by creating a new smart form template right away.",
+    "createFirst": "Create Your First Template",
+    "noDescription": "No description provided.",
+    "modalCreateTitle": "Create New Template",
+    "templateName": "Template Name *",
+    "templateNamePlaceholder": "e.g., Employment Contract",
+    "description": "DESCRIPTION (OPTIONAL)",
+    "descriptionPlaceholder": "What is this template about?",
+    "cancel": "Cancel",
+    "creating": "Creating...",
+    "createAndStart": "Create and Start",
+    "successCreated": "Template created successfully.",
+    "errorLoading": "An error occurred while loading documents.",
+    "errorCreating": "An error occurred while creating.",
+    "toastDeleted": "Template permanently deleted.",
+    "toastDeleteError": "An error occurred while deleting.",
+    "deleteConfirmTitle": "Delete Template",
+    "deleteConfirmText": "Are you sure you want to delete the template named {{name}}?",
+    "deleteConfirm": "Delete Permanently",
+    "deleting": "Deleting...",
+    "deleteTooltip": "Delete",
+    "requiredName": "Document name is required.",
+    "createdSuccess": "Template created successfully.",
+    "createError": "An error occurred while creating the document.",
+    "fetchError": "An error occurred while fetching documents.",
+    "notFound": "Document not found or you do not have permission.",
+    "fetchDetailError": "An error occurred while fetching document details.",
+    "updatedSuccess": "Template updated successfully.",
+    "updateError": "An error occurred while updating the document.",
+    "deletedSuccess": "Document successfully deleted.",
+    "deleteError": "An error occurred while deleting the document.",
+    "pdfGenerationError": "PDF could not be generated.",
+    "loadError": "An error occurred while loading the document.",
+    "htmlMissing": "HTML content is missing for PDF generation.",
+    "serverError": "A server error occurred."
+  },
+  "templates": {
+    "fetchAllError": "An error occurred while fetching templates.",
+    "notFoundBySlug": "Template not found",
+    "notFoundById": "Template not found",
+    "noSlugAssigned": "Template found but no slug assigned.",
+    "notFound": "Template not found.",
+    "fetchDetailError": "An error occurred while fetching template details.",
+    "redirectError": "An error occurred while processing the old ID redirect.",
+    "consentMissing": "User consent information is missing.",
+    "generateError": "A server error occurred while generating the document."
+  },
+  "dashboard": {
+    "toastDeleted": "Document permanently deleted.",
+    "toastDeleteError": "An error occurred while deleting.",
+    "toastRenamed": "Document name updated.",
+    "toastRenameError": "Could not rename.",
+    "loading": "Preparing your workspace...",
+    "deleteTitle": "Delete Document",
+    "deleteConfirmText": "Are you sure you want to permanently delete this document and all its data? This action cannot be undone.",
+    "cancel": "Cancel",
+    "deletePermanently": "Delete",
+    "greeting": "Welcome to your workspace, {{name}}.",
+    "subtitle": "Create a new smart template or quickly return to recently edited forms.",
+    "createNew": "Create New Template",
+    "createDesc": "Build smart contracts with form and text blocks.",
+    "library": "Public Library",
+    "libraryDesc": "Discover ready-made templates and use them instantly.",
+    "recentlyEdited": "Recently EDITED",
+    "viewAll": "View All",
+    "emptyProjects": "You don't have any templates yet. Start by creating a new template.",
+    "rename": "Rename"
+  },
+  "dashboardLayout": {
+    "overview": "Overview",
+    "myTemplates": "My Templates",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "personalWorkspace": "Personal Workspace",
+    "backToHome": "Back to Home",
+    "accountSettings": "Account Settings",
+    "logout": "Sign Out"
+  },
+  "settings": {
+    "pageTitle": "Account Settings",
+    "pageSubtitle": "Manage your personal information and security settings.",
+    "workspaceInfo": "Workspace Information",
+    "workspaceDesc": "Your registered account details.",
+    "registeredEmail": "REGISTERED EMAIL",
+    "personalInfo": "Personal Information",
+    "personalInfoDesc": "Your name as it will appear on documents and panels.",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "security": "Security & Password",
+    "securityDesc": "Use this section if you want to change your account password.",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "newPasswordPlaceholder": "At least 6 characters",
+    "confirmPassword": "Confirm New Password",
+    "confirmPasswordPlaceholder": "Verify your new password",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "profileUpdated": "Your information has been updated successfully.",
+    "currentPasswordRequired": "Please enter your current password.",
+    "passwordMinLength": "New password must be at least 6 characters.",
+    "passwordsMismatch": "New passwords do not match.",
+    "updateFailed": "Update failed."
+  },
+  "auth": {
+    "tooManyFailedAttempts": "Too many failed login attempts. Please try again after {{minutes}} minutes.",
+    "tooManyRegistrations": "Too many registration requests. Please try again after {{hours}} hours.",
+    "requiredFieldsMissing": "Please fill in all required fields.",
+    "passwordTooWeak": "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, and one digit.",
+    "emailAlreadyUsed": "This email address is already in use.",
+    "registrationFailed": "A system error occurred while creating your account.",
+    "invalidCredentials": "Invalid email or password.",
+    "accountLocked": "Your account has been temporarily locked due to multiple failed login attempts. Please try again after {{minutes}} minutes.",
+    "accountSuspended": "Your account has been suspended.",
+    "serverError": "Server error.",
+    "missingMfaFields": "Missing information.",
+    "invalidToken": "Invalid verification token.",
+    "userNotFound": "User not found.",
+    "invalidOtp": "Invalid or expired code. Please log in again.",
+    "mfaSessionExpired": "Verification session expired. Please log in again.",
+    "userInfoFetchFailed": "Could not fetch user information.",
+    "enterEmail": "Please enter your email address.",
+    "resetLinkSent": "Password reset link sent.",
+    "forgotPasswordError": "An error occurred during the process.",
+    "invalidRequest": "Invalid request. Please fill in all fields.",
+    "passwordMinLength": "Password must be at least {{min}} characters long.",
+    "resetLinkInvalid": "The reset link is invalid or has expired.",
+    "passwordSetSuccess": "Password has been set successfully. You can now log in.",
+    "passwordUpdateError": "An error occurred while updating the password.",
+    "incorrectCurrentPassword": "Current password is incorrect.",
+    "profileUpdateFailed": "An error occurred while updating the profile."
+  },
+  "footer": {
+    "description": "The simplest way to prepare your contracts, petitions and routine correspondence. Your free workspace that eliminates distraction and repetition.",
+    "platform": "Platform",
+    "publicLibrary": "Public Library",
+    "signUpFree": "Sign Up Free",
+    "login": "Login",
+    "legal": "Legal & Support",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "disclaimer": "Disclaimer",
+    "rights": "All rights reserved."
+  },
+  "cookie": {
+    "accept": "Accept",
+    "decline": "Decline",
+    "description": "This website uses cookies to improve user experience and analyze site traffic. For more information, please",
+    "privacyPolicy": "read our Privacy Policy",
+    "readMore": "."
+  },
+  "login": {
+    "welcome": "Welcome",
+    "subtitle": "Sign in to your account to continue.",
+    "email": "EMAIL",
+    "emailPlaceholder": "email@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Forgot Password?",
+    "signIn": "Sign In",
+    "checking": "Checking...",
+    "noAccount": "Don't have an account?",
+    "registerNow": "Register Now",
+    "error": "Login failed. Please check your credentials.",
+    "mfaTitle": "Verification Code",
+    "mfaInstructions": "Enter the 6-digit code sent to <bold>{{email}}</bold>.",
+    "verifying": "Verifying...",
+    "goBack": "Go Back",
+    "invalidCode": "Invalid verification code."
+  },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Start generating in seconds.",
+    "fullName": "Name",
+    "fullNamePlaceholder": "Your Name",
+    "email": "EMAIL",
+    "emailPlaceholder": "email@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "At least 8 characters (Upper/Lower/Digit)",
+    "passwordHint": "Password must be at least 8 characters and include uppercase, lowercase, and a digit.",
+    "submit": "Sign Up Free",
+    "creating": "Creating Account...",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign In",
+    "error": "Registration failed."
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "subtitle": "Enter your email address and we'll send you a password reset link.",
+    "email": "EMAIL",
+    "emailPlaceholder": "email@example.com",
+    "submit": "Send Reset Link",
+    "sending": "Sending...",
+    "remembered": "Remember your password?",
+    "signIn": "Sign In",
+    "successFallback": "Password reset link sent.",
+    "errorFallback": "An error occurred. Please try again."
+  },
+  "notFound": {
+    "pageTitle": "Page Not Found (404) - Belge Hızlı",
+    "title": "Page Not Found",
+    "message": "Sorry, the page you are looking for does not exist, may have been renamed, or is temporarily unavailable.",
+    "home": "Home",
+    "goBack": "Go Back"
+  },
+  "templateList": {
+    "pageTitle": "Public Library - Belge Hızlı",
+    "metaDescription": "Lease agreements, employment contracts, freelancer agreements and petition templates. Don't start from scratch — fill in the form and get your document instantly.",
+    "disclaimer": "Templates in this library are suitable for general use. For very specific legal situations, we recommend seeking professional advice.",
+    "badge": "Public Library",
+    "title": "Ready-Made Templates",
+    "subtitle": "No need to start from scratch. Pick the template you need, answer the questions the system asks, and get your complete PDF output in seconds.",
+    "searchPlaceholder": "Search templates (e.g., lease, employment, petition)...",
+    "quickSearch": "Quick Search",
+    "categories": {
+      "all": "All Templates",
+      "realEstate": "Real Estate",
+      "jobCareer": "Job & Career",
+      "commercial": "Commercial",
+      "petitions": "Petitions & Notices",
+      "personal": "Personal"
+    },
+    "viewForm": "View Form",
+    "examineTemplate": "View Template",
+    "loadMore": "Load More",
+    "noTemplateTitle": "No templates found",
+    "noTemplateText": "No templates in our library match the criteria you searched for.",
+    "clearFilters": "Clear Filters",
+    "errorLoading": "An error occurred while loading templates.",
+    "serverError": "Server error: {{status}}",
+    "networkError": "Could not reach the server. Please check your network connection.",
+    "retry": "Retry"
+  },
+  "templateDetail": {
+    "defaultTitle": "Fill Template",
+    "notFound": "Template not found.",
+    "loadError": "There was a problem loading the template. Please refresh the page.",
+    "preparing": "Preparing template...",
+    "refreshPage": "Refresh Page",
+    "back": "Go Back",
+    "publicTemplateBadge": "Public Library Template",
+    "stepFillForm": "Fill in the form",
+    "stepReviewDownload": "Review and download",
+    "step1Tag": "Step 1",
+    "step1Hint": "Fill in the relevant fields and watch your document take shape in the preview on the right. Once you've completed the required sections, click \"Next Step\" to switch to preview mode.",
+    "step2Tag": "Step 2",
+    "reviewDocument": "Review your document",
+    "reviewDescription": "You can make final manual edits on the preview and download as PDF.",
+    "noFormFields": "This template has no custom form fields to fill in.",
+    "fillRequiredHint": "You can proceed after filling all required fields.",
+    "nextStepReview": "Next Step: Review",
+    "manualEditsNote": "All manual edits you make on the preview will be reflected directly in the PDF file.",
+    "highlightNote": "Yellow variable highlights are for guidance only and will not appear in the downloaded file.",
+    "noPreviewContent": "Preview content is not defined.",
+    "termsPrefix": "I have read the ",
+    "termsOfService": "Terms of Service",
+    "and": "and",
+    "privacyPolicy": "Privacy Policy",
+    "termsSuffix": "",
+    "termsNotAccepted": "Please accept the Terms of Service and Privacy Policy before downloading.",
+    "formValidationFailed": "Could not validate form data. Please refresh the page.",
+    "fillRequiredFields": "Please fill in the required fields or correct invalid entries.",
+    "downloadError": "An error occurred. Please try again.",
+    "tooManyRequests": "Too many requests. Please wait a moment and try again.",
+    "serverError": "A server error occurred. Please try again later.",
+    "networkError": "Please check your internet connection and try again.",
+    "downloadPdf": "Download as PDF",
+    "processing": "Processing document...",
+    "backToFormTitle": "Go back to form?",
+    "backToFormWarning": "If you return to the form, any manual text edits you made on the live preview will be lost.",
+    "stayInPreview": "Stay in preview",
+    "goBackAnyway": "Go back anyway",
+    "livePreviewBelow": "Live preview below",
+    "close": "Close"
+  },
+  "documentForm": {
+    "requiredField": "This field is required.",
+    "invalidEmail": "Enter a valid email address.",
+    "invalidNumber": "Please enter a number.",
+    "selectPlaceholder": "Select...",
+    "group": "Group",
+    "remove": "Remove",
+    "addNew": "Add New",
+    "emailCopyInfo": "A copy of your original PDF document will be sent to this address."
+  },
+  "documentPreview": {
+    "previewTitle": "Document Preview",
+    "lockedBadge": "Manual Editing Locked",
+    "editBadge": "Manual Editing Enabled",
+    "livePreviewActive": "Live Preview Active",
+    "livePreviewDescription": "The data you enter in the form on the left will appear here in real time. You can make manual text edits in the next step.",
+    "loading": "Loading preview...",
+    "fillFormPrompt": "Start filling the form on the left to see the document preview.",
+    "syntaxErrorTitle": "Syntax Error",
+    "syntaxErrorMessage": "The template contains an unclosed variable {{ }} or invalid structure. Please check and try again."
+  },
+  "postDownloadModal": {
+    "close": "Close",
+    "title": "Your document has been saved to your device.",
+    "descriptionLoggedIn": "You have successfully downloaded your document. If you want to copy this template to your projects, edit it freely, or create your own documents from scratch, you can check out the main dashboard.",
+    "descriptionGuest": "We have successfully created your document. If you want to reuse or modify this template, or automatically prepare similar documents in the future, we can set up a free workspace just for you.",
+    "empathyText": "If you only needed this document for now, feel free to close this window and continue with your work. Best of luck!",
+    "closeWindow": "Close Window",
+    "goToDashboard": "Go to Dashboard",
+    "createFreeAccount": "Create Free Account"
+  },
+  "setPassword": {
+    "title": "Set New Password",
+    "subtitle": "Create a new, strong password for your account.",
+    "newPassword": "New Password",
+    "passwordPlaceholder": "At least 8 characters (Upper/Lower/Digit)",
+    "save": "Save Password",
+    "saving": "Updating...",
+    "redirecting": "Redirecting to login page...",
+    "invalidToken": "Invalid or missing security token. Please click the link in your email again.",
+    "successFallback": "Password has been set successfully. You can now log in.",
+    "errorFallback": "An error occurred while updating the password."
+  },
+  "homePage": {
+    "pageTitle": "Belge Hızlı — Smart Form & Contract Builder",
+    "metaDescription": "A clean document workspace with smart form infrastructure where you can easily prepare contracts, petitions or official correspondence.",
+    "heroTitle1": "The smart way to prepare",
+    "heroAccent": "documents & contracts",
+    "heroSub": "A recurring contract, a formal notice, or a technical document — whatever you're writing, turn your text into a fillable smart form in seconds.",
+    "startNow": "Get Started",
+    "readyTemplates": "Ready Templates",
+    "mockFileName": "draft_doc",
+    "variables": "Variables",
+    "convertToQuestion": "Convert to Question",
+    "add": "Add",
+    "slides": {
+      "default": {
+        "tag": "Legal Agreement",
+        "trigger": "{ }",
+        "title": "Residential Lease Agreement",
+        "vars": [
+          "lessor_name",
+          "lessor_id",
+          "lessee_name",
+          "lessee_id"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "RESIDENTIAL LEASE AGREEMENT"
+          },
+          {
+            "type": "label",
+            "text": "Article 1 — Parties"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "On one side, as lessor, "
+              },
+              {
+                "t": "{lessor_name}",
+                "var": true
+              },
+              {
+                "t": " (ID: "
+              },
+              {
+                "t": "{lessor_id}",
+                "var": true
+              },
+              {
+                "t": "), and on the other side, as lessee, "
+              },
+              {
+                "t": "{lessee_name}",
+                "var": true
+              },
+              {
+                "t": " (ID: "
+              },
+              {
+                "t": "{lessee_id}",
+                "var": true
+              },
+              {
+                "t": "), hereby conclude this agreement."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "Article 2 — Scope and Rent"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "The monthly net rent is "
+              },
+              {
+                "t": "50,000",
+                "highlightTrigger": true
+              },
+              {
+                "t": " TL, payable in advance to the designated bank account on the 5th of each month."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Rent Amount"
+      },
+      "ink": {
+        "tag": "COMMERCIAL Agreement",
+        "trigger": "<< >>",
+        "title": "Commercial Purchase Agreement",
+        "vars": [
+          "seller_company",
+          "buyer_company",
+          "delivery_method"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "COMMERCIAL GOODS PURCHASE AGREEMENT"
+          },
+          {
+            "type": "label",
+            "text": "Article 1 — Subject of the Agreement"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "This agreement governs the terms of sale between seller "
+              },
+              {
+                "t": "<<seller_company>>",
+                "var": true
+              },
+              {
+                "t": " and buyer "
+              },
+              {
+                "t": "<<buyer_company>>",
+                "var": true
+              },
+              {
+                "t": "."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "Article 2 — Late Penalty"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "For each day of delay, a penalty equal to "
+              },
+              {
+                "t": "0.5%",
+                "highlightTrigger": true
+              },
+              {
+                "t": " of the total order value shall be paid."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Penalty Rate"
+      },
+      "dark": {
+        "tag": "TECHNICAL Agreement",
+        "trigger": "@",
+        "title": "Software Development Agreement",
+        "vars": [
+          "project_name",
+          "developer_title",
+          "client_title"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "SOFTWARE DEVELOPMENT AND LICENSE AGREEMENT"
+          },
+          {
+            "type": "label",
+            "text": "1. Project Definition"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "This agreement sets out the terms for the "
+              },
+              {
+                "t": "@project_name",
+                "var": true
+              },
+              {
+                "t": " system, to be developed by "
+              },
+              {
+                "t": "@developer_title",
+                "var": true
+              },
+              {
+                "t": " on behalf of "
+              },
+              {
+                "t": "@client_title",
+                "var": true
+              },
+              {
+                "t": "."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "2. Maintenance and Support"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Following the go-live date, software defects will be resolved free of charge for "
+              },
+              {
+                "t": "6 Months",
+                "highlightTrigger": true
+              },
+              {
+                "t": "."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Warranty Period"
+      },
+      "forest": {
+        "tag": "Health & CLINIC",
+        "trigger": "[ ]",
+        "title": "Informed Consent Form",
+        "vars": [
+          "patient_full_name",
+          "patient_id",
+          "doctor_name"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "INFORMED CONSENT AND WAIVER"
+          },
+          {
+            "type": "label",
+            "text": "I. Patient Information"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "I, "
+              },
+              {
+                "t": "[patient_full_name]",
+                "var": true
+              },
+              {
+                "t": " (ID: "
+              },
+              {
+                "t": "[patient_id]",
+                "var": true
+              },
+              {
+                "t": "), hereby consent to the "
+              },
+              {
+                "t": "Orthopedic Surgery",
+                "highlightTrigger": true
+              },
+              {
+                "t": " procedure to be performed by Dr. "
+              },
+              {
+                "t": "[doctor_name]",
+                "var": true
+              },
+              {
+                "t": " at your facility."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Operation Name"
+      }
+    },
+    "magicTitle": "Create forms in seconds",
+    "magicDescription": "Already have a draft? Paste or drag your text into the workspace. With the \"Detect All\" button, the system automatically finds all variables in your text and builds the form for you.",
+    "bubbleTitle": "Select text, turn it into a question",
+    "bubbleDescription": "Select the words that will change in each document and convert them into a dynamic form question with a single click.",
+    "logicTitle": "Documents that adapt to answers",
+    "logicDescription": "No need to prepare separate contract drafts for each client or situation. With \"Conditional Blocks\", specific sections of your document are automatically shown or hidden based on a form answer.",
+    "useCasesTitle": "Solutions for Every Industry",
+    "useCasesDescription": "Reduce your operational workload in any field, thanks to variables and smart forms.",
+    "useCases": {
+      "hr": "Human Resources",
+      "hrDesc": "Instantly customize employment contracts, reference letters, job offers and benefits notifications.",
+      "legal": "Legal & Real Estate",
+      "legalDesc": "Dynamically generate notices, lease agreements, powers of attorney and real estate purchase commitments.",
+      "freelancer": "Freelancers & Agencies",
+      "freelancerDesc": "Personalize project proposals, NDAs and service agreements in seconds.",
+      "education": "Education & Academia",
+      "educationDesc": "Automate student acceptance letters, internship contracts and thesis advisory forms.",
+      "health": "Health & Clinics",
+      "healthDesc": "Quickly personalize patient information forms, consent documents and examination reports.",
+      "ecommerce": "E-commerce & Retail",
+      "ecommerceDesc": "Dynamically generate supplier contracts, return policies and dealer agreements."
+    },
+    "searchTitle": "Looking for a ready-made template?",
+    "searchDescription": "If you don't want to start from scratch, browse our pre-built general-purpose templates and get instant PDF output.",
+    "searchPlaceholder": "E.g.: Lease agreement, resignation letter, notice...",
+    "findTemplate": "Find Template",
+    "frequentlyUsed": "Frequently used",
+    "ctaTitle": "Create your workspace",
+    "ctaDescription": "Sign up to create and save your own templates.",
+    "magicSidebarTitle": "Form Questions",
+    "magicEmptyState": "No questions yet",
+    "magicField1": "Lessee Name",
+    "magicField2": "ID Number",
+    "magicField3": "Start Date",
+    "magicField4": "Rent Amount",
+    "detectAll": "Detect All",
+    "magicPaperTitle": "LEASE AGREEMENT",
+    "magicPaperPara1": "This agreement is concluded between the property owner and, as lessee,",
+    "magicVarLessee": "@lessee_name",
+    "magicVarLesseeId": "@id_number",
+    "magicPaperPara1Suffix": "as the contracting parties.",
+    "magicPaperPara2a": "The agreement will enter into force on",
+    "magicVarStartDate": "@start_date",
+    "magicPaperPara2b": "and the monthly rent is set at",
+    "magicVarRent": "@rent_amount",
+    "magicPaperPara2Suffix": "TL.",
+    "bubblePaperTitle": "SERVICE AGREEMENT",
+    "bubblePaperArticle": "Article 1",
+    "bubblePaperPara1": "This service agreement is entered into between",
+    "bubblePaperSelection": "John Doe",
+    "bubblePaperPara2": "as the service provider and TechBrand as the service recipient...",
+    "logicSidebarTitle": "Test Form",
+    "logicQuestion": "Pet PERMISSION",
+    "no": "No",
+    "yes": "Yes",
+    "logicPaperTitle": "LEASE AGREEMENT",
+    "logicPaperPara1": "The tenant may not make changes to fixtures without the written consent of the lessor. All costs incurred shall be borne by the tenant.",
+    "logicConditionText": "Show IF \"{{question}}\" = \"{{answer}}\"",
+    "logicConditionPara": "The tenant is personally responsible for any inconvenience or damage caused by their pet in the common areas of the building. Required hygiene standards must be maintained.",
+    "logicPaperPara2": "This agreement has been signed by the mutual consent of the parties and a copy has been delivered to each."
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "hostedForm": {
+    "loading": "Loading form...",
+    "notFoundOrAccess": "Document not found or you don't have access.",
+    "errorTitle": "Sorry 😕",
+    "fillRequiredFields": "Please fill in all required fields completely.",
+    "systemError": "System Error",
+    "pdfGenerationError": "An error occurred while generating the PDF.",
+    "connectionError": "A connection error occurred during the process.",
+    "successTitle": "Success!",
+    "successMessage": "Your document has been successfully created and downloaded to your device.",
+    "successNote": "You can open the downloaded PDF file to review it.",
+    "smartDocument": "Smart Document",
+    "noFieldsTitle": "No fields to fill in.",
+    "noFieldsSubtext": "You can download it directly as a PDF.",
+    "completeAndDownload": "Complete & Download PDF",
+    "pdfPreparing": "Preparing PDF..."
+  },
+  "userTemplateEdit": {
+    "loading": "Loading template...",
+    "errorLoading": "Could not load the template.",
+    "back": "Go Back"
+  },
+  "sidebar": {
+    "formFields": "Form fields",
+    "emptyTitle": "Your form is empty",
+    "emptyDescription": "Paste your text onto the canvas on the right or drag a document in. Select the words that will change and convert them into questions!",
+    "addField": "Add new field",
+    "insertedSuccess": "Inserted into text!",
+    "unnamedField": "Unnamed field",
+    "insertToText": "Insert into text",
+    "add": "Add",
+    "basic": "Basic",
+    "advanced": "Advanced",
+    "questionText": "Question text",
+    "questionPlaceholder": "e.g. Full Name",
+    "fieldType": "Field type",
+    "required": "Required",
+    "options": "Options",
+    "option": "Option",
+    "addOption": "Add option",
+    "variableName": "Variable name",
+    "auto": "(auto)",
+    "placeholderText": "Placeholder text",
+    "placeholderHint": "Guidance text...",
+    "addCondition": "Add display condition",
+    "condition": "Display condition",
+    "removeCondition": "Remove",
+    "conditionQuestion": "Depends on which question?",
+    "conditionValue": "Should match which answer?",
+    "select": "Select…",
+    "delete": "Delete"
+  },
+  "templateBuilder": {
+    "fieldType": {
+      "email": "Email",
+      "text": "Short Text",
+      "textarea": "Long Text",
+      "number": "Number",
+      "date": "Date",
+      "select": "Dropdown",
+      "radio": "Single Choice",
+      "checkbox": "Multiple Choice"
+    },
+    "themes": {
+      "daylight": "Daylight",
+      "midnight": "Midnight",
+      "library": "Library",
+      "forest": "Forest",
+      "glacier": "Glacier",
+      "sunset": "Sunset",
+      "ink": "Ink",
+      "lavender": "Lavender"
+    },
+    "variableFormat": {
+      "doubleCurly": "Double Curly Braces",
+      "square": "Square Brackets",
+      "doubleAngle": "Double Angle Brackets",
+      "singleCurly": "Single Curly Brace",
+      "atSign": "At Sign",
+      "exampleDoubleCurly": "{{name}}",
+      "exampleSquare": "[name]",
+      "exampleDoubleAngle": "<<name>>",
+      "exampleSingleCurly": "{name}",
+      "exampleAtSign": "@name"
+    },
+    "header": {
+      "myTemplates": "My Templates",
+      "templateNamePlaceholder": "Template name…",
+      "changeTheme": "Change Theme",
+      "design": "Design",
+      "preview": "Preview",
+      "saving": "Saving...",
+      "savedToCloud": "Saved to cloud",
+      "unsavedChanges": "Unsaved changes",
+      "saveFailed": "Save failed",
+      "share": "Share",
+      "download": "Download",
+      "save": "Save"
+    },
+    "toast": {
+      "fillRequiredFields": "Please fill in the required fields (marked in red).",
+      "savedSuccess": "Template saved successfully!",
+      "saveFailed": "Save failed."
+    },
+    "modals": {
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "selectPlaceholder": "Select...",
+      "magic": {
+        "title": "Magic Detection",
+        "description": "Select the variable format you previously used in your document.",
+        "noVariablesFound": "No variables in \"{{format}}\" format were found in the document.",
+        "variablesDetected": "{{count}} variables detected! ✨",
+        "infoBox": "All words in the selected format will be found, added as questions to the left sidebar, and automatically converted to the standard {{variable}} format in the text."
+      },
+      "conditional": {
+        "title": "Add Conditional Block",
+        "description": "Creates a block of text that will appear when a specific answer is given to the selected question.",
+        "whichQuestion": "Which question does this depend on?",
+        "whichAnswer": "Which answer triggers visibility?",
+        "insertBlock": "Insert Block",
+        "selectBoth": "Please select both a variable and a value.",
+        "blockInserted": "Conditional block inserted.",
+        "placeholderText": "Type your conditional text here..."
+      },
+      "share": {
+        "title": "Public Link",
+        "description": "Anyone you send this link to can fill out the form and instantly download a PDF.",
+        "copy": "Copy",
+        "copied": "Copied"
+      },
+      "pdf": {
+        "title": "Download PDF",
+        "description": "Your template will be converted to PDF format based on the data you entered.",
+        "preparing": "Preparing PDF...",
+        "downloaded": "PDF downloaded successfully!",
+        "error": "Error generating PDF!",
+        "confirmAndDownload": "Confirm & Download"
+      },
+      "backWarning": {
+        "returnToDesign": "Return to Design Mode?",
+        "returnToForm": "Return to Form?",
+        "designWarning": "If you return to design mode, any manual text edits you made on the live preview will be lost.",
+        "previewEditsLost": "If you return to the form, any manual text edits you made on the live preview will be lost.",
+        "previewInterrupted": "If you return to the form, you will interrupt the preview test mid-way.",
+        "stayInPreview": "Stay in Preview",
+        "goBackAnyway": "Go Back Anyway"
+      }
+    },
+    "previewMode": {
+      "testForm": "Test form",
+      "step": "Step {{current}}/2",
+      "noFields": "No fields to test.",
+      "fillRequired": "Please fill in all required fields.",
+      "reviewDocument": "Review Document",
+      "backToForm": "Back to Form"
+    },
+    "smartBar": {
+      "detectAll": "Detect All",
+      "magicTitle": "Automatically detects variables in different formats",
+      "magicHint": "Instantly turn hidden variables in your document into form fields.",
+      "triggerTitle": "Variable Format (Trigger)",
+      "custom": "Custom...",
+      "customPlaceholder": "e.g. //",
+      "select": "Select",
+      "import": "Import",
+      "conditionalBlock": "Conditional Block",
+      "toast": {
+        "triggerTooLong": "Trigger can be at most 5 characters.",
+        "slashReserved": "The '/' character is reserved for the command menu.",
+        "triggerUpdated": "Variable format updated.",
+        "fileTooLarge": "File size is too large (Max 2MB).",
+        "fileImported": "Document imported successfully!",
+        "parsingDocx": "Parsing {{fileName}}...",
+        "wordImported": "Word file imported successfully!",
+        "wordError": "An error occurred while reading the Word file.",
+        "pdfNotSupported": "PDF parsing is currently unavailable. Please use .docx instead.",
+        "unsupportedFile": "Please upload only .txt, .html, or .docx files."
+      }
+    },
+    "toolbar": {
+      "undo": "Undo",
+      "redo": "Redo",
+      "bold": "Bold (Ctrl+B)",
+      "italic": "Italic (Ctrl+I)",
+      "font": "Font",
+      "size": "Size",
+      "line": "Line",
+      "textColor": "Text Color",
+      "highlightColor": "Highlight Color",
+      "normal": "Normal",
+      "heading1": "Heading 1",
+      "heading2": "Heading 2",
+      "heading3": "Heading 3",
+      "alignLeft": "Align Left",
+      "alignCenter": "Align Center",
+      "alignRight": "Align Right",
+      "alignJustify": "Justify",
+      "bulletList": "Bullet List",
+      "orderedList": "Numbered List",
+      "insertVariable": "Insert Variable",
+      "insertSignature": "Insert Signature",
+      "signatureLeft": "Left Signature",
+      "signatureRight": "Right Signature",
+      "variables": "VARIABLES",
+      "noVariables": "No questions added",
+      "toast": {
+        "variableInserted": "Variable inserted"
+      }
+    },
+    "helpers": {
+      "signatureParty": "[Party / Title]",
+      "signature": "Signature"
+    }
+  },
+  "editorCanvas": {
+    "placeholder": "Paste your text or press '/' ...",
+    "dropDocument": "Drop your document here",
+    "supportedFormats": ".txt and .docx supported",
+    "importSuccess": "Document imported successfully!",
+    "parsingDocx": "Parsing {{fileName}}...",
+    "wordImportSuccess": "Word file imported successfully!",
+    "wordImportError": "Error reading Word file.",
+    "unsupportedFileType": "You can only upload .txt, .html or .docx files.",
+    "variables": "VARIABLES",
+    "noMatchingField": "No matching field",
+    "basicBlocks": "BASIC BLOCKS",
+    "noMatchingCommand": "No matching command",
+    "convertToQuestion": "Convert to question",
+    "questionTitlePlaceholder": "Question title",
+    "add": "Add",
+    "enterQuestionTitle": "Please enter a title for this question.",
+    "fieldAdded": "\"{{label}}\" added successfully! ✨",
+    "multiReplaceTitle": "Multiple Matches Found",
+    "multiReplaceDescription": "\"{{searchText}}\" appears {{count}} times in the document.",
+    "cancel": "Cancel",
+    "replaceSelected": "Replace selected",
+    "noOccurrencesSelected": "You haven't selected any matches.",
+    "slash": {
+      "h1": "Heading 1",
+      "h2": "Heading 2",
+      "h3": "Heading 3",
+      "bulletList": "Bullet List",
+      "orderedList": "Numbered List",
+      "pageBreak": "Page Break",
+      "signatureLeft": "Signature (Left)",
+      "signatureRight": "Signature (Right)"
+    }
+  },
+  "server": {
+    "tooManyRequests": "Too many requests. Please try again later.",
+    "pdfLimitReached": "Hourly document generation limit reached. Please try again later.",
+    "corsPolicyViolation": "CORS policy violation.",
+    "unexpectedError": "An unexpected server error occurred."
+  }
+}

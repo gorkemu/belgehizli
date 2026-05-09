@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styles from './TemplateList.module.css';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -11,16 +12,18 @@ import {
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
 
-const CATEGORIES = [
-  { id: 'all', label: 'Tüm Şablonlar', icon: <FolderKanban size={16} />, keywords: [] },
-  { id: 'gayrimenkul', label: 'Gayrimenkul', icon: <Home size={16} />, keywords: ['kira', 'taşınmaz', 'arsa', 'gayrimenkul', 'ev', 'tahliye', 'tapu', 'emlak'] },
-  { id: 'is-kariyer', label: 'İş & Kariyer', icon: <Briefcase size={16} />, keywords: ['işçi', 'işveren', 'istifa', 'freelancer', 'staj', 'cv', 'özgeçmiş', 'personel', 'bakım'] },
-  { id: 'ticari', label: 'Ticari', icon: <Landmark size={16} />, keywords: ['ortaklık', 'satış', 'teklif', 'danışmanlık', 'gizlilik', 'nda', 'devir', 'gider', 'pazarlama', 'hizmet'] },
-  { id: 'dilekce', label: 'Dilekçe & İhtarname', icon: <Scale size={16} />, keywords: ['dilekçe', 'ihtarname', 'şikayet', 'başvuru', 'tespit', 'tutanak'] },
-  { id: 'bireysel', label: 'Bireysel', icon: <User size={16} />, keywords: ['araç', 'borç', 'ödünç', 'emanet', 'eşya', 'fotoğraf', 'evlilik', 'miras', 'seyahat', 'muvafakatname'] }
+const CATEGORY_KEYS = [
+  { id: 'all', labelKey: 'templateList.categories.all', icon: <FolderKanban size={16} />, keywords: [] },
+  { id: 'gayrimenkul', labelKey: 'templateList.categories.realEstate', icon: <Home size={16} />, keywords: ['kira', 'taşınmaz', 'arsa', 'gayrimenkul', 'ev', 'tahliye', 'tapu', 'emlak'] },
+  { id: 'is-kariyer', labelKey: 'templateList.categories.jobCareer', icon: <Briefcase size={16} />, keywords: ['işçi', 'işveren', 'istifa', 'freelancer', 'staj', 'cv', 'özgeçmiş', 'personel', 'bakım'] },
+  { id: 'ticari', labelKey: 'templateList.categories.commercial', icon: <Landmark size={16} />, keywords: ['ortaklık', 'satış', 'teklif', 'danışmanlık', 'gizlilik', 'nda', 'devir', 'gider', 'pazarlama', 'hizmet'] },
+  { id: 'dilekce', labelKey: 'templateList.categories.petitions', icon: <Scale size={16} />, keywords: ['dilekçe', 'ihtarname', 'şikayet', 'başvuru', 'tespit', 'tutanak'] },
+  { id: 'bireysel', labelKey: 'templateList.categories.personal', icon: <User size={16} />, keywords: ['araç', 'borç', 'ödünç', 'emanet', 'eşya', 'fotoğraf', 'evlilik', 'miras', 'seyahat', 'muvafakatname'] }
 ];
 
 function TemplateList() {
+  const { t } = useTranslation();
+
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -38,13 +41,13 @@ function TemplateList() {
         setLoading(false);
       })
       .catch(error => {
-        let errorMessage = 'Şablonlar yüklenirken bir hata oluştu.';
-        if (error.response) errorMessage = `Sunucu hatası: ${error.response.status}`;
-        else if (error.request) errorMessage = 'Sunucuya ulaşılamadı. Lütfen ağ bağlantınızı kontrol edin.';
+        let errorMessage = t('templateList.errorLoading');
+        if (error.response) errorMessage = t('templateList.serverError', { status: error.response.status });
+        else if (error.request) errorMessage = t('templateList.networkError');
         setError(errorMessage);
         setLoading(false);
       });
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -65,7 +68,7 @@ function TemplateList() {
       template.description.toLowerCase().includes(searchTerm.toLowerCase());
     let matchesCategory = true;
     if (activeCategory !== 'all') {
-      const categoryObj = CATEGORIES.find(c => c.id === activeCategory);
+      const categoryObj = CATEGORY_KEYS.find(c => c.id === activeCategory);
       matchesCategory = categoryObj.keywords.some(kw =>
         template.name.toLowerCase().includes(kw) || template.slug.includes(kw)
       );
@@ -83,7 +86,9 @@ function TemplateList() {
       <div className={styles.statusContainerError}>
         <AlertCircle size={48} />
         <p>{error}</p>
-        <button onClick={() => window.location.reload()} className={styles.retryButton}>Yeniden Dene</button>
+        <button onClick={() => window.location.reload()} className={styles.retryButton}>
+          {t('templateList.retry')}
+        </button>
       </div>
     );
   }
@@ -91,15 +96,15 @@ function TemplateList() {
   return (
     <div className={styles.pageWrapper}>
       <Helmet>
-        <title>Açık Kütüphane - Belge Hızlı</title>
-        <meta name="description" content="Kira sözleşmesi, iş sözleşmesi, freelancer anlaşması ve dilekçe şablonları. Sıfırdan başlamayın, formu doldurun ve belgenizi anında alın." />
+        <title>{t('templateList.pageTitle')}</title>
+        <meta name="description" content={t('templateList.metaDescription')} />
         <link rel="canonical" href="https://www.belgehizli.com/sablonlar" />
       </Helmet>
 
       <div className={styles.disclaimerBanner}>
         <div className={styles.disclaimerInner}>
           <Info size={16} className={styles.disclaimerIcon} />
-          <span>Bu kütüphanedeki şablonlar genel kullanıma uygundur. Çok spesifik hukuki durumlarınız için profesyonel danışmanlık almanız önerilir.</span>
+          <span>{t('templateList.disclaimer')}</span>
         </div>
       </div>
 
@@ -108,28 +113,25 @@ function TemplateList() {
         <div className={styles.listHeader}>
           <div className={styles.badge}>
             <FileText size={13} />
-            <span>Açık Kütüphane</span>
+            <span>{t('templateList.badge')}</span>
           </div>
 
-          <h1 className={styles.sectionTitle}>Hazır Şablonlar</h1>
-          <p className={styles.subtitle}>
-            Sıfırdan başlamanıza gerek yok. İhtiyacınız olan taslağı seçin,
-            sistemin size soracağı soruları yanıtlayın ve saniyeler içinde eksiksiz PDF çıktınızı alın.
-          </p>
+          <h1 className={styles.sectionTitle}>{t('templateList.title')}</h1>
+          <p className={styles.subtitle}>{t('templateList.subtitle')}</p>
 
           <form className={styles.searchBar} onSubmit={handleSearchSubmit}>
             <Search className={styles.searchIcon} size={18} />
             <input
               type="text"
-              placeholder="Şablon ara (örn: kira, iş, dilekçe)..."
+              placeholder={t('templateList.searchPlaceholder')}
               value={searchTerm}
               onChange={handleSearchChange}
             />
-            <button type="submit">Hızlı Ara</button>
+            <button type="submit">{t('templateList.quickSearch')}</button>
           </form>
 
           <div className={styles.categoryWrapper}>
-            {CATEGORIES.map(category => (
+            {CATEGORY_KEYS.map(category => (
               <button
                 key={category.id}
                 onClick={() => {
@@ -140,7 +142,7 @@ function TemplateList() {
                 className={`${styles.categoryTab} ${activeCategory === category.id ? styles.categoryTabActive : ''}`}
               >
                 {category.icon}
-                <span>{category.label}</span>
+                <span>{t(category.labelKey)}</span>
               </button>
             ))}
           </div>
@@ -174,7 +176,7 @@ function TemplateList() {
                     />
                     <div className={styles.imageOverlay}>
                       <div className={styles.overlayAction}>
-                        <FileText size={18} /> Formu Görüntüle
+                        <FileText size={18} /> {t('templateList.viewForm')}
                       </div>
                     </div>
                   </div>
@@ -183,7 +185,7 @@ function TemplateList() {
                     <p className={styles.cardDescription}>{template.description}</p>
                     <div className={styles.cardFooter}>
                       <span className={styles.cardLinkText}>
-                        Şablonu İncele <ArrowRight size={16} />
+                        {t('templateList.examineTemplate')} <ArrowRight size={16} />
                       </span>
                     </div>
                   </div>
@@ -194,7 +196,7 @@ function TemplateList() {
             {visibleCount < filteredTemplates.length && (
               <div className={styles.loadMoreContainer}>
                 <button onClick={handleLoadMore} className={styles.loadMoreButton}>
-                  Daha Fazla Göster
+                  {t('templateList.loadMore')}
                 </button>
               </div>
             )}
@@ -204,10 +206,10 @@ function TemplateList() {
             <div className={styles.noDataIconWrap}>
               <Search size={32} />
             </div>
-            <h3>Şablon bulunamadı</h3>
-            <p>Aradığınız kriterlere uygun bir taslak kütüphanemizde yer almıyor.</p>
+            <h3>{t('templateList.noTemplateTitle')}</h3>
+            <p>{t('templateList.noTemplateText')}</p>
             <button onClick={() => { setSearchTerm(''); setActiveCategory('all'); }} className={styles.clearSearchButton}>
-              Filtreleri Temizle
+              {t('templateList.clearFilters')}
             </button>
           </div>
         )}
