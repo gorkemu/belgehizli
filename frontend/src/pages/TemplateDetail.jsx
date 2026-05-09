@@ -448,10 +448,11 @@ function TemplateDetail() {
                             <label className={styles.termsCheckboxContainer}>
                                 <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
                                 <span className={styles.termsLabel}>
+                                    {t('templateDetail.termsPrefix')}
                                     <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>{t('templateDetail.termsOfService')}</Link>
                                     {' '}{t('templateDetail.and')}{' '}
                                     <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>{t('templateDetail.privacyPolicy')}</Link>
-                                    {' '}{t('templateDetail.termsSuffix')}
+                                    {t('templateDetail.termsSuffix')}
                                 </span>
                             </label>
 
