@@ -2,11 +2,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CookieConsent from 'react-cookie-consent';
+import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
 
 const CookieBanner = ({
-  buttonText = "Kabul Et",
-  declineButtonText = "Reddet",
+  buttonText,
+  declineButtonText,
   cookieName = "belgeHizliCookieConsent",
   expires = 150,
 
@@ -38,24 +39,30 @@ const CookieBanner = ({
   privacyPolicyPath = "/gizlilik-politikasi",
   children 
 }) => {
+  const { t } = useTranslation();
+
+  // Props ile gelmeyen metinler için çeviri anahtarlarını kullan
+  const acceptText = buttonText || t('cookie.accept');
+  const declineText = declineButtonText || t('cookie.decline');
+
   const defaultContent = (
     <>
-      Bu web sitesi, kullanıcı deneyimini geliştirmek ve site trafiğini analiz etmek için çerezleri kullanır. Daha fazla bilgi için{" "}
+      {t('cookie.description')}{" "}
       <Link
         to={privacyPolicyPath}
         style={{ color: "var(--gray-300)", textDecoration: "underline" }}
       >
-        Gizlilik Politikamızı
+        {t('cookie.privacyPolicy')}
       </Link>{" "}
-      okuyun.
+      {t('cookie.readMore')}
     </>
   );
 
   return (
     <CookieConsent
       location="bottom"
-      buttonText={buttonText}
-      declineButtonText={declineButtonText}
+      buttonText={acceptText}
+      declineButtonText={declineText}
       cookieName={cookieName}
       style={style}
       buttonStyle={buttonStyle}

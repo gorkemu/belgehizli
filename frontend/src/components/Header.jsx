@@ -1,12 +1,15 @@
 // frontend/src/components/Header.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Search, LayoutDashboard } from 'lucide-react';
+import { Search, LayoutDashboard, Globe } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 import Button from '../components/ui/Button';
 
 function Header() {
+  const { t, i18n } = useTranslation();
+
   const [scrolled, setScrolled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -29,6 +32,11 @@ function Header() {
 
   const dashboardPath = user?.currentOrganization?.type === 'CLIENT' ? '/portal' : '/panel';
 
+  const toggleLanguage = () => {
+    const newLang = i18n.language.startsWith('tr') ? 'en' : 'tr';
+    i18n.changeLanguage(newLang);
+  };
+
   return (
     <>
       <div className={styles.headerSpacer} />
@@ -46,48 +54,54 @@ function Header() {
               <Search className={styles.searchIcon} size={16} />
               <input
                 type="text"
-                placeholder="Hazır şablon ara (örn: kira, dilekçe)..."
+                placeholder={t('header.searchPlaceholder')}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
               />
-              <button type="submit" className={styles.searchBtn}>Bul</button>
+              <button type="submit" className={styles.searchBtn}>{t('header.find')}</button>
             </form>
           </div>
 
           <div className={styles.rightSpacer}>
-            {user ? (
-
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => navigate('/panel')}
-                style={{width: '240px', height: '50px'}}
-                leftIcon={<LayoutDashboard size={16} />}
+            {/* Dil Değiştirici */}
+            <div className={styles.languageSwitcher}>
+              <button
+                className={`${styles.langOption} ${i18n.language.startsWith('tr') ? styles.langOptionActive : ''}`}
+                onClick={() => {
+                  if (!i18n.language.startsWith('tr')) i18n.changeLanguage('tr');
+                }}
+                aria-label="Türkçe"
+                aria-pressed={i18n.language.startsWith('tr')}
               >
-                <span>Çalışma Alanı</span>
+                TR
+              </button>
+              <button
+                className={`${styles.langOption} ${i18n.language.startsWith('en') ? styles.langOptionActive : ''}`}
+                onClick={() => {
+                  if (!i18n.language.startsWith('en')) i18n.changeLanguage('en');
+                }}
+                aria-label="English"
+                aria-pressed={i18n.language.startsWith('en')}
+              >
+                EN
+              </button>
+            </div>
+
+            {user ? (
+              <Button variant="primary" size="lg" onClick={() => navigate('/panel')} leftIcon={<LayoutDashboard size={16} />}>
+                <span>{t('header.workspace')}</span>
               </Button>
             ) : (
               <div className={styles.authButtons}>
-                <Button
-                variant="secondary"
-                size="lg"
-                onClick={() => navigate('/giris-yap')}
-                style={{width: '160px', height: '40px'}}
-              >
-                <span>Giriş</span>
-              </Button>
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() => navigate('/kayit-ol')}
-                style={{width: '160px', height: '40px'}}
-              >
-                <span>Kayıt Ol</span>
-              </Button>
+                <Button variant="secondary" onClick={() => navigate('/giris-yap')}>
+                  <span>{t('header.login')}</span>
+                </Button>
+                <Button variant="primary" onClick={() => navigate('/kayit-ol')}>
+                  <span>{t('header.register')}</span>
+                </Button>
               </div>
             )}
           </div>
-
         </div>
       </header>
     </>

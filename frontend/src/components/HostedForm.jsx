@@ -3,10 +3,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Handlebars from 'handlebars';
+import { useTranslation } from 'react-i18next';
 import DocumentForm from './DocumentForm';
 import styles from './HostedForm.module.css';
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, FileText, Download, Loader2, AlertCircle } from 'lucide-react';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
@@ -34,6 +36,7 @@ if (!Handlebars.helpers.eq) {
 }
 
 const HostedForm = () => {
+    const { t } = useTranslation();
     const { slug } = useParams();
 
     const [projectData, setProjectData] = useState(null);
@@ -55,18 +58,23 @@ const HostedForm = () => {
                 setLoading(false);
             } catch (err) {
                 console.error("Yükleme hatası:", err);
-                setError("Belge bulunamadı veya erişim yetkiniz yok.");
+                const message = getUserFriendlyMessage(
+                    err.response?.data,
+                    'hostedForm.notFoundOrAccess',
+                    t
+                );
+                setError(message);
                 setLoading(false);
             }
         };
         fetchProjectOrTemplate();
-    }, [slug]);
+    }, [slug, t]);
 
     const handleSubmit = async () => {
         if (formRef.current) {
             const isValid = formRef.current.handleSubmit();
             if (!isValid) {
-                alert("Lütfen tüm zorunlu alanları eksiksiz doldurun.");
+                alert(t('hostedForm.fillRequiredFields'));
                 return;
             }
         }
@@ -119,15 +127,15 @@ const HostedForm = () => {
         } catch (err) {
             console.error("Derleme hatası:", err);
             if (err.response && err.response.data instanceof Blob) {
-                const errorText = await err.response.data.text();
                 try {
+                    const errorText = await err.response.data.text();
                     const errJson = JSON.parse(errorText);
-                    alert(`Sistem Hatası: ${errJson.message}`);
+                    alert(`${t('hostedForm.systemError')}: ${errJson.message}`);
                 } catch (e) {
-                    alert("PDF oluşturulurken bir hata oluştu.");
+                    alert(t('hostedForm.pdfGenerationError'));
                 }
             } else {
-                alert("İşlem sırasında bir bağlantı hatası oluştu.");
+                alert(t('hostedForm.connectionError'));
             }
             setIsSubmitting(false);
         }
@@ -136,14 +144,14 @@ const HostedForm = () => {
     if (loading) return (
         <div className={styles.centerScreen}>
             <Loader2 size={44} className={styles.spinner} />
-            <p>Form yükleniyor...</p>
+            <p>{t('hostedForm.loading')}</p>
         </div>
     );
 
     if (error) return (
         <div className={styles.centerScreen}>
             <AlertCircle size={56} className={styles.errorIcon} />
-            <h2>Üzgünüz 😕</h2>
+            <h2>{t('hostedForm.errorTitle')}</h2>
             <p>{error}</p>
         </div>
     );
@@ -154,12 +162,12 @@ const HostedForm = () => {
                 <div className={styles.successIconWrapper}>
                     <CheckCircle2 size={44} color="#10b981" />
                 </div>
-                <h2 className={styles.successTitle}>İşlem Başarılı!</h2>
+                <h2 className={styles.successTitle}>{t('hostedForm.successTitle')}</h2>
                 <p className={styles.successMessage}>
-                    Belgeniz başarıyla oluşturuldu ve cihazınıza indirildi. 
+                    {t('hostedForm.successMessage')}
                 </p>
                 <div className={styles.successNote}>
-                    <Download size={18} /> İndirilen PDF dosyasını açarak kontrol edebilirsiniz.
+                    <Download size={18} /> {t('hostedForm.successNote')}
                 </div>
             </div>
         </div>
@@ -189,7 +197,7 @@ const HostedForm = () => {
                 <div className={styles.formWrapper}>
                     <div className={styles.formHeader}>
                         <div className={styles.headerBadge}>
-                            <FileText size={16} /> Akıllı Belge
+                            <FileText size={16} /> {t('hostedForm.smartDocument')}
                         </div>
                         <h1 className={styles.title}>{projectData.name}</h1>
                         {projectData.description && (
@@ -208,8 +216,8 @@ const HostedForm = () => {
                         ) : (
                             <div className={styles.emptyFieldsMessage}>
                                 <FileText size={48} className={styles.emptyIcon} />
-                                <p className={styles.emptyTitle}>Doldurulacak bir alan bulunmuyor.</p>
-                                <p className={styles.emptySubtext}>Doğrudan PDF olarak indirebilirsiniz.</p>
+                                <p className={styles.emptyTitle}>{t('hostedForm.noFieldsTitle')}</p>
+                                <p className={styles.emptySubtext}>{t('hostedForm.noFieldsSubtext')}</p>
                             </div>
                         )}
                     </div>
@@ -221,9 +229,9 @@ const HostedForm = () => {
                             disabled={isSubmitting || (formFields.length > 0 && !isFormValid)}
                         >
                             {isSubmitting ? (
-                                <><Loader2 size={20} className={styles.btnSpinner} /> PDF Hazırlanıyor...</>
+                                <><Loader2 size={20} className={styles.btnSpinner} /> {t('hostedForm.pdfPreparing')}</>
                             ) : (
-                                'Tamamla ve PDF İndir'
+                                t('hostedForm.completeAndDownload')
                             )}
                         </button>
                         <div className={styles.watermark}>

@@ -1,4 +1,6 @@
+// frontend/src/features/TemplateBuilder/components/Sidebar/index.jsx
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../../hooks/useTemplateBuilder';
 import { generateVarName, getTriggerSymbols } from '../../utils/helpers';
 import globalStyles from '../../TemplateBuilder.module.css';
@@ -10,6 +12,7 @@ import { Plus, Lightbulb } from 'lucide-react';
 import SortableFieldCard from './SortableFieldCard';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   const { 
     formData, setFormData, 
     formErrors, setFormErrors,
@@ -82,13 +85,13 @@ const Sidebar = () => {
     if (!editorInstance) return;
     const sym = getTriggerSymbols(triggerSymbol);
     editorInstance.chain().focus().insertContent({ type: 'text', text: ` ${sym.s}${name}${sym.e} ` }).run();
-    showToast('Metne eklendi!', 'success');
+    showToast(t('sidebar.insertedSuccess'), 'success');
   };
 
   return (
     <aside className={styles.left}>
       <div className={styles.panelHead}>
-        <span className={styles.panelTitle}>Form alanları</span>
+        <span className={styles.panelTitle}>{t('sidebar.formFields')}</span>
         <span className={styles.fieldCount}>{formData.fields.length}</span>
       </div>
       
@@ -96,8 +99,8 @@ const Sidebar = () => {
         {formData.fields.length === 0 ? (
           <div className={styles.emptyFieldsState}>
             <Lightbulb size={32} color="var(--warning)" style={{ marginBottom: 12 }} />
-            <h4>Formunuz henüz boş</h4>
-            <p>Sağdaki kağıda metninizi yapıştırın veya belge sürükleyin. Değişecek kelimeleri fareyle seçerek soruya dönüştürün!</p>
+            <h4>{t('sidebar.emptyTitle')}</h4>
+            <p>{t('sidebar.emptyDescription')}</p>
           </div>
         ) : (
           <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -128,7 +131,7 @@ const Sidebar = () => {
           </DndContext>
         )}
         <button className={styles.addFieldBtn} onClick={addField}>
-          <Plus size={16} /> Yeni alan ekle
+          <Plus size={16} /> {t('sidebar.addField')}
         </button>
       </div>
     </aside>

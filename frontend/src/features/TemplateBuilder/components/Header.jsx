@@ -1,6 +1,7 @@
 // frontend/src/features/TemplateBuilder/components/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
 import styles from './Header.module.css';
@@ -14,6 +15,7 @@ import {
 import { THEMES } from '../utils/constants';
 
 const Header = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { 
     formData, setFormData, 
@@ -31,30 +33,22 @@ const Header = () => {
   } = useTemplateBuilder();
 
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-
-  // Theme Popover State
   const [themePopover, setThemePopover] = useState(false);
 
-  // Kaydetme İşlemi (Context'teki editorInstance'ı kullanır)
+
   const handleSaveClick = async () => {
     const err = {};
 
-    // 1. Şablon Adı Kontrolü
     if (!formData.name?.trim()) err.name = true;
 
-    // 2. İçerik (Editör) Kontrolü
-    // SADECE Tasarım modundaysak editörden veri al, Önizlemedeysek şablonun orijinal halini koru!
     const currentContent = (mode === 'build' && editorInstance) 
       ? editorInstance.getHTML() 
       : (formData.content || '');
-    const stripped = currentContent.replace(/(<([^>]+)>)/gi, '').trim(); // Sadece HTML etiketlerini değil, içindeki metni kontrol eder
+    const stripped = currentContent.replace(/(<([^>]+)>)/gi, '').trim();
     if (!stripped) err.content = true;
 
-    // 3. Form Alanları (Sorular) Kontrolü
     formData.fields.forEach((f, i) => {
       if (!f.label?.trim()) err[`field_${i}`] = true;
-
-      // Select, radio veya checkbox ise boş seçenek bırakılmış mı kontrolü
       if (
         ['select', 'radio', 'checkbox'].includes(f.fieldType) &&
         (!f.options?.length || f.options.some(o => !o.trim()))
@@ -63,29 +57,24 @@ const Header = () => {
       }
     });
 
-    // 4. Hata Varsa İşlemi Durdur ve Kullanıcıyı Uyar
     if (Object.keys(err).length > 0) {
       setFormErrors(err);
-      showToast('Lütfen eksik alanları (kırmızı) tamamlayın.', 'error');
+      showToast(t('templateBuilder.toast.fillRequiredFields'), 'error');
 
-      // Hatalı olan ilk form alanının index'ini bul
       const errorFieldIndex = Object.keys(err)
         .find(k => k.startsWith('field_') || k.startsWith('options_'))
         ?.split('_')[1];
-
-      // Eğer hata bir form alanındaysa, o alanın (kartın) detaylarını otomatik aç
       if (errorFieldIndex !== undefined) {
         const id = formData.fields[errorFieldIndex]?.id;
         if (id && !expandedFields.includes(id)) {
           setExpandedFields(prev => [...prev, id]);
         }
       }
-      return; // Kaydetmeyi iptal et
+      return;
     }
 
-    // 5. Her Şey Yolundaysa Kaydetme İşlemine Geç
     setFormErrors({});
-    setSaveStatus('saving'); // Header'daki bulut ikonunu "Kaydediliyor..." spinner'ına çevirir
+    setSaveStatus('saving');
 
     try {
       if (onSave) {
@@ -103,17 +92,16 @@ const Header = () => {
           new Promise(resolve => setTimeout(resolve, 600))
         ]);
 
-        showToast('Şablon başarıyla kaydedildi!', 'success');
+        showToast(t('templateBuilder.toast.savedSuccess'), 'success');
         setSaveStatus('saved');
       }
     } catch (error) {
       console.error("Kaydetme Hatası:", error);
-      showToast('Kaydetme başarısız oldu.', 'error');
+      showToast(t('templateBuilder.toast.saveFailed'), 'error');
       setSaveStatus('error');
     }
   };
 
-  // --- SESSİZ OTO-KAYDETME FONKSİYONU ---
   const handleAutoSave = async () => {
     if (!onSave) return;
     setSaveStatus('saving');
@@ -129,7 +117,7 @@ const Header = () => {
           fields: getCleanFields(),
           settings: { ...formData.settings, variableTrigger: triggerSymbol }
         }),
-        new Promise(resolve => setTimeout(resolve, 600)) // UX gecikmesi
+        new Promise(resolve => setTimeout(resolve, 600))
       ]);
       setSaveStatus('saved');
     } catch (error) {
@@ -138,31 +126,23 @@ const Header = () => {
     }
   };
 
-  // --- OTO-KAYDETME TETİKLEYİCİSİ (2 Saniye) ---
   useEffect(() => {
-    // Form tamamen boşken (ilk açılışta) oto-kayıt yapma
     if (!formData.name && formData.fields.length === 0) return;
-
-    // Kullanıcı bir şey değiştirdiği an bulut ikonunu "Değişiklikler var" yap
     setSaveStatus('unsaved');
-
-    // 2 saniye boyunca kullanıcıdan yeni bir tuş vuruşu gelmezse kaydet
     const timer = setTimeout(() => {
       handleAutoSave();
     }, 2000);
-
-    // Eğer 2 saniye dolmadan kullanıcı bir şey yazarsa, eski sayacı iptal et (Debounce)
     return () => clearTimeout(timer);
-  }, [formData]); // formData her değiştiğinde bu efekt çalışır
+  }, [formData]);
 
-  return (
+    return (
     <header className={styles.header}>
       <Button 
         variant="secondary" 
         onClick={() => navigate('/panel/projects')} 
         leftIcon={<ArrowLeft size={16} />}
       >
-        <span>Şablonlarım</span>
+        <span>{t('templateBuilder.header.myTemplates')}</span>
       </Button>
 
       <input
@@ -172,12 +152,12 @@ const Header = () => {
           setFormData(p => ({ ...p, name: e.target.value }));
           if (formErrors.name) setFormErrors(p => ({ ...p, name: false }));
         }}
-        placeholder="Şablon adı…"
+        placeholder={t('templateBuilder.header.templateNamePlaceholder')}
       />
 
       <div className={styles.compactThemeDropdown} id="tb-theme-btn">
-        <button onClick={() => setThemePopover(!themePopover)} className={styles.themeActiveBtn} title="Temayı Değiştir">
-          {THEMES.find(t => t.id === editorTheme)?.emoji}
+        <button onClick={() => setThemePopover(!themePopover)} className={styles.themeActiveBtn} title={t('templateBuilder.header.changeTheme')}>
+          {THEMES.find(th => th.id === editorTheme)?.emoji}
         </button>
 
         {themePopover && (
@@ -185,16 +165,16 @@ const Header = () => {
             <div className={globalStyles.popoverOverlay} onClick={() => setThemePopover(false)} />
             <div style={{ position: 'absolute', top: '100%', right: '0', marginTop: '8px', zIndex: 99999 }}>
               <div className={globalStyles.dropdownMenuFixed} style={{ minWidth: '150px' }}>
-                {THEMES.map(t => (
+                {THEMES.map(theme => (
                   <button
-                    key={t.id}
-                    onClick={() => { handleThemeChange(t.id); setThemePopover(false); }}
+                    key={theme.id}
+                    onClick={() => { handleThemeChange(theme.id); setThemePopover(false); }}
                     className={globalStyles.dropdownItem}
                     style={{ justifyContent: 'flex-start', gap: '8px' }}
                   >
-                    <span style={{ fontSize: '1.2rem' }}>{t.emoji}</span>
-                    <span style={{ fontWeight: editorTheme === t.id ? '800' : '600', color: editorTheme === t.id ? 'var(--text-primary)' : 'inherit' }}>
-                      {t.label}
+                    <span style={{ fontSize: '1.2rem' }}>{theme.emoji}</span>
+                    <span style={{ fontWeight: editorTheme === theme.id ? '800' : '600', color: editorTheme === theme.id ? 'var(--text-primary)' : 'inherit' }}>
+                      {t(theme.label)}
                     </span>
                   </button>
                 ))}
@@ -208,7 +188,6 @@ const Header = () => {
         <button 
           className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`} 
           onClick={() => {
-            // Önizlemenin hangi adımında olursa olsun, tasarıma geçerken uyar
             if (mode === 'preview') {
               setShowBackWarning('build');
             } else {
@@ -216,7 +195,7 @@ const Header = () => {
             }
           }}
         >
-          <Wrench size={15} /> Tasarım
+          <Wrench size={15} /> {t('templateBuilder.header.design')}
         </button>
         
         <button 
@@ -224,16 +203,16 @@ const Header = () => {
           className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`} 
           onClick={() => setMode('preview')}
         >
-          <Eye size={15} /> Önizleme
+          <Eye size={15} /> {t('templateBuilder.header.preview')}
         </button>
       </div>
 
       <div className={styles.headerRight}>
         <div className={styles.autoSaveIndicator}>
-          {saveStatus === 'saving' && <><Loader2 size={14} className={styles.spinnerIcon} /> Kaydediliyor...</>}
-          {saveStatus === 'saved' && <><Cloud size={14} style={{ color: 'var(--success)' }} /> Buluta kaydedildi</>}
-          {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> Değişiklikler var</>}
-          {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: 'var(--danger)' }} /> Kaydedilemedi</>}
+          {saveStatus === 'saving' && <><Loader2 size={14} className={styles.spinnerIcon} /> {t('templateBuilder.header.saving')}</>}
+          {saveStatus === 'saved' && <><Cloud size={14} style={{ color: 'var(--success)' }} /> {t('templateBuilder.header.savedToCloud')}</>}
+          {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> {t('templateBuilder.header.unsavedChanges')}</>}
+          {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: 'var(--danger)' }} /> {t('templateBuilder.header.saveFailed')}</>}
         </div>
 
         <div className={styles.headerActionsDivider} />
@@ -242,10 +221,10 @@ const Header = () => {
           id="tb-share-btn" 
           variant="secondary" 
           onClick={() => setIsShareModalOpen(true)} 
-          title="Genel Bağlantı"
+          title={t('templateBuilder.header.share')}
           leftIcon={<LinkIcon size={15} />}
         >
-          <span>Paylaş</span>
+          <span>{t('templateBuilder.header.share')}</span>
         </Button>
 
         {mode === 'preview' && (
@@ -255,7 +234,7 @@ const Header = () => {
             isLoading={isGeneratingPdf}
             leftIcon={!isGeneratingPdf && <Printer size={15} />}
           >
-            <span>İndir</span>
+            <span>{t('templateBuilder.header.download')}</span>
           </Button>
         )}
 
@@ -265,7 +244,7 @@ const Header = () => {
           isLoading={saveStatus === 'saving'}
           leftIcon={<Save size={15} />}
         >
-          <span>Kaydet</span>
+          <span>{t('templateBuilder.header.save')}</span>
         </Button>
       </div>
     </header>

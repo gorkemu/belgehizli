@@ -1,0 +1,929 @@
+{
+  "header": {
+    "searchPlaceholder": "Hazır şablon ara (örn: kira, dilekçe)...",
+    "find": "Bul",
+    "workspace": "Çalışma Alanı",
+    "login": "Giriş",
+    "register": "Kayıt Ol"
+  },
+  "projects": {
+    "title": "Tüm Şablonlar",
+    "subtitle": "Sözleşme ve form şablonlarınızı tek bir yerden yönetin.",
+    "newTemplate": "Yeni Şablon",
+    "loading": "Şablonlarınız yükleniyor...",
+    "emptyTitle": "Henüz bir şablonunuz yok",
+    "emptyText": "Hemen yeni bir akıllı form şablonu oluşturarak çalışmaya başlayın.",
+    "createFirst": "İlk Şablonunuzu Oluşturun",
+    "noDescription": "Açıklama girilmemiş.",
+    "modalCreateTitle": "Yeni Şablon Oluştur",
+    "templateName": "Şablon Adı *",
+    "templateNamePlaceholder": "Örn: İş Sözleşmesi",
+    "description": "Açıklama (Opsiyonel)",
+    "descriptionPlaceholder": "Bu şablon ne hakkında?",
+    "cancel": "Vazgeç",
+    "creating": "Oluşturuluyor...",
+    "createAndStart": "Oluştur ve Başla",
+    "successCreated": "Şablon başarıyla oluşturuldu.",
+    "errorLoading": "Belgeler yüklenirken bir hata oluştu.",
+    "errorCreating": "Oluşturulurken bir hata oluştu.",
+    "toastDeleted": "Şablon kalıcı olarak silindi.",
+    "toastDeleteError": "Silinirken bir hata oluştu.",
+    "deleteConfirmTitle": "Şablonu Sil",
+    "deleteConfirmText": "{{name}} adlı şablonu silmek istediğinize emin misiniz?",
+    "deleteConfirm": "Kalıcı Olarak Sil",
+    "deleting": "Siliniyor...",
+    "deleteTooltip": "Sil",
+    "requiredName": "Belge adı zorunludur.",
+    "createdSuccess": "Şablon başarıyla oluşturuldu.",
+    "createError": "Belge oluşturulurken bir hata meydana geldi.",
+    "fetchError": "Belgeler alınırken bir hata oluştu.",
+    "notFound": "Belge bulunamadı veya yetkiniz yok.",
+    "fetchDetailError": "Belge detayları alınırken bir hata oluştu.",
+    "updatedSuccess": "Şablon başarıyla güncellendi.",
+    "updateError": "Belge güncellenirken bir hata oluştu.",
+    "deletedSuccess": "Belge başarıyla silindi.",
+    "deleteError": "Belge silinirken bir hata oluştu.",
+    "pdfGenerationError": "PDF oluşturulamadı.",
+    "loadError": "Belge yüklenirken hata oluştu.",
+    "htmlMissing": "PDF oluşturmak için HTML içeriği eksik.",
+    "serverError": "Sunucu hatası oluştu."
+  },
+  "templates": {
+    "fetchAllError": "Şablonlar alınırken bir hata oluştu.",
+    "notFoundBySlug": "Şablon bulunamadı",
+    "notFoundById": "Şablon bulunamadı",
+    "noSlugAssigned": "Şablon bulundu ancak slug atanmamış.",
+    "notFound": "Şablon bulunamadı.",
+    "fetchDetailError": "Şablon detayı alınırken bir hata oluştu.",
+    "redirectError": "Eski ID yönlendirmesi sırasında bir hata oluştu.",
+    "consentMissing": "Kullanıcı onayı bilgileri eksik.",
+    "generateError": "Belge oluşturulurken bir sunucu hatası meydana geldi."
+  },
+  "dashboard": {
+    "toastDeleted": "Belge kalıcı olarak silindi.",
+    "toastDeleteError": "Belge silinirken bir hata oluştu.",
+    "toastRenamed": "Belge adı güncellendi.",
+    "toastRenameError": "İsim değiştirilemedi.",
+    "loading": "Çalışma alanınız hazırlanıyor...",
+    "deleteTitle": "Belgeyi Sil",
+    "deleteConfirmText": "Bu belgeyi ve içerdiği tüm verileri kalıcı olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.",
+    "cancel": "Vazgeç",
+    "deletePermanently": "Kalıcı Olarak Sil",
+    "greeting": "Çalışma alanınıza hoş geldiniz, {{name}}.",
+    "subtitle": "Yeni bir akıllı şablon oluşturun veya son düzenlediğiniz formlara hızla geri dönün.",
+    "createNew": "Yeni Şablon Oluştur",
+    "createDesc": "Form ve metin bloklarıyla akıllı sözleşmeler hazırlayın.",
+    "library": "Açık Kütüphane",
+    "libraryDesc": "Hazır şablonları keşfedin ve anında kullanın.",
+    "recentlyEdited": "Son Düzenlenenler",
+    "viewAll": "Tümünü Gör",
+    "emptyProjects": "Henüz bir şablonunuz bulunmuyor. Yeni bir şablon oluşturarak başlayın.",
+    "rename": "Yeniden Adlandır"
+  },
+  "dashboardLayout": {
+    "overview": "Özet",
+    "myTemplates": "Şablonlarım",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "personalWorkspace": "Kişisel Çalışma Alanı",
+    "backToHome": "Ana Sayfaya Dön",
+    "accountSettings": "Hesap Ayarları",
+    "logout": "Güvenli Çıkış"
+  },
+  "settings": {
+    "pageTitle": "Hesap Ayarları",
+    "pageSubtitle": "Kişisel bilgilerinizi ve güvenlik ayarlarınızı yönetin.",
+    "workspaceInfo": "Çalışma Alanı Bilgileri",
+    "workspaceDesc": "Sisteme kayıtlı olduğunuz hesap detayları.",
+    "registeredEmail": "Kayıtlı E-posta Adresi",
+    "personalInfo": "Kişisel Bilgiler",
+    "personalInfoDesc": "Belgelerde ve panellerde görünecek adınız.",
+    "fullName": "Ad Soyad",
+    "fullNamePlaceholder": "Tam adınızı girin",
+    "security": "Güvenlik & Şifre",
+    "securityDesc": "Hesap şifrenizi değiştirmek istiyorsanız bu alanı kullanın.",
+    "currentPassword": "Mevcut Şifreniz",
+    "newPassword": "Yeni Şifre",
+    "newPasswordPlaceholder": "En az 6 karakter",
+    "confirmPassword": "Yeni Şifre (Tekrar)",
+    "confirmPasswordPlaceholder": "Yeni şifrenizi doğrulayın",
+    "saveChanges": "Değişiklikleri Kaydet",
+    "saving": "Kaydediliyor...",
+    "profileUpdated": "Bilgileriniz başarıyla güncellendi.",
+    "currentPasswordRequired": "Lütfen mevcut şifrenizi girin.",
+    "passwordMinLength": "Yeni şifre en az 6 karakter olmalıdır.",
+    "passwordsMismatch": "Yeni şifreler eşleşmiyor.",
+    "updateFailed": "Güncelleme başarısız oldu."
+  },
+  "auth": {
+    "tooManyFailedAttempts": "Çok fazla başarısız giriş denemesi yaptınız. Lütfen {{minutes}} dakika sonra tekrar deneyin.",
+    "tooManyRegistrations": "Çok fazla hesap oluşturma isteği. Lütfen {{hours}} saat sonra tekrar deneyin.",
+    "requiredFieldsMissing": "Lütfen zorunlu alanları doldurun.",
+    "passwordTooWeak": "Şifreniz en az 8 karakter uzunluğunda olmalı; en az bir büyük harf, bir küçük harf ve bir rakam içermelidir.",
+    "emailAlreadyUsed": "Bu e-posta adresi zaten kullanımda.",
+    "registrationFailed": "Hesabınız oluşturulurken sistemsel bir hata meydana geldi.",
+    "invalidCredentials": "Geçersiz e-posta veya şifre.",
+    "accountLocked": "Hesabınız çok fazla hatalı giriş denemesi nedeniyle geçici olarak kilitlendi. Lütfen {{minutes}} dakika sonra tekrar deneyin.",
+    "accountSuspended": "Hesabınız askıya alınmış.",
+    "serverError": "Sunucu hatası.",
+    "missingMfaFields": "Eksik bilgi gönderildi.",
+    "invalidToken": "Geçersiz doğrulama jetonu.",
+    "userNotFound": "Kullanıcı bulunamadı.",
+    "invalidOtp": "Geçersiz veya süresi dolmuş kod. Lütfen tekrar giriş yapın.",
+    "mfaSessionExpired": "Doğrulama oturumunun süresi dolmuş. Lütfen tekrar giriş yapın.",
+    "userInfoFetchFailed": "Kullanıcı bilgileri alınamadı.",
+    "enterEmail": "Lütfen e-posta adresinizi girin.",
+    "resetLinkSent": "Şifre sıfırlama bağlantısı gönderildi.",
+    "forgotPasswordError": "İşlem sırasında bir hata oluştu.",
+    "invalidRequest": "Geçersiz istek. Lütfen tüm alanları eksiksiz doldurun.",
+    "passwordMinLength": "Şifreniz en az {{min}} karakter olmalıdır.",
+    "resetLinkInvalid": "Sıfırlama bağlantınız geçersiz veya süresi dolmuş.",
+    "passwordSetSuccess": "Şifreniz başarıyla oluşturuldu. Artık giriş yapabilirsiniz.",
+    "passwordUpdateError": "Şifre güncellenirken bir hata oluştu.",
+    "incorrectCurrentPassword": "Mevcut şifreniz hatalı.",
+    "profileUpdateFailed": "Profil güncellenirken bir hata oluştu."
+  },
+  "footer": {
+    "description": "Sözleşme, dilekçe ve rutin yazışmalarınızı hazırlamanın en yalın hali. Dikkatinizi dağıtmayan, tekrarı ortadan kaldıran ücretsiz çalışma alanınız.",
+    "platform": "Platform",
+    "publicLibrary": "Açık Kütüphane",
+    "signUpFree": "Ücretsiz Kayıt Ol",
+    "login": "Giriş Yap",
+    "legal": "Yasal & Destek",
+    "privacy": "Gizlilik Politikası",
+    "terms": "Kullanım Şartları",
+    "disclaimer": "Ön Bilgilendirme",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "cookie": {
+    "accept": "Kabul Et",
+    "decline": "Reddet",
+    "description": "Bu web sitesi, kullanıcı deneyimini iyileştirmek ve site trafiğini analiz etmek için çerez kullanır. Daha fazla bilgi için",
+    "privacyPolicy": "Gizlilik Politikamızı",
+    "readMore": "okuyun."
+  },
+  "login": {
+    "welcome": "Hoş Geldiniz",
+    "subtitle": "Devam etmek için hesabınıza giriş yapın.",
+    "email": "E-posta Adresi",
+    "emailPlaceholder": "ornek@email.com",
+    "password": "Şifre",
+    "passwordPlaceholder": "••••••••",
+    "forgotPassword": "Şifremi Unuttum?",
+    "signIn": "Giriş Yap",
+    "checking": "Kontrol Ediliyor...",
+    "noAccount": "Henüz hesabınız yok mu?",
+    "registerNow": "Hemen Kayıt Olun",
+    "error": "Giriş başarısız oldu. Bilgilerinizi kontrol edin.",
+    "mfaTitle": "Doğrulama Kodu",
+    "mfaInstructions": "<bold>{{email}}</bold> adresine gönderdiğimiz 6 haneli kodu girin.",
+    "verifying": "Doğrulanıyor...",
+    "goBack": "Geri Dön",
+    "invalidCode": "Geçersiz doğrulama kodu."
+  },
+  "register": {
+    "title": "Hesap Oluştur",
+    "subtitle": "Saniyeler içinde üretmeye başlayın.",
+    "fullName": "Ad Soyad",
+    "fullNamePlaceholder": "Adınız Soyadınız",
+    "email": "E-posta Adresi",
+    "emailPlaceholder": "ornek@email.com",
+    "password": "Şifre",
+    "passwordPlaceholder": "En az 8 karakter (Büyük/Küçük/Rakam)",
+    "passwordHint": "Şifreniz en az 8 karakter olmalı; büyük harf, küçük harf ve rakam içermelidir.",
+    "submit": "Ücretsiz Kayıt Ol",
+    "creating": "Hesap Oluşturuluyor...",
+    "haveAccount": "Zaten hesabınız var mı?",
+    "signIn": "Giriş Yapın",
+    "error": "Kayıt işlemi başarısız oldu."
+  },
+  "forgotPassword": {
+    "title": "Şifremi Unuttum",
+    "subtitle": "E-posta adresinizi girin; size şifre sıfırlama bağlantısı gönderelim.",
+    "email": "E-posta Adresi",
+    "emailPlaceholder": "ornek@email.com",
+    "submit": "Sıfırlama Bağlantısı Gönder",
+    "sending": "Gönderiliyor...",
+    "remembered": "Şifrenizi hatırladınız mı?",
+    "signIn": "Giriş Yapın",
+    "successFallback": "Şifre sıfırlama bağlantısı gönderildi.",
+    "errorFallback": "Bir hata oluştu. Lütfen tekrar deneyin."
+  },
+  "notFound": {
+    "pageTitle": "Sayfa Bulunamadı (404) - Belge Hızlı",
+    "title": "Sayfa Bulunamadı",
+    "message": "Üzgünüz, aradığınız sayfa mevcut değil; adı değiştirilmiş veya geçici olarak kullanım dışı olabilir.",
+    "home": "Ana Sayfa",
+    "goBack": "Geri Dön"
+  },
+  "templateList": {
+    "pageTitle": "Açık Kütüphane - Belge Hızlı",
+    "metaDescription": "Kira sözleşmesi, iş sözleşmesi, freelancer anlaşması ve dilekçe şablonları. Sıfırdan başlamayın, formu doldurun ve belgenizi anında alın.",
+    "disclaimer": "Bu kütüphanedeki şablonlar genel kullanıma uygundur. Çok spesifik hukuki durumlar için profesyonel danışmanlık almanız önerilir.",
+    "badge": "Açık Kütüphane",
+    "title": "Hazır Şablonlar",
+    "subtitle": "Sıfırdan başlamanıza gerek yok. İhtiyacınız olan taslağı seçin, soruları yanıtlayın ve saniyeler içinde eksiksiz PDF çıktınızı alın.",
+    "searchPlaceholder": "Şablon ara (örn: kira, iş, dilekçe)...",
+    "quickSearch": "Hızlı Ara",
+    "categories": {
+      "all": "Tüm Şablonlar",
+      "realEstate": "Gayrimenkul",
+      "jobCareer": "İş & Kariyer",
+      "commercial": "Ticari",
+      "petitions": "Dilekçe & İhtarname",
+      "personal": "Bireysel"
+    },
+    "viewForm": "Formu Görüntüle",
+    "examineTemplate": "Şablonu İncele",
+    "loadMore": "Daha Fazla Göster",
+    "noTemplateTitle": "Şablon bulunamadı",
+    "noTemplateText": "Aradığınız kriterlere uygun bir taslak kütüphanemizde yer almıyor.",
+    "clearFilters": "Filtreleri Temizle",
+    "errorLoading": "Şablonlar yüklenirken bir hata oluştu.",
+    "serverError": "Sunucu hatası: {{status}}",
+    "networkError": "Sunucuya ulaşılamadı. Lütfen ağ bağlantınızı kontrol edin.",
+    "retry": "Yeniden Dene"
+  },
+  "templateDetail": {
+    "defaultTitle": "Şablon Doldur",
+    "notFound": "Şablon bulunamadı.",
+    "loadError": "Şablon yüklenirken bir sorun oluştu. Lütfen sayfayı yenileyin.",
+    "preparing": "Şablon hazırlanıyor...",
+    "refreshPage": "Sayfayı Yenile",
+    "back": "Geri Dön",
+    "publicTemplateBadge": "Açık Kütüphane Şablonu",
+    "stepFillForm": "Formu Doldur",
+    "stepReviewDownload": "İncele ve İndir",
+    "step1Tag": "Adım 1",
+    "step1Hint": "İlgili alanları doldurun; sağ taraftaki önizlemede belgenizi anlık olarak görün. Gerekli alanları tamamladıktan sonra <strong>\"Sonraki Adım\"</strong> ile önizleme moduna geçebilirsiniz.",
+    "step2Tag": "Adım 2",
+    "reviewDocument": "Belgenizi İnceleyin",
+    "reviewDescription": "Sağdaki önizleme üzerinden son düzenlemelerinizi yapabilir ve PDF olarak indirebilirsiniz.",
+    "noFormFields": "Bu şablon için doldurulacak özel bir form alanı bulunmuyor.",
+    "fillRequiredHint": "Zorunlu alanları doldurduktan sonra ilerleyebilirsiniz.",
+    "nextStepReview": "Sonraki Adım: İncele",
+    "manualEditsNote": "Önizleme üzerinde yaptığınız tüm manuel düzenlemeler doğrudan PDF dosyasına yansıtılacaktır.",
+    "highlightNote": "Sarı renkli değişken vurguları yalnızca kontrol amaçlıdır; indirilen dosyada görünmez.",
+    "noPreviewContent": "Önizleme içeriği tanımlanmamış.",
+    "termsOfService": "Kullanım Şartları",
+    "privacyPolicy": "Gizlilik Politikası",
+    "and": "ve",
+    "termsSuffix": "'nı okudum.",
+    "termsNotAccepted": "Lütfen indirmeye geçmeden önce Kullanım Şartları ve Gizlilik Politikası'nı onaylayın.",
+    "formValidationFailed": "Form verileri doğrulanamadı. Lütfen sayfayı yenileyin.",
+    "fillRequiredFields": "Lütfen formdaki zorunlu alanları doldurun veya hatalı girişleri düzeltin.",
+    "downloadError": "İşlem sırasında bir hata oluştu. Lütfen tekrar deneyin.",
+    "tooManyRequests": "Çok fazla istek yapıldı. Lütfen kısa bir süre bekleyip tekrar deneyin.",
+    "serverError": "Sunucu kaynaklı bir hata oluştu. Lütfen daha sonra tekrar deneyin.",
+    "networkError": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin.",
+    "downloadPdf": "PDF Olarak İndir",
+    "processing": "Belge İşleniyor...",
+    "backToFormTitle": "Forma Geri Dön?",
+    "backToFormWarning": "Forma geri dönerseniz, canlı önizleme üzerinde manuel olarak yaptığınız metin düzenlemeleri silinecektir.",
+    "stayInPreview": "Önizlemede Kal",
+    "goBackAnyway": "Yine De Dön",
+    "livePreviewBelow": "Canlı önizleme aşağıda",
+    "close": "Kapat"
+  },
+  "documentForm": {
+    "requiredField": "Bu alan zorunludur.",
+    "invalidEmail": "Geçerli bir e-posta adresi girin.",
+    "invalidNumber": "Lütfen bir sayı girin.",
+    "selectPlaceholder": "Seçiniz...",
+    "group": "Grup",
+    "remove": "Kaldır",
+    "addNew": "Yeni Ekle",
+    "emailCopyInfo": "Orijinal PDF belgenizin bir kopyası bu adrese gönderilecektir."
+  },
+  "documentPreview": {
+    "previewTitle": "Belge Önizlemesi",
+    "lockedBadge": "Manuel Düzenleme Kapalı",
+    "editBadge": "Manuel Düzenleme Açık",
+    "livePreviewActive": "Canlı Önizleme Aktif",
+    "livePreviewDescription": "Sol taraftaki forma girdiğiniz veriler eşzamanlı olarak bu alana yansıyacaktır. Manuel metin düzenlemelerini bir sonraki adımda yapabilirsiniz.",
+    "loading": "Önizleme yükleniyor...",
+    "fillFormPrompt": "Belge önizlemesini görmek için sol taraftaki formu doldurmaya başlayın.",
+    "syntaxErrorTitle": "Sözdizimi Hatası (Syntax Error)",
+    "syntaxErrorMessage": "Şablonunuzda kapatılmamış bir değişken {{ }} veya hatalı bir yapı bulunuyor. Lütfen kontrol edip tekrar deneyin."
+  },
+  "postDownloadModal": {
+    "close": "Kapat",
+    "title": "Belgeniz cihazınıza kaydedildi.",
+    "descriptionLoggedIn": "İhtiyacınız olan belgeyi başarıyla indirdiniz. Bu şablonu kendi projelerinize kopyalamak, üzerinde düzenleme yapmak veya sıfırdan kendi belgenizi oluşturmak isterseniz ana panele göz atabilirsiniz.",
+    "descriptionGuest": "İhtiyacınız olan belgeyi başarıyla oluşturduk. Bu taslağı ileride tekrar kullanmak, değişiklik yapmak veya benzer belgeleri otomatik hazırlamak isterseniz sizin için ücretsiz bir alan oluşturabiliriz.",
+    "empathyText": "Şimdilik yalnızca bu belgeye ihtiyacınız varsa pencereyi kapatıp işinize dönebilirsiniz. Kolaylıklar dileriz.",
+    "closeWindow": "Pencereyi Kapat",
+    "goToDashboard": "Ana Panele Git",
+    "createFreeAccount": "Ücretsiz Hesap Oluştur"
+  },
+  "setPassword": {
+    "title": "Yeni Şifre Belirle",
+    "subtitle": "Hesabınız için yeni ve güçlü bir şifre oluşturun.",
+    "newPassword": "Yeni Şifre",
+    "passwordPlaceholder": "En az 8 karakter (Büyük/Küçük/Rakam)",
+    "save": "Şifreyi Kaydet",
+    "saving": "Güncelleniyor...",
+    "redirecting": "Giriş sayfasına yönlendiriliyorsunuz...",
+    "invalidToken": "Geçersiz veya eksik güvenlik jetonu. Lütfen e-postanızdaki bağlantıya tekrar tıklayın.",
+    "successFallback": "Şifreniz başarıyla oluşturuldu. Artık giriş yapabilirsiniz.",
+    "errorFallback": "Şifre güncellenirken bir hata oluştu."
+  },
+  "homePage": {
+    "pageTitle": "Belge Hızlı — Akıllı Form ve Sözleşme Oluşturucu",
+    "metaDescription": "Sözleşme, dilekçe veya resmi yazışmalarınızı kolayca hazırlayabileceğiniz, akıllı form altyapısına sahip temiz belge çalışma alanı.",
+    "heroTitle1": "Belge ve sözleşmeleri hazırlamanın",
+    "heroAccent": "akıllı yolu",
+    "heroSub": "Sık kullandığınız bir sözleşme, ihtarname veya teknik bir doküman... Ne yazıyor olursanız olun, metninizi saniyeler içinde doldurulabilir bir akıllı forma dönüştürün.",
+    "startNow": "Hemen Başlayın",
+    "readyTemplates": "Hazır Şablonlar",
+    "mockFileName": "belge_taslak",
+    "variables": "Değişkenler",
+    "convertToQuestion": "Soruya Dönüştür",
+    "add": "Ekle",
+    "slides": {
+      "default": {
+        "tag": "Hukuki Sözleşme",
+        "trigger": "{ }",
+        "title": "Konut Kira Sözleşmesi",
+        "vars": [
+          "kiralayan_isim",
+          "kiralayan_tc",
+          "kiraci_isim",
+          "kiraci_tc"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "KONUT KİRA SÖZLEŞMESİ"
+          },
+          {
+            "type": "label",
+            "text": "Madde 1 — Taraflar"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Bir tarafta kiralayan sıfatıyla "
+              },
+              {
+                "t": "{kiralayan_isim}",
+                "var": true
+              },
+              {
+                "t": " (TC: "
+              },
+              {
+                "t": "{kiralayan_tc}",
+                "var": true
+              },
+              {
+                "t": "), diğer tarafta kiracı sıfatıyla "
+              },
+              {
+                "t": "{kiraci_isim}",
+                "var": true
+              },
+              {
+                "t": " (TC: "
+              },
+              {
+                "t": "{kiraci_tc}",
+                "var": true
+              },
+              {
+                "t": ") arasında işbu sözleşme akdedilmiştir."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "Madde 2 — Kapsam ve Bedel"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Aylık kira bedeli net "
+              },
+              {
+                "t": "50.000",
+                "highlightTrigger": true
+              },
+              {
+                "t": " TL olup her ayın 5. günü ilgili banka hesabına peşin olarak yatırılacaktır."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Kira Bedeli"
+      },
+      "ink": {
+        "tag": "Ticari Sözleşme",
+        "trigger": "<< >>",
+        "title": "Ticari Alım Satım Sözleşmesi",
+        "vars": [
+          "satici_firma",
+          "alici_firma",
+          "teslim_sekli"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "TİCARİ MAL ALIM SATIM SÖZLEŞMESİ"
+          },
+          {
+            "type": "label",
+            "text": "Madde 1 — Sözleşmenin Konusu"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "İşbu sözleşme, satıcı "
+              },
+              {
+                "t": "<<satici_firma>>",
+                "var": true
+              },
+              {
+                "t": " ile alıcı "
+              },
+              {
+                "t": "<<alici_firma>>",
+                "var": true
+              },
+              {
+                "t": " arasındaki emtia alım satım şartlarını düzenler."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "Madde 2 — Gecikme Cezası"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Gecikilen her gün için toplam sipariş bedelinin %"
+              },
+              {
+                "t": "0,5",
+                "highlightTrigger": true
+              },
+              {
+                "t": "'i oranında cezai şart ödenir."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Cezai Şart Oranı"
+      },
+      "dark": {
+        "tag": "Teknik Sözleşme",
+        "trigger": "@",
+        "title": "Yazılım Geliştirme Sözleşmesi",
+        "vars": [
+          "proje_adi",
+          "gelistirici_unvan",
+          "musteri_unvan"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "YAZILIM GELİŞTİRME VE LİSANS SÖZLEŞMESİ"
+          },
+          {
+            "type": "label",
+            "text": "1. Proje Tanımı"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Bu sözleşme, "
+              },
+              {
+                "t": "@musteri_unvan",
+                "var": true
+              },
+              {
+                "t": " adına "
+              },
+              {
+                "t": "@gelistirici_unvan",
+                "var": true
+              },
+              {
+                "t": " tarafından geliştirilen "
+              },
+              {
+                "t": "@proje_adi",
+                "var": true
+              },
+              {
+                "t": " sisteminin koşullarını belirler."
+              }
+            ]
+          },
+          {
+            "type": "label",
+            "text": "2. Bakım ve Destek"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Canlıya alımın ardından "
+              },
+              {
+                "t": "6 Ay",
+                "highlightTrigger": true
+              },
+              {
+                "t": " boyunca yazılımsal hatalar ücretsiz giderilir."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Bakım Süresi"
+      },
+      "forest": {
+        "tag": "Sağlık & Klinik",
+        "trigger": "[ ]",
+        "title": "Aydınlatılmış Onam Formu",
+        "vars": [
+          "hasta_adi_soyadi",
+          "hasta_tc",
+          "doktor_adi"
+        ],
+        "body": [
+          {
+            "type": "heading",
+            "text": "AYDINLATILMIŞ ONAM VE RIZA BELGESİ"
+          },
+          {
+            "type": "label",
+            "text": "I. Hasta Bilgileri"
+          },
+          {
+            "type": "para",
+            "parts": [
+              {
+                "t": "Ben, "
+              },
+              {
+                "t": "[hasta_adi_soyadi]",
+                "var": true
+              },
+              {
+                "t": " (TC: "
+              },
+              {
+                "t": "[hasta_tc]",
+                "var": true
+              },
+              {
+                "t": "), hastaneniz bünyesinde "
+              },
+              {
+                "t": "[doktor_adi]",
+                "var": true
+              },
+              {
+                "t": " tarafından gerçekleştirilecek olan "
+              },
+              {
+                "t": "Ortopedik Cerrahi",
+                "highlightTrigger": true
+              },
+              {
+                "t": " operasyonuna onay veriyorum."
+              }
+            ]
+          }
+        ],
+        "bubbleInput": "Operasyon Adı"
+      }
+    },
+    "magicTitle": "Saniyeler içinde form oluşturun",
+    "magicDescription": "Zaten hazırladığınız bir taslağınız mı var? Metni çalışma alanına yapıştırın veya sürükleyip bırakın. \"Tümünü Algıla\" düğmesiyle sistem, metninizdeki tüm değişkenleri otomatik olarak bulur ve formu sizin yerinize kurar.",
+    "bubbleTitle": "Metni seçin, soruya dönüştürün",
+    "bubbleDescription": "Her belgede değişecek kelimeleri seçin ve tek tıklamayla dinamik bir form sorusuna çevirin.",
+    "logicTitle": "Cevaplara göre şekillenen belgeler",
+    "logicDescription": "Her müşteri veya durum için ayrı sözleşme taslakları hazırlamanıza gerek yok. \"Şartlı Bloklar\" sayesinde formdaki bir cevaba göre belgenizin belirli bölümleri otomatik olarak gösterilir ya da gizlenir.",
+    "useCasesTitle": "Her Sektöre Uygun Çözümler",
+    "useCasesDescription": "Değişkenler ve akıllı formlar sayesinde hangi alanda çalışırsanız çalışın operasyonel yükünüzü azaltın.",
+    "useCases": {
+      "hr": "İnsan Kaynakları",
+      "hrDesc": "İş sözleşmeleri, referans mektupları, iş teklifleri ve yan haklar bildirimlerini anında kişiselleştirin.",
+      "legal": "Hukuk & Emlak",
+      "legalDesc": "İhtarnameler, kira sözleşmeleri, vekaletnameler ve gayrimenkul alım satım taahhütlerini dinamik olarak oluşturun.",
+      "freelancer": "Freelancer & Ajanslar",
+      "freelancerDesc": "Proje teklifleri, gizlilik sözleşmeleri ve hizmet bedeli anlaşmalarını saniyeler içinde kişiselleştirin.",
+      "education": "Eğitim & Akademi",
+      "educationDesc": "Öğrenci kabul mektupları, staj sözleşmeleri ve tez danışmanlık formlarını otomatikleştirin.",
+      "health": "Sağlık & Klinik",
+      "healthDesc": "Hasta bilgilendirme formları, rıza belgeleri ve muayene raporlarını hızlıca kişiselleştirin.",
+      "ecommerce": "E-ticaret & Perakende",
+      "ecommerceDesc": "Tedarikçi sözleşmeleri, iade politikaları ve bayi anlaşmalarını dinamik olarak oluşturun."
+    },
+    "searchTitle": "Hazır bir taslak mı arıyorsunuz?",
+    "searchDescription": "Sıfırdan başlamak istemiyorsanız önceden hazırlanmış genel geçer şablonlarımıza göz atıp anında PDF çıktısı alabilirsiniz.",
+    "searchPlaceholder": "Örn: Kira sözleşmesi, istifa dilekçesi, ihtarname...",
+    "findTemplate": "Şablon Bul",
+    "frequentlyUsed": "Sık kullanılanlar",
+    "ctaTitle": "Çalışma alanınızı oluşturun",
+    "ctaDescription": "Kendi şablonlarınızı oluşturup kaydetmek için hesap açın.",
+    "magicSidebarTitle": "Form Soruları",
+    "magicEmptyState": "Henüz soru yok",
+    "magicField1": "Kiracı Adı",
+    "magicField2": "TC Kimlik",
+    "magicField3": "Başlangıç Tarihi",
+    "magicField4": "Kira Bedeli",
+    "detectAll": "Tümünü Algıla",
+    "magicPaperTitle": "KİRA SÖZLEŞMESİ",
+    "magicPaperPara1": "İşbu sözleşme, bir tarafta mülk sahibi ile diğer tarafta kiracı sıfatıyla",
+    "magicVarLessee": "@kiraci_adi",
+    "magicVarLesseeId": "@tc_kimlik",
+    "magicPaperPara1Suffix": "arasında akdedilmiştir.",
+    "magicPaperPara2a": "Sözleşme",
+    "magicVarStartDate": "@baslangic_tarihi",
+    "magicPaperPara2b": "tarihinde yürürlüğe girecek olup aylık kira bedeli",
+    "magicVarRent": "@kira_bedeli",
+    "magicPaperPara2Suffix": "TL olarak belirlenmiştir.",
+    "bubblePaperTitle": "HİZMET SÖZLEŞMESİ",
+    "bubblePaperArticle": "Madde 1",
+    "bubblePaperPara1": "İşbu hizmet sözleşmesi; hizmet sağlayıcı sıfatıyla",
+    "bubblePaperSelection": "Ahmet Yılmaz",
+    "bubblePaperPara2": "ile hizmet alıcı sıfatıyla TechBrand arasında akdedilmiştir...",
+    "logicSidebarTitle": "Test Formu",
+    "logicQuestion": "Evcil Hayvan İzni",
+    "no": "Hayır",
+    "yes": "Evet",
+    "logicPaperTitle": "KİRA SÖZLEŞMESİ",
+    "logicPaperPara1": "Kiracı, kiralayanın yazılı izni olmaksızın demirbaşlarda değişiklik yapamaz. Yapılan tüm masraflar kiracıya aittir.",
+    "logicConditionText": "\"{{question}}\" = \"{{answer}}\" ise",
+    "logicConditionPara": "Kiracı, evcil hayvanının bina ortak alanlarında yol açabileceği her türlü rahatsızlık ve zarardan şahsen sorumludur. Gerekli hijyen kurallarına uyulacaktır.",
+    "logicPaperPara2": "İşbu sözleşme tarafların karşılıklı iradesiyle imzalanmış ve birer nüshası her bir tarafa teslim edilmiştir."
+  },
+  "common": {
+    "loading": "Yükleniyor..."
+  },
+  "hostedForm": {
+    "loading": "Form yükleniyor...",
+    "notFoundOrAccess": "Belge bulunamadı veya erişim yetkiniz yok.",
+    "errorTitle": "Üzgünüz 😕",
+    "fillRequiredFields": "Lütfen tüm zorunlu alanları eksiksiz doldurun.",
+    "systemError": "Sistem Hatası",
+    "pdfGenerationError": "PDF oluşturulurken bir hata oluştu.",
+    "connectionError": "İşlem sırasında bir bağlantı hatası oluştu.",
+    "successTitle": "İşlem Başarılı!",
+    "successMessage": "Belgeniz başarıyla oluşturuldu ve cihazınıza indirildi.",
+    "successNote": "İndirilen PDF dosyasını açarak kontrol edebilirsiniz.",
+    "smartDocument": "Akıllı Belge",
+    "noFieldsTitle": "Doldurulacak bir alan bulunmuyor.",
+    "noFieldsSubtext": "Doğrudan PDF olarak indirebilirsiniz.",
+    "completeAndDownload": "Tamamla ve PDF İndir",
+    "pdfPreparing": "PDF Hazırlanıyor..."
+  },
+  "userTemplateEdit": {
+    "loading": "Şablon yükleniyor...",
+    "errorLoading": "Şablon yüklenemedi.",
+    "back": "Geri Dön"
+  },
+  "sidebar": {
+    "formFields": "Form alanları",
+    "emptyTitle": "Formunuz henüz boş",
+    "emptyDescription": "Sağdaki alana metninizi yapıştırın veya belge sürükleyin. Değişecek kelimeleri seçerek soruya dönüştürün!",
+    "addField": "Yeni alan ekle",
+    "insertedSuccess": "Metne eklendi!",
+    "unnamedField": "İsimsiz alan",
+    "insertToText": "Metne Ekle",
+    "add": "Ekle",
+    "basic": "Temel",
+    "advanced": "Gelişmiş",
+    "questionText": "Soru metni",
+    "questionPlaceholder": "Örn: Adı Soyadı",
+    "fieldType": "Alan tipi",
+    "required": "Zorunlu alan",
+    "options": "Seçenekler",
+    "option": "Seçenek",
+    "addOption": "Seçenek ekle",
+    "variableName": "Değişken adı",
+    "auto": "(otomatik)",
+    "placeholderText": "Placeholder metni",
+    "placeholderHint": "Yönlendirici metin...",
+    "addCondition": "Gösterim şartı ekle",
+    "condition": "Gösterim şartı",
+    "removeCondition": "Kaldır",
+    "conditionQuestion": "Hangi soruya bağlı?",
+    "conditionValue": "Cevabı ne olmalı?",
+    "select": "Seçiniz…",
+    "delete": "Sil"
+  },
+  "templateBuilder": {
+    "themes": {
+      "daylight": "Gün Işığı",
+      "midnight": "Gece Yarısı",
+      "library": "Kütüphane",
+      "forest": "Orman",
+      "glacier": "Buzul",
+      "sunset": "Günbatımı",
+      "ink": "Mürekkep",
+      "lavender": "Lavanta"
+    },
+    "variableFormat": {
+      "doubleCurly": "Çift Süslü Parantez",
+      "square": "Köşeli Parantez",
+      "doubleAngle": "Çift Ok",
+      "singleCurly": "Tek Süslü Parantez",
+      "atSign": "Et İşareti",
+      "exampleDoubleCurly": "{{isim}}",
+      "exampleSquare": "[isim]",
+      "exampleDoubleAngle": "<<isim>>",
+      "exampleSingleCurly": "{isim}",
+      "exampleAtSign": "@isim"
+    },
+    "fieldType": {
+      "text": "Metin",
+      "email": "E-posta",
+      "textarea": "Uzun Metin",
+      "number": "Sayı",
+      "date": "Tarih",
+      "select": "Açılır Liste",
+      "radio": "Tekli Seçim",
+      "checkbox": "Çoklu Seçim"
+    },
+    "header": {
+      "myTemplates": "Şablonlarım",
+      "templateNamePlaceholder": "Şablon adı…",
+      "changeTheme": "Temayı Değiştir",
+      "design": "Tasarım",
+      "preview": "Önizleme",
+      "saving": "Kaydediliyor...",
+      "savedToCloud": "Buluta kaydedildi",
+      "unsavedChanges": "Kaydedilmemiş değişiklikler var",
+      "saveFailed": "Kaydedilemedi",
+      "share": "Paylaş",
+      "download": "İndir",
+      "save": "Kaydet"
+    },
+    "toast": {
+      "fillRequiredFields": "Lütfen eksik alanları (kırmızı ile işaretli) tamamlayın.",
+      "savedSuccess": "Şablon başarıyla kaydedildi!",
+      "saveFailed": "Kaydetme başarısız oldu."
+    },
+    "modals": {
+      "cancel": "Vazgeç",
+      "apply": "Uygula",
+      "selectPlaceholder": "Seçiniz...",
+      "magic": {
+        "title": "Sihirli Algılama",
+        "description": "Belgede daha önce kullandığınız değişken formatını seçin.",
+        "noVariablesFound": "Belgede \"{{format}}\" formatında değişken bulunamadı.",
+        "variablesDetected": "{{count}} değişken algılandı! ✨",
+        "infoBox": "Seçtiğiniz formattaki tüm kelimeler bulunacak, sol tarafa soru olarak eklenecek ve metin içindekiler standart {{değişken}} formatına otomatik dönüştürülecektir."
+      },
+      "conditional": {
+        "title": "Şartlı Blok Ekle",
+        "description": "Seçilen soruya belirli bir cevap verildiğinde görünecek bir metin bloğu oluşturur.",
+        "whichQuestion": "Hangi Soruya Bağlı?",
+        "whichAnswer": "Hangi Cevap Verildiğinde Gösterilsin?",
+        "insertBlock": "Bloğu Ekle",
+        "selectBoth": "Lütfen bir değişken ve değer seçin.",
+        "blockInserted": "Şartlı blok eklendi.",
+        "placeholderText": "Buraya şartlı metninizi yazın..."
+      },
+      "share": {
+        "title": "Genel Bağlantı",
+        "description": "Bu bağlantıyı gönderdiğiniz kişiler formu doldurup anında PDF alabilir.",
+        "copy": "Kopyala",
+        "copied": "Kopyalandı"
+      },
+      "pdf": {
+        "title": "PDF İndir",
+        "description": "Girdiğiniz verilere göre şablonunuz PDF formatına dönüştürülecektir.",
+        "preparing": "PDF hazırlanıyor...",
+        "downloaded": "PDF başarıyla indirildi!",
+        "error": "PDF oluşturulurken hata oluştu!",
+        "confirmAndDownload": "Onayla ve İndir"
+      },
+      "backWarning": {
+        "returnToDesign": "Tasarım Moduna Dön?",
+        "returnToForm": "Forma Geri Dön?",
+        "designWarning": "Tasarım moduna geri dönerseniz, canlı önizleme üzerinde manuel olarak yaptığınız metin düzenlemeleri silinecektir.",
+        "previewEditsLost": "Forma geri dönerseniz, canlı önizleme üzerinde manuel olarak yaptığınız metin düzenlemeleri silinecektir.",
+        "previewInterrupted": "Forma geri dönerseniz önizleme testini yarıda kesmiş olacaksınız.",
+        "stayInPreview": "Önizlemede Kal",
+        "goBackAnyway": "Yine De Dön"
+      }
+    },
+    "previewMode": {
+      "testForm": "Test formu",
+      "step": "Adım {{current}}/2",
+      "noFields": "Test edilecek alan yok.",
+      "fillRequired": "Lütfen tüm zorunlu alanları doldurun.",
+      "reviewDocument": "Belgeyi İncele",
+      "backToForm": "Forma Dön ve Düzenle"
+    },
+    "smartBar": {
+      "detectAll": "Tümünü Algıla",
+      "magicTitle": "Farklı formatlardaki değişkenleri otomatik bulur",
+      "magicHint": "Belgenizdeki değişkenleri anında form alanına dönüştürün.",
+      "triggerTitle": "Değişken Formatı (Tetikleyici)",
+      "custom": "Özel...",
+      "customPlaceholder": "Örn: //",
+      "select": "Seç",
+      "import": "İçe Aktar",
+      "conditionalBlock": "Şartlı Blok",
+      "toast": {
+        "triggerTooLong": "Tetikleyici en fazla 5 karakter olabilir.",
+        "slashReserved": "'/' işareti komut menüsü için ayrılmıştır.",
+        "triggerUpdated": "Değişken formatı güncellendi.",
+        "fileTooLarge": "Dosya boyutu çok büyük (Maks. 2MB).",
+        "fileImported": "Belge başarıyla içe aktarıldı!",
+        "parsingDocx": "{{fileName}} ayrıştırılıyor...",
+        "wordImported": "Word dosyası başarıyla içe aktarıldı!",
+        "wordError": "Word dosyası okunurken hata oluştu.",
+        "pdfNotSupported": "PDF ayrıştırma şu an aktif değil. Lütfen .docx kullanın.",
+        "unsupportedFile": "Lütfen yalnızca .txt, .html veya .docx dosyası yükleyin."
+      }
+    },
+    "toolbar": {
+      "undo": "Geri al",
+      "redo": "İleri al",
+      "bold": "Kalın (Ctrl+B)",
+      "italic": "İtalik (Ctrl+I)",
+      "font": "Font",
+      "size": "Boyut",
+      "line": "Satır",
+      "textColor": "Yazı Rengi",
+      "highlightColor": "Vurgu Rengi",
+      "normal": "Normal",
+      "heading1": "Başlık 1",
+      "heading2": "Başlık 2",
+      "heading3": "Başlık 3",
+      "alignLeft": "Sola Hizala",
+      "alignCenter": "Ortala",
+      "alignRight": "Sağa Hizala",
+      "alignJustify": "İki Yana Hizala",
+      "bulletList": "Madde İşaretli Liste",
+      "orderedList": "Numaralı Liste",
+      "insertVariable": "Değişken Ekle",
+      "insertSignature": "İmza Ekle",
+      "signatureLeft": "Sola İmza",
+      "signatureRight": "Sağa İmza",
+      "variables": "DEĞİŞKENLER",
+      "noVariables": "Henüz soru eklenmedi",
+      "toast": {
+        "variableInserted": "Değişken eklendi"
+      }
+    },
+    "helpers": {
+      "signatureParty": "[Taraf / Unvan]",
+      "signature": "İmza"
+    }
+  },
+  "editorCanvas": {
+    "placeholder": "Metni yapıştırın veya '/' tuşuna basın...",
+    "dropDocument": "Belgeyi Buraya Bırakın",
+    "supportedFormats": ".txt ve .docx desteklenir",
+    "importSuccess": "Belge başarıyla içe aktarıldı!",
+    "parsingDocx": "{{fileName}} ayrıştırılıyor...",
+    "wordImportSuccess": "Word dosyası başarıyla içe aktarıldı!",
+    "wordImportError": "Word dosyası okunurken hata oluştu.",
+    "unsupportedFileType": "Yalnızca .txt, .html veya .docx dosyası yükleyebilirsiniz.",
+    "variables": "DEĞİŞKENLER",
+    "noMatchingField": "Eşleşen alan yok",
+    "basicBlocks": "TEMEL BLOKLAR",
+    "noMatchingCommand": "Eşleşen komut bulunamadı",
+    "convertToQuestion": "Soruya Dönüştür",
+    "questionTitlePlaceholder": "Soru Başlığı",
+    "add": "Ekle",
+    "enterQuestionTitle": "Lütfen bu soru için bir başlık girin.",
+    "fieldAdded": "\"{{label}}\" başarıyla eklendi! ✨",
+    "multiReplaceTitle": "Çoklu Eşleşme Bulundu",
+    "multiReplaceDescription": "\"{{searchText}}\" ifadesi belgede {{count}} kez geçiyor.",
+    "cancel": "Vazgeç",
+    "replaceSelected": "Seçilenleri Değiştir",
+    "noOccurrencesSelected": "Hiçbir eşleşme seçmediniz.",
+    "slash": {
+      "h1": "Büyük Başlık",
+      "h2": "Orta Başlık",
+      "h3": "Küçük Başlık",
+      "bulletList": "Madde İmleri",
+      "orderedList": "Numaralı Liste",
+      "pageBreak": "Sayfa Sonu",
+      "signatureLeft": "İmza (Sola)",
+      "signatureRight": "İmza (Sağa)"
+    }
+  },
+  "server": {
+    "tooManyRequests": "Çok fazla istek yaptınız. Lütfen daha sonra tekrar deneyin.",
+    "pdfLimitReached": "Saatlik belge oluşturma sınırına ulaştınız. Lütfen daha sonra tekrar deneyin.",
+    "corsPolicyViolation": "CORS politikası ihlali.",
+    "unexpectedError": "Sunucuda beklenmedik bir hata oluştu."
+  }
+}

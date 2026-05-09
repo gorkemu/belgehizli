@@ -1,12 +1,16 @@
 // frontend/src/pages/Register.jsx
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link, Navigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2 } from 'lucide-react';
+import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const Register = () => {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -31,16 +35,24 @@ const Register = () => {
       await register(formData.fullName, formData.email, formData.password);
       navigate('/panel', { replace: true });
     } catch (err) {
-      setError(err.response?.data?.message || 'Kayıt işlemi başarısız oldu.');
-      setIsLoading(false); 
+      setError(getUserFriendlyMessage(err.response?.data, 'register.error', t));
+      setIsLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div className={styles.authContainer}>
+        <Loader2 size={32} className={styles.spinner} color="#2563eb" />
+      </div>
+    );
+  }
 
   return (
     <div className={styles.authContainer}>
       <div className={styles.authCard}>
-        <h2 className={styles.authTitle}>Hesap Oluştur</h2>
-        <p className={styles.authSubtitle}>Saniyeler içinde üretmeye başlayın.</p>
+        <h2 className={styles.authTitle}>{t('register.title')}</h2>
+        <p className={styles.authSubtitle}>{t('register.subtitle')}</p>
 
         {error && (
           <div className={styles.errorBox}>
@@ -50,7 +62,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit}>
           <div className={styles.formGroup}>
-            <label className={styles.label}>Ad Soyad</label>
+            <label className={styles.label}>{t('register.fullName')}</label>
             <input
               type="text"
               name="fullName"
@@ -58,12 +70,12 @@ const Register = () => {
               required
               value={formData.fullName}
               onChange={handleChange}
-              placeholder="Adınız Soyadınız"
+              placeholder={t('register.fullNamePlaceholder')}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>E-posta Adresi</label>
+            <label className={styles.label}>{t('register.email')}</label>
             <input
               type="email"
               name="email"
@@ -71,40 +83,40 @@ const Register = () => {
               required
               value={formData.email}
               onChange={handleChange}
-              placeholder="ornek@email.com"
+              placeholder={t('register.emailPlaceholder')}
             />
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>Şifre</label>
+            <label className={styles.label}>{t('register.password')}</label>
             <input
               type="password"
               name="password"
               className={styles.input}
               required
-              minLength={8} 
-              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
-              title="Şifreniz en az 8 karakter olmalı, büyük harf, küçük harf ve rakam içermelidir." 
+              minLength={8}
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              title={t('register.passwordHint')}
               value={formData.password}
               onChange={handleChange}
-              placeholder="En az 8 karakter (Büyük/Küçük/Rakam)"
+              placeholder={t('register.passwordPlaceholder')}
             />
           </div>
 
-          <Button 
-            type="submit" 
-            variant="primary" 
-            size="lg" 
-            fullWidth 
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
+            fullWidth
             isLoading={isLoading}
           >
-            {isLoading ? 'Hesap Oluşturuluyor...' : 'Ücretsiz Kayıt Ol'}
+            {isLoading ? t('register.creating') : t('register.submit')}
           </Button>
         </form>
 
         <p className={styles.switchText}>
-          Zaten hesabınız var mı?
-          <Link to="/giris-yap" className={styles.switchLink}>Giriş Yapın</Link>
+          {t('register.haveAccount')}{' '}
+          <Link to="/giris-yap" className={styles.switchLink}>{t('register.signIn')}</Link>
         </p>
       </div>
     </div>

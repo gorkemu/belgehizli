@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
 import styles from './EditorCanvas.module.css';
@@ -38,18 +39,23 @@ const LineHeight = Extension.create({
   addCommands() { return { setLineHeight: lineHeight => ({ commands }) => this.options.types.map(type => commands.updateAttributes(type, { lineHeight })).some(Boolean), unsetLineHeight: () => ({ commands }) => this.options.types.map(type => commands.resetAttributes(type, 'lineHeight')).some(Boolean), }; },
 });
 
-const SLASH_COMMANDS = [
-  { id: 'h1', label: 'Büyük Başlık', icon: <Heading1 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 1 }).run() },
-  { id: 'h2', label: 'Orta Başlık', icon: <Heading2 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 2 }).run() },
-  { id: 'h3', label: 'Küçük Başlık', icon: <Heading3 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 3 }).run() },
-  { id: 'bullet', label: 'Madde İmleri', icon: <List size={14} />, action: (ed) => ed.chain().focus().toggleBulletList().run() },
-  { id: 'ordered', label: 'Numaralı Liste', icon: <ListOrdered size={14} />, action: (ed) => ed.chain().focus().toggleOrderedList().run() },
-  { id: 'divider', label: 'Sayfa Sonu', icon: <Scissors size={14} />, action: (ed) => ed.chain().focus().setHorizontalRule().run() },
-  { id: 'sig_left', label: 'İmza (Sola)', icon: <AlignLeft size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('left')).run() },
-  { id: 'sig_right', label: 'İmza (Sağa)', icon: <AlignRight size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('right')).run() },
-];
+// --- Çeviriye bağlı slash komutları oluştur ---
+// EditorCanvas.jsx içinde useSlashCommands hook'unun son hali
+const useSlashCommands = (t, triggerSymbol) => useMemo(() => [
+  { id: 'h1', label: t('editorCanvas.slash.h1'), icon: <Heading1 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 1 }).run() },
+  { id: 'h2', label: t('editorCanvas.slash.h2'), icon: <Heading2 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 2 }).run() },
+  { id: 'h3', label: t('editorCanvas.slash.h3'), icon: <Heading3 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 3 }).run() },
+  { id: 'bullet', label: t('editorCanvas.slash.bulletList'), icon: <List size={14} />, action: (ed) => ed.chain().focus().toggleBulletList().run() },
+  { id: 'ordered', label: t('editorCanvas.slash.orderedList'), icon: <ListOrdered size={14} />, action: (ed) => ed.chain().focus().toggleOrderedList().run() },
+  { id: 'divider', label: t('editorCanvas.slash.pageBreak'), icon: <Scissors size={14} />, action: (ed) => ed.chain().focus().setHorizontalRule().run() },
+  { id: 'sig_left', label: t('editorCanvas.slash.signatureLeft'), icon: <AlignLeft size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('left', t, triggerSymbol)).run() },
+  { id: 'sig_right', label: t('editorCanvas.slash.signatureRight'), icon: <AlignRight size={14} />, action: (ed) => ed.chain().focus().insertContent(insertSignatureBlock('right', t, triggerSymbol)).run() },
+], [t, triggerSymbol]);
 
 const EditorCanvas = () => {
+  const { t } = useTranslation();
+  const SLASH_COMMANDS = useSlashCommands(t);
+
   const {
     formData, setFormData, triggerSymbol,
     setEditorInstance, showToast, expandedFields, setExpandedFields, mode
@@ -80,7 +86,7 @@ const EditorCanvas = () => {
   useEffect(() => { slashSelectedIndexRef.current = slashSelectedIndex; }, [slashSelectedIndex]);
   useEffect(() => { varMenuStateRef.current = varMenuState; }, [varMenuState]);
   useEffect(() => { varSelectedIndexRef.current = varSelectedIndex; }, [varSelectedIndex]);
-  // Menüde ok tuşlarıyla gezerken otomatik aşağı/yukarı kaydırma (Scroll into view)
+
   useEffect(() => {
     if (slashMenuState.show) {
       const el = window.document.getElementById(`slash-item-${slashSelectedIndex}`);
@@ -91,25 +97,27 @@ const EditorCanvas = () => {
       if (el) el.scrollIntoView({ block: 'nearest' });
     }
   }, [slashSelectedIndex, slashMenuState.show, varSelectedIndex, varMenuState.show]);
-  // Tüm menüleri ESC tuşuyla kapatma
+
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === 'Escape') {
-        // Balon menüyü kapat ve varsayılan buton moduna sıfırla
         setSelectionMenu(p => ({ ...p, show: false, mode: 'button' }));
         setFormatMenu({ show: false, top: 0, left: 0 });
-
-        // Varsa açık olan slash/değişken menülerini de kapat
         setSlashMenuState(s => ({ ...s, show: false }));
         setVarMenuState(s => ({ ...s, show: false }));
       }
     };
-
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-  const filteredSlashCmds = useMemo(() => SLASH_COMMANDS.filter(cmd => cmd.label.toLowerCase().includes(slashMenuState.query.toLowerCase())), [slashMenuState.query]);
+  const filteredSlashCmds = useMemo(() => SLASH_COMMANDS.filter(cmd => cmd.label.toLowerCase().includes(slashMenuState.query.toLowerCase())), [slashMenuState.query, SLASH_COMMANDS]);
+
+  const getFieldTypeLabel = (value) => {
+    const key = `templateBuilder.fieldType.${value}`;
+    const translated = t(key);
+    return translated !== key ? translated : FIELD_TYPES.find(t => t.value === value)?.label || value;
+  };
 
   const checkCursorForMenu = useCallback((ed) => {
     if (!ed || !ed.view || ed.view.isDestroyed) return;
@@ -162,7 +170,7 @@ const EditorCanvas = () => {
       StarterKit.configure({ codeBlock: false, blockquote: false }),
       TextStyle, Color, FontFamily, FontSize, LineHeight, Highlight.configure({ multicolor: true }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
-      Placeholder.configure({ placeholder: "Metni yapıştırın veya '/' tuşuna basın..." }),
+      Placeholder.configure({ placeholder: t('editorCanvas.placeholder') }),
       CharacterCount.configure({ limit: EDITOR_LIMITS.MAX_CHARS })
     ],
     content: DOMPurify.sanitize(formData.content || ''),
@@ -179,7 +187,6 @@ const EditorCanvas = () => {
     onSelectionUpdate: ({ editor: ed }) => checkCursorForMenu(ed)
   });
 
-  // Klavye Yönlendirmeleri (Menu Navigasyonu)
   useEffect(() => {
     if (!editor) return;
     editor.setOptions({
@@ -222,7 +229,7 @@ const EditorCanvas = () => {
         }
       }
     });
-  }, [editor, formData.fields, triggerSymbol]);
+  }, [editor, formData.fields, triggerSymbol, SLASH_COMMANDS]);
 
   const executeSlashCommand = useCallback((cmd) => {
     const ms = slashMenuStateRef.current; editor?.chain().focus().deleteRange(ms.range).run(); cmd.action(editor); setSlashMenuState(s => ({ ...s, show: false }));
@@ -235,7 +242,6 @@ const EditorCanvas = () => {
     if (selectionMenu.show) setSelectionMenu(s => ({ ...s, show: false }));
   }, [formatMenu.show, selectionMenu.show]);
 
-  // Sürükle Bırak (Dosya İçe Aktarma)
   const handleDragOver = (e) => { e.preventDefault(); if (mode === 'build') setIsDraggingFile(true); };
   const handleDragLeave = (e) => { e.preventDefault(); setIsDraggingFile(false); };
 
@@ -250,21 +256,20 @@ const EditorCanvas = () => {
       reader.onload = (e) => {
         const text = e.target.result;
         const contentToInsert = file.type === "text/plain" ? text.split('\n').map(line => `<p>${line}</p>`).join('') : DOMPurify.sanitize(text);
-        editor.commands.setContent(contentToInsert); showToast("Belge başarıyla içe aktarıldı!", "success");
+        editor.commands.setContent(contentToInsert); showToast(t('editorCanvas.importSuccess'), "success");
       }; reader.readAsText(file);
     } else if (file.name.endsWith('.docx')) {
-      showToast(`${file.name} ayrıştırılıyor...`, "success", false);
+      showToast(t('editorCanvas.parsingDocx', { fileName: file.name }), "success", false);
       const reader = new FileReader();
       reader.onload = async (e) => {
         try {
           const result = await mammoth.convertToHtml({ arrayBuffer: e.target.result });
-          editor.commands.setContent(DOMPurify.sanitize(result.value)); showToast("Word dosyası başarıyla aktarıldı!", "success");
-        } catch { showToast("Word dosyası okunurken hata oluştu.", "error"); }
+          editor.commands.setContent(DOMPurify.sanitize(result.value)); showToast(t('editorCanvas.wordImportSuccess'), "success");
+        } catch { showToast(t('editorCanvas.wordImportError'), "error"); }
       }; reader.readAsArrayBuffer(file);
-    } else { showToast("Sadece .txt, .html veya .docx yükleyebilirsiniz.", "error"); }
+    } else { showToast(t('editorCanvas.unsupportedFileType'), "error"); }
   };
 
-  // Dönüştürme (Çoklu Eşleşme) Mantığı
   const findOccurrences = (searchText) => {
     const occurrences = []; const { doc } = editor.state;
     const escapeRegExp = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const regex = new RegExp(escapeRegExp(searchText), 'gi');
@@ -285,11 +290,11 @@ const EditorCanvas = () => {
     [...positionsToReplace].sort((a, b) => b.from - a.from).forEach(({ from, to }) => { tr = tr.insertText(`${sym.s}${finalVarName}${sym.e}`, from, to); }); editor.view.dispatch(tr);
     setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' });
     setSelectionMenu({ show: false, top: 0, left: 0, mode: 'button', text: '', fieldType: 'text' }); setFormatMenu({ show: false, top: 0, left: 0 }); setVarNameInput('');
-    showToast(`"${newField.label}" başarıyla eklendi! ✨`, 'success');
+    showToast(t('editorCanvas.fieldAdded', { label: newField.label }), 'success');
   };
 
   const confirmConversion = () => {
-    if (!varNameInput.trim()) return showToast("Lütfen bu soru için bir başlık girin.", "error");
+    if (!varNameInput.trim()) return showToast(t('editorCanvas.enterQuestionTitle'), "error");
     const label = varNameInput.trim(); const baseVarName = generateVarName(label);
     const finalVarName = formData.fields.some(f => f.name === baseVarName) ? `${baseVarName}_${Math.floor(Math.random() * 100)}` : baseVarName;
     const newField = { id: Math.random().toString(36).substr(2, 9), name: finalVarName, label: label, fieldType: selectionMenu.fieldType || 'text', required: true, options: [], placeholder: `${label} giriniz...`, condition: null, nameEdited: true };
@@ -309,8 +314,8 @@ const EditorCanvas = () => {
       {isDraggingFile && (
         <div className={styles.dragOverlay}>
           <FileUp size={48} color="var(--accent)" />
-          <h2>Belgeyi Buraya Bırakın</h2>
-          <p>.txt ve .docx desteklenir</p>
+          <h2>{t('editorCanvas.dropDocument')}</h2>
+          <p>{t('editorCanvas.supportedFormats')}</p>
         </div>
       )}
 
@@ -321,7 +326,7 @@ const EditorCanvas = () => {
       {/* --- Variable AutoComplete Menu --- */}
       {varMenuState.show && mode === 'build' && (
         <div className={`no-print ${styles.slashMenu}`} data-testid="variable-menu" style={{ top: varMenuState.pos.top, left: varMenuState.pos.left }}>
-          <div className={styles.autocompleteHeader}>DEĞİŞKENLER</div>
+          <div className={styles.autocompleteHeader}>{t('editorCanvas.variables')}</div>
           {formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).length > 0 ? (
             formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).map((f, index) => (
               <div key={f.id} id={`var-item-${index}`} onClick={() => {
@@ -332,19 +337,19 @@ const EditorCanvas = () => {
                 <span className={styles.slashLabel}>{f.label || f.name}</span>
               </div>
             ))
-          ) : <div className={styles.autocompleteEmpty}>Eşleşen alan yok</div>}
+          ) : <div className={styles.autocompleteEmpty}>{t('editorCanvas.noMatchingField')}</div>}
         </div>
       )}
 
       {/* --- Slash Command Menu --- */}
       {slashMenuState.show && mode === 'build' && (
         <div className={`no-print ${styles.slashMenu}`} data-testid="slash-menu" style={{ top: slashMenuState.pos.top, left: slashMenuState.pos.left }}>
-          <div className={styles.autocompleteHeader}>TEMEL BLOKLAR</div>
+          <div className={styles.autocompleteHeader}>{t('editorCanvas.basicBlocks')}</div>
           {filteredSlashCmds.length > 0 ? filteredSlashCmds.map((cmd, index) => (
             <div key={cmd.id} id={`slash-item-${index}`} onClick={() => executeSlashCommand(cmd)} onMouseMove={(e) => { if (Math.abs(e.clientX - mousePosRef.current.x) > 2 || Math.abs(e.clientY - mousePosRef.current.y) > 2) { mousePosRef.current = { x: e.clientX, y: e.clientY }; if (slashSelectedIndex !== index) setSlashSelectedIndex(index); } }} className={`${styles.slashItem} ${index === slashSelectedIndex ? styles.slashItemActive : ''}`}>
               <span className={styles.slashIcon}>{cmd.icon}</span><span className={styles.slashLabel}>{cmd.label}</span>
             </div>
-          )) : <div className={styles.autocompleteEmpty}>Eşleşen komut bulunamadı</div>}
+          )) : <div className={styles.autocompleteEmpty}>{t('editorCanvas.noMatchingCommand')}</div>}
         </div>
       )}
 
@@ -356,14 +361,18 @@ const EditorCanvas = () => {
               <button type="button" onClick={() => {
                 const textBefore = editor.state.doc.textBetween(Math.max(0, editor.state.selection.from - 40), editor.state.selection.from, null, '\ufffc');
                 const match = textBefore.match(/([a-zA-ZçğıöşüÇĞİÖŞÜ\s]+):\s*$/);
-                setVarNameInput(match && match[1].trim() ? match[1].trim() : ''); 
+                setVarNameInput(match && match[1].trim() ? match[1].trim() : '');
                 setSelectionMenu(p => ({ ...p, mode: 'input' }));
-              }} className={styles.bubbleBtn}><Sparkles size={14} /> Soruya Dönüştür</button>
+              }} className={styles.bubbleBtn}><Sparkles size={14} /> {t('editorCanvas.convertToQuestion')}</button>
             ) : (
               <div className={styles.bubbleInputRow}>
-                <input autoFocus placeholder="Soru Başlığı" value={varNameInput} onChange={e => setVarNameInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') confirmConversion(); if (e.key === 'Escape') setSelectionMenu(p => ({ ...p, mode: 'button' })); }} className={styles.bubbleInput} />
-                <select value={selectionMenu.fieldType} onChange={e => setSelectionMenu(p => ({ ...p, fieldType: e.target.value }))} className={styles.bubbleSelect}>{FIELD_TYPES.map(type => (<option key={type.value} value={type.value}>{type.label}</option>))}</select>
-                <button onClick={confirmConversion} className={styles.bubbleConfirmBtn}>Ekle</button>
+                <input autoFocus placeholder={t('editorCanvas.questionTitlePlaceholder')} value={varNameInput} onChange={e => setVarNameInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') confirmConversion(); if (e.key === 'Escape') setSelectionMenu(p => ({ ...p, mode: 'button' })); }} className={styles.bubbleInput} />
+                <select value={selectionMenu.fieldType} onChange={e => setSelectionMenu(p => ({ ...p, fieldType: e.target.value }))} className={styles.bubbleSelect}>
+                  {FIELD_TYPES.map(type => (
+                    <option key={type.value} value={type.value}>{t(type.label)}</option>
+                  ))}
+                </select>
+                <button onClick={confirmConversion} className={styles.bubbleConfirmBtn}>{t('editorCanvas.add')}</button>
               </div>
             )}
           </div>
@@ -376,7 +385,7 @@ const EditorCanvas = () => {
           <div className={globalStyles.modal} style={{ maxWidth: '560px' }}>
             <div className={globalStyles.modalHead}>
               <div className={globalStyles.modalIcon} style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', borderColor: 'var(--border)' }}><Layers size={20} /></div>
-              <div><h3>Çoklu Eşleşme Bulundu</h3><p><b>"{multiReplace.searchText}"</b> ifadesi belgede {multiReplace.occurrences.length} kez geçiyor.</p></div>
+              <div><h3>{t('editorCanvas.multiReplaceTitle')}</h3><p>{t('editorCanvas.multiReplaceDescription', { searchText: multiReplace.searchText, count: multiReplace.occurrences.length })}</p></div>
               <button className={globalStyles.modalClose} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}><X size={18} /></button>
             </div>
             <div className={globalStyles.modalBody}>
@@ -393,12 +402,12 @@ const EditorCanvas = () => {
               </div>
             </div>
             <div className={globalStyles.modalFoot}>
-              <button className={globalStyles.cancelBtn} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}>Vazgeç</button>
+              <button className={globalStyles.cancelBtn} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}>{t('editorCanvas.cancel')}</button>
               <button className={styles.primaryBtn} onClick={() => {
                 const selectedOccs = multiReplace.occurrences.filter(o => o.selected);
-                if (selectedOccs.length === 0) return showToast("Hiçbir eşleşme seçmediniz.", "error");
+                if (selectedOccs.length === 0) return showToast(t('editorCanvas.noOccurrencesSelected'), "error");
                 executeConversion(multiReplace.newField, multiReplace.finalVarName, selectedOccs);
-              }}>Seçili Olanları Değiştir</button>
+              }}>{t('editorCanvas.replaceSelected')}</button>
             </div>
           </div>
         </div>

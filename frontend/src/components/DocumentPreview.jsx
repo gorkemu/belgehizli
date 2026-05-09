@@ -1,5 +1,6 @@
 // frontend/src/components/DocumentPreview.jsx
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './DocumentPreview.module.css';
 import Handlebars from 'handlebars';
 import { FileSearch, FileText, Loader2, Edit3, Lock, Eye } from 'lucide-react';
@@ -56,16 +57,11 @@ function prepareTemplateForHighlighting(templateStr) {
     return processed;
 }
 
-// ─── Güvenlik: yalnızca resimlere özgü hizalama işlemi ─────────────────────
-// Diğer tüm HTML elemanlarına dokunmaz; yalnızca <img> etiketlerinin
-// data-align özniteliği ve üst-eleman text-align stiline bakarak
-// gerekli margin / display düzeltmelerini inline style ile uygular.
 function applyImageAlignment(html) {
     if (typeof document === 'undefined' || !html) return html;
     const div = document.createElement('div');
     div.innerHTML = html;
 
-    // 1. data-align özniteliği taşıyan resimler
     div.querySelectorAll('img[data-align]').forEach(img => {
         const align = img.getAttribute('data-align');
         if (align === 'center') {
@@ -83,12 +79,10 @@ function applyImageAlignment(html) {
         }
     });
 
-    // 2. Üst eleman (p veya div) text-align stiline göre hizalama
     div.querySelectorAll('p, div').forEach(container => {
         const textAlign = container.style && container.style.textAlign;
         if (!textAlign) return;
         container.querySelectorAll('img').forEach(img => {
-            // Zaten data-align ile işlendiyse tekrar dokunma
             if (img.getAttribute('data-align')) return;
             if (textAlign === 'center') {
                 img.style.display = 'block';
@@ -105,9 +99,6 @@ function applyImageAlignment(html) {
     return div.innerHTML;
 }
 
-// ─── DOMPurify konfigürasyonu ───────────────────────────────────────────────
-// data-align yalnızca img etiketlerinde anlamlıdır; diğer data-* öznitelikleri
-// ALLOWED_ATTR dışında tutulmaya devam eder.
 const purifyConfig = {
     ALLOWED_TAGS: [
         'p', 'br', 'b', 'i', 'em', 'strong', 'a', 'ul', 'ol', 'li',
@@ -120,9 +111,7 @@ const purifyConfig = {
         'src', 'alt', 'width', 'height',
         'data-youtube-video', 'allowfullscreen', 'frameborder',
         'containerstyle', 'wrapperstyle',
-        // Görsel hizalama için – yalnızca img etiketine anlamlı katkı sağlar
         'data-align',
-        // İmza tablosu tipi vs. için
         'data-type'
     ],
     FORBID_TAGS: ['script', 'style'],
@@ -130,6 +119,7 @@ const purifyConfig = {
 };
 
 function DocumentPreview({ templateContent, formData, editorRef, currentStep }) {
+    const { t } = useTranslation();
 
     const safeHtml = useMemo(() => {
         if (!templateContent) return '';
@@ -144,29 +134,26 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
             const compiledTemplate = Handlebars.compile(templateToUse);
             const rawHtml = compiledTemplate(formData || {});
 
-            // 1. Önce DOMPurify ile temizle
             const sanitized = DOMPurify.sanitize(rawHtml, purifyConfig);
-
-            // 2. Yalnızca resimlere özgü hizalama düzeltmesini uygula
             return applyImageAlignment(sanitized);
 
         } catch (error) {
             console.error("Şablon Derleme Hatası:", error);
             return `
                 <div class="${styles.errorFallback}">
-                    <h3>Sözdizimi Hatası (Syntax Error)</h3>
-                    <p>Şablonunuzda kapatılmamış bir değişken <strong>{{ }}</strong> veya hatalı bir kurgu bulunuyor. Lütfen kontrol edip tekrar deneyin.</p>
+                    <h3>${t('documentPreview.syntaxErrorTitle')}</h3>
+                    <p>${t('documentPreview.syntaxErrorMessage')}</p>
                 </div>
             `;
         }
-    }, [templateContent, formData, currentStep]);
+    }, [templateContent, formData, currentStep, t]);
 
     if (!templateContent) {
         return (
             <div className={styles.container}>
                 <div className={styles.emptyState}>
                     <Loader2 size={36} className={styles.spinner} />
-                    <p>Önizleme verileri yükleniyor...</p>
+                    <p>{t('documentPreview.loading')}</p>
                 </div>
             </div>
         );
@@ -177,7 +164,7 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
             <div className={styles.container}>
                 <div className={styles.emptyState}>
                     <FileText size={48} className={styles.emptyIcon} />
-                    <p>Belge önizlemesini görmek için sol taraftaki formu doldurmaya başlayabilirsiniz.</p>
+                    <p>{t('documentPreview.fillFormPrompt')}</p>
                 </div>
             </div>
         );
@@ -187,15 +174,15 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
         <div className={styles.container}>
             <div className={styles.previewHeader}>
                 <FileSearch size={18} className={styles.headerIcon} />
-                <h3 className={styles.previewTitle}>Belge Önizlemesi</h3>
+                <h3 className={styles.previewTitle}>{t('documentPreview.previewTitle')}</h3>
 
                 {currentStep === 1 ? (
                     <div className={styles.lockedBadge}>
-                        <Lock size={14} /> Manuel Düzenleme Kapalı
+                        <Lock size={14} /> {t('documentPreview.lockedBadge')}
                     </div>
                 ) : (
                     <div className={styles.editBadge}>
-                        <Edit3 size={14} /> Manuel Düzenleme Açık
+                        <Edit3 size={14} /> {t('documentPreview.editBadge')}
                     </div>
                 )}
             </div>
@@ -206,8 +193,8 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
                         <Eye size={20} />
                     </div>
                     <div className={styles.bannerContent}>
-                        <strong>Canlı Önizleme Aktif</strong>
-                        <p>Sol taraftaki forma girdiğiniz veriler eşzamanlı olarak bu alana yansıyacaktır. Manuel metin düzenlemelerini bir sonraki adımda yapabilirsiniz.</p>
+                        <strong>{t('documentPreview.livePreviewActive')}</strong>
+                        <p>{t('documentPreview.livePreviewDescription')}</p>
                     </div>
                 </div>
             )}
