@@ -103,20 +103,14 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 17381,
+                      "duration": 8770,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.902Z",
+                      "startTime": "2026-05-09T14:21:15.126Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-6a195-adde-İmleri-doğru-çalışmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -143,20 +137,14 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 17814,
+                      "duration": 9354,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.876Z",
+                      "startTime": "2026-05-09T14:21:15.136Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-f6f46-lic-Renk-Hizalama-çalışmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -183,20 +171,14 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 17739,
+                      "duration": 8157,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.834Z",
+                      "startTime": "2026-05-09T14:21:15.102Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-4c2a9-o-işlemleri-doğru-çalışmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -223,20 +205,14 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 17746,
+                      "duration": 9306,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.858Z",
+                      "startTime": "2026-05-09T14:21:15.162Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-d7449-iste-iç-içe-geçme-çalışmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -263,20 +239,14 @@
                       "workerIndex": 4,
                       "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 17760,
+                      "duration": 7103,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.921Z",
+                      "startTime": "2026-05-09T14:21:15.153Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-33949-ksekliği-değiştirilebilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -303,20 +273,14 @@
                       "workerIndex": 5,
                       "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 16309,
+                      "duration": 8325,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.958Z",
+                      "startTime": "2026-05-09T14:21:15.184Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-06788--gezinme-ve-Enter-ile-seçim-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -343,20 +307,14 @@
                       "workerIndex": 6,
                       "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 18195,
+                      "duration": 8729,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:02.968Z",
+                      "startTime": "2026-05-09T14:21:15.149Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-1-core-ed-cfe28--açılıp-seçim-yapılabilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -400,20 +358,14 @@
                       "workerIndex": 7,
                       "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 17193,
+                      "duration": 7238,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:03.067Z",
+                      "startTime": "2026-05-09T14:21:15.228Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-92a33-x-tetikleyicileri-çalışmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -437,23 +389,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 4,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 8576,
+                      "duration": 4127,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:41.379Z",
+                      "startTime": "2026-05-09T14:21:32.292Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-453a7-evcut-değişkenler-dönüşmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -477,23 +423,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 8626,
+                      "duration": 6356,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:41.461Z",
+                      "startTime": "2026-05-09T14:21:32.964Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-b0e7f-klı-formatlar-seçilebilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -517,23 +457,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
+                      "workerIndex": 2,
+                      "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 11697,
+                      "duration": 7856,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:41.631Z",
+                      "startTime": "2026-05-09T14:21:33.271Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-9ff39-la-yerde-değiştirilebilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -557,23 +491,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 7678,
+                      "duration": 5082,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:42.194Z",
+                      "startTime": "2026-05-09T14:21:34.006Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-6225f-urumunda-numaralandırılmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -597,23 +525,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 7,
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 7207,
+                      "duration": 4947,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:42.711Z",
+                      "startTime": "2026-05-09T14:21:34.338Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-2-variabl-dd498-nde-form-alanı-kaldırılmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -654,23 +576,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 6889,
+                      "duration": 4735,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:03:43.088Z",
+                      "startTime": "2026-05-09T14:21:34.643Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-771ce-ışıldığında-sistem-uyarmalı-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -694,23 +610,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10768,
+                      "duration": 7777,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:04:00.138Z",
+                      "startTime": "2026-05-09T14:21:43.530Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-23d7a-a-ve-Önizlemede-PDF-İndirme-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -734,23 +644,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 5930,
+                      "duration": 4432,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:04:11.812Z",
+                      "startTime": "2026-05-09T14:21:51.361Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-f8838-de-koşula-göre-gösterilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -774,23 +678,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 4054,
+                      "duration": 3107,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:04:18.669Z",
+                      "startTime": "2026-05-09T14:21:55.809Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-8c3e8-e-bırak-ile-sıralanabilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -814,23 +712,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2265,
+                      "duration": 1665,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:04:23.534Z",
+                      "startTime": "2026-05-09T14:21:58.933Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-56f6e-aşım-linki-kopyalanabilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -854,23 +746,17 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 3,
-                      "parallelIndex": 3,
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2925,
+                      "duration": 2230,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-05-09T14:04:26.444Z",
+                      "startTime": "2026-05-09T14:22:00.613Z",
                       "annotations": [],
-                      "attachments": [
-                        {
-                          "name": "trace",
-                          "contentType": "application/zip",
-                          "path": "C:\\Users\\gorke\\belgehizli\\test-results\\template-builder-3-form-an-5cbc8-localStorage-a-kaydedilmeli-e2e\\trace.zip"
-                        }
-                      ]
+                      "attachments": []
                     }
                   ],
                   "status": "expected"
@@ -884,13 +770,285 @@
           ]
         }
       ]
+    },
+    {
+      "title": "api\\auth\\account-lockout.spec.js",
+      "file": "api/auth/account-lockout.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Hesap Kilitleme (Account Lockout)",
+          "file": "api/auth/account-lockout.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Bir hesaba 5 kez hatalı giriş yapıldığında hesap kilitlenmeli (403 Forbidden)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:38.810Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "aca62ffc35b717c47523-c32305e435246ff2e9ec",
+              "file": "api/auth/account-lockout.spec.js",
+              "line": 23,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\auth\\forgot-password.spec.js",
+      "file": "api/auth/forgot-password.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Şifremi Unuttum (Forgot Password) Güvenliği",
+          "file": "api/auth/forgot-password.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Sistemde KAYITLI OLMAYAN bir e-posta girildiğinde bile 200 dönmeli (Enumeration Koruması)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 707,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:38.837Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-3531122b07260a11784f",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 7,
+              "column": 7
+            },
+            {
+              "title": "Sistemde KAYITLI BİR e-posta girildiğinde başarılı yanıt dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1549,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:39.778Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "2ba00858970829ed2f51-492f944afe1d534ec3d0",
+              "file": "api/auth/forgot-password.spec.js",
+              "line": 21,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\auth\\mfa.spec.js",
+      "file": "api/auth/mfa.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - MFA (Çok Faktörlü Doğrulama) Güvenliği",
+          "file": "api/auth/mfa.spec.js",
+          "line": 4,
+          "column": 15,
+          "specs": [
+            {
+              "title": "Doğru şifreyle giriş yapıldığında doğrudan giriş YAPILAMAMALI, MFA kodu talep edilmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 1059,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:41.435Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-e6c314a49a9709209c08",
+              "file": "api/auth/mfa.spec.js",
+              "line": 26,
+              "column": 7
+            },
+            {
+              "title": "Yanlış MFA kodu girildiğinde 400 (Bad Request) dönmeli",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 9,
+                      "parallelIndex": 3,
+                      "status": "passed",
+                      "duration": 185,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:43.066Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a05b884873a10853f9b2-87f26451922eb70e5739",
+              "file": "api/auth/mfa.spec.js",
+              "line": 42,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "api\\auth\\rate-limit.spec.js",
+      "file": "api/auth/rate-limit.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Auth API - Brute Force Koruması (Rate Limiting)",
+          "file": "api/auth/rate-limit.spec.js",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Giriş (login) rotasında arka arkaya 10 hatalı denemeden sonra IP engellenmeli (429 Too Many Requests)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "api",
+                  "projectName": "api",
+                  "results": [
+                    {
+                      "workerIndex": 8,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 1108,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-05-09T14:21:41.668Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "83817046f7c55ac6b21b-0f7bf828305a5ccb3fd5",
+              "file": "api/auth/rate-limit.spec.js",
+              "line": 6,
+              "column": 7
+            }
+          ]
+        }
+      ]
     }
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-05-09T14:03:00.548Z",
-    "duration": 92795.707,
-    "expected": 19,
+    "startTime": "2026-05-09T14:21:11.694Z",
+    "duration": 53450.958999999995,
+    "expected": 25,
     "skipped": 0,
     "unexpected": 0,
     "flaky": 0

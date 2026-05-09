@@ -1,10 +1,10 @@
+// tests\api\auth\account-lockout.spec.js
 import { test, expect } from '@playwright/test';
 
 test.describe('Auth API - Hesap Kilitleme (Account Lockout)', () => {
   const registerUrl = '/api/auth/register';
   const loginUrl = '/api/auth/login';
   
-  // Diğer testlerle çakışmamak için bu dosyaya özel sahte IP
   const fakeIp = `192.168.20.${Math.floor(Math.random() * 255)}`;
 
   const testUser = {
@@ -31,7 +31,7 @@ test.describe('Auth API - Hesap Kilitleme (Account Lockout)', () => {
           password: 'YanlisSifre123!' 
         }
       });
-      expect(response.status()).toBe(401); 
+      expect(response.status()).toBe(401);
     }
 
     // 2. Aşama: DOĞRU şifreyle deneme (Kilitli olmalı)
@@ -46,6 +46,9 @@ test.describe('Auth API - Hesap Kilitleme (Account Lockout)', () => {
     expect(lockedResponse.status()).toBe(403);
 
     const body = await lockedResponse.json();
-    expect(body.message).toContain('geçici olarak kilitlendi');
+    // Dil bağımsız doğrulama: messageKey veya message kontrolü
+    expect(body.messageKey).toBe('auth.accountLocked');
+    // params içinde minutes değeri olmalı
+    expect(body.params?.minutes).toBeGreaterThan(0);
   });
 });
