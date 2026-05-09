@@ -1,12 +1,11 @@
+// tests/api/auth/mfa-security.spec.js
 import { test, expect } from '@playwright/test';
 
-// Testler sırayla çalışacak.
 test.describe.serial('Auth API - MFA (Çok Faktörlü Doğrulama) Güvenliği', () => {
   const registerUrl = '/api/auth/register';
   const loginUrl = '/api/auth/login';
   const verifyMfaUrl = '/api/auth/verify-mfa';
 
-  // Diğer testlerle çakışmamak için bu dosyaya özel sahte IP
   const fakeIp = `192.168.10.${Math.floor(Math.random() * 255)}`;
 
   const testUser = {
@@ -50,7 +49,11 @@ test.describe.serial('Auth API - MFA (Çok Faktörlü Doğrulama) Güvenliği', 
     });
 
     expect(response.status()).toBe(400);
+
     const body = await response.json();
-    expect(body.message).toContain('Geçersiz veya süresi dolmuş kod');
+    // Dil bağımsız kontroller
+    expect(body).toHaveProperty('messageKey');
+    expect(body.messageKey).toMatch(/invalidOtp|mfaSessionExpired|otp/i);
+    expect(body).toHaveProperty('message');
   });
 });

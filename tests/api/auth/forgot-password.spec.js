@@ -9,15 +9,16 @@ test.describe('Auth API - Şifremi Unuttum (Forgot Password) Güvenliği', () =>
       data: { email: 'asla.varolmayan.bir.email@hacker.com' }
     });
 
-    // 404 (Not Found) dönmemeli! Güvenlik için 200 dönmeli.
     expect(response.status()).toBe(200);
 
     const body = await response.json();
-    expect(body.message).toContain('gönderildi');
+    // Dil bağımsız: messageKey varlığı yeterli
+    expect(body).toHaveProperty('messageKey');
+    expect(body.messageKey).toMatch(/resetLinkSent|link/i);
+    expect(body).toHaveProperty('message');
   });
 
   test('Sistemde KAYITLI BİR e-posta girildiğinde başarılı yanıt dönmeli', async ({ request }) => {
-    // 1. Önce geçici bir kullanıcı oluşturalım
     const testUser = {
       fullName: 'Sifre Sifirlama Test',
       email: `reset_${Date.now()}@test.com`,
@@ -25,7 +26,6 @@ test.describe('Auth API - Şifremi Unuttum (Forgot Password) Güvenliği', () =>
     };
     await request.post('/api/auth/register', { data: testUser });
 
-    // 2. Şifremi unuttum isteği atalım
     const response = await request.post(forgotPasswordUrl, {
       data: { email: testUser.email }
     });
@@ -33,6 +33,9 @@ test.describe('Auth API - Şifremi Unuttum (Forgot Password) Güvenliği', () =>
     expect(response.status()).toBe(200);
     
     const body = await response.json();
-    expect(body.message).toContain('gönderildi');
+    // Dil bağımsız: messageKey kontrolü
+    expect(body).toHaveProperty('messageKey');
+    expect(body.messageKey).toMatch(/resetLinkSent|link/i);
+    expect(body).toHaveProperty('message');
   });
 });
