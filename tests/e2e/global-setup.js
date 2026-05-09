@@ -30,7 +30,8 @@ async function globalSetup(config) {
   await page.fill('input[type="password"]', process.env.TEST_USER_PASSWORD);
 
   console.log('Giriş yap butonuna tıklanıyor...');
-  await page.locator('button', { hasText: 'Giriş Yap' }).click();
+  // Dil bağımsız: butonun rolü "button" ve metni "Giriş Yap" veya "Sign In" olanı bulur
+  await page.getByRole('button', { name: /Giriş Yap|Sign In/ }).click();
 
   console.log('Panelin açılması bekleniyor...');
   
