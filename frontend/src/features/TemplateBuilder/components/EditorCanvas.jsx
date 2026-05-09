@@ -143,10 +143,26 @@ const EditorCanvas = () => {
 
     if (varMatch) {
       const coords = view.coordsAtPos(selection.from);
-      const menuHeight = 320;
-      const topPos = (window.innerHeight - coords.bottom < menuHeight) ? coords.top - menuHeight : coords.bottom + 5;
-      setVarMenuState({ show: true, pos: { top: topPos, left: coords.left }, query: varMatch[2], range: { from: selection.from - (varMatch[1].length + varMatch[2].length), to: selection.from } });
-      setVarSelectedIndex(0); setSlashMenuState(s => ({ ...s, show: false }));
+      const spaceBelow = window.innerHeight - coords.bottom;
+
+      let posStyles = { left: coords.left };
+      if (spaceBelow < 250) {
+        posStyles.bottom = window.innerHeight - coords.top + 5;
+        posStyles.top = 'auto';
+      } else {
+        posStyles.top = coords.bottom + 5;
+        posStyles.bottom = 'auto';
+      }
+
+      setVarMenuState({
+        show: true,
+        pos: posStyles, 
+        query: varMatch[2],
+        range: { from: selection.from - (varMatch[1].length + varMatch[2].length), to: selection.from }
+      });
+
+      setVarSelectedIndex(0);
+      setSlashMenuState(s => ({ ...s, show: false }));
       return;
     }
 
@@ -325,7 +341,7 @@ const EditorCanvas = () => {
 
       {/* --- Variable AutoComplete Menu --- */}
       {varMenuState.show && mode === 'build' && (
-        <div className={`no-print ${styles.slashMenu}`} data-testid="variable-menu" style={{ top: varMenuState.pos.top, left: varMenuState.pos.left }}>
+        <div className={`no-print ${styles.slashMenu}`} data-testid="variable-menu" style={{ ...varMenuState.pos }}>
           <div className={styles.autocompleteHeader}>{t('editorCanvas.variables')}</div>
           {formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).length > 0 ? (
             formData.fields.filter(f => f.name.toLowerCase().includes(varMenuState.query.toLowerCase())).map((f, index) => (
