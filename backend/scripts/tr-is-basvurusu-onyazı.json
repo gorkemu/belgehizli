@@ -1,0 +1,27 @@
+{
+  "_id": "68026c21d3d0d8e46eebe642",
+  "name": "İş Başvurusu Ön Yazı Taslağı",
+  "description": "CV ile birlikte gönderilen, pozisyona uygunluğu ve motivasyonu anlatan ön yazı formatı.",
+  "price": 5,
+  "language": "tr",
+  "slug": "is-basvurusu-on-yazi-taslagi",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p>{{formatDate tarih}}</p>\n<br/>\n<p><strong>{{firma_adi}}</strong></p>\n<p>{{#if ilgili_kisi_departman}}{{ilgili_kisi_departman}} Dikkatine{{else}}İnsan Kaynakları Departmanı Dikkatine{{/if}}</p>\n<p>{{firma_adresi}}</p>\n<br/>\n<p><strong>Konu:</strong> {{basvurulan_pozisyon}} Pozisyonu Başvurusu</p>\n<br/>\n<p>Sayın Yetkili,</p>\n\n<p>{{iletisim_kaynagi}} aracılığıyla yayınlanan {{basvurulan_pozisyon}} pozisyonu ilanınızla ilgileniyorum. Sahip olduğum bilgi, beceri ve deneyimlerin, şirketinizin aradığı niteliklerle örtüştüğüne inanıyorum.</p>\n\n<p><strong>Neden Ben? (Uygunluk ve Motivasyon):</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{uygunluk_motivasyon}}</pre>\n\n<p><strong>Neden Bu Şirket/Pozisyon?</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{neden_bu_sirket}}</pre>\n\n<p>Detaylı özgeçmişim ekte yer almaktadır. Pozisyonun gerektirdiği sorumlulukları başarıyla yerine getirebileceğime ve şirketinize değer katacağıma inanıyorum.</p>\n\n<p>Başvurumla ilgilendiğiniz için teşekkür eder, tarafınızdan gelecek olumlu veya olumsuz yanıtı beklediğimi belirtmek isterim.</p>\n\n<p>Saygılarımla,</p>\n\n<div style='margin-top: 30px;'>\n  <p><strong>{{ad_soyad}}</strong><br/>\n  {{adres}}<br/>\n  Telefon: {{telefon}}<br/>\n  E-posta: {{eposta}}<br/>\n  {{#if portfolyo_linkedin}}Portfolyo/LinkedIn: {{portfolyo_linkedin}}{{/if}}\n  </p>\n</div>\n</div>",
+  "fields": [
+    { "name": "ad_soyad", "label": "Adınız Soyadınız", "fieldType": "text", "required": true },
+    { "name": "adres", "label": "Adresiniz (Kısa)", "fieldType": "text", "required": true, "placeholder": "Örn: Şişli/İstanbul" },
+    { "name": "telefon", "label": "Telefon Numaranız", "fieldType": "text", "required": true },
+    { "name": "eposta", "label": "E-posta Adresiniz", "fieldType": "email", "required": true },
+    { "name": "portfolyo_linkedin", "label": "Portfolyo/LinkedIn Linki (Varsa)", "fieldType": "text", "required": false },
+    { "name": "tarih", "label": "Tarih", "fieldType": "date", "required": true },
+    { "name": "firma_adi", "label": "Başvurulan Firma Adı", "fieldType": "text", "required": true },
+    { "name": "ilgili_kisi_departman", "label": "İlgili Kişi veya Departman (Biliyorsanız)", "fieldType": "text", "required": false, "placeholder": "Örn: Sn. Ahmet Yılmaz / Pazarlama Müdürü" },
+    { "name": "firma_adresi", "label": "Firma Adresi (Biliyorsanız)", "fieldType": "textarea", "required": false },
+    { "name": "basvurulan_pozisyon", "label": "Başvurulan Pozisyon", "fieldType": "text", "required": true },
+    { "name": "iletisim_kaynagi", "label": "İlanı Nerede Gördünüz?", "fieldType": "text", "required": true, "placeholder": "Örn: Kariyer.net, LinkedIn, Şirketinizin web sitesi" },
+    { "name": "uygunluk_motivasyon", "label": "Neden Bu Pozisyona Uygunsunuz? (Özet)", "fieldType": "textarea", "required": true, "placeholder": "Deneyimlerinizi ve becerilerinizi vurgulayın." },
+    { "name": "neden_bu_sirket", "label": "Neden Bu Şirkette Çalışmak İstiyorsunuz? (Özet)", "fieldType": "textarea", "required": true, "placeholder": "Şirketin vizyonuyla ilgili motivasyonunuzu belirtin." },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

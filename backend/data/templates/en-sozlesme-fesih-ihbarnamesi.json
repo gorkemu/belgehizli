@@ -1,0 +1,24 @@
+{
+  "name": "Notice of Contract Termination",
+  "description": "Formal notice informing the other party that the contract is terminated for just cause due to non-compliance.",
+  "price": 10,
+  "language": "en",
+  "slug": "notice-of-contract-termination",
+  "content": "<div style=\"font-family: 'Helvetica', 'Arial', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <p style='text-align: right;'><strong>Date:</strong> {{formatDate current_date}}</p>\n  <p><strong>FROM:</strong><br/>{{sender_name_title}}<br/>{{sender_address}}</p>\n  <p style='margin-top: 20px;'><strong>TO:</strong><br/>{{recipient_name_title}}<br/>{{recipient_address}}</p>\n\n  <p style='margin-top: 30px;'><strong>RE: Notice of Termination of Contract dated {{formatDate contract_date}} regarding {{contract_subject}}</strong></p>\n\n  <p>Dear Sir/Madam,</p>\n\n  <p>This letter serves as formal written notice that we are terminating the aforementioned contract, effective immediately, due to your failure to fulfill the obligations set forth in the agreement.</p>\n\n  <p>Specifically, the termination is based on the following breach(es) of contract:</p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0 0 0 20px; font-family: \"Helvetica\", \"Arial\", sans-serif; font-style: italic;'>{{breach_reasons}}</pre>\n\n  <p>Despite previous communications attempting to resolve these issues, the breaches have not been cured. Therefore, we are exercising our right to terminate the contract in accordance with <strong>Clause {{clause_no}}</strong> of the agreement.</p>\n\n  {{#if compensation_amount}}\n  <p>Furthermore, due to the damages incurred as a result of these breaches, we demand payment of <strong>{{compensation_amount}}</strong> as compensation/penalty within <strong>{{payment_days}} days</strong> of receipt of this notice. Failure to remit this payment may result in legal action to recover the amounts owed, along with associated legal fees.</p>\n  {{/if}}\n\n  <p>Please ensure that any outstanding matters or handovers are completed promptly. All our rights and remedies under the contract and applicable laws are strictly reserved.</p>\n\n  <p style='margin-top: 40px;'>Sincerely,</p>\n  <p>{{sender_name_title}}<br/><br/><br/>Signature: ____________________</p>\n</div>",
+  "fields": [
+    { "name": "current_date", "label": "Date of Notice", "fieldType": "date", "required": true },
+    { "name": "sender_name_title", "label": "Your Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "sender_address", "label": "Your Address", "fieldType": "textarea", "required": true },
+    { "name": "recipient_name_title", "label": "Recipient's Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "recipient_address", "label": "Recipient's Address", "fieldType": "textarea", "required": true },
+    { "name": "contract_date", "label": "Date of the Contract", "fieldType": "date", "required": true },
+    { "name": "contract_subject", "label": "Subject of the Contract", "fieldType": "text", "required": true, "placeholder": "e.g., Software Development Services" },
+    { "name": "breach_reasons", "label": "Reasons for Termination (Breaches)", "fieldType": "textarea", "required": true, "placeholder": "e.g., Failure to deliver the project on time, failure to make payments, etc." },
+    { "name": "clause_no", "label": "Termination Clause No. in Contract", "fieldType": "text", "required": true, "placeholder": "e.g., 12" },
+    { "name": "compensation_amount", "label": "Compensation/Penalty Amount (if any) including currency", "fieldType": "text", "required": false, "placeholder": "e.g., $5,000" },
+    { "name": "payment_days", "label": "Days Allowed for Payment", "fieldType": "number", "required": false },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}
