@@ -21,22 +21,23 @@ async function globalSetup(config) {
     }
   });
 
-  console.log(`Giriş sayfasına gidiliyor: ${baseURL}/giris-yap`);
-  await page.goto(`${baseURL}/giris-yap`);
+  console.log(`Giriş sayfasına gidiliyor: ${baseURL}/tr/giris-yap`);
+  await page.goto(`${baseURL}/tr/giris-yap`);
   await page.waitForLoadState('domcontentloaded');
+
+  await page.waitForSelector('input[type="email"]', { state: 'visible', timeout: 10000 });
 
   console.log('Form dolduruluyor...');
   await page.fill('input[type="email"]', process.env.TEST_USER_EMAIL);
   await page.fill('input[type="password"]', process.env.TEST_USER_PASSWORD);
 
   console.log('Giriş yap butonuna tıklanıyor...');
-  // Dil bağımsız: butonun rolü "button" ve metni "Giriş Yap" veya "Sign In" olanı bulur
-  await page.getByRole('button', { name: /Giriş Yap|Sign In/ }).click();
+  await page.locator('form').filter({ has: page.locator('input[type="password"]') }).locator('button[type="submit"]').click();
 
   console.log('Panelin açılması bekleniyor...');
   
   try {
-    await page.waitForURL(`${baseURL}/panel`, { timeout: 15000 });
+    await page.waitForURL(`**/tr/panel`, { timeout: 15000 });
   } catch (error) {
     console.log('\n❌ YÖNLENDİRME BAŞARISIZ OLDU! TIMEOUT YENDİ.');
     
