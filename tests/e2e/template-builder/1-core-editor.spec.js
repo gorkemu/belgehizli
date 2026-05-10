@@ -12,14 +12,17 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
       localStorage.setItem('i18nextLng', 'tr');
     });
     const page = await context.newPage();
-    await page.goto('/panel');
+    
+    await page.goto('/tr/panel');
     await page.getByRole('button', { name: 'Yeni Şablon Oluştur' }).click();
-    await page.waitForURL(/\/panel\/projects/);
+    
+    await page.waitForURL(/.*\/panel\/projects/);
     await page.getByRole('button', { name: 'Yeni Şablon' }).click();
     await page.getByPlaceholder('Örn: İş Sözleşmesi').fill(DOC_NAME);
     await page.getByRole('button', { name: 'Oluştur ve Başla' }).click();
-    await page.waitForURL(/\/panel\/duzenle\/.+/);
-    const match = page.url().match(/\/panel\/duzenle\/([a-f0-9]+)/i);
+    
+    await page.waitForURL(/.*\/panel\/duzenle\/.+/);
+    const match = page.url().match(/.*\/panel\/duzenle\/([a-f0-9]+)/i);
     if (match && match[1]) TEST_DOC_ID = match[1];
     await page.close();
   });
@@ -27,7 +30,8 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
   test.afterAll(async ({ browser }) => {
     if (!TEST_DOC_ID) return;
     const page = await browser.newPage();
-    await page.goto('/panel/projects');
+    
+    await page.goto('/tr/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
     await projectCard.locator('button[title="Sil"], button[title="Delete"]').click();
     await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/ }).click();
@@ -41,7 +45,7 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
       localStorage.setItem('i18nextLng', 'tr');
     });
 
-    await page.goto(`/panel/duzenle/${TEST_DOC_ID}`);
+    await page.goto(`/tr/panel/duzenle/${TEST_DOC_ID}`);
     await page.getByRole('button', { name: 'Tasarım' }).click();
     const editor = page.locator('.ProseMirror');
     await editor.click();
