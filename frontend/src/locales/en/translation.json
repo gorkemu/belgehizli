@@ -926,5 +926,42 @@
     "pdfLimitReached": "Hourly document generation limit reached. Please try again later.",
     "corsPolicyViolation": "CORS policy violation.",
     "unexpectedError": "An unexpected server error occurred."
+  },
+  "aboutUs": {
+    "pageTitle": "About Us",
+    "metaDescription": "Learn about the mission of Belge Hızlı and how we simplify the online document creation process.",
+    "title": "About Us",
+    "paragraph1": "our goal is to simplify the process of preparing frequently needed legal and routine documents, breaking the repetitive copy-paste cycles. By leveraging technology, we allow you to create your standard document needs with your own information flawlessly in seconds.",
+    "paragraph2": "The templates on our site are prepared with general needs in mind. By filling out the smart form fields we designed for you, you can personalize these templates according to your situation and instantly download them in PDF format or save them to your workspace.",
+    "importantNoteTitle": "Important Reminder",
+    "importantNoteContent": "is not a law firm, and the services we provide do not substitute for legal advice. We strongly recommend always consulting a legal professional to ensure the exact suitability and legal validity of the documents you create for your specific situation."
+  },
+  "contactUs": {
+    "pageTitle": "Contact Us",
+    "metaDescription": "Contact Belge Hızlı. You can reach out to us for questions, suggestions, or collaboration requests.",
+    "title": "Contact Information",
+    "paragraph1": "You can use the information below for your questions, suggestions, or technical support requests.",
+    "paragraph2": "For customer support requests, we kindly ask you to primarily use our <bold>email address</bold>.",
+    "companyInfo": "Company Information",
+    "fullName": "Full Name",
+    "taxOffice": "Tax Office",
+    "taxId": "Tax ID Number",
+    "address": "Headquarters Address",
+    "contactChannels": "Contact Channels",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "legal": {
+    "loading": "Loading...",
+    "loadingPolicy": "Loading policy...",
+    "loadingTerms": "Loading Terms of Service...",
+    "lastUpdated": "Last Updated",
+    "datePending": "Pending Date...",
+    "preInfoTitle": "Pre-Information Form",
+    "preInfoDesc": "Review the pre-information form regarding our services.",
+    "privacyTitle": "Privacy Policy and Clarification Text",
+    "privacyDesc": "Learn about how we process and protect your personal data.",
+    "termsTitle": "Terms of Service and Distance Selling Agreement",
+    "termsDesc": "Read the terms of use and contract details of our platform."
   }
 }

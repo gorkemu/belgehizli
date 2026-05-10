@@ -3,11 +3,11 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { PostDownloadModal } from '../components/PostDownloadModal';
-import axios from 'axios';
+import api from '../utils/api'; 
 import styles from './TemplateDetail.module.css';
 import DocumentForm from '../components/DocumentForm';
 import DocumentPreview from '../components/DocumentPreview';
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '../components/SEOHead'; 
 import {
     ArrowLeft, CheckCircle2, AlertCircle, Download,
     Loader2, X, ArrowDown, Edit2, ArrowRight, FileText, CheckSquare
@@ -18,9 +18,15 @@ import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 function TemplateDetail() {
     const { t } = useTranslation();
-    const { slug } = useParams();
+    const { slug, lang } = useParams(); 
     const navigate = useNavigate();
     const { user } = useContext(AuthContext);
+
+    const currentLang = lang || 'tr'; 
+
+    // Dinamik Rotalar
+    const termsRoute = currentLang === 'tr' ? 'kullanim-sartlari' : 'terms-of-service';
+    const privacyRoute = currentLang === 'tr' ? 'gizlilik-politikasi' : 'privacy-policy';
 
     const formRef = useRef(null);
     const [template, setTemplate] = useState(null);
@@ -39,7 +45,6 @@ function TemplateDetail() {
     const [isNoticeVisibleByScroll, setIsNoticeVisibleByScroll] = useState(true);
     const [isNoticeDismissed, setIsNoticeDismissed] = useState(false);
     const editorRef = useRef(null);
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
     const [currentStep, setCurrentStep] = useState(1);
     const [showBackWarning, setShowBackWarning] = useState(false);
     const [isFormValid, setIsFormValid] = useState(false);
@@ -52,7 +57,7 @@ function TemplateDetail() {
         setIsConversionModalOpen(false);
         setCurrentStep(1);
 
-        axios.get(`${API_BASE_URL}/sablonlar/detay/${slug}`)
+        api.get(`/sablonlar/detay/${slug}`)
             .then(response => {
                 setTemplate(response.data);
 
@@ -96,7 +101,6 @@ function TemplateDetail() {
 
     useEffect(() => {
         const currentRef = previewRef.current;
-
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -109,22 +113,11 @@ function TemplateDetail() {
                     setIsNoticeVisibleByScroll(false);
                 }
             },
-            {
-                root: null,
-                rootMargin: '-100px 0px 0px 0px',
-                threshold: 0.1
-            }
+            { root: null, rootMargin: '-100px 0px 0px 0px', threshold: 0.1 }
         );
 
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
+        if (currentRef) observer.observe(currentRef);
+        return () => { if (currentRef) observer.unobserve(currentRef); };
     }, [template]);
 
     useEffect(() => {
@@ -134,7 +127,6 @@ function TemplateDetail() {
                 setAutoSaveVisible(true);
                 setTimeout(() => setAutoSaveVisible(false), 2000);
             }, 500);
-
             return () => clearTimeout(handler);
         }
     }, [formData, slug]);
@@ -150,11 +142,7 @@ function TemplateDetail() {
             const headerOffset = 95;
             const elementPosition = previewRef.current.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
         }
     };
 
@@ -175,17 +163,12 @@ function TemplateDetail() {
 
         if (isFormValidLocal) {
             setCurrentStep(2);
-
             if (window.innerWidth <= 1024 && previewRef.current) {
                 setTimeout(() => {
                     const headerOffset = 95;
                     const elementPosition = previewRef.current.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.scrollY - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                 }, 50);
             }
         }
@@ -199,19 +182,11 @@ function TemplateDetail() {
     const handleDownload = async () => {
         let detectedError = null;
 
-        if (!agreedToTerms) {
-            detectedError = t('templateDetail.termsNotAccepted');
-        }
-
-        if (!detectedError && !formRef.current) {
-            detectedError = t('templateDetail.formValidationFailed');
-        }
-
+        if (!agreedToTerms) detectedError = t('templateDetail.termsNotAccepted');
+        if (!detectedError && !formRef.current) detectedError = t('templateDetail.formValidationFailed');
         if (!detectedError && formRef.current) {
             const isDocumentFormValid = await formRef.current.handleSubmit();
-            if (!isDocumentFormValid) {
-                detectedError = t('templateDetail.fillRequiredFields');
-            }
+            if (!isDocumentFormValid) detectedError = t('templateDetail.fillRequiredFields');
         }
 
         if (detectedError) {
@@ -236,7 +211,7 @@ function TemplateDetail() {
                 consentTimestamp: new Date().toISOString(),
             };
 
-            const response = await axios.post(`${API_BASE_URL}/templates/${template._id}/generate-document`, backendPayload, {
+            const response = await api.post(`/templates/${template._id}/generate-document`, backendPayload, {
                 responseType: 'blob'
             });
 
@@ -283,16 +258,10 @@ function TemplateDetail() {
             );
 
             if (message === t('templateDetail.downloadError')) {
-                // özel durumlar için ek kontrol
-                if (error.response?.status === 429) {
-                    message = t('templateDetail.tooManyRequests');
-                } else if (error.response?.status === 500) {
-                    message = t('templateDetail.serverError');
-                } else if (error.code === 'ERR_NETWORK') {
-                    message = t('templateDetail.networkError');
-                }
+                if (error.response?.status === 429) message = t('templateDetail.tooManyRequests');
+                else if (error.response?.status === 500) message = t('templateDetail.serverError');
+                else if (error.code === 'ERR_NETWORK') message = t('templateDetail.networkError');
             }
-
             setDownloadError(message);
         } finally {
             setLoadingDownload(false);
@@ -321,18 +290,14 @@ function TemplateDetail() {
 
     return (
         <div className={styles.root}>
-            <Helmet>
-                <title>{template.name ? `${template.name} - Belge Hızlı` : t('templateDetail.defaultTitle')}</title>
-            </Helmet>
+            <SEOHead 
+                dynamicTitle={template.name ? `${template.name}` : t('templateDetail.defaultTitle')} 
+                descKey="templateList.metaDescription" 
+            />
 
             <div className={styles.workspaceContainer}>
                 <div className={styles.workspaceHeader}>
-                    <Button
-                        variant="secondary"
-                        onClick={() => navigate(-1)}
-                        leftIcon={<ArrowLeft size={16} />}
-                        className={styles.backButton}
-                    >
+                    <Button variant="secondary" onClick={() => navigate(-1)} leftIcon={<ArrowLeft size={16} />} className={styles.backButton}>
                         {t('templateDetail.back')}
                     </Button>
                     <div className={styles.headerTitles}>
@@ -365,9 +330,7 @@ function TemplateDetail() {
                         {currentStep === 1 && (
                             <div className={styles.formColumnHeader}>
                                 <div className={styles.formStepTag}>{t('templateDetail.step1Tag')}</div>
-                                <p className={styles.formColumnHint}>
-                                    {t('templateDetail.step1Hint')}
-                                </p>
+                                <p className={styles.formColumnHint}>{t('templateDetail.step1Hint')}</p>
                             </div>
                         )}
 
@@ -384,13 +347,7 @@ function TemplateDetail() {
 
                         <div className={currentStep === 2 ? styles.blurredForm : ''}>
                             {template.fields && template.fields.length > 0 ? (
-                                <DocumentForm
-                                    templateFields={template.fields}
-                                    onChange={handleFormChange}
-                                    onValidChange={handleFormValidityChange}
-                                    ref={formRef}
-                                    initialData={formData}
-                                />
+                                <DocumentForm templateFields={template.fields} onChange={handleFormChange} onValidChange={handleFormValidityChange} ref={formRef} initialData={formData} />
                             ) : (
                                 <div className={styles.emptyFormNotice}>{t('templateDetail.noFormFields')}</div>
                             )}
@@ -401,16 +358,7 @@ function TemplateDetail() {
                                         <CheckCircle2 size={16} className={styles.progressIcon} />
                                         {t('templateDetail.fillRequiredHint')}
                                     </div>
-
-                                    <Button
-                                        variant="primary"
-                                        size="lg"
-                                        onClick={handleNextStep}
-                                        disabled={!isFormValid}
-                                        fullWidth={isMobile}
-                                        leftIcon={<Edit2 size={20} />}
-                                        rightIcon={<ArrowRight size={18} />}
-                                    >
+                                    <Button variant="primary" size="lg" onClick={handleNextStep} disabled={!isFormValid} fullWidth={isMobile} leftIcon={<Edit2 size={20} />} rightIcon={<ArrowRight size={18} />}>
                                         {t('templateDetail.nextStepReview')}
                                     </Button>
                                 </div>
@@ -421,18 +369,11 @@ function TemplateDetail() {
                     <div className={styles.previewColumn} ref={previewRef} data-locked={currentStep === 1 ? "true" : "false"}>
                         {template.content ? (
                             <>
-                                <DocumentPreview
-                                    templateContent={template.content}
-                                    formData={formData}
-                                    editorRef={editorRef}
-                                    currentStep={currentStep}
-                                />
+                                <DocumentPreview templateContent={template.content} formData={formData} editorRef={editorRef} currentStep={currentStep} />
                                 {currentStep === 2 && (
                                     <div className={styles.previewNotes}>
                                         <p className={styles.secureNote}>{t('templateDetail.manualEditsNote')}</p>
-                                        <p className={styles.highlightNote}>
-                                            {t('templateDetail.highlightNote')}
-                                        </p>
+                                        <p className={styles.highlightNote}>{t('templateDetail.highlightNote')}</p>
                                     </div>
                                 )}
                             </>
@@ -449,9 +390,9 @@ function TemplateDetail() {
                                 <input type="checkbox" checked={agreedToTerms} onChange={(e) => setAgreedToTerms(e.target.checked)} className={styles.checkboxInput} />
                                 <span className={styles.termsLabel}>
                                     {t('templateDetail.termsPrefix')}
-                                    <Link to="/kullanim-sartlari" target="_blank" className={styles.termsLink}>{t('templateDetail.termsOfService')}</Link>
+                                    <Link to={`/${currentLang}/${termsRoute}`} target="_blank" className={styles.termsLink}>{t('templateDetail.termsOfService')}</Link>
                                     {' '}{t('templateDetail.and')}{' '}
-                                    <Link to="/gizlilik-politikasi" target="_blank" className={styles.termsLink}>{t('templateDetail.privacyPolicy')}</Link>
+                                    <Link to={`/${currentLang}/${privacyRoute}`} target="_blank" className={styles.termsLink}>{t('templateDetail.privacyPolicy')}</Link>
                                     {t('templateDetail.termsSuffix')}
                                 </span>
                             </label>
@@ -461,14 +402,7 @@ function TemplateDetail() {
                             )}
 
                             <div className={styles.ctaWrapper}>
-                                <Button
-                                    variant="primary"
-                                    size="lg"
-                                    onClick={handleDownload}
-                                    disabled={!agreedToTerms}
-                                    isLoading={loadingDownload}
-                                    leftIcon={!loadingDownload && <Download size={18} />}
-                                >
+                                <Button variant="primary" size="lg" onClick={handleDownload} disabled={!agreedToTerms} isLoading={loadingDownload} leftIcon={!loadingDownload && <Download size={18} />}>
                                     {loadingDownload ? t('templateDetail.processing') : t('templateDetail.downloadPdf')}
                                 </Button>
                             </div>
@@ -499,11 +433,7 @@ function TemplateDetail() {
                 </div>
             )}
 
-            <PostDownloadModal
-                isOpen={isConversionModalOpen}
-                onClose={() => setIsConversionModalOpen(false)}
-                isLoggedIn={!!user}
-            />
+            <PostDownloadModal isOpen={isConversionModalOpen} onClose={() => setIsConversionModalOpen(false)} isLoggedIn={!!user} />
         </div>
     );
 }

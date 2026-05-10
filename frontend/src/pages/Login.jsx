@@ -1,15 +1,23 @@
 // frontend/src/pages/Login.jsx
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link, useLocation, useParams } from 'react-router-dom'; 
 import { useTranslation, Trans } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2, KeyRound, ArrowLeft } from 'lucide-react';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
+import { SEOHead } from '../components/SEOHead'; 
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const Login = () => {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+
+  // Dinamik Rotalar
+  const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
+  const forgotPasswordRoute = currentLang === 'tr' ? 'sifremi-unuttum' : 'forgot-password';
+  const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -35,7 +43,7 @@ const Login = () => {
         setTempToken(response.tempToken);
         setIsLoading(false);
       } else {
-        const from = location.state?.from?.pathname || '/panel';
+        const from = location.state?.from?.pathname || `/${currentLang}/${dashboardRoute}`;
         navigate(from, { replace: true });
       }
     } catch (err) {
@@ -51,7 +59,7 @@ const Login = () => {
 
     try {
       await verifyMfa(tempToken, otp);
-      const from = location.state?.from?.pathname || '/panel';
+      const from = location.state?.from?.pathname || `/${currentLang}/${dashboardRoute}`;
       navigate(from, { replace: true });
     } catch (err) {
       setError(getUserFriendlyMessage(err.response?.data, 'login.invalidCode', t));
@@ -69,6 +77,9 @@ const Login = () => {
 
   return (
     <div className={styles.authContainer}>
+      {/* SEO Etiketleri */}
+      <SEOHead titleKey="login.welcome" descKey="login.subtitle" />
+
       <div className={styles.authCard}>
         {requiresMfa ? (
           <div style={{ animation: 'fadeIn 0.3s ease-out' }}>
@@ -140,7 +151,7 @@ const Login = () => {
               <div className={styles.formGroup}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <label className={styles.label}>{t('login.password')}</label>
-                  <Link to="/sifremi-unuttum" className={styles.switchLink} style={{ fontSize: '0.8rem', fontWeight: '600' }}>
+                  <Link to={`/${currentLang}/${forgotPasswordRoute}`} className={styles.switchLink} style={{ fontSize: '0.8rem', fontWeight: '600' }}>
                     {t('login.forgotPassword')}
                   </Link>
                 </div>
@@ -160,7 +171,7 @@ const Login = () => {
 
             <p className={styles.switchText}>
               {t('login.noAccount')}{' '}
-              <Link to="/kayit-ol" className={styles.switchLink}>{t('login.registerNow')}</Link>
+              <Link to={`/${currentLang}/${registerRoute}`} className={styles.switchLink}>{t('login.registerNow')}</Link>
             </p>
           </div>
         )}

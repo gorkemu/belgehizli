@@ -926,5 +926,42 @@
     "pdfLimitReached": "Saatlik belge oluşturma sınırına ulaştınız. Lütfen daha sonra tekrar deneyin.",
     "corsPolicyViolation": "CORS politikası ihlali.",
     "unexpectedError": "Sunucuda beklenmedik bir hata oluştu."
+  },
+  "aboutUs": {
+    "pageTitle": "Hakkımızda",
+    "metaDescription": "Belge Hızlı'nın kuruluş amacı ve online belge oluşturma sürecini nasıl kolaylaştırdığımız hakkında bilgi edinin.",
+    "title": "Hakkımızda",
+    "paragraph1": "olarak amacımız, sıkça ihtiyaç duyulan yasal ve rutin belgeleri hazırlama sürecini kolaylaştırmak, tekrarlayan kopyala-yapıştır döngülerini kırmaktır. Teknolojiyi kullanarak, belirli standartlardaki belge ihtiyaçlarınızı kendi bilgilerinizle saniyeler içinde ve hatasız bir şekilde oluşturmanıza olanak tanıyoruz.",
+    "paragraph2": "Sitemizde bulunan şablonlar, genel ihtiyaçlar göz önünde bulundurularak hazırlanmıştır. Sizin için tasarladığımız akıllı form alanlarını doldurarak bu şablonları kendi durumunuza göre kişiselleştirebilir ve anında PDF formatında indirebilir veya çalışma alanınıza kaydedebilirsiniz.",
+    "importantNoteTitle": "Önemli Hatırlatma",
+    "importantNoteContent": "bir hukuk bürosu değildir ve sunduğumuz hizmetler hukuki danışmanlık yerine geçmez. Oluşturduğunuz belgelerin özel durumunuza tam uygunluğu ve yasal geçerliliği konusunda emin olmak için her zaman bir hukuk profesyoneline danışmanızı öneririz."
+  },
+  "contactUs": {
+    "pageTitle": "İletişim",
+    "metaDescription": "Belge Hızlı ile iletişime geçin. Soru, öneri veya işbirliği talepleriniz için bize ulaşabilirsiniz.",
+    "title": "İletişim Bilgileri",
+    "paragraph1": "Soru, öneri veya teknik destek talepleriniz için aşağıdaki bilgileri kullanabilirsiniz.",
+    "paragraph2": "Müşteri destek talepleriniz için öncelikli olarak <bold>e-posta adresimizi</bold> kullanmanızı rica ederiz.",
+    "companyInfo": "Firma Bilgileri",
+    "fullName": "Adı Soyadı",
+    "taxOffice": "Vergi Dairesi",
+    "taxId": "Vergi Kimlik Numarası",
+    "address": "Merkez Adresi",
+    "contactChannels": "İletişim Kanalları",
+    "email": "E-posta",
+    "phone": "Telefon"
+  },
+  "legal": {
+    "loading": "Yükleniyor...",
+    "loadingPolicy": "Politika yükleniyor...",
+    "loadingTerms": "Kullanım Şartları yükleniyor...",
+    "lastUpdated": "Son Güncelleme",
+    "datePending": "Tarih Bekleniyor...",
+    "preInfoTitle": "Ön Bilgilendirme Formu",
+    "preInfoDesc": "Hizmetlerimizle ilgili ön bilgilendirme formunu inceleyin.",
+    "privacyTitle": "Gizlilik Politikası ve Aydınlatma Metni",
+    "privacyDesc": "Kişisel verilerinizi nasıl işlediğimiz ve koruduğumuz hakkında bilgi alın.",
+    "termsTitle": "Kullanım Şartları ve Mesafeli Satış Sözleşmesi",
+    "termsDesc": "Platformumuzun kullanım şartlarını ve sözleşme detaylarını okuyun."
   }
 }

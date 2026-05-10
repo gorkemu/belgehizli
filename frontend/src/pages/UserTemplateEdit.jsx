@@ -2,17 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import axios from 'axios';
+import api from '../utils/api'; 
 import TemplateBuilder from '../features/TemplateBuilder';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+import { SEOHead } from '../components/SEOHead'; 
 
 const UserTemplateEdit = () => {
     const { t } = useTranslation();
-    const { id } = useParams();
+    const { id, lang } = useParams();
     const navigate = useNavigate();
+    const currentLang = lang || 'tr';
+
+    // Dinamik Geri Dönüş Rotası
+    const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
 
     const [template, setTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -21,10 +24,7 @@ const UserTemplateEdit = () => {
     useEffect(() => {
         const fetchTemplate = async () => {
             try {
-                const token = localStorage.getItem('user_token');
-                const response = await axios.get(`${API_BASE_URL}/projects/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const response = await api.get(`/projects/${id}`);
 
                 const data = response.data;
                 data.fields = Array.isArray(data.fields) ? data.fields : [];
@@ -44,10 +44,7 @@ const UserTemplateEdit = () => {
     }, [id, t]);
 
     const handleSave = async (payload) => {
-        const token = localStorage.getItem('user_token');
-        await axios.put(`${API_BASE_URL}/projects/${id}`, payload, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        await api.put(`/projects/${id}`, payload);
     };
 
     if (loading) return (
@@ -62,7 +59,7 @@ const UserTemplateEdit = () => {
             <AlertCircle size={36} style={{ marginBottom: 12 }} />
             <p>{error}</p>
             <button 
-                onClick={() => navigate('/panel/projects')} 
+                onClick={() => navigate(`/${currentLang}/${projectsRoute}`)} 
                 style={{ marginTop: '16px', padding: '8px 16px', background: '#1c1917', color: 'white', borderRadius: '8px', border: 'none', cursor: 'pointer' }}
             >
                 {t('userTemplateEdit.back')}
@@ -70,7 +67,16 @@ const UserTemplateEdit = () => {
         </div>
     );
 
-    return <TemplateBuilder initialData={template} onSave={handleSave} isUser={true} />;
+    return (
+        <>
+            {/* SEO Etiketi - Dinamik Başlık */}
+            <SEOHead 
+                dynamicTitle={template?.name ? `${template.name} - Tasarım` : 'Şablon Düzenle'} 
+                descKey="homePage.metaDescription" 
+            />
+            <TemplateBuilder initialData={template} onSave={handleSave} isUser={true} />
+        </>
+    );
 };
 
 export default UserTemplateEdit;

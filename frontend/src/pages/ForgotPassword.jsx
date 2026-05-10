@@ -1,15 +1,21 @@
 // frontend/src/pages/ForgotPassword.jsx
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
+import { SEOHead } from '../components/SEOHead'; 
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+
+  const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
+
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -43,12 +49,14 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.authContainer}>
+      <SEOHead titleKey="forgotPassword.title" descKey="forgotPassword.subtitle" />
+
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('forgotPassword.title')}</h2>
         <p className={styles.authSubtitle}>{t('forgotPassword.subtitle')}</p>
 
         {status.message && (
-          <div className={status.type === 'success' ? styles.successBox : styles.errorBox}>
+          <div className={status.type === 'success' ? styles.successBox : styles.errorBox} style={status.type === 'success' ? { backgroundColor: '#f0fdf4', color: '#166534', borderColor: '#bbf7d0', padding: '14px 18px', borderRadius: '12px', fontSize: '0.9rem', marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' } : {}}>
             {status.type === 'success' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
             {status.message}
           </div>
@@ -74,7 +82,7 @@ const ForgotPassword = () => {
 
         <p className={styles.switchText}>
           {t('forgotPassword.remembered')}{' '}
-          <Link to="/giris-yap" className={styles.switchLink}>{t('forgotPassword.signIn')}</Link>
+          <Link to={`/${currentLang}/${loginRoute}`} className={styles.switchLink}>{t('forgotPassword.signIn')}</Link>
         </p>
       </div>
     </div>

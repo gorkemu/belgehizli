@@ -40,7 +40,6 @@ const LineHeight = Extension.create({
 });
 
 // --- Çeviriye bağlı slash komutları oluştur ---
-// EditorCanvas.jsx içinde useSlashCommands hook'unun son hali
 const useSlashCommands = (t, triggerSymbol) => useMemo(() => [
   { id: 'h1', label: t('editorCanvas.slash.h1'), icon: <Heading1 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 1 }).run() },
   { id: 'h2', label: t('editorCanvas.slash.h2'), icon: <Heading2 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 2 }).run() },
