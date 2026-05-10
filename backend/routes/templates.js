@@ -264,47 +264,11 @@ router.post('/templates/:id/generate-document', async (req, res) => {
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
 
         if (userEmailForLog !== 'unknown@example.com' && pdfBuffer) {
-            const emailSubject = `[Sistem Bildirimi] Belgeniz Hazır: ${template.name}`;
+            // Kullanıcının dilini header'dan al (Varsayılan 'tr')
+            const userLang = req.headers['accept-language']?.startsWith('en') ? 'en' : 'tr';
 
-            const emailHtml = `
-              <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1c1917; max-width: 560px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; background-color: #ffffff;">
-                
-                <div style="background-color: #f5f5f4; padding: 24px; border-bottom: 1px solid #e7e5e4; text-align: left;">
-                  <span style="font-size: 16px; font-weight: 800; color: #1c1917; letter-spacing: -0.02em;">BELGE <span style="color: #a8a29e;">HIZLI</span></span>
-                </div>
-                
-                <div style="padding: 32px 24px;">
-                  <p style="font-size: 15px; line-height: 1.6; color: #57534e; margin-top: 0;">Sayın İlgili,</p>
-                  
-                  <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
-                    Sistemimiz üzerinden başarıyla oluşturduğunuz <strong>"${template.name || 'Belge'}"</strong> adlı PDF dokümanı ekte tarafınıza sunulmuştur.
-                  </p>
-                  
-                  <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
-                    İhtiyacınız halinde kendi şablonlarınızı oluşturmak, çalışma alanınızı yönetmek ve belgelerinizi güvenle saklamak için ücretsiz hesabınızı aktifleştirebilirsiniz.
-                  </p>
-                  
-                  <div style="margin: 32px 0 16px 0;">
-                    <a href="https://www.belgehizli.com/kayit-ol" 
-                       style="display: inline-block; background-color: #1c1917; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">
-                       Ücretsiz Çalışma Alanı Oluştur
-                    </a>
-                  </div>
-                </div>
-                
-                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4;">
-                  <p style="font-size: 12px; color: #a8a29e; margin: 0; line-height: 1.5;">
-                    Bu otomatik bir sistem bildirimdir, lütfen bu mesaja yanıt vermeyiniz.<br>
-                    © ${new Date().getFullYear()} Belge Hızlı. Tüm hakları saklıdır.
-                  </p>
-                </div>
-                
-              </div>
-            `;
-
-            const emailText = `Sayın İlgili, "${template.name}" adlı belgeniz ekte yer almaktadır. Kendi şablonlarınızı oluşturmak için platformumuzu ücretsiz deneyebilirsiniz: https://www.belgehizli.com/kayit-ol`;
-
-            sendPdfEmail(userEmailForLog, emailSubject, emailText, emailHtml, pdfBuffer, safeFilename)
+            // HTML/Text oluşturma satırlarının hepsini sildik. Sadece gerekli verileri mailer'a gönderiyoruz.
+            sendPdfEmail(userEmailForLog, template.name, pdfBuffer, safeFilename, userLang)
                 .catch(err => console.error("E-posta gönderilemedi:", err));
         }
 

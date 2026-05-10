@@ -1,6 +1,6 @@
 // frontend/src/hooks/usePdfGeneration.js
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 function usePdfGeneration(templateId) {
     const [loadingPdf, setLoadingPdf] = useState(false);
@@ -10,7 +10,7 @@ function usePdfGeneration(templateId) {
         setLoadingPdf(true);
         setPdfError(null);
         try {
-            const response = await axios.post(`/api/templates/${templateId}/generate-pdf`, { formData }, { responseType: 'blob' });
+            const response = await api.post(`/api/templates/${templateId}/generate-pdf`, { formData }, { responseType: 'blob' });
             const blob = new Blob([response.data], { type: 'application/pdf' });
             const url = window.URL.createObjectURL(blob);
             window.open(url);

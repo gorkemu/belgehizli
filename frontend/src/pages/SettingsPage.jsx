@@ -1,14 +1,13 @@
 // frontend/src/pages/SettingsPage.jsx
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { User, CheckCircle2, AlertTriangle, Building2, Save, ShieldCheck } from 'lucide-react';
+import { SEOHead } from '../components/SEOHead'; 
 import styles from './SettingsPage.module.css';
 import Button from '../components/ui/Button';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 const SettingsPage = () => {
     const { t } = useTranslation();
@@ -45,7 +44,6 @@ const SettingsPage = () => {
         setIsSubmitting(true);
 
         try {
-            const token = localStorage.getItem('user_token');
             const payload = { fullName };
 
             if (currentPassword && newPassword) {
@@ -53,9 +51,7 @@ const SettingsPage = () => {
                 payload.newPassword = newPassword;
             }
 
-            await axios.put(`${API_BASE_URL}/auth/update-profile`, payload, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
+            await api.put(`/auth/update-profile`, payload);
 
             showToast(t('settings.profileUpdated'), 'success');
 
@@ -63,8 +59,8 @@ const SettingsPage = () => {
             setNewPassword('');
             setConfirmPassword('');
 
-        } catch (error) {
-            showToast(getUserFriendlyMessage(err.response?.data, 'settings.updateFailed', t), 'error');
+        } catch (error) { 
+            showToast(getUserFriendlyMessage(error.response?.data, 'settings.updateFailed', t), 'error');
         } finally {
             setIsSubmitting(false);
         }
@@ -72,6 +68,8 @@ const SettingsPage = () => {
 
     return (
         <div className={styles.root}>
+            {/* SEO Etiketleri */}
+            <SEOHead titleKey="settings.pageTitle" descKey="settings.pageSubtitle" />
 
             {toast.show && (
                 <div className={`${styles.toast} ${toast.type === 'success' ? styles.toastSuccess : styles.toastError}`}>

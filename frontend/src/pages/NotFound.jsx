@@ -1,21 +1,25 @@
 // frontend/src/pages/NotFound.jsx
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import styles from './NotFound.module.css';
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '../components/SEOHead'; 
 import { FileQuestion, ArrowLeft, Home } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 function NotFound() {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
   const navigate = useNavigate();
+
+  const currentLang = lang || 'tr'; 
 
   return (
     <>
-      <Helmet>
-        <title>{t('notFound.pageTitle')}</title>
-      </Helmet>
+      <SEOHead 
+        titleKey="notFound.pageTitle" 
+        descKey="notFound.message" 
+      />
 
       <div className={styles.container}>
         <div className={styles.contentWrapper}>
@@ -36,11 +40,12 @@ function NotFound() {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => navigate('/')}
+              onClick={() => navigate(`/${currentLang}`)}
               leftIcon={<Home size={18} />}
             >
               <span>{t('notFound.home')}</span>
             </Button>
+            
             <Button
               variant="secondary"
               size="lg"

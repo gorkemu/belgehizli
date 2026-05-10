@@ -1,18 +1,28 @@
 // frontend/src/components/Footer.jsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import styles from './Footer.module.css';
 
 function Footer() {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr'; 
+
+  // 🔥 Dinamik Rotalar
+  const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+  const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
+  const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
+  const privacyRoute = currentLang === 'tr' ? 'gizlilik-politikasi' : 'privacy-policy';
+  const termsRoute = currentLang === 'tr' ? 'kullanim-sartlari' : 'terms-of-service';
+  const preInfoRoute = currentLang === 'tr' ? 'on-bilgilendirme-formu' : 'pre-information-form';
 
   return (
     <footer className={styles.appFooter}>
       <div className={styles.footerContent}>
 
         <div className={styles.footerBrand}>
-          <Link to="/" className={styles.logoContainer}>
+          <Link to={`/${currentLang}`} className={styles.logoContainer}>
             <img
               src="/logo-full-white.svg"
               alt="Belge Hızlı"
@@ -30,9 +40,9 @@ function Footer() {
             <h4 className={styles.columnTitle}>{t('footer.platform')}</h4>
             <nav className={styles.footerNav}>
               <ul>
-                <li><Link to="/sablonlar">{t('footer.publicLibrary')}</Link></li>
-                <li><Link to="/kayit-ol">{t('footer.signUpFree')}</Link></li>
-                <li><Link to="/giris-yap">{t('footer.login')}</Link></li>
+                <li><Link to={`/${currentLang}/${libraryRoute}`}>{t('footer.publicLibrary')}</Link></li>
+                <li><Link to={`/${currentLang}/${registerRoute}`}>{t('footer.signUpFree')}</Link></li>
+                <li><Link to={`/${currentLang}/${loginRoute}`}>{t('footer.login')}</Link></li>
               </ul>
             </nav>
           </div>
@@ -41,9 +51,9 @@ function Footer() {
             <h4 className={styles.columnTitle}>{t('footer.legal')}</h4>
             <nav className={styles.footerNav}>
               <ul>
-                <li><Link to="/gizlilik-politikasi">{t('footer.privacy')}</Link></li>
-                <li><Link to="/kullanim-sartlari">{t('footer.terms')}</Link></li>
-                <li><Link to="/on-bilgilendirme-formu">{t('footer.disclaimer')}</Link></li>
+                <li><Link to={`/${currentLang}/${privacyRoute}`}>{t('footer.privacy')}</Link></li>
+                <li><Link to={`/${currentLang}/${termsRoute}`}>{t('footer.terms')}</Link></li>
+                <li><Link to={`/${currentLang}/${preInfoRoute}`}>{t('footer.disclaimer')}</Link></li>
               </ul>
             </nav>
           </div>

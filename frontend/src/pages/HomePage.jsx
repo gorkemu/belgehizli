@@ -1,8 +1,9 @@
+// frontend/src/pages/HomePage.jsx
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import styles from './HomePage.module.css';
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '../components/SEOHead'; 
 import {
   FileText, Search, Home as HomeIcon, Car, Gavel, Sparkles, Zap,
   Building2, Briefcase, Scale,
@@ -11,7 +12,6 @@ import {
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 
-/* ---------------------------------- */
 const POPULAR_CHIPS = [
   { name: 'Kira Sözleşmesi', slug: 'konut-kira-sozlesmesi', icon: <HomeIcon size={13} /> },
   { name: 'İstifa Dilekçesi', slug: 'istifa-dilekcesi', icon: <FileText size={13} /> },
@@ -19,13 +19,19 @@ const POPULAR_CHIPS = [
   { name: 'İhtarname', slug: 'genel-ihtarname', icon: <Gavel size={13} /> },
 ];
 
-/* ---------------------------------- */
 function HomePage() {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fade, setFade] = useState(false);
-  const navigate = useNavigate();
+
+  // Mevcut Dil ve Dinamik Rotalar
+  const currentLang = lang || 'tr';
+  const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
+  const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+  const detailRoute = currentLang === 'tr' ? 'sablonlar/detay' : 'templates/detail';
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -40,10 +46,12 @@ function HomePage() {
 
   const handleSearch = e => {
     e.preventDefault();
-    if (searchTerm.trim()) navigate(`/sablonlar?search=${encodeURIComponent(searchTerm.trim())}`);
+    if (searchTerm.trim()) {
+      navigate(`/${currentLang}/${libraryRoute}?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
   };
 
-  /* ---------- Hero Slides (tamamen çeviriye bağlı) ---------- */
+  /* ---------- Hero Slides ---------- */
   const heroSlides = useMemo(() => {
     const getVars = (key) => t(`homePage.slides.${key}.vars`, { returnObjects: true }) || [];
 
@@ -111,13 +119,12 @@ function HomePage() {
     return null;
   };
 
-  /* ---------- JSX ---------- */
   return (
     <div className={styles.pageWrapper}>
-      <Helmet>
-        <title>{t('homePage.pageTitle')}</title>
-        <meta name="description" content={t('homePage.metaDescription')} />
-      </Helmet>
+      <SEOHead 
+        titleKey="homePage.pageTitle" 
+        descKey="homePage.metaDescription" 
+      />
 
       {/* ======================= HERO ======================= */}
       <section className={styles.hero}>
@@ -129,10 +136,10 @@ function HomePage() {
             </h1>
             <p className={styles.heroSub}>{t('homePage.heroSub')}</p>
             <div className={styles.heroCtas}>
-              <Button variant="primary" size="lg" onClick={() => navigate('/kayit-ol')}>
+              <Button variant="primary" size="lg" onClick={() => navigate(`/${currentLang}/${registerRoute}`)}>
                 <span>{t('homePage.startNow')}</span>
               </Button>
-              <Button variant="secondary" size="lg" onClick={() => navigate('/sablonlar')}>
+              <Button variant="secondary" size="lg" onClick={() => navigate(`/${currentLang}/${libraryRoute}`)}>
                 <span>{t('homePage.readyTemplates')}</span>
               </Button>
             </div>
@@ -332,7 +339,7 @@ function HomePage() {
           <div className={styles.chips}>
             <span className={styles.chipsLabel}>{t('homePage.frequentlyUsed')}:</span>
             {POPULAR_CHIPS.map(chip => (
-              <button key={chip.slug} onClick={() => navigate(`/sablonlar/detay/${chip.slug}`)} className={styles.chip} type="button">
+              <button key={chip.slug} onClick={() => navigate(`/${currentLang}/${detailRoute}/${chip.slug}`)} className={styles.chip} type="button">
                 {chip.icon} {chip.name}
               </button>
             ))}
@@ -346,7 +353,7 @@ function HomePage() {
           <div className={styles.ctaContent}>
             <h2>{t('homePage.ctaTitle')}</h2>
             <p>{t('homePage.ctaDescription')}</p>
-            <Button variant="primary" size="lg" onClick={() => navigate('/kayit-ol')}>
+            <Button variant="primary" size="lg" onClick={() => navigate(`/${currentLang}/${registerRoute}`)}>
               <span>{t('homePage.startNow')}</span>
             </Button>
           </div>

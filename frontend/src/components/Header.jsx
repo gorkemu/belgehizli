@@ -1,21 +1,24 @@
 // frontend/src/components/Header.jsx
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'; 
 import { Search, LayoutDashboard, Globe } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 import Button from '../components/ui/Button';
+import { translatePath } from '../utils/routeDictionary'; 
 
 function Header() {
   const { t, i18n } = useTranslation();
-
   const [scrolled, setScrolled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
+  const { lang } = useParams(); 
+
+  const currentLang = lang || 'tr'; 
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -27,14 +30,18 @@ function Header() {
 
   const handleSearch = e => {
     e.preventDefault();
-    if (searchTerm.trim()) navigate(`/sablonlar?search=${encodeURIComponent(searchTerm.trim())}`);
+    if (searchTerm.trim()) {
+      const searchRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+      navigate(`/${currentLang}/${searchRoute}?search=${encodeURIComponent(searchTerm.trim())}`);
+    }
   };
 
-  const dashboardPath = user?.currentOrganization?.type === 'CLIENT' ? '/portal' : '/panel';
-
-  const toggleLanguage = () => {
-    const newLang = i18n.language.startsWith('tr') ? 'en' : 'tr';
-    i18n.changeLanguage(newLang);
+  const switchLanguage = (targetLang) => {
+    if (currentLang === targetLang) return; 
+    
+    i18n.changeLanguage(targetLang);
+    const newUrl = translatePath(location.pathname, targetLang);
+    navigate({ pathname: newUrl, search: location.search });
   };
 
   return (
@@ -44,7 +51,7 @@ function Header() {
       <header className={`${styles.appHeader} ${scrolled ? styles.scrolled : ''}`}>
         <div className={styles.headerInner}>
 
-          <Link to="/" className={styles.logoContainer}>
+          <Link to={`/${currentLang}`} className={styles.logoContainer}>
             <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.logoFull} />
             <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.logoIcon} />
           </Link>
@@ -66,37 +73,31 @@ function Header() {
             {/* Dil Değiştirici */}
             <div className={styles.languageSwitcher}>
               <button
-                className={`${styles.langOption} ${i18n.language.startsWith('tr') ? styles.langOptionActive : ''}`}
-                onClick={() => {
-                  if (!i18n.language.startsWith('tr')) i18n.changeLanguage('tr');
-                }}
+                className={`${styles.langOption} ${currentLang === 'tr' ? styles.langOptionActive : ''}`}
+                onClick={() => switchLanguage('tr')}
                 aria-label="Türkçe"
-                aria-pressed={i18n.language.startsWith('tr')}
               >
                 TR
               </button>
               <button
-                className={`${styles.langOption} ${i18n.language.startsWith('en') ? styles.langOptionActive : ''}`}
-                onClick={() => {
-                  if (!i18n.language.startsWith('en')) i18n.changeLanguage('en');
-                }}
+                className={`${styles.langOption} ${currentLang === 'en' ? styles.langOptionActive : ''}`}
+                onClick={() => switchLanguage('en')}
                 aria-label="English"
-                aria-pressed={i18n.language.startsWith('en')}
               >
                 EN
               </button>
             </div>
 
             {user ? (
-              <Button variant="primary" size="lg" onClick={() => navigate('/panel')} leftIcon={<LayoutDashboard size={16} />}>
+              <Button variant="primary" size="lg" onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'panel' : 'dashboard'}`)} leftIcon={<LayoutDashboard size={16} />}>
                 <span>{t('header.workspace')}</span>
               </Button>
             ) : (
               <div className={styles.authButtons}>
-                <Button variant="secondary" onClick={() => navigate('/giris-yap')}>
+                <Button variant="secondary" onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'giris-yap' : 'login'}`)}>
                   <span>{t('header.login')}</span>
                 </Button>
-                <Button variant="primary" onClick={() => navigate('/kayit-ol')}>
+                <Button variant="primary" onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'kayit-ol' : 'register'}`)}>
                   <span>{t('header.register')}</span>
                 </Button>
               </div>

@@ -1,5 +1,6 @@
+// frontend/src/features/TemplateBuilder/components/Modals.jsx
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../../../utils/api'; 
 import Handlebars from 'handlebars';
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
@@ -8,8 +9,6 @@ import { Wand2, Zap, Link as LinkIcon, CheckCircle2, Copy, Printer, X, Sparkles,
 import { VARIABLE_FORMATS } from '../utils/constants';
 import { getTriggerSymbols, generateVarName, convertToHandlebars } from '../utils/helpers';
 import Button from '../../../components/ui/Button';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
 
 const Modals = () => {
   const { t } = useTranslation();
@@ -89,15 +88,15 @@ const Modals = () => {
     setIsGeneratingPdf(true); 
     showToast(t('templateBuilder.modals.pdf.preparing'), 'success');
     try {
-      const token = localStorage.getItem('user_token');
       const hbHtml = convertToHandlebars(editorInstance.getHTML(), triggerSymbol);
       const template = Handlebars.compile(hbHtml);
       const finalHtml = template(virtualFormData);
 
       const targetId = formData._id || 'preview';
-      const res = await axios.post(`${API_BASE_URL}/projects/${targetId}/generate-pdf`,
+      
+      const res = await api.post(`/projects/${targetId}/generate-pdf`,
         { html: finalHtml, documentName: formData.name || 'Sablon' },
-        { headers: { Authorization: `Bearer ${token}` }, responseType: 'blob' }
+        { responseType: 'blob' }
       );
 
       const url = window.URL.createObjectURL(new Blob([res.data]));

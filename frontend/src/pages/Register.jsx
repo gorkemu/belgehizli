@@ -1,15 +1,22 @@
 // frontend/src/pages/Register.jsx
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
+import { SEOHead } from '../components/SEOHead'; 
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const Register = () => {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+
+  // Dinamik Rotalar
+  const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
+  const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -33,7 +40,7 @@ const Register = () => {
 
     try {
       await register(formData.fullName, formData.email, formData.password);
-      navigate('/panel', { replace: true });
+      navigate(`/${currentLang}/${dashboardRoute}`, { replace: true });
     } catch (err) {
       setError(getUserFriendlyMessage(err.response?.data, 'register.error', t));
       setIsLoading(false);
@@ -50,6 +57,9 @@ const Register = () => {
 
   return (
     <div className={styles.authContainer}>
+      {/* SEO Etiketleri */}
+      <SEOHead titleKey="register.title" descKey="register.subtitle" />
+
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('register.title')}</h2>
         <p className={styles.authSubtitle}>{t('register.subtitle')}</p>
@@ -116,7 +126,7 @@ const Register = () => {
 
         <p className={styles.switchText}>
           {t('register.haveAccount')}{' '}
-          <Link to="/giris-yap" className={styles.switchLink}>{t('register.signIn')}</Link>
+          <Link to={`/${currentLang}/${loginRoute}`} className={styles.switchLink}>{t('register.signIn')}</Link>
         </p>
       </div>
     </div>

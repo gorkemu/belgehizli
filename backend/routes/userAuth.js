@@ -100,7 +100,10 @@ router.post('/register', registerLimiter, async (req, res) => {
 router.post('/login', authLimiter, async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
+        // Kullanıcının dilini header'dan al (Varsayılan 'tr')
+        const userLang = req.headers['accept-language']?.startsWith('en') ? 'en' : 'tr';
+
         const user = await User.findOne({ email: email.toLowerCase() });
 
         if (!user) {
@@ -159,12 +162,13 @@ router.post('/login', authLimiter, async (req, res) => {
         }
 
         const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-        
+
         user.mfaOtp = otpCode;
         user.mfaOtpExpires = Date.now() + 5 * 60 * 1000;
         await user.save();
 
-        await sendMfaEmail(user.email, otpCode);
+        // Dil bilgisini Mailer'a iletiyoruz
+        await sendMfaEmail(user.email, otpCode, userLang);
 
         res.json({
             requiresMfa: true,
@@ -257,6 +261,8 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
     try {
         const { email } = req.body;
 
+        const userLang = req.headers['accept-language']?.startsWith('en') ? 'en' : 'tr';
+
         if (!email) {
             return res.status(400).json({
                 messageKey: 'auth.enterEmail',
@@ -284,9 +290,11 @@ router.post('/forgot-password', authLimiter, async (req, res) => {
         await user.save();
 
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
-        const resetLink = `${frontendUrl}/sifre-belirle?token=${resetToken}`;
 
-        await sendPasswordResetEmail(user.email, resetLink);
+        const setPasswordRoute = userLang === 'tr' ? 'sifre-belirle' : 'set-password';
+        const resetLink = `${frontendUrl}/${userLang}/${setPasswordRoute}?token=${resetToken}`;
+
+        await sendPasswordResetEmail(user.email, resetLink, userLang);
 
         res.status(200).json({
             messageKey: successMessageKey,

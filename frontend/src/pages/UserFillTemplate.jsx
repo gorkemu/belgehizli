@@ -1,18 +1,23 @@
 // frontend/src/pages/UserFillTemplate.jsx
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom'; 
+import api from '../utils/api'; 
+import { useTranslation } from 'react-i18next'; 
 import DocumentForm from '../components/DocumentForm';
 import DocumentPreview from '../components/DocumentPreview';
 import styles from './TemplateDetail.module.css';
 import { ArrowLeft, CheckCircle2, AlertCircle, Download, Loader2, Edit2, ArrowRight } from 'lucide-react';
-import { Helmet } from 'react-helmet-async';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+import { SEOHead } from '../components/SEOHead'; 
+import { Helmet } from 'react-helmet-async'; 
 
 const UserFillTemplate = () => {
-    const { id } = useParams();
+    const { t } = useTranslation();
+    const { id, lang } = useParams(); 
     const navigate = useNavigate();
+    const currentLang = lang || 'tr';
+
+    // Dinamik Panel Rotası
+    const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
 
     const [template, setTemplate] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -31,19 +36,16 @@ const UserFillTemplate = () => {
     useEffect(() => {
         const fetchTemplate = async () => {
             try {
-                const token = localStorage.getItem('user_token');
-                const res = await axios.get(`${API_BASE_URL}/user-templates/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const res = await api.get(`/user-templates/${id}`);
                 setTemplate(res.data);
             } catch (err) {
-                setError("Şablon yüklenemedi. Lütfen tekrar deneyin.");
+                setError(t('templateDetail.loadError'));
             } finally {
                 setLoading(false);
             }
         };
         fetchTemplate();
-    }, [id]);
+    }, [id, t]);
 
     const handleNextStep = async () => {
         let isFormValidLocal = true;
@@ -73,17 +75,13 @@ const UserFillTemplate = () => {
                 finalEditedHtml = rawHtml.replace(/<mark[^>]*>/gi, '').replace(/<\/mark>/gi, '');
             }
 
-            const token = localStorage.getItem('user_token');
-            const response = await axios.post(`${API_BASE_URL}/templates/${template._id}/generate-document`,
+            const response = await api.post(`/templates/${template._id}/generate-document`, 
                 {
                     formData,
                     editedHtml: finalEditedHtml,
                     consentTimestamp: new Date().toISOString()
                 },
-                {
-                    responseType: 'blob',
-                    headers: { Authorization: `Bearer ${token}` }
-                }
+                { responseType: 'blob' }
             );
 
             const blob = new Blob([response.data], { type: 'application/pdf' });
@@ -98,7 +96,7 @@ const UserFillTemplate = () => {
 
         } catch (err) {
             console.error(err);
-            setError("Belge oluşturulurken hata oluştu.");
+            setError(t('templateDetail.downloadError'));
         } finally {
             setIsSubmitting(false);
         }
@@ -107,7 +105,7 @@ const UserFillTemplate = () => {
     if (loading) return (
         <div className={styles.statusContainer}>
             <Loader2 size={48} className={styles.spinner} />
-            <p>Çalışma Alanı Hazırlanıyor...</p>
+            <p>{t('templateDetail.preparing')}</p> 
         </div>
     );
 
@@ -115,7 +113,9 @@ const UserFillTemplate = () => {
         <div className={styles.errorScreen}>
             <AlertCircle size={48} />
             <p>{error}</p>
-            <button onClick={() => navigate('/panel')} className={styles.backButton}>Panele Dön</button>
+            <button onClick={() => navigate(`/${currentLang}/${dashboardRoute}`)} className={styles.backButton}>
+                {t('templateDetail.back')} 
+            </button>
         </div>
     );
 
@@ -123,13 +123,16 @@ const UserFillTemplate = () => {
 
     return (
         <>
+            {/* SEO Etiketleri */}
+            <SEOHead dynamicTitle={template?.name || t('templateDetail.defaultTitle')} descKey="homePage.metaDescription" />
             <Helmet>
                 <meta name="robots" content="noindex, nofollow" />
             </Helmet>
+
             <div className={`${styles.workspaceContainer} ${styles.userFillContainer}`}>
                 <div className={styles.workspaceHeader}>
-                    <button onClick={() => navigate('/panel')} className={styles.backButton}>
-                        <ArrowLeft size={18} /> İptal Et ve Çık
+                    <button onClick={() => navigate(`/${currentLang}/${dashboardRoute}`)} className={styles.backButton}>
+                        <ArrowLeft size={18} /> {t('templateDetail.back')}
                     </button>
                     <div className={styles.headerTitles}>
                         <h1 className={styles.title}>{template.name}</h1>
@@ -140,12 +143,12 @@ const UserFillTemplate = () => {
                 <div className={styles.stepperWrapper}>
                     <div className={`${styles.stepItem} ${currentStep === 1 ? styles.stepActive : ''}`}>
                         <div className={styles.stepNumber}>1</div>
-                        <span>Formu Doldur</span>
+                        <span>{t('templateDetail.stepFillForm')}</span> 
                     </div>
                     <div className={`${styles.stepConnector} ${currentStep === 2 ? styles.connectorDone : ''}`} />
                     <div className={`${styles.stepItem} ${currentStep === 2 ? styles.stepActive : styles.stepPassive}`}>
                         <div className={styles.stepNumber}>2</div>
-                        <span>İncele & Son Rötuşlar</span>
+                        <span>{t('templateDetail.stepReviewDownload')}</span> 
                     </div>
                 </div>
 
@@ -157,9 +160,9 @@ const UserFillTemplate = () => {
                     <div className={styles.formColumn}>
                         {currentStep === 1 && (
                             <div className={styles.formColumnHeader}>
-                                <div className={styles.formStepTag}>Adım 1 / 2</div>
+                                <div className={styles.formStepTag}>{t('templateDetail.step1Tag')}</div>
                                 <p className={styles.formColumnHint}>
-                                    Müşterinize ait bilgileri girin. Canlı önizlemede sonucu görebilirsiniz.
+                                    {t('templateDetail.step1Hint')}
                                 </p>
                             </div>
                         )}
@@ -168,8 +171,8 @@ const UserFillTemplate = () => {
                             <div className={styles.formOverlay} onClick={() => setShowBackWarning(true)}>
                                 <div className={styles.overlayContent}>
                                     <CheckCircle2 size={32} className={styles.overlayIconSuccess} />
-                                    <h4>Form Dolduruldu</h4>
-                                    <p>Şimdi sağ taraftaki önizleme üzerinden manuel düzeltmeler yapabilirsiniz.</p>
+                                    <h4>{t('templateDetail.reviewDocument')}</h4>
+                                    <p>{t('templateDetail.reviewDescription')}</p>
                                 </div>
                             </div>
                         )}
@@ -183,7 +186,7 @@ const UserFillTemplate = () => {
                                     ref={formRef}
                                 />
                             ) : (
-                                <div className={styles.emptyFormNotice}>Bu şablon için dinamik soru bulunmuyor.</div>
+                                <div className={styles.emptyFormNotice}>{t('templateDetail.noFormFields')}</div>
                             )}
 
                             {currentStep === 1 && (
@@ -196,7 +199,7 @@ const UserFillTemplate = () => {
                                         <span className={styles.btnInner}>
                                             <Edit2 size={20} />
                                             <span>
-                                                <span className={styles.btnMainText}>Sonraki Adım: İncele & Düzenle</span>
+                                                <span className={styles.btnMainText}>{t('templateDetail.nextStepReview')}</span>
                                             </span>
                                         </span>
                                         <ArrowRight size={18} className={styles.btnArrow} />
@@ -228,7 +231,7 @@ const UserFillTemplate = () => {
                                     className={`${styles.payDownloadButton} ${isSubmitting ? styles.disabledButton : ''}`}
                                 >
                                     <Download size={20} />
-                                    {isSubmitting ? 'PDF Oluşturuluyor...' : `Belgeyi Üret ve İndir`}
+                                    {isSubmitting ? t('templateDetail.processing') : t('templateDetail.downloadPdf')}
                                 </button>
                             </div>
                         </div>
@@ -239,11 +242,11 @@ const UserFillTemplate = () => {
                     <div className={styles.modalOverlay} onClick={() => setShowBackWarning(false)}>
                         <div className={styles.warningModal} onClick={(e) => e.stopPropagation()}>
                             <AlertCircle size={48} className={styles.warningIcon} />
-                            <h3>Forma Geri Dön?</h3>
-                            <p>Eğer forma geri dönerseniz <strong>önizleme üzerinde</strong> elle yaptığınız rötuşlar silinecektir.</p>
+                            <h3>{t('templateDetail.backToFormTitle')}</h3>
+                            <p>{t('templateDetail.backToFormWarning')}</p>
                             <div className={styles.warningActions}>
-                                <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>İptal, Önizlemede Kal</button>
-                                <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>Evet, Forma Dön</button>
+                                <button onClick={() => setShowBackWarning(false)} className={styles.cancelBtn}>{t('templateDetail.stayInPreview')}</button>
+                                <button onClick={confirmGoBackToForm} className={styles.confirmBtn}>{t('templateDetail.goBackAnyway')}</button>
                             </div>
                         </div>
                     </div>
