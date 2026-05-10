@@ -1,0 +1,27 @@
+{
+  "_id": "69cb464c27ce161cbc131b5e",
+  "name": "Kat Karşılığı İnşaat Ön Protokolü",
+  "description": "Arsa sahibi ile yüklenici (müteahhit) arasında inşaatın genel şartlarını ve paylaşım oranlarını belirleyen ön anlaşma.",
+  "price": 35,
+  "language": "tr",
+  "slug": "kat-karsiligi-insaat-on-protokolu",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px;'>KAT KARŞILIĞI İNŞAAT ÖN PROTOKOLÜ</h2>\n\n  <p><strong>ARSA SAHİBİ:</strong> {{arsa_sahibi_ad_soyad}} (T.C. No: {{arsa_sahibi_tc}})<br/><strong>ADRES:</strong> {{arsa_sahibi_adres}}</p>\n\n  <p><strong>YÜKLENİCİ (Müteahhit):</strong> {{yuklenici_unvan}}<br/><strong>ADRES:</strong> {{yuklenici_adres}}</p>\n\n  <p><strong>1. TAŞINMAZ BİLGİLERİ:</strong> {{ada_no}} Ada, {{parsel_no}} Parsel üzerinde bulunan {{tasinmaz_adres}} adresindeki gayrimenkul.</p>\n\n  <p><strong>2. PAYLAŞIM ORANI:</strong> Taraflar, yapılacak inşaatın <strong>%{{arsa_sahibi_payi}}</strong> oranının Arsa Sahibi'ne, <strong>%{{yuklenici_payi}}</strong> oranının Yüklenici'ye ait olması konusunda mutabık kalmışlardır.</p>\n\n  <p><strong>3. İNŞAAT SÜRESİ VE ŞARTLAR:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{insaat_sartlari}}</pre>\n\n  <p><strong>4. NİHAİ SÖZLEŞME:</strong> Taraflar, işbu ön protokole uygun olarak en geç {{formatDate noter_tarihi}} tarihine kadar noter huzurunda <strong>Düzenleme Şeklinde Gayrimenkul Satış Vaadi ve Arsa Payı Karşılığı İnşaat Sözleşmesi</strong> imzalamayı kabul ve taahhüt ederler.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>ARSA SAHİBİ</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>YÜKLENİCİ</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n  </div>\n  <p style='margin-top: 30px;'><strong>Tarih:</strong> {{formatDate protokol_tarihi}}</p>\n</div>",
+  "fields": [
+    { "name": "arsa_sahibi_ad_soyad", "label": "Arsa Sahibi Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "arsa_sahibi_tc", "label": "Arsa Sahibi T.C. No", "fieldType": "text", "required": true },
+    { "name": "arsa_sahibi_adres", "label": "Arsa Sahibi Adresi", "fieldType": "textarea", "required": true },
+    { "name": "yuklenici_unvan", "label": "Yüklenici (Müteahhit) Ünvanı", "fieldType": "text", "required": true },
+    { "name": "yuklenici_adres", "label": "Yüklenici Adresi", "fieldType": "textarea", "required": true },
+    { "name": "ada_no", "label": "Ada No", "fieldType": "text", "required": true },
+    { "name": "parsel_no", "label": "Parsel No", "fieldType": "text", "required": true },
+    { "name": "tasinmaz_adres", "label": "Arsanın Açık Adresi", "fieldType": "textarea", "required": true },
+    { "name": "arsa_sahibi_payi", "label": "Arsa Sahibi Payı (%)", "fieldType": "number", "required": true },
+    { "name": "yuklenici_payi", "label": "Yüklenici Payı (%)", "fieldType": "number", "required": true },
+    { "name": "insaat_sartlari", "label": "İnşaat Şartları ve Kalite Standartları", "fieldType": "textarea", "placeholder": "Örn: C30 beton kullanılacaktır, teslim süresi ruhsattan itibaren 24 aydır.", "required": true },
+    { "name": "noter_tarihi", "label": "Noter Sözleşmesi İçin Son Tarih", "fieldType": "date", "required": true },
+    { "name": "protokol_tarihi", "label": "Protokol Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

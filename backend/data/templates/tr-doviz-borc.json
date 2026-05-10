@@ -1,0 +1,24 @@
+{
+  "_id": "69cb48c627ce161cbc131b64",
+  "name": "Döviz Bazlı Borç (Adi Ödünç) Sözleşmesi",
+  "description": "Döviz (Dolar, Euro vb.) cinsinden verilen borçların geri ödeme şartlarını ve kur risklerini düzenleyen adi ödünç sözleşmesi.",
+  "price": 10,
+  "language": "tr",
+  "slug": "doviz-bazli-borc-sozlesmesi",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px;'>DÖVİZ BAZLI ADİ ÖDÜNÇ SÖZLEŞMESİ</h2>\n\n  <p><strong>BORÇ VEREN:</strong> {{borc_veren_ad_soyad}} (T.C. No: {{borc_veren_tc}})<br/>\n  <strong>BORÇ ALAN:</strong> {{borc_alan_ad_soyad}} (T.C. No: {{borc_alan_tc}})</p>\n\n  <p><strong>1. KONU:</strong> Borç Veren, Borç Alan'a {{formatDate borc_tarihi}} tarihinde <strong>{{borc_miktari}} {{doviz_cinsi}}</strong> tutarında nakit borç vermiştir.</p>\n\n  <p><strong>2. GERİ ÖDEME:</strong> Borç Alan, almış olduğu bu borcu en geç {{formatDate vade_tarihi}} tarihinde yine <strong>{{doviz_cinsi}}</strong> cinsinden veya o günkü TCMB Efektif Satış Kuru üzerinden Türk Lirası karşılığı olarak ödeyecektir.</p>\n\n  <p><strong>3. ÖZEL ŞARTLAR:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{ozel_sartlar}}</pre>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>BORÇ VEREN</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>BORÇ ALAN</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n  </div>\n  <p style='margin-top: 30px;'><strong>Tarih:</strong> {{formatDate imza_tarihi}}</p>\n</div>",
+  "fields": [
+    { "name": "borc_veren_ad_soyad", "label": "Borç Veren Ad Soyad", "fieldType": "text", "required": true },
+    { "name": "borc_veren_tc", "label": "Borç Veren T.C. No", "fieldType": "text", "required": true },
+    { "name": "borc_alan_ad_soyad", "label": "Borç Alan Ad Soyad", "fieldType": "text", "required": true },
+    { "name": "borc_alan_tc", "label": "Borç Alan T.C. No", "fieldType": "text", "required": true },
+    { "name": "borc_miktari", "label": "Borç Miktarı", "fieldType": "number", "required": true },
+    { "name": "doviz_cinsi", "label": "Döviz Cinsi (USD/EUR vb.)", "fieldType": "text", "required": true },
+    { "name": "borc_tarihi", "label": "Borç Verilen Tarih", "fieldType": "date", "required": true },
+    { "name": "vade_tarihi", "label": "Geri Ödeme Tarihi", "fieldType": "date", "required": true },
+    { "name": "ozel_sartlar", "label": "Özel Şartlar (Varsa)", "fieldType": "textarea", "placeholder": "Örn: Gecikme halinde %2 faiz uygulanacaktır.", "required": false },
+    { "name": "imza_tarihi", "label": "Sözleşme İmza Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,25 @@
+{
+  "_id": "69ca01b09e4b82aaf809ed3a",
+  "name": "Anlaşmalı Boşanma Protokolü",
+  "description": "Eşlerin boşanma, velayet, nafaka ve mal paylaşımı konularında karşılıklı mutabık kaldıklarını gösteren yasal protokol.",
+  "price": 30,
+  "language": "tr",
+  "slug": "anlasmali-bosanma-protokolu",
+  "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center;'>ANLAŞMALI BOŞANMA PROTOKOLÜ</h2>\n\n  <p><strong>TARAFLAR:</strong><br/>\n  1- {{kadin_ad_soyad}} (T.C. No: {{kadin_tc_no}})<br/>\n  2- {{erkek_ad_soyad}} (T.C. No: {{erkek_tc_no}})\n  </p>\n\n  <p>Yukarıda bilgileri yazılı taraflar, karşılıklı serbest iradeleri ile evlilik birliğini sonlandırmaya karar vermiş olup, boşanmanın mali ve hukuki sonuçlarını aşağıdaki şekilde düzenlemişlerdir:</p>\n\n  <p><strong>1. BOŞANMA HUSUSU:</strong> Taraflar karşılıklı olarak boşanmayı kabul ederler. Evlilik birliğinin temelinden sarsıldığı konusunda mutabıktırlar.</p>\n\n  <p><strong>2. VELAYET VE KİŞİSEL İLİŞKİ:</strong> {{#if (eq cocuk_varmi 'Evet')}}Müşterek çocuk/çocukların velayeti {{velayet_kimde}} tarafına bırakılacaktır. Diğer tarafın çocukla kuracağı kişisel ilişki gün ve saatleri mahkemenin takdirine ve tarafların ortak mutabakatına bırakılmıştır.{{else}}Tarafların müşterek çocuğu bulunmamaktadır.{{/if}}</p>\n\n  <p><strong>3. NAFAKA VE TAZMİNAT:</strong> {{#if (eq nafaka_varmi 'Evet')}}Taraflardan {{nafaka_odeyecek_taraf}}, diğeri (veya müşterek çocuk) için aylık {{nafaka_miktari}} TL nafaka ödemeyi kabul ve taahhüt eder.{{else}}Tarafların birbirinden yoksulluk nafakası, maddi veya manevi tazminat talebi bulunmamaktadır. Birbirlerini bu konularda ibra etmişlerdir.{{/if}}</p>\n\n  <p><strong>4. MAL PAYLAŞIMI:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{mal_paylasimi_detay}}</pre>\n  <p>Taraflar, yukarıda belirtilen mal paylaşımı dışında birbirlerinden ev eşyası, ziynet eşyası, araç veya gayrimenkul dâhil başkaca hiçbir hak ve alacak talep etmeyeceklerini gayrikabili rücu kabul ederler.</p>\n\n  <p><strong>5. YARGILAMA GİDERLERİ:</strong> Taraflar birbirlerinden yargılama gideri ve vekalet ücreti talep etmeyeceklerdir.</p>\n\n  <p>İşbu 5 (beş) maddelik protokol taraflarca okunmuş, içeriği tamamen benimsenmiş ve hür iradeleri ile {{formatDate protokol_tarihi}} tarihinde imza altına alınmıştır.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>{{kadin_ad_soyad}}</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>{{erkek_ad_soyad}}</strong></p>\n      <p><br/>İmza: ________________</p>\n    </div>\n  </div>\n</div>",
+  "fields": [
+    { "name": "kadin_ad_soyad", "label": "1. Eşin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "kadin_tc_no", "label": "1. Eşin T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "erkek_ad_soyad", "label": "2. Eşin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "erkek_tc_no", "label": "2. Eşin T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "cocuk_varmi", "label": "Müşterek Çocuk Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
+    { "name": "velayet_kimde", "label": "Velayet Kimde Kalacak? (Evet ise)", "fieldType": "text", "required": false, "condition": { "field": "cocuk_varmi", "value": "Evet" } },
+    { "name": "nafaka_varmi", "label": "Nafaka veya Tazminat Ödenecek mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
+    { "name": "nafaka_odeyecek_taraf", "label": "Nafakayı Kim Ödeyecek? (Evet ise)", "fieldType": "text", "required": false, "condition": { "field": "nafaka_varmi", "value": "Evet" } },
+    { "name": "nafaka_miktari", "label": "Aylık Nafaka Tutarı (TL) (Evet ise)", "fieldType": "number", "required": false, "condition": { "field": "nafaka_varmi", "value": "Evet" } },
+    { "name": "mal_paylasimi_detay", "label": "Mal Paylaşımı Detayları", "fieldType": "textarea", "placeholder": "Ev eşyaları, araç, gayrimenkul paylaşımını buraya yazın. (Örn: X plakalı araç 1. Eşte kalacaktır.)", "required": true },
+    { "name": "protokol_tarihi", "label": "Protokol Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

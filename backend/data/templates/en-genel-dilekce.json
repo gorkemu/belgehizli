@@ -1,0 +1,23 @@
+{
+  "name": "Formal Request Letter / General Petition",
+  "description": "A standard formal letter format used to submit a request, complaint, or information to authorities, institutions, or businesses.",
+  "price": 5,
+  "language": "en",
+  "slug": "formal-request-letter-general-petition",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p><strong>From:</strong><br/>\n  {{applicant_name}}<br/>\n  {{applicant_address}}<br/>\n  ID / SSN: {{applicant_id_no}}<br/>\n  Phone: {{applicant_phone}}\n  </p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>To:</strong><br/>\n  {{addressee_authority}}<br/>\n  {{city_state}}\n  </p>\n\n  <p style='margin-top: 30px;'><strong>Subject / RE: {{subject}}</strong></p>\n\n  <p>To Whom It May Concern,</p>\n\n  <div style='margin-top: 20px; margin-bottom: 20px;'>\n    <pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{body_text}}</pre>\n  </div>\n\n  <p>I kindly request your prompt attention to this matter and ask that the necessary actions be taken regarding my request. I am happy to provide any further information if required.</p>\n\n  <p>Thank you for your time and assistance.</p>\n\n  <p style='margin-top: 40px;'>Sincerely,</p>\n  <p>_________________________<br/><strong>{{applicant_name}}</strong></p>\n\n  {{#if attachments}}\n  <div style='margin-top: 30px;'>\n    <p><strong>Enclosures / Attachments:</strong></p>\n    <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{attachments}}</pre>\n  </div>\n  {{/if}}\n</div>",
+  "fields": [
+    { "name": "applicant_name", "label": "Your Full Name", "fieldType": "text", "required": true },
+    { "name": "applicant_address", "label": "Your Address", "fieldType": "textarea", "required": true },
+    { "name": "applicant_id_no", "label": "Your ID / SSN Number", "fieldType": "text", "required": true },
+    { "name": "applicant_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
+    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
+    { "name": "addressee_authority", "label": "Name of Authority / Department", "fieldType": "text", "required": true, "placeholder": "e.g., Department of Housing, XYZ Corporation HR" },
+    { "name": "city_state", "label": "City, State of Authority", "fieldType": "text", "required": true, "placeholder": "e.g., New York, NY" },
+    { "name": "subject", "label": "Subject of Request", "fieldType": "text", "required": true, "placeholder": "Briefly state the purpose of this letter." },
+    { "name": "body_text", "label": "Body / Explanation / Request Details", "fieldType": "textarea", "required": true, "placeholder": "Explain the situation and your request in detail." },
+    { "name": "attachments", "label": "Enclosures / Attachments (Optional)", "fieldType": "textarea", "required": false, "placeholder": "1- Copy of ID\n2- Proof of Address" },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,21 @@
+{
+  "_id": "69cb477127ce161cbc131b60",
+  "name": "Muvafakatname (Seyahat ve Pasaport)",
+  "description": "18 yaşından küçük çocukların pasaport işlemleri veya yurt dışına seyahati için anne/baba tarafından verilen izin belgesi.",
+  "price": 8,
+  "language": "tr",
+  "slug": "muvafakatname-seyahat-pasaport",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px;'>MUVAFAKATNAME</h2>\n\n  <p><strong>MUVAFAKAT EDEN (Anne/Baba):</strong> {{veli_ad_soyad}} (T.C. No: {{veli_tc}})<br/><strong>ADRES:</strong> {{veli_adres}}</p>\n\n  <p><strong>VELAYETİ ALTINDA BULUNAN KÜÇÜK:</strong> {{cocuk_ad_soyad}} (T.C. No: {{cocuk_tc}})<br/><strong>DOĞUM TARİHİ:</strong> {{formatDate cocuk_dogum_tarihi}}</p>\n\n  <p>Velayeti altında bulunan yukarıda kimlik bilgileri yazılı oğlum/kızım {{cocuk_ad_soyad}}'ın;</p>\n  <ul>\n    <li>Pasaport almasına, var olan pasaportunun yenilenmesine ve temdit işlemlerine,</li>\n    <li>Yurt dışına {{#if seyahat_refakat}} <strong>{{seyahat_refakat}}</strong> refakatinde {{else}} münferiden (tek başına) {{/if}} çıkış yapmasına,</li>\n    <li>İlgili makamlarda müracaat ve işlemlerin yapılmasına,</li>\n  </ul>\n  <p>muvafakat ettiğimi, bu konuda her türlü yasal işlemi yapmaya yetkili olduğunu beyan ve kabul ederim.</p>\n\n  <p style='margin-top: 50px; text-align: right;'><strong>MUVAFAKAT EDEN</strong></p>\n  <p style='text-align: right;'>{{veli_ad_soyad}}<br/><br/>İmza: ________________</p>\n\n  <p style='margin-top: 40px; font-size: 0.8em; font-style: italic;'><strong>Not:</strong> Bu belge taslak mahiyetinde olup, resmi geçerlilik kazanması için Noter huzurunda onaylanması gerekmektedir.</p>\n</div>",
+  "fields": [
+    { "name": "veli_ad_soyad", "label": "Muvafakat Veren Veli Ad Soyad", "fieldType": "text", "required": true },
+    { "name": "veli_tc", "label": "Veli T.C. No", "fieldType": "text", "required": true },
+    { "name": "veli_adres", "label": "Veli Adresi", "fieldType": "textarea", "required": true },
+    { "name": "cocuk_ad_soyad", "label": "Çocuğun Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "cocuk_tc", "label": "Çocuğun T.C. No", "fieldType": "text", "required": true },
+    { "name": "cocuk_dogum_tarihi", "label": "Çocuğun Doğum Tarihi", "fieldType": "date", "required": true },
+    { "name": "seyahat_refakat", "label": "Seyahat Refakatçisi (Boşsa tek başına)", "fieldType": "text", "placeholder": "Örn: Annesi Ayşe Yılmaz", "required": false },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

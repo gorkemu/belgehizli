@@ -1,0 +1,25 @@
+{
+  "name": "Notice to Quit and Demand for Occupancy Compensation",
+  "description": "A formal legal notice sent to an unlawful occupant or holdover tenant demanding back rent/compensation and immediate eviction.",
+  "price": 12,
+  "language": "en",
+  "slug": "notice-to-quit-demand-occupancy-compensation",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h3 style='text-align: center; padding-bottom: 10px; text-decoration: underline;'>NOTICE TO QUIT AND DEMAND FOR PAYMENT</h3>\n\n  <p><strong>FROM (Owner / Sender):</strong><br/>{{owner_name}}<br/>ID/SSN: {{owner_id}}<br/>Address: {{owner_address}}</p>\n\n  <p><strong>TO (Occupant / Recipient):</strong><br/>{{occupant_name}}<br/>Address: {{occupant_address}}</p>\n\n  <p><strong>SUBJECT:</strong> Notice to Vacate and Demand for Use and Occupancy Compensation regarding the property located at {{property_address}}.</p>\n\n  <p><strong>STATEMENT OF FACTS:</strong></p>\n  <p>Please be advised that I am the legal owner of the premises located at <strong>{{property_address}}</strong>. You have been occupying and using this property without any valid lease agreement, legal right, or authorization since <strong>{{formatDate occupancy_start_date}}</strong>.</p>\n\n  <p>Due to your unlawful detainer and unauthorized use of the premises, you are liable for the fair market rental value of the property for the period of your occupancy. For the period spanning <strong>{{occupancy_period}}</strong>, the total use and occupancy compensation (mesne profits) currently owed is <strong>{{demanded_amount}}</strong>.</p>\n\n  <p><strong>DEMAND AND CONCLUSION:</strong></p>\n  <p>I hereby formally demand that within <strong>{{compliance_days}} days</strong> of receiving this notice, you must:</p>\n  <ul>\n    <li>Immediately vacate the premises, remove all personal belongings, and surrender the property in a vacant state, AND</li>\n    <li>Remit the total sum of {{demanded_amount}} to the following bank account: {{bank_account_details}}.</li>\n  </ul>\n  <p>If you fail to comply with these demands within the specified timeframe, I will initiate formal eviction proceedings (Unlawful Detainer lawsuit) and seek a monetary judgment against you, including all applicable legal costs, court fees, and attorney's fees.</p>\n\n  <p style='text-align: right; margin-top: 40px;'><strong>OWNER / SENDER</strong></p>\n  <p style='text-align: right;'>{{owner_name}}<br/>Date: {{formatDate notice_date}}<br/><br/>Signature: ________________</p>\n</div>",
+  "fields": [
+    { "name": "owner_name", "label": "Your Name (Property Owner)", "fieldType": "text", "required": true },
+    { "name": "owner_id", "label": "Your ID / SSN", "fieldType": "text", "required": true },
+    { "name": "owner_address", "label": "Your Mailing Address", "fieldType": "textarea", "required": true },
+    { "name": "occupant_name", "label": "Occupant's Name", "fieldType": "text", "required": true },
+    { "name": "occupant_address", "label": "Occupant's Address (Where notice is sent)", "fieldType": "textarea", "required": true },
+    { "name": "property_address", "label": "Address of the Occupied Property", "fieldType": "textarea", "required": true },
+    { "name": "occupancy_start_date", "label": "Date Unauthorized Occupancy Began", "fieldType": "date", "required": true },
+    { "name": "occupancy_period", "label": "Period for which compensation is claimed", "fieldType": "text", "placeholder": "e.g., January 2024 to March 2026", "required": true },
+    { "name": "demanded_amount", "label": "Total Amount Demanded (Include Currency)", "fieldType": "text", "placeholder": "e.g., $5,000", "required": true },
+    { "name": "compliance_days", "label": "Days Given to Comply", "fieldType": "number", "placeholder": "e.g., 7 or 14", "required": true },
+    { "name": "bank_account_details", "label": "Bank Account / Routing Details", "fieldType": "text", "required": true },
+    { "name": "notice_date", "label": "Date of this Notice", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,29 @@
+{
+  "_id": "69c9f3429e4b82aaf809ed28",
+  "name": "Tüketici Hakem Heyeti Başvuru Dilekçesi",
+  "description": "Satın alınan ayıplı mal veya hizmetin iadesi, değişimi veya onarımı talebiyle Hakem Heyeti'ne sunulacak dilekçe.",
+  "price": 5,
+  "language": "tr",
+  "slug": "tuketici-hakem-heyeti-basvuru-dilekcesi",
+  "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center; margin-bottom: 30px;'>{{heyet_adi}} BAŞKANLIĞI'NA</h3>\n\n  <p><strong>ŞİKAYET EDEN (Tüketici):</strong><br/>\n  Adı Soyadı: {{tuketici_ad_soyad}}<br/>\n  T.C. Kimlik No: {{tuketici_tc_no}}<br/>\n  Adresi: {{tuketici_adres}}<br/>\n  Telefon: {{tuketici_telefon}}\n  </p>\n\n  <p><strong>ŞİKAYET EDİLEN (Satıcı/Sağlayıcı):</strong><br/>\n  Ticari Ünvanı: {{satici_unvan}}<br/>\n  Adresi: {{satici_adres}}\n  </p>\n\n  <p><strong>ŞİKAYET KONUSU:</strong> {{sikayet_ozeti}}</p>\n  <p><strong>UYUŞMAZLIK BEDELİ:</strong> {{urun_bedeli}} TL</p>\n  <p><strong>OLAY TARİHİ:</strong> {{formatDate olay_tarihi}}</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; font-family: inherit; font-size: inherit; margin: 0; padding: 0;'>{{detayli_aciklama}}</pre>\n\n  <p><strong>HUKUKİ DELİLLER:</strong> Fatura, Satış Sözleşmesi, Garanti Belgesi, Servis Fişleri, {{ek_deliller}}.</p>\n\n  <p><strong>TALEP VE SONUÇ:</strong> Yukarıda açıklanan nedenlerle, ayıplı {{#if (eq talep_turu 'Bedel İadesi')}}malın/hizmetin iadesi ile ödediğim bedelin tarafıma geri ödenmesini{{else if (eq talep_turu 'Değişim')}}malın ayıpsız misli ile değiştirilmesini{{else}}malın ücretsiz onarılmasını{{/if}} saygılarımla arz ve talep ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Tarih: {{formatDate dilekce_tarihi}}</p>\n  <div style='text-align: right;'>\n    <p>Adı Soyadı: {{tuketici_ad_soyad}}<br/><br/><br/><br/>\n    İmza: _________________________</p>\n  </div>\n\n  <p style='margin-top: 20px;'><strong>EKLER:</strong><br/>1- Fatura Örneği<br/>2- {{ekler_liste}}</p>\n</div>",
+  "fields": [
+    { "name": "heyet_adi", "label": "İlgili Hakem Heyeti Adı", "fieldType": "text", "placeholder": "Örn: Kadıköy Tüketici Hakem Heyeti", "required": true },
+    { "name": "tuketici_ad_soyad", "label": "Adınız Soyadınız", "fieldType": "text", "required": true },
+    { "name": "tuketici_tc_no", "label": "T.C. Kimlik Numaranız", "fieldType": "text", "required": true },
+    { "name": "tuketici_adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
+    { "name": "tuketici_telefon", "label": "Telefonunuz", "fieldType": "text", "required": true },
+    { "name": "satici_unvan", "label": "Satıcı Firma Ünvanı", "fieldType": "text", "placeholder": "Örn: ABC Teknoloji Market Ltd. Şti.", "required": true },
+    { "name": "satici_adres", "label": "Satıcı Firmanın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "sikayet_ozeti", "label": "Şikayet Konusu (Kısa)", "fieldType": "text", "placeholder": "Örn: Buzdolabı Arızası / Ücret İadesi Talebi", "required": true },
+    { "name": "urun_bedeli", "label": "Ürün/Hizmet Bedeli (TL)", "fieldType": "number", "required": true },
+    { "name": "olay_tarihi", "label": "Satın Alma/Arıza Tarihi", "fieldType": "date", "required": true },
+    { "name": "detayli_aciklama", "label": "Olayın Detaylı Özeti", "fieldType": "textarea", "placeholder": "Ürünü ne zaman aldınız, ne sorun çıktı, firmaya başvurdunuz mu? Detaylıca yazın.", "required": true },
+    { "name": "talep_turu", "label": "Hakem Heyetinden Talebiniz", "fieldType": "select", "options": ["Bedel İadesi", "Değişim", "Ücretsiz Onarım"], "required": true },
+    { "name": "ek_deliller", "label": "Diğer Deliller (Opsiyonel)", "fieldType": "text", "placeholder": "Örn: Fotoğraflar, WhatsApp yazışmaları", "required": false },
+    { "name": "ekler_liste", "label": "Ekler Listesi", "fieldType": "text", "placeholder": "Örn: Servis fişi fotokopisi", "required": true },
+    { "name": "dilekce_tarihi", "label": "Dilekçe Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

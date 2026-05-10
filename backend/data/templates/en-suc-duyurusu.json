@@ -1,0 +1,24 @@
+{
+  "name": "Criminal Complaint / Report to Authorities",
+  "description": "A formal written complaint addressed to law enforcement or a district attorney requesting an investigation into an alleged crime.",
+  "price": 10,
+  "language": "en",
+  "slug": "criminal-complaint-report-authorities",
+  "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center; text-transform: uppercase;'>TO THE {{jurisdiction_name}}</h3>\n  <p style='text-align: center; margin-bottom: 30px;'>Criminal Investigation Division</p>\n\n  <p><strong>COMPLAINANT / VICTIM:</strong><br/>\n  Name: {{complainant_name}}<br/>\n  ID / SSN: {{complainant_id}}<br/>\n  Address: {{complainant_address}}<br/>\n  Phone: {{complainant_phone}}</p>\n\n  <p><strong>SUSPECT / ACCUSED:</strong><br/>\n  {{suspect_info}}</p>\n\n  <p><strong>ALLEGED OFFENSE:</strong> {{offense_type}}</p>\n  <p><strong>DATE OF INCIDENT:</strong> {{formatDate incident_date}}</p>\n\n  <p><strong>STATEMENT OF FACTS:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{incident_summary}}</pre>\n\n  <p><strong>EVIDENCE PROVIDED:</strong></p>\n  <p>{{evidence_list}}, alongside any potential witness testimonies and other lawful evidence to be discovered during the investigation.</p>\n\n  <p><strong>RELIEF SOUGHT / REQUEST FOR INVESTIGATION:</strong><br/>\n  For the reasons explained above, I respectfully request that a formal criminal investigation be initiated against the suspect(s) named herein, and that appropriate legal action and/or criminal charges be brought forward in the interest of justice.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Date: {{formatDate petition_date}}</p>\n  <div style='text-align: right;'>\n    <p>Complainant: {{complainant_name}}<br/><br/><br/>Signature: _________________________</p>\n  </div>\n</div>",
+  "fields": [
+    { "name": "jurisdiction_name", "label": "Name of Authority", "fieldType": "text", "placeholder": "e.g., District Attorney's Office of New York, NYPD", "required": true },
+    { "name": "complainant_name", "label": "Your Full Name (Complainant)", "fieldType": "text", "required": true },
+    { "name": "complainant_id", "label": "Your ID / SSN / Passport No", "fieldType": "text", "required": true },
+    { "name": "complainant_address", "label": "Your Address", "fieldType": "textarea", "required": true },
+    { "name": "complainant_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
+    { "name": "suspect_info", "label": "Suspect Information", "fieldType": "text", "placeholder": "Name, address, or 'Unknown Individual' if identity is unknown.", "required": true },
+    { "name": "offense_type", "label": "Type of Alleged Offense", "fieldType": "text", "placeholder": "e.g., Fraud, Harassment, Theft", "required": true },
+    { "name": "incident_date", "label": "Date of Incident", "fieldType": "date", "required": true },
+    { "name": "incident_summary", "label": "Detailed Summary of the Incident", "fieldType": "textarea", "placeholder": "Describe what happened chronologically and factually.", "required": true },
+    { "name": "evidence_list", "label": "List of Evidence", "fieldType": "textarea", "placeholder": "e.g., Bank statements, Screenshots, Video recordings", "required": true },
+    { "name": "petition_date", "label": "Date of this Complaint", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

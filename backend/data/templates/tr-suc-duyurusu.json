@@ -1,0 +1,25 @@
+{
+  "_id": "69ca00f19e4b82aaf809ed38",
+  "name": "Suç Duyurusu (Savcılık Şikayet Dilekçesi)",
+  "description": "Herhangi bir suçun mağduru olunduğunda şüpheli hakkında soruşturma başlatılması talebiyle Cumhuriyet Başsavcılığı'na sunulacak dilekçe.",
+  "price": 10,
+  "language": "tr",
+  "slug": "suc-duyurusu-savcilik-sikayet-dilekcesi",
+  "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center;'>CUMHURİYET BAŞSAVCILIĞI'NA</h3>\n  <p style='text-align: center; margin-bottom: 30px;'>{{sehir_adi}}</p>\n\n  <p><strong>MÜŞTEKİ (Şikayetçi):</strong> {{ad_soyad}} (T.C. No: {{tc_no}})<br/>Adres: {{adres}}<br/>Tel: {{telefon}}</p>\n\n  <p><strong>ŞÜPHELİ:</strong> {{supheli_bilgileri}}</p>\n\n  <p><strong>SUÇ:</strong> {{suc_turu}}</p>\n  <p><strong>SUÇ TARİHİ:</strong> {{formatDate suc_tarihi}}</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{olay_ozeti}}</pre>\n\n  <p><strong>DELİLLER:</strong> {{deliller}}, tanık beyanları, mesaj kayıtları ve her türlü yasal delil.</p>\n\n  <p><strong>SONUÇ VE İSTEM:</strong> Yukarıda açıklanan nedenlerle, şüpheli/şüpheliler hakkında gerekli soruşturmanın yapılarak cezalandırılmaları amacıyla kamu davası açılmasına karar verilmesini saygılarımla arz ve talep ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Tarih: {{formatDate dilekce_tarihi}}</p>\n  <div style='text-align: right;'>\n    <p>Müşteki Adı Soyadı: {{ad_soyad}}<br/><br/><br/>İmza: _________________________</p>\n  </div>\n</div>",
+  "fields": [
+    { "name": "sehir_adi", "label": "Savcılığın Bulunduğu Şehir/İlçe", "fieldType": "text", "placeholder": "Örn: İSTANBUL, KADIKÖY", "required": true },
+    { "name": "ad_soyad", "label": "Adınız Soyadınız (Müşteki)", "fieldType": "text", "required": true },
+    { "name": "tc_no", "label": "T.C. Kimlik Numaranız", "fieldType": "text", "required": true },
+    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
+    { "name": "telefon", "label": "Telefonunuz", "fieldType": "text", "required": true },
+    { "name": "supheli_bilgileri", "label": "Şüpheli Bilgileri", "fieldType": "text", "placeholder": "Adı biliniyorsa adı, bilinmiyorsa 'Kimliği Tespit Edilecek Şahıs'", "required": true },
+    { "name": "suc_turu", "label": "Şikayet Edilen Suç Tipi", "fieldType": "text", "placeholder": "Örn: Bilişim Yoluyla Dolandırıcılık, Tehdit, Hakaret", "required": true },
+    { "name": "suc_tarihi", "label": "Olayın Gerçekleştiği Tarih", "fieldType": "date", "required": true },
+    { "name": "olay_ozeti", "label": "Olayın Detaylı Özeti", "fieldType": "textarea", "placeholder": "Olayı kronolojik, somut ve net bir şekilde anlatın.", "required": true },
+    { "name": "deliller", "label": "Elinizdeki Deliller", "fieldType": "textarea", "placeholder": "Örn: Banka Dekontu, Ekran Görüntüsü, Ses Kaydı", "required": true },
+    { "name": "dilekce_tarihi", "label": "Dilekçe Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

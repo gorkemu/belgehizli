@@ -1,0 +1,24 @@
+{
+  "_id": "69cb480d27ce161cbc131b62",
+  "name": "Menfi Tespit Dilekçesi (Borçsuzluk Tespiti)",
+  "description": "Haksız bir borç iddiasına veya icra takibine karşı, borçlu olunmadığının tespiti ve takibin durdurulması talebiyle açılan dava dilekçesi.",
+  "price": 15,
+  "language": "tr",
+  "slug": "menfi-tespit-davasi-dilekcesi",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h3 style='text-align: center;'>NÖBETÇİ {{mahkeme_turu}} MAHKEMESİ'NE</h3>\n  <p style='text-align: center; margin-bottom: 30px;'>{{sehir_adi}}</p>\n\n  <p><strong>DAVACI:</strong> {{ad_soyad}} (T.C. No: {{tc_no}})<br/><strong>ADRES:</strong> {{adres}}</p>\n\n  <p><strong>DAVALI:</strong> {{davali_ad_unvan}}<br/><strong>ADRES:</strong> {{davali_adres}}</p>\n\n  <p><strong>KONU:</strong> Davalı tarafça iddia edilen {{icra_dosya_no}} sayılı icra takibine konu borcun bulunmadığının tespiti (Menfi Tespit) talebidir.</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <p>Davalı tarafça aleyhime başlatılan icra takibinde/iddiada öne sürülen {{borc_miktari}} TL tutarındaki borç haksız ve hukuka aykırıdır. Söz konusu borcun aslı veya hukuki bir dayanağı yoktur; çünkü:</p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{borcsuzluk_nedeni}}</pre>\n\n  <p><strong>SONUÇ VE İSTEM:</strong> Haklı davamın kabulü ile davalıya borçlu olmadığımın tespitine, haksız icra takibinin (varsa) iptaline ve %20'den aşağı olmamak üzere kötü niyet tazminatına, yargılama giderleri ile vekalet ücretinin davalı yana yükletilmesine karar verilmesini saygılarımla arz ve talep ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'><strong>DAVACI</strong></p>\n  <p style='text-align: right;'>{{ad_soyad}}<br/><br/><br/>İmza: ________________</p>\n</div>",
+  "fields": [
+    { "name": "mahkeme_turu", "label": "Mahkeme Türü", "fieldType": "text", "placeholder": "Örn: ASLİYE HUKUK / TÜKETİCİ", "required": true },
+    { "name": "sehir_adi", "label": "Şehir (Mahkemenin Bulunduğu İl/İlçe)", "fieldType": "text", "required": true },
+    { "name": "ad_soyad", "label": "Adınız Soyadınız (Davacı)", "fieldType": "text", "required": true },
+    { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
+    { "name": "davali_ad_unvan", "label": "Davalı (Alacaklı Görünen) Adı/Ünvanı", "fieldType": "text", "required": true },
+    { "name": "davali_adres", "label": "Davalının Adresi", "fieldType": "textarea", "required": true },
+    { "name": "icra_dosya_no", "label": "İcra Dosya No (Varsa)", "fieldType": "text", "placeholder": "Örn: İstanbul 3. İcra Müd. 2026/1234 E.", "required": false },
+    { "name": "borc_miktari", "label": "İddia Edilen Borç Tutarı (TL)", "fieldType": "number", "required": true },
+    { "name": "borcsuzluk_nedeni", "label": "Neden Borçlu Değilsiniz?", "fieldType": "textarea", "placeholder": "Örn: Borç ödendi dekontu ektedir, İmza bana ait değildir, Mal teslim edilmedi.", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}
