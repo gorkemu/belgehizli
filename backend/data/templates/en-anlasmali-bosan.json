@@ -1,0 +1,24 @@
+{
+  "name": "Marital Settlement Agreement (Uncontested Divorce)",
+  "description": "A legal protocol where spouses agree on the terms of their divorce, including asset division, child custody, and support.",
+  "price": 30,
+  "language": "en",
+  "slug": "marital-settlement-agreement-uncontested-divorce",
+  "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center;'>MARITAL SETTLEMENT AGREEMENT</h2>\n\n  <p><strong>THE PARTIES:</strong><br/>\n  1- <strong>Spouse 1:</strong> {{spouse_1_name}} (ID/SSN: {{spouse_1_id}})<br/>\n  2- <strong>Spouse 2:</strong> {{spouse_2_name}} (ID/SSN: {{spouse_2_id}})\n  </p>\n\n  <p>The Parties identified above, having decided to dissolve their marriage by mutual consent due to irreconcilable differences, hereby agree to settle all rights, obligations, and financial matters arising from their marriage as follows:</p>\n\n  <p><strong>1. DIVORCE:</strong> Both Parties mutually consent to an uncontested divorce and agree to execute all necessary documents to effectuate the dissolution of their marriage.</p>\n\n  <p><strong>2. CHILD CUSTODY & VISITATION:</strong> {{#if (eq has_children 'Yes')}}The Parties share minor child(ren). Sole/Primary legal and physical custody shall be awarded to <strong>{{custody_details}}</strong>. The non-custodial parent shall have reasonable visitation rights as agreed upon by the Parties or determined by the court.{{else}}The Parties have no minor children together.{{/if}}</p>\n\n  <p><strong>3. SPOUSAL & CHILD SUPPORT (ALIMONY):</strong> {{#if (eq alimony_applies 'Yes')}}<strong>{{alimony_payer}}</strong> agrees to pay the other party the sum of <strong>{{alimony_amount}}</strong> per month for spousal and/or child support.{{else}}Both Parties hereby waive any right to claim spousal support (alimony) from the other, now and in the future.{{/if}}</p>\n\n  <p><strong>4. DIVISION OF ASSETS & DEBTS:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{asset_debt_division}}</pre>\n  <p>Except as explicitly stated above, each Party shall retain full ownership of any personal property, bank accounts, and vehicles currently in their possession. The Parties waive any further claims to each other's current or future assets.</p>\n\n  <p><strong>5. LEGAL FEES:</strong> Each Party shall be responsible for their own legal fees and court costs associated with this divorce proceeding.</p>\n\n  <p>This Agreement contains the entire understanding of the Parties. It has been read, understood, and signed voluntarily and without coercion on {{formatDate agreement_date}}.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>{{spouse_1_name}}</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>{{spouse_2_name}}</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n  </div>\n</div>",
+  "fields": [
+    { "name": "spouse_1_name", "label": "Spouse 1 Full Name", "fieldType": "text", "required": true },
+    { "name": "spouse_1_id", "label": "Spouse 1 ID / SSN", "fieldType": "text", "required": true },
+    { "name": "spouse_2_name", "label": "Spouse 2 Full Name", "fieldType": "text", "required": true },
+    { "name": "spouse_2_id", "label": "Spouse 2 ID / SSN", "fieldType": "text", "required": true },
+    { "name": "has_children", "label": "Do the parties have minor children?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "custody_details", "label": "Who gets primary custody? (If Yes)", "fieldType": "text", "required": false, "condition": { "field": "has_children", "value": "Yes" } },
+    { "name": "alimony_applies", "label": "Will Support/Alimony be paid?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "alimony_payer", "label": "Who will pay the support? (If Yes)", "fieldType": "text", "required": false, "condition": { "field": "alimony_applies", "value": "Yes" } },
+    { "name": "alimony_amount", "label": "Monthly Support Amount (If Yes)", "fieldType": "text", "placeholder": "e.g., $1,000", "required": false, "condition": { "field": "alimony_applies", "value": "Yes" } },
+    { "name": "asset_debt_division", "label": "Division of Assets and Debts", "fieldType": "textarea", "placeholder": "Detail who gets the house, cars, and who pays which debts.", "required": true },
+    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

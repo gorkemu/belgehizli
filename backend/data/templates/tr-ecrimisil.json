@@ -1,0 +1,25 @@
+{
+  "_id": "69ca09059e4b82aaf809ed4c",
+  "name": "Ecrimisil (Haksız İşgal Tazminatı) İhtarnamesi",
+  "description": "Taşınmazı haksız yere işgal eden tarafa, geçmişe dönük kullanım bedelinin ödenmesi ve tahliye talebi için gönderilen resmi ihtar.",
+  "price": 12,
+  "language": "tr",
+  "slug": "ecrimisil-haksiz-isgal-tazminati-ihtarnamesi",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h3 style='text-align: center; padding-bottom: 10px;'>İHTARNAME</h3>\n\n  <p><strong>KEŞİDECİ:</strong> {{ad_soyad}} (T.C. No: {{tc_no}})<br/><strong>ADRES:</strong> {{adres}}</p>\n\n  <p><strong>MUHATAP:</strong> {{muhatap_ad_soyad_unvan}}<br/><strong>ADRES:</strong> {{muhatap_adres}}</p>\n\n  <p><strong>KONU:</strong> {{tasinmaz_adresi}} adresindeki taşınmazın haksız işgali nedeniyle ecrimisil (işgaliye) bedeli talebi ve tahliye ihtarıdır.</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <p>Mülkiyeti tarafıma ait olan {{tasinmaz_adresi}} adresindeki taşınmazı, herhangi bir kira sözleşmesi veya hukuki dayanak olmaksızın {{formatDate isgal_baslangic}} tarihinden bu yana haksız olarak kullanmaktasınız.</p>\n\n  <p>Söz konusu haksız kullanım nedeniyle şahsımın uğradığı zarar ve taşınmazın emsal kira bedelleri göz önüne alındığında; {{isgal_donemi}} dönemi için toplam <strong>{{talep_edilen_tutar}} TL</strong> ecrimisil bedelinin ödenmesi gerekmektedir.</p>\n\n  <p><strong>SONUÇ VE İSTEM:</strong></p>\n  <p>İşbu ihtarnamenin tebliğinden itibaren {{odeme_suresi}} gün içinde;</p>\n  <ul>\n    <li>Haksız işgal edilen taşınmazın derhal tahliye edilerek boş olarak teslim edilmesini,</li>\n    <li>Toplam {{talep_edilen_tutar}} TL ecrimisil bedelinin {{iban_no}} numaralı hesaba yatırılmasını,</li>\n  </ul>\n  <p>aksi takdirde aleyhinize müdahalenin men-i, tahliye ve ecrimisil davaları açılacağını, yargılama giderleri ile vekalet ücretinin tarafınıza yükleneceğini ihtar ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'><strong>İHTAR EDEN</strong></p>\n  <p style='text-align: right;'>{{ad_soyad}}<br/><br/><br/>İmza: ________________</p>\n\n  <p style='margin-top: 20px; font-size: 0.9em;'><strong>SAYIN NOTER:</strong> Üç nüshadan ibaret işbu ihtarnamenin bir nüshasının muhataba tebliğini, bir nüshasının dairenizde saklanmasını, tebliğ şerhini havi bir nüshasının tarafıma verilmesini talep ederim.</p>\n</div>",
+  "fields": [
+    { "name": "ad_soyad", "label": "Adınız Soyadınız", "fieldType": "text", "required": true },
+    { "name": "tc_no", "label": "T.C. Kimlik Numaranız", "fieldType": "text", "required": true },
+    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
+    { "name": "muhatap_ad_soyad_unvan", "label": "Muhatap Adı/Ünvanı", "fieldType": "text", "required": true },
+    { "name": "muhatap_adres", "label": "Muhatabın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "tasinmaz_adresi", "label": "İşgal Edilen Taşınmazın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "isgal_baslangic", "label": "İşgalin Başladığı Tarih", "fieldType": "date", "required": true },
+    { "name": "isgal_donemi", "label": "Tazminat Talep Edilen Dönem", "fieldType": "text", "placeholder": "Örn: Ocak 2024 - Mart 2026", "required": true },
+    { "name": "talep_edilen_tutar", "label": "Talep Edilen Toplam Tutar (TL)", "fieldType": "number", "required": true },
+    { "name": "odeme_suresi", "label": "Ödeme İçin Verilen Süre (Gün)", "fieldType": "number", "placeholder": "Örn: 7", "required": true },
+    { "name": "iban_no", "label": "Ödemenin Yapılacağı IBAN", "fieldType": "text", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Lease Agreement Addendum / Amendment",
+  "description": "A formal document used to modify, add, or update the terms of an existing residential or commercial lease agreement.",
+  "price": 8,
+  "language": "en",
+  "slug": "lease-agreement-addendum-amendment",
+  "content": "<h2 style='text-align:center;'>LEASE ADDENDUM / AMENDMENT</h2>\n<p>This Lease Addendum (the \"Addendum\") is made and entered into on {{formatDate addendum_date}}, by and between the Landlord, {{landlord_name}}, and the Tenant, {{tenant_name}}. This Addendum modifies and becomes a part of the original Lease Agreement (the \"Original Lease\") dated {{formatDate original_lease_date}} for the premises located at {{property_address}}.</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>Landlord:</strong> {{landlord_name}}</p>\n<p><strong>Tenant:</strong> {{tenant_name}}</p>\n\n<p><strong>2. AMENDMENTS AND ADDITIONS</strong></p>\n<p>The Parties hereby agree to amend, add, or modify the terms of the Original Lease as follows:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{amended_terms}}</pre>\n\n<p><strong>3. RATIFICATION OF ORIGINAL LEASE</strong></p>\n<p>Except as specifically modified by this Addendum, all other terms, conditions, covenants, and provisions of the Original Lease shall remain in full force and effect. In the event of any conflict between the terms of the Original Lease and this Addendum, the terms of this Addendum shall prevail.</p>\n\n<p>IN WITNESS WHEREOF, the Parties have executed this Addendum as of the date first written above.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>LANDLORD</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{landlord_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>TENANT</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{tenant_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
+  "fields": [
+    { "name": "landlord_name", "label": "Landlord's Name", "fieldType": "text", "required": true },
+    { "name": "tenant_name", "label": "Tenant's Name", "fieldType": "text", "required": true },
+    { "name": "original_lease_date", "label": "Date of the Original Lease", "fieldType": "date", "required": true },
+    { "name": "property_address", "label": "Property Address", "fieldType": "textarea", "required": true },
+    { "name": "amended_terms", "label": "Amended / Added Terms", "fieldType": "textarea", "placeholder": "e.g., Section 4 is amended to allow 1 dog weighing under 20 lbs...", "required": true },
+    { "name": "addendum_date", "label": "Date of this Addendum", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

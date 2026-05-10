@@ -1,0 +1,29 @@
+{
+  "name": "Equipment Loan Agreement (Gratuitous)",
+  "description": "A contract outlining the terms for lending equipment or personal property to someone temporarily and free of charge.",
+  "price": 5,
+  "language": "en",
+  "slug": "equipment-loan-agreement",
+  "content": "<h3 style='text-align:center;'>EQUIPMENT LOAN AGREEMENT</h3>\n<p>This Equipment Loan Agreement (the \"Agreement\") is made and entered into on {{formatDate agreement_date}} by and between the Lender and the Borrower named below, regarding the temporary and gratuitous loan of the specified equipment.</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>Lender:</strong> {{lender_name}}, Address: {{lender_address}}, Phone: {{lender_phone}}</p>\n<p><strong>Borrower:</strong> {{borrower_name}}, Address: {{borrower_address}}, Phone: {{borrower_phone}}</p>\n\n<p><strong>2. DESCRIPTION OF LOANED EQUIPMENT</strong></p>\n<p>The Lender agrees to loan to the Borrower, and the Borrower accepts, the following equipment (the \"Equipment\"):</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{equipment_description}}</pre>\n<p>Condition at time of handover: {{equipment_condition}}</p>\n\n<p><strong>3. LOAN PERIOD AND RETURN</strong></p>\n<p>The Equipment is loaned to the Borrower for a period of {{loan_duration}}.</p>\n<p>The Borrower agrees to return the Equipment to the Lender no later than <strong>{{formatDate return_date}}</strong>. The Equipment must be returned in the exact same condition it was received, ordinary wear and tear excepted.</p>\n<p>Return Location: {{return_location}}</p>\n\n<p><strong>4. USE AND LIABILITY</strong></p>\n<ul>\n <li>The Borrower agrees to use the Equipment exclusively for: {{intended_use}}.</li>\n <li>The Borrower shall exercise due care and maintain the Equipment properly while in their possession.</li>\n <li>If the Equipment is lost, stolen, or damaged beyond ordinary wear and tear while in the Borrower's custody, the Borrower agrees to: <strong>{{liability_for_loss}}</strong>.</li>\n <li>The Borrower may not sublease, lend, or transfer the Equipment to any third party without the express written consent of the Lender.</li>\n</ul>\n\n{{#if (eq deposit_collected 'Yes')}}\n<p><strong>5. SECURITY DEPOSIT</strong></p>\n<p>The Borrower has provided the Lender with a Security Deposit in the amount of <strong>{{deposit_amount}}</strong>. This deposit will be held by the Lender and returned in full to the Borrower upon the safe and timely return of the Equipment in satisfactory condition.</p>\n{{/if}}\n\n<p>By signing below, both parties acknowledge that they have read, understood, and agreed to the terms of this Agreement.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>LENDER</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{lender_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>BORROWER</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{borrower_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
+  "fields": [
+    { "name": "lender_name", "label": "Lender's Full Name", "fieldType": "text", "required": true },
+    { "name": "lender_address", "label": "Lender's Address", "fieldType": "textarea", "required": true },
+    { "name": "lender_phone", "label": "Lender's Phone Number", "fieldType": "text", "required": true },
+    { "name": "borrower_name", "label": "Borrower's Full Name", "fieldType": "text", "required": true },
+    { "name": "borrower_address", "label": "Borrower's Address", "fieldType": "textarea", "required": true },
+    { "name": "borrower_phone", "label": "Borrower's Phone Number", "fieldType": "text", "required": true },
+    { "name": "equipment_description", "label": "Description of Equipment", "fieldType": "textarea", "placeholder": "Include Make, Model, Serial Number, and accessories.", "required": true },
+    { "name": "equipment_condition", "label": "Condition at Handover", "fieldType": "text", "placeholder": "e.g., Like new, Good working condition", "required": true },
+    { "name": "loan_duration", "label": "Duration of Loan", "fieldType": "text", "placeholder": "e.g., 2 Weeks, For the duration of the project", "required": true },
+    { "name": "return_date", "label": "Required Return Date", "fieldType": "date", "required": true },
+    { "name": "return_location", "label": "Return Location", "fieldType": "text", "placeholder": "e.g., Lender's Home Address", "required": true },
+    { "name": "intended_use", "label": "Intended Use of Equipment", "fieldType": "text", "placeholder": "e.g., Personal photography project, Event presentation", "required": true },
+    { "name": "liability_for_loss", "label": "Liability for Loss/Damage", "fieldType": "text", "placeholder": "e.g., Pay full replacement cost of $500, cover all repair fees.", "required": true },
+    { "name": "deposit_collected", "label": "Has a Security Deposit been collected?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "deposit_amount", "label": "Security Deposit Amount (Include Currency)", "fieldType": "text", "required": false, "condition": { "field": "deposit_collected", "value": "Yes" } },
+    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

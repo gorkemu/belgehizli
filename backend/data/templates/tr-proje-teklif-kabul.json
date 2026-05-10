@@ -1,0 +1,28 @@
+{
+  "_id": "6805c625b989142070477f96",
+  "name": "Proje Teklifi Kabul/Onay Yazısı",
+  "description": "Sunulan bir proje teklifinin müşteri tarafından kabul edildiğini bildiren resmi yazı.",
+  "price": 5,
+  "language": "tr",
+  "slug": "proje-teklifi-kabul-onay-yazisi",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p style='text-align: right;'>{{sehir_bilgisi}}, {{formatDate kabul_tarihi}}</p>\n<br/>\n<p><strong>{{teklif_veren_ad_unvan}} DİKKATİNE,</strong></p>\n<p>{{teklif_veren_adres}}</p>\n<br/>\n<p><strong>Konu:</strong> {{formatDate teklif_tarihi}} Tarihli, {{teklif_no}} No'lu Teklifinizin Kabulü Hk.</p>\n<br/>\n<p>Sayın {{ilgili_kisi}},</p>\n\n<p>Şirketimize/şahsıma sunmuş olduğunuz {{formatDate teklif_tarihi}} tarihli ve {{teklif_no}} numaralı, {{proje_adi}} projesine ilişkin teklifinizi incelemiş bulunmaktayız.</p>\n\n<p>Teklifinizde belirtilen kapsam, süre ve {{toplam_bedel}} TL + KDV tutarındaki bedel tarafımızca uygun görülmüş ve kabul edilmiştir.</p>\n\n{{#if ek_kosullar_veya_notlar}}\n<p>Bu kabul ile birlikte aşağıdaki ek koşul/notların da dikkate alınmasını rica ederiz:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ek_kosullar_veya_notlar}}</pre>\n{{/if}}\n\n<p>Teklifinizde belirtilen ödeme planına uygun olarak ilk ödeme {{ilk_odeme_bilgisi}} yapılacaktır/yapılmıştır.</p>\n\n<p>Proje çalışmalarına {{formatDate proje_baslangic_tarihi}} tarihinde başlanmasını öngörmekteyiz. Gerekli sözleşme süreçleri veya başlangıç adımları için sizinle ayrıca iletişime geçilecektir.</p>\n\n<p>İşbirliğimizin başarılı bir şekilde devam etmesini dileriz.</p>\n\n<p>Saygılarımızla,</p>\n\n<div style='margin-top: 30px;'>\n <p><strong>{{kabul_eden_ad_unvan}}</strong><br/>\n {{#if kabul_eden_yetkili_isim}}({{kabul_eden_yetkili_isim}})<br/>{{/if}}\n <span style='display: inline-block; margin-top: 15px;'>İmza/Kaşe: _________________________</span>\n </p>\n</div>\n</div>",
+  "fields": [
+    { "name": "kabul_eden_ad_unvan", "label": "Teklifi Kabul Eden Adı/Unvanı (Siz/Şirketiniz)", "fieldType": "text", "required": true },
+    { "name": "kabul_eden_yetkili_isim", "label": "Kabul Eden Yetkili İsim (Şirket ise, Opsiyonel)", "fieldType": "text", "required": false },
+    { "name": "teklif_veren_ad_unvan", "label": "Teklifi Veren Firma/Kişi Adı/Unvanı", "fieldType": "text", "required": true },
+    { "name": "teklif_veren_adres", "label": "Teklifi Verenin Adresi", "fieldType": "textarea", "required": true },
+    { "name": "ilgili_kisi", "label": "Teklifi Veren Taraftaki İlgili Kişi (Hitap için)", "fieldType": "text", "placeholder": "Örn: Sn. Yılmaz", "required": true },
+    { "name": "sehir_bilgisi", "label": "Yazının Yazıldığı Şehir", "fieldType": "text", "required": true },
+    { "name": "kabul_tarihi", "label": "Kabul Yazısı Tarihi", "fieldType": "date", "required": true },
+    { "name": "teklif_tarihi", "label": "Kabul Edilen Teklifin Tarihi", "fieldType": "date", "required": true },
+    { "name": "teklif_no", "label": "Kabul Edilen Teklifin Numarası (Varsa)", "fieldType": "text", "required": false },
+    { "name": "proje_adi", "label": "Projenin Adı/Konusu", "fieldType": "text", "required": true },
+    { "name": "toplam_bedel", "label": "Kabul Edilen Toplam Bedel (TL, KDV Hariç)", "fieldType": "number", "required": true },
+    { "name": "ek_kosullar_veya_notlar", "label": "Kabul ile İletilecek Ek Koşullar/Notlar (Varsa)", "fieldType": "textarea", "required": false },
+    { "name": "ilk_odeme_bilgisi", "label": "İlk Ödeme Bilgisi", "fieldType": "text", "placeholder": "Örn: en kısa sürede hesabınıza..., Ekteki dekont ile...", "required": true },
+    { "name": "proje_baslangic_tarihi", "label": "Öngörülen Proje Başlangıç Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Bill of Sale (Personal Property / As-Is)",
+  "description": "A simple contract for the private sale of second-hand goods (furniture, electronics, etc.) sold in 'as-is' condition.",
+  "price": 5,
+  "language": "en",
+  "slug": "bill-of-sale-personal-property-as-is",
+  "content": "<h3 style='text-align:center;'>BILL OF SALE (PERSONAL PROPERTY)</h3>\n<p>This Bill of Sale is made and entered into on {{formatDate date_of_sale}} by and between the Seller and the Buyer named below, for the sale of the personal property described herein.</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>Seller:</strong> {{seller_name}}<br/>Address: {{seller_address}}<br/>Phone: {{seller_phone}}</p>\n<p><strong>Buyer:</strong> {{buyer_name}}<br/>Address: {{buyer_address}}<br/>Phone: {{buyer_phone}}</p>\n\n<p><strong>2. DESCRIPTION OF PROPERTY</strong></p>\n<p>The Seller hereby sells and transfers to the Buyer the following used personal property (the \"Property\"):</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{item_description}}</pre>\n\n<p><strong>3. PURCHASE PRICE AND PAYMENT</strong></p>\n<p>The Buyer agrees to pay the Seller the total purchase price of <strong>{{purchase_price}}</strong>.</p>\n<p>Payment was / will be made via {{payment_method}} on {{payment_timing}}.</p>\n\n<p><strong>4. DELIVERY AND \"AS-IS\" CONDITION</strong></p>\n<p>The Property shall be delivered to the Buyer on {{formatDate delivery_date}} at {{delivery_location}}.</p>\n<p><strong>AS-IS CLAUSE:</strong> The Buyer acknowledges that the Property is sold <strong>\"AS IS\"</strong> and <strong>\"WITH ALL FAULTS.\"</strong> The Seller makes no warranties or guarantees, express or implied, regarding the condition, merchantability, or fitness for a particular purpose of the Property.</p>\n{{#if seller_disclosures}}\n<p><strong>Seller Disclosures:</strong> The Seller discloses the following known defects or issues with the Property:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{seller_disclosures}}</pre>\n{{/if}}\n\n<p><strong>5. TRANSFER OF OWNERSHIP</strong></p>\n<p>The Seller warrants that they are the lawful owner of the Property and that it is free of all liens and encumbrances. Ownership transfers to the Buyer upon full payment and delivery.</p>\n\n<p>IN WITNESS WHEREOF, the Parties have executed this Bill of Sale on the date first written above.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>SELLER</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{seller_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>BUYER</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{buyer_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
+  "fields": [
+    { "name": "seller_name", "label": "Seller's Full Name", "fieldType": "text", "required": true },
+    { "name": "seller_address", "label": "Seller's Address", "fieldType": "textarea", "required": true },
+    { "name": "seller_phone", "label": "Seller's Phone Number", "fieldType": "text", "required": true },
+    { "name": "buyer_name", "label": "Buyer's Full Name", "fieldType": "text", "required": true },
+    { "name": "buyer_address", "label": "Buyer's Address", "fieldType": "textarea", "required": true },
+    { "name": "buyer_phone", "label": "Buyer's Phone Number", "fieldType": "text", "required": true },
+    { "name": "item_description", "label": "Description of Property / Items", "fieldType": "textarea", "placeholder": "e.g., 1x Used Sony Refrigerator, 1x Leather Sofa...", "required": true },
+    { "name": "purchase_price", "label": "Total Purchase Price (Include Currency)", "fieldType": "text", "placeholder": "e.g., $350.00", "required": true },
+    { "name": "payment_method", "label": "Payment Method", "fieldType": "text", "placeholder": "e.g., Cash, Venmo, Bank Transfer", "required": true },
+    { "name": "payment_timing", "label": "Payment Timing", "fieldType": "text", "placeholder": "e.g., At the time of signing, Upon delivery", "required": true },
+    { "name": "delivery_date", "label": "Delivery / Pickup Date", "fieldType": "date", "required": true },
+    { "name": "delivery_location", "label": "Delivery / Pickup Location", "fieldType": "text", "placeholder": "e.g., Seller's home, Buyer's address", "required": true },
+    { "name": "seller_disclosures", "label": "Seller Disclosures (Known Defects)", "fieldType": "textarea", "placeholder": "List any scratches, broken parts, etc. Leave blank if none.", "required": false },
+    { "name": "date_of_sale", "label": "Date of Sale", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

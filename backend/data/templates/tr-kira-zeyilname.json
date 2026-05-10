@@ -1,0 +1,20 @@
+{
+  "_id": "6806120ab989142070477f9f",
+  "name": "Kira Sözleşmesi Eki / Zeyilname",
+  "description": "Mevcut bir kira sözleşmesine ekleme veya değişiklik yapmak için kullanılan belge.",
+  "price": 8,
+  "language": "tr",
+  "slug": "kira-sozlesmesi-eki-zeyilname",
+  "content": "<h2 style='text-align:center;'>KİRA SÖZLEŞMESİ EK PROTOKOLÜ / ZEYİLNAME</h2>\n<p>Bir tarafta Kiraya Veren {{kiralayan_ad_soyad}} ile diğer tarafta Kiracı {{kiraci_ad_soyad}} arasında, {{formatDate orijinal_sozlesme_tarihi}} başlangıç tarihli ve {{kiralanan_adres}} adresindeki taşınmaza ilişkin Kira Sözleşmesi'ne (\"Ana Sözleşme\") ek olarak aşağıdaki hususlarda anlaşmaya varılarak işbu Ek Protokol / Zeyilname {{formatDate tarih}} tarihinde düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Kiraya Veren:</strong> {{kiralayan_ad_soyad}}</p>\n<p><strong>Kiracı:</strong> {{kiraci_ad_soyad}}</p>\n\n<p><strong>2. EKLENEN / DEĞİŞTİRİLEN MADDELER</strong></p>\n<p>Ana Sözleşme'nin ilgili maddelerine ek olarak veya ilgili maddeleri değiştirecek şekilde aşağıdaki maddeler üzerinde anlaşmaya varılmıştır:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{eklenen_degistirilen_maddeler}}</pre>\n\n<p><strong>3. DİĞER HÜKÜMLER</strong></p>\n<p>İşbu Ek Protokol / Zeyilname'de hüküm bulunmayan hallerde Ana Sözleşme hükümleri aynen geçerlidir. İşbu belge, Ana Sözleşme'nin ayrılmaz bir parçasıdır.</p>\n\n<p>İşbu Ek Protokol / Zeyilname 3 (üç) maddeden ibaret olup, taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Kiraya Veren</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{kiralayan_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Kiracı</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{kiraci_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
+  "fields": [
+    { "name": "kiralayan_ad_soyad", "label": "Kiraya Verenin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "kiraci_ad_soyad", "label": "Kiracının Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "orijinal_sozlesme_tarihi", "label": "Orijinal Kira Sözleşmesinin Başlangıç Tarihi", "fieldType": "date", "required": true },
+    { "name": "kiralanan_adres", "label": "Kiralanan Taşınmazın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "eklenen_degistirilen_maddeler", "label": "Eklenen veya Değiştirilen Maddeler", "fieldType": "textarea", "placeholder": "Örn: Ana Sözleşme'nin X. maddesi aşağıdaki şekilde değiştirilmiştir...", "required": true },
+    { "name": "tarih", "label": "Ek Protokol / Zeyilname Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

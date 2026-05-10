@@ -1,0 +1,26 @@
+{
+  "name": "Project Proposal Acceptance Letter",
+  "description": "A formal business letter notifying a vendor, contractor, or freelancer that their project proposal has been accepted.",
+  "price": 5,
+  "language": "en",
+  "slug": "project-proposal-acceptance-letter",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p><strong>From:</strong><br/>\n{{accepting_party_name}}<br/>\n{{#if accepting_contact_person}}{{accepting_contact_person}}<br/>{{/if}}\n</p>\n\n<p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate acceptance_date}}</p>\n\n<p style='margin-top: 20px;'><strong>To:</strong><br/>\n{{vendor_company_name}}<br/>\n{{vendor_address}}</p>\n\n<p style='margin-top: 30px; text-decoration: underline;'><strong>RE: Acceptance of Proposal for {{project_name}} (Ref No: {{proposal_number}})</strong></p>\n\n<p>Dear {{vendor_contact_person}},</p>\n\n<p>We are pleased to inform you that we have reviewed your proposal dated {{formatDate proposal_date}} regarding the <strong>{{project_name}}</strong> project, and we have decided to accept it.</p>\n\n<p>We accept the scope of work, timelines, and the total proposed cost of <strong>{{total_accepted_amount}}</strong> (excluding applicable taxes) as outlined in your proposal.</p>\n\n{{#if additional_terms_notes}}\n<p>Please note that our acceptance is subject to the following additional terms or notes discussed previously:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{additional_terms_notes}}</pre>\n{{/if}}\n\n<p>Regarding the financial arrangements, the initial payment will be processed as follows: <strong>{{initial_payment_info}}</strong>.</p>\n\n<p>We anticipate that the project will commence on or around <strong>{{formatDate project_start_date}}</strong>. We will be in touch shortly to finalize any formal agreements or onboarding steps required to begin the work.</p>\n\n<p>We look forward to a successful collaboration and a highly productive working relationship with your team.</p>\n\n<p>Sincerely,</p>\n\n<div style='margin-top: 40px;'>\n <p>_________________________<br/>\n <strong>{{#if accepting_contact_person}}{{accepting_contact_person}}{{else}}{{accepting_party_name}}{{/if}}</strong><br/>\n {{accepting_party_name}}\n </p>\n</div>\n</div>",
+  "fields": [
+    { "name": "accepting_party_name", "label": "Your Company Name", "fieldType": "text", "required": true },
+    { "name": "accepting_contact_person", "label": "Your Name / Signatory (Optional)", "fieldType": "text", "required": false },
+    { "name": "vendor_company_name", "label": "Vendor/Contractor Company Name", "fieldType": "text", "required": true },
+    { "name": "vendor_address", "label": "Vendor's Address", "fieldType": "textarea", "required": true },
+    { "name": "vendor_contact_person", "label": "Vendor Contact Person (Greeting)", "fieldType": "text", "placeholder": "e.g., Mr. Smith, Jane", "required": true },
+    { "name": "acceptance_date", "label": "Date of this Letter", "fieldType": "date", "required": true },
+    { "name": "proposal_date", "label": "Date of the Proposal", "fieldType": "date", "required": true },
+    { "name": "proposal_number", "label": "Proposal Reference Number (If any)", "fieldType": "text", "required": false },
+    { "name": "project_name", "label": "Project Name / Subject", "fieldType": "text", "required": true },
+    { "name": "total_accepted_amount", "label": "Total Accepted Amount (Include Currency)", "fieldType": "text", "placeholder": "e.g., $15,000", "required": true },
+    { "name": "additional_terms_notes", "label": "Additional Conditions / Notes (Optional)", "fieldType": "textarea", "required": false },
+    { "name": "initial_payment_info", "label": "Initial Payment Details", "fieldType": "text", "placeholder": "e.g., Wire transfer within 5 business days, Check attached", "required": true },
+    { "name": "project_start_date", "label": "Expected Project Start Date", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}
