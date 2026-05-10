@@ -1,6 +1,6 @@
 // frontend/src/context/AuthContext.jsx
 import React, { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 export const AuthContext = createContext();
 
@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
             const token = localStorage.getItem('user_token');
             if (token) {
                 try {
-                    const response = await axios.get(`${API_BASE_URL}/auth/me`, {
+                    const response = await api.get(`/auth/me`, {
                         headers: { Authorization: `Bearer ${token}` }
                     });
                     setUser(response.data);
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
     }, [API_BASE_URL]);
 
     const login = async (email, password) => {
-        const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
+        const response = await api.post(`/auth/login`, { email, password });
         
         // Eğer MFA gerekmiyorsa (eski usül direkt girişse) token'ı kaydet
         if (!response.data.requiresMfa) {
@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const verifyMfa = async (tempToken, otp) => {
-        const response = await axios.post(`${API_BASE_URL}/auth/verify-mfa`, { tempToken, otp });
+        const response = await api.post(`/auth/verify-mfa`, { tempToken, otp });
         
         // Doğrulama başarılıysa GERÇEK token'ı kaydet ve kullanıcıyı içeri al
         localStorage.setItem('user_token', response.data.token);
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     const register = async (fullName, email, password) => {
-        const response = await axios.post(`${API_BASE_URL}/auth/register`, {
+        const response = await api.post(`/auth/register`, {
             fullName,
             email,
             password
@@ -72,12 +72,12 @@ export const AuthProvider = ({ children }) => {
     };
 
     const forgotPassword = async (email) => {
-        const response = await axios.post(`${API_BASE_URL}/auth/forgot-password`, { email });
+        const response = await api.post(`/auth/forgot-password`, { email });
         return response.data;
     };
 
     const resetPassword = async (token, newPassword) => {
-        const response = await axios.post(`${API_BASE_URL}/auth/set-password`, { token, newPassword });
+        const response = await api.post(`/auth/set-password`, { token, newPassword });
         return response.data;
     };
 

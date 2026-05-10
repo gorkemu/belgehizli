@@ -1,15 +1,20 @@
 // frontend/src/pages/SetPassword.jsx
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { useNavigate, useSearchParams, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
+import { SEOHead } from '../components/SEOHead'; 
 import styles from './Auth.module.css';
 import Button from '../components/ui/Button';
 
 const SetPassword = () => {
   const { t } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+  const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
+
   const [newPassword, setNewPassword] = useState('');
   const [status, setStatus] = useState({ type: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -44,9 +49,8 @@ const SetPassword = () => {
       );
       setStatus({ type: 'success', message: successMessage });
       
-      // 3 saniye sonra login'e yönlendir
       setTimeout(() => {
-        navigate('/giris-yap');
+        navigate(`/${currentLang}/${loginRoute}`);
       }, 3000);
     } catch (err) {
       const errorMessage = getUserFriendlyMessage(
@@ -62,6 +66,9 @@ const SetPassword = () => {
 
   return (
     <div className={styles.authContainer}>
+      {/* SEO Etiketleri */}
+      <SEOHead titleKey="setPassword.title" descKey="setPassword.subtitle" />
+
       <div className={styles.authCard}>
         <h2 className={styles.authTitle}>{t('setPassword.title')}</h2>
         <p className={styles.authSubtitle}>{t('setPassword.subtitle')}</p>

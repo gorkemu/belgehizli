@@ -1,6 +1,7 @@
+// frontend/src/pages/Dashboard.jsx
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import { useNavigate, Link, useParams } from 'react-router-dom'; 
+import api from '../utils/api'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -11,12 +12,13 @@ import styles from './Dashboard.module.css';
 import Button from '../components/ui/Button';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
-
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+  const { lang } = useParams(); 
   const { t, i18n } = useTranslation();
+
+  const currentLang = lang || 'tr'; 
 
   const [stats, setStats] = useState({ projectCount: 0 });
   const [recentProjects, setRecentProjects] = useState([]);
@@ -35,11 +37,8 @@ const Dashboard = () => {
 
   const fetchDashboardData = async () => {
     try {
-      const token = localStorage.getItem('user_token');
       const timestamp = new Date().getTime();
-      const projectsRes = await axios.get(`${API_BASE_URL}/projects/my-projects?t=${timestamp}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const projectsRes = await api.get(`/projects/my-projects?t=${timestamp}`);
       const projects = projectsRes.data;
       setStats({ projectCount: projects.length });
       setRecentProjects(projects.slice(0, 5));
@@ -65,15 +64,12 @@ const Dashboard = () => {
 
   const handleDeleteProject = async () => {
     try {
-      const token = localStorage.getItem('user_token');
-      await axios.delete(`${API_BASE_URL}/projects/${deleteProjectTarget}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/projects/${deleteProjectTarget}`);
       setRecentProjects(prev => prev.filter(p => p._id !== deleteProjectTarget));
       setStats(s => ({ projectCount: s.projectCount - 1 }));
       setDeleteProjectTarget(null);
       showToast(t('dashboard.toastDeleted'));
-    } catch {
+    } catch (err) {
       showToast(getUserFriendlyMessage(err.response?.data, 'dashboard.toastDeleteError', t), 'error');
     }
   };
@@ -81,14 +77,11 @@ const Dashboard = () => {
   const handleRenameProject = async (projectId) => {
     if (!editingProjectName.trim()) return setEditingProjectId(null);
     try {
-      const token = localStorage.getItem('user_token');
-      await axios.put(`${API_BASE_URL}/projects/${projectId}`, { name: editingProjectName }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.put(`/projects/${projectId}`, { name: editingProjectName });
       setRecentProjects(prev => prev.map(p => p._id === projectId ? { ...p, name: editingProjectName } : p));
       setEditingProjectId(null);
       showToast(t('dashboard.toastRenamed'));
-    } catch {
+    } catch (err) {
       showToast(getUserFriendlyMessage(err.response?.data, 'dashboard.toastRenameError', t), 'error');
     }
   };
@@ -105,6 +98,11 @@ const Dashboard = () => {
     </div>
   );
 
+  // Dinamik rotalarımız
+  const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
+  const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+  const editRoute = currentLang === 'tr' ? 'panel/duzenle' : 'dashboard/edit';
+
   return (
     <div className={styles.root}>
       {toast.show && (
@@ -118,22 +116,12 @@ const Dashboard = () => {
           <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
             <div className={styles.modalIconBox}><AlertTriangle size={24} color="#dc2626" /></div>
             <h2 className={styles.modalTitle}>{t('dashboard.deleteTitle')}</h2>
-            <p className={styles.modalText}>
-              {t('dashboard.deleteConfirmText')}
-            </p>
+            <p className={styles.modalText}>{t('dashboard.deleteConfirmText')}</p>
             <div className={styles.modalActions}>
-              <Button
-                variant="secondary"
-                onClick={() => setDeleteProjectTarget(null)}
-                style={{ "flex": 1 }}
-              >
+              <Button variant="secondary" onClick={() => setDeleteProjectTarget(null)} style={{ "flex": 1 }}>
                 {t('dashboard.cancel')}
               </Button>
-              <Button
-                variant="danger"
-                onClick={handleDeleteProject}
-                style={{ "flex": 1 }}
-              >
+              <Button variant="danger" onClick={handleDeleteProject} style={{ "flex": 1 }}>
                 {t('dashboard.deletePermanently')}
               </Button>
             </div>
@@ -148,14 +136,14 @@ const Dashboard = () => {
         </div>
 
         <div className={styles.heroCardsRow}>
-          <button onClick={() => navigate('/panel/projects')} className={styles.heroCardPrimary}>
+          <button onClick={() => navigate(`/${currentLang}/${projectsRoute}`)} className={styles.heroCardPrimary}>
             <div className={styles.heroCardIconPrimary}><Plus size={24} color="#ffffff" /></div>
             <div className={styles.heroCardContent}>
               <h3>{t('dashboard.createNew')}</h3>
               <p>{t('dashboard.createDesc')}</p>
             </div>
           </button>
-          <button onClick={() => navigate('/sablonlar')} className={styles.heroCardSecondary}>
+          <button onClick={() => navigate(`/${currentLang}/${libraryRoute}`)} className={styles.heroCardSecondary}>
             <div className={styles.heroCardIconSecondary}><BookOpen size={24} color="#1c1917" /></div>
             <div className={styles.heroCardContent}>
               <h3>{t('dashboard.library')}</h3>
@@ -168,7 +156,7 @@ const Dashboard = () => {
       <div className={styles.projectsSection}>
         <div className={styles.sectionHeader}>
           <h3 className={styles.sectionTitle}>{t('dashboard.recentlyEdited')}</h3>
-          <Link to="/panel/projects" className={styles.viewAllLink}>{t('dashboard.viewAll')} <ArrowRight size={14} /></Link>
+          <Link to={`/${currentLang}/${projectsRoute}`} className={styles.viewAllLink}>{t('dashboard.viewAll')} <ArrowRight size={14} /></Link>
         </div>
         <div className={styles.projectList}>
           {recentProjects.length === 0 ? (
@@ -179,7 +167,7 @@ const Dashboard = () => {
           ) : (
             recentProjects.map(project => (
               <div key={project._id} className={styles.projectRow}>
-                <div className={styles.projectInfo} onClick={() => navigate(`/panel/duzenle/${project._id}`)}>
+                <div className={styles.projectInfo} onClick={() => navigate(`/${currentLang}/${editRoute}/${project._id}`)}>
                   <div className={styles.projectIconWrapper}><LayoutTemplate size={18} color="#57534e" /></div>
                   <div className={styles.projectTextData}>
                     {editingProjectId === project._id ? (

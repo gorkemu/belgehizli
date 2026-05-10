@@ -1,18 +1,23 @@
 // frontend/src/pages/PreInformationForm.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import api from '../utils/api'; 
 import DOMPurify from 'dompurify';
 import styles from './PreInformationForm.module.css';
+import { SEOHead } from '../components/SEOHead'; 
 import { FileSignature, Loader2 } from 'lucide-react';
 
 function PreInformationForm() {
+    const { t } = useTranslation();
+    const { lang } = useParams();
+    const currentLang = lang === 'en' ? 'en-US' : 'tr-TR';
+
     const [legalDoc, setLegalDoc] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
-
-        axios.get(`${API_URL}/legal/on_bilgilendirme/latest`)
+        api.get(`/legal/on_bilgilendirme/latest`)
             .then(res => {
                 setLegalDoc(res.data);
                 setLoading(false);
@@ -27,14 +32,14 @@ function PreInformationForm() {
         return (
             <div className={styles.container} style={{ textAlign: 'center', padding: '3rem' }}>
                 <Loader2 className={styles.spinner} size={40} />
-                <p>Yükleniyor...</p>
+                <p>{t('legal.loading')}</p>
             </div>
         );
     }
 
     const formattedDate = legalDoc?.updatedAt
-        ? new Date(legalDoc.updatedAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })
-        : "Tarih Bekleniyor...";
+        ? new Date(legalDoc.updatedAt).toLocaleDateString(currentLang, { day: '2-digit', month: 'long', year: 'numeric' })
+        : t('legal.datePending');
 
     const formatLegalContent = (html) => {
         if (!html) return '';
@@ -44,11 +49,13 @@ function PreInformationForm() {
 
     return (
         <div className={styles.container}>
+            <SEOHead titleKey="legal.preInfoTitle" descKey="legal.preInfoDesc" />
+
             <h1 className={styles.title}>
-                <FileSignature size={36} className={styles.titleIcon} /> Ön Bilgilendirme Formu
+                <FileSignature size={36} className={styles.titleIcon} /> {t('legal.preInfoTitle')}
             </h1>
 
-            <div className={styles.versionBadge}>Son Güncelleme: {formattedDate}</div>
+            <div className={styles.versionBadge}>{t('legal.lastUpdated')}: {formattedDate}</div>
 
             <div
                 className={styles.dynamicContent}

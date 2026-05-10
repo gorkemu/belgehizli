@@ -1,7 +1,7 @@
 // frontend/src/pages/TemplateList.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import api from '../utils/api';                    
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './TemplateList.module.css';
 import { Helmet } from 'react-helmet-async';
@@ -9,8 +9,7 @@ import {
   Search, FileText, ArrowRight, AlertCircle, Info,
   Loader2, Home, Briefcase, Landmark, Scale, User, FolderKanban
 } from 'lucide-react';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
+import { SEOHead } from '../components/SEOHead';
 
 const CATEGORY_KEYS = [
   { id: 'all', labelKey: 'templateList.categories.all', icon: <FolderKanban size={16} />, keywords: [] },
@@ -23,6 +22,12 @@ const CATEGORY_KEYS = [
 
 function TemplateList() {
   const { t } = useTranslation();
+  const { lang } = useParams();                     
+  const currentLang = lang || 'tr';                  
+
+  // Dil bazlı rotalar 
+  const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+  const detailRoute = currentLang === 'tr' ? 'sablonlar/detay' : 'templates/detail';
 
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -35,7 +40,7 @@ function TemplateList() {
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${API_BASE_URL}/sablonlar`)
+    api.get('/sablonlar')                
       .then(response => {
         setTemplates(response.data);
         setLoading(false);
@@ -58,7 +63,12 @@ function TemplateList() {
   const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchTerm(val);
-    navigate(val ? `/sablonlar?search=${encodeURIComponent(val)}` : '/sablonlar', { replace: true });
+    // Navigasyon başına /:lang ekleniyor
+    navigate(val
+      ? `/${currentLang}/${libraryRoute}?search=${encodeURIComponent(val)}`
+      : `/${currentLang}/${libraryRoute}`,
+      { replace: true }
+    );
   };
 
   const handleSearchSubmit = (e) => e.preventDefault();
@@ -94,12 +104,12 @@ function TemplateList() {
   }
 
   return (
+    
     <div className={styles.pageWrapper}>
-      <Helmet>
-        <title>{t('templateList.pageTitle')}</title>
-        <meta name="description" content={t('templateList.metaDescription')} />
-        <link rel="canonical" href="https://www.belgehizli.com/sablonlar" />
-      </Helmet>
+      <SEOHead 
+          titleKey="templateList.pageTitle" 
+          descKey="templateList.metaDescription" 
+      />
 
       <div className={styles.disclaimerBanner}>
         <div className={styles.disclaimerInner}>
@@ -137,7 +147,7 @@ function TemplateList() {
                 onClick={() => {
                   setActiveCategory(category.id);
                   setSearchTerm('');
-                  navigate('/sablonlar', { replace: true });
+                  navigate(`/${currentLang}/${libraryRoute}`, { replace: true });
                 }}
                 className={`${styles.categoryTab} ${activeCategory === category.id ? styles.categoryTabActive : ''}`}
               >
@@ -165,7 +175,11 @@ function TemplateList() {
           <>
             <div className={styles.templateGrid}>
               {displayedTemplates.map(template => (
-                <Link to={`/sablonlar/detay/${template.slug}`} key={template._id} className={styles.templateCard}>
+                <Link
+                  to={`/${currentLang}/${detailRoute}/${template.slug}`}   
+                  key={template._id}
+                  className={styles.templateCard}
+                >
                   <div className={styles.cardImageContainer}>
                     <img
                       src={getPreviewImageUrl(template._id)}
@@ -208,7 +222,10 @@ function TemplateList() {
             </div>
             <h3>{t('templateList.noTemplateTitle')}</h3>
             <p>{t('templateList.noTemplateText')}</p>
-            <button onClick={() => { setSearchTerm(''); setActiveCategory('all'); }} className={styles.clearSearchButton}>
+            <button
+              onClick={() => { setSearchTerm(''); setActiveCategory('all'); }}
+              className={styles.clearSearchButton}
+            >
               {t('templateList.clearFilters')}
             </button>
           </div>

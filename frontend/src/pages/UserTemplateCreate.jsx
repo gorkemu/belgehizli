@@ -1,22 +1,34 @@
 // frontend/src/pages/UserTemplateCreate.jsx
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom'; 
+import api from '../utils/api'; 
 import TemplateBuilder from '../features/TemplateBuilder';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+import { SEOHead } from '../components/SEOHead'; 
 
 const UserTemplateCreate = () => {
     const navigate = useNavigate();
+    const { lang } = useParams();
+    const currentLang = lang || 'tr';
 
     const handleSave = async (payload) => {
-        const token = localStorage.getItem('user_token');
-        await axios.put(`${API_BASE_URL}/user-templates/${id}`, payload, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        const response = await api.post(`/projects/create`, payload);
+        
+        const editRoute = currentLang === 'tr' ? 'panel/duzenle' : 'dashboard/edit';
+        if (response.data && response.data._id) {
+            navigate(`/${currentLang}/${editRoute}/${response.data._id}`);
+        }
     };
 
-    return <TemplateBuilder onSave={handleSave} isUser={true} />;
+    return (
+        <>
+            {/* SEO Etiketi */}
+            <SEOHead 
+                titleKey="projects.newTemplate" 
+                descKey="homePage.metaDescription" 
+            />
+            <TemplateBuilder onSave={handleSave} isUser={true} />
+        </>
+    );
 };
 
 export default UserTemplateCreate;

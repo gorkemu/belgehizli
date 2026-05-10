@@ -1,17 +1,22 @@
 // frontend/src/pages/ProjectsManager.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom'; 
+import api from '../utils/api'; 
 import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate } from 'lucide-react';
 import styles from './ProjectsManager.module.css';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
+import { SEOHead } from '../components/SEOHead'; 
 
 export const ProjectsManager = () => {
   const { t, i18n } = useTranslation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+  const navigate = useNavigate();
+
+  // Dinamik Rota
+  const editRoute = currentLang === 'tr' ? 'panel/duzenle' : 'dashboard/edit';
 
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,8 +29,6 @@ export const ProjectsManager = () => {
 
   const [docToDelete, setDocToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  const navigate = useNavigate();
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -47,23 +50,10 @@ export const ProjectsManager = () => {
     };
   }, []);
 
-  const getUserFriendlyMessage = (body, defaultKey) => {
-    if (body?.messageKey) {
-      return t(body.messageKey, body.params || {});
-    }
-    if (body?.message) {
-      return body.message;
-    }
-    return t(defaultKey);
-  };
-
   const fetchDocuments = async () => {
     try {
-      const token = localStorage.getItem('user_token');
       const timestamp = new Date().getTime();
-      const response = await axios.get(`${API_BASE_URL}/projects/my-projects?t=${timestamp}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.get(`/projects/my-projects?t=${timestamp}`);
       setDocuments(response.data);
     } catch (err) {
       setError(getUserFriendlyMessage(err.response?.data, 'projects.errorLoading', t));
@@ -78,7 +68,6 @@ export const ProjectsManager = () => {
     setError('');
 
     try {
-      const token = localStorage.getItem('user_token');
       const payload = {
         name: formData.name,
         description: formData.description,
@@ -86,14 +75,12 @@ export const ProjectsManager = () => {
         settings: { mode: 'FREE' }
       };
 
-      const response = await axios.post(`${API_BASE_URL}/projects/create`, payload, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const response = await api.post(`/projects/create`, payload);
 
       setIsModalOpen(false);
       setFormData({ name: '', description: '' });
       showToast(t('projects.successCreated'));
-      navigate(`/panel/duzenle/${response.data._id}`);
+      navigate(`/${currentLang}/${editRoute}/${response.data._id}`);
     } catch (err) {
       setError(getUserFriendlyMessage(err.response?.data, 'projects.errorCreating', t));
     } finally {
@@ -105,10 +92,7 @@ export const ProjectsManager = () => {
     if (!docToDelete) return;
     setIsDeleting(true);
     try {
-      const token = localStorage.getItem('user_token');
-      await axios.delete(`${API_BASE_URL}/projects/${docToDelete._id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await api.delete(`/projects/${docToDelete._id}`);
       setDocuments(documents.filter(p => p._id !== docToDelete._id));
       setDocToDelete(null);
       showToast(t('projects.toastDeleted'));
@@ -127,6 +111,9 @@ export const ProjectsManager = () => {
 
   return (
     <div className={styles.root}>
+      {/* SEO Etiketleri */}
+      <SEOHead titleKey="projects.title" descKey="projects.subtitle" />
+
       {toast.show && <div className={`${styles.toast} ${toast.type === 'success' ? styles.toastSuccess : styles.toastError}`}><CheckCircle2 size={18} /> {toast.message}</div>}
 
       <div className={styles.header}>
@@ -157,7 +144,7 @@ export const ProjectsManager = () => {
       ) : (
         <div className={styles.projectGrid}>
           {documents.map(doc => (
-            <div key={doc._id} onClick={() => navigate(`/panel/duzenle/${doc._id}`)} className={styles.projectCard}>
+            <div key={doc._id} onClick={() => navigate(`/${currentLang}/${editRoute}/${doc._id}`)} className={styles.projectCard}>
               <div className={styles.cardHeader}>
                 <div className={styles.categoryIcon}><LayoutTemplate size={18} color="#57534e" /></div>
                 <button onClick={(e) => { e.stopPropagation(); setDocToDelete(doc); }} className={styles.deleteButton} title={t('projects.deleteTooltip')}><Trash2 size={16} /></button>

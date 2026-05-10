@@ -1,21 +1,23 @@
 // frontend/src/pages/TermsOfService.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import api from '../utils/api';
 import DOMPurify from 'dompurify';
 import styles from './TermsOfService.module.css';
-import { Helmet } from 'react-helmet-async';
+import { SEOHead } from '../components/SEOHead';
 import { ScrollText, Loader2 } from 'lucide-react';
 
 function TermsOfService() {
+    const { t } = useTranslation();
+    const { lang } = useParams();
+    const currentLang = lang === 'en' ? 'en-US' : 'tr-TR';
+
     const [legalDoc, setLegalDoc] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    const siteName = import.meta.env.VITE_SITE_NAME || "Belge Hızlı";
-
     useEffect(() => {
-        const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api';
-
-        axios.get(`${API_URL}/legal/kullanim_sartlari/latest`)
+        api.get(`/legal/kullanim_sartlari/latest`)
             .then(res => {
                 setLegalDoc(res.data);
                 setLoading(false);
@@ -30,14 +32,14 @@ function TermsOfService() {
         return (
             <div className={styles.container} style={{ textAlign: 'center', padding: '5rem' }}>
                 <Loader2 className={styles.spinner} size={48} />
-                <p>Kullanım Şartları yükleniyor...</p>
+                <p>{t('legal.loadingTerms')}</p>
             </div>
         );
     }
 
     const formattedDate = legalDoc?.updatedAt
-        ? new Date(legalDoc.updatedAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })
-        : "Tarih Bekleniyor...";
+        ? new Date(legalDoc.updatedAt).toLocaleDateString(currentLang, { day: '2-digit', month: 'long', year: 'numeric' })
+        : t('legal.datePending');
 
     const formatLegalContent = (html) => {
         if (!html) return '';
@@ -47,16 +49,14 @@ function TermsOfService() {
 
     return (
         <>
-            <Helmet>
-                <title>Kullanım Şartları - {siteName}</title>
-            </Helmet>
+            <SEOHead titleKey="legal.termsTitle" descKey="legal.termsDesc" />
 
             <div className={styles.container}>
                 <div className={styles.header}>
                     <ScrollText size={48} className={styles.titleIcon} />
-                    <h1 className={styles.title}>Kullanım Şartları ve Mesafeli Satış Sözleşmesi</h1>
+                    <h1 className={styles.title}>{t('legal.termsTitle')}</h1>
                     <p className={styles.lastUpdated}>
-                        <strong>Son Güncelleme:</strong> {formattedDate}
+                        <strong>{t('legal.lastUpdated')}:</strong> {formattedDate}
                     </p>
                 </div>
 

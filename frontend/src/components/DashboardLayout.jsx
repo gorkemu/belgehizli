@@ -1,6 +1,6 @@
 // frontend/src/components/DashboardLayout.jsx
 import React, { useContext, useState, useEffect } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, useParams } from 'react-router-dom'; 
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -15,6 +15,14 @@ export const DashboardLayout = () => {
   const { t } = useTranslation();
   const { user, logout } = useContext(AuthContext);
   const location = useLocation();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr';
+
+  // Dinamik Rotalar
+  const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
+  const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
+  const settingsRoute = currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings';
+
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -31,15 +39,15 @@ export const DashboardLayout = () => {
   useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
 
   const navItems = [
-    { path: '/panel',          name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true  },
-    { path: '/panel/projects', name: t('dashboardLayout.myTemplates'), icon: FolderKanban,    exact: false },
+    { path: `/${currentLang}/${dashboardRoute}`,  name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true  },
+    { path: `/${currentLang}/${projectsRoute}`, name: t('dashboardLayout.myTemplates'), icon: FolderKanban,  exact: false },
   ];
 
   return (
     <div className={styles.root}>
       {isMobile && (
         <div className={styles.mobileHeader}>
-          <Link to="/panel" className={styles.mobileLogoLink}>
+          <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.mobileLogoLink}>
             <img
               src="/logo-icon.svg"
               alt="Belge Hızlı"
@@ -74,7 +82,7 @@ export const DashboardLayout = () => {
         ].join(' ')}
       >
         <div className={styles.sidebarHeader}>
-          <Link to="/panel" className={styles.sidebarLogoLink}>
+          <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.sidebarLogoLink}>
             <img
               src="/logo-full-white.svg"
               alt="Belge Hızlı"
@@ -125,20 +133,22 @@ export const DashboardLayout = () => {
           </div>
 
           <div className={styles.footerLinksGroup}>
-            <Link to="/" className={styles.footerLink}>
+            <Link to={`/${currentLang}`} className={styles.footerLink}>
               <Globe size={16} className={styles.icon} />
               <span>{t('dashboardLayout.backToHome')}</span>
             </Link>
+            
             <Link
-              to="/panel/settings"
-              className={`${styles.footerLink} ${location.pathname === '/panel/settings' ? styles.footerLinkActive : ''}`}
+              to={`/${currentLang}/${settingsRoute}`}
+              className={`${styles.footerLink} ${location.pathname.includes(settingsRoute) ? styles.footerLinkActive : ''}`}
             >
               <Settings
                 size={16}
-                className={location.pathname === '/panel/settings' ? styles.iconActive : styles.icon}
+                className={location.pathname.includes(settingsRoute) ? styles.iconActive : styles.icon}
               />
               <span>{t('dashboardLayout.accountSettings')}</span>
             </Link>
+            
             <Button 
               variant="ghost" 
               fullWidth 
