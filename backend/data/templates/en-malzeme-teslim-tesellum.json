@@ -1,0 +1,22 @@
+{
+  "name": "Equipment Handover Form",
+  "description": "A formal document verifying the checkout or return of company equipment, materials, or assets.",
+  "price": 5,
+  "language": "en",
+  "slug": "equipment-asset-handover-form",
+  "content": "<h3 style='text-align:center;'>EQUIPMENT HANDOVER FORM</h3>\n<p style='text-align: right;'><strong>Date:</strong> {{formatDate handover_date}}</p>\n<hr style='margin: 15px 0;'/>\n\n<p>This document serves to confirm that the following equipment/asset(s) has/have been handed over by <strong>{{issued_by_name}}</strong> (\"Issuer\") and received by <strong>{{received_by_name}}</strong> (\"Recipient\").</p>\n\n<p>The Recipient acknowledges receipt of the item(s) listed below in {{#if (eq condition 'Good Working Order')}}<strong>good working order and physical condition</strong>{{else}}the condition specified below{{/if}}.</p>\n\n<p><strong>Item(s) Description:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{equipment_list}}</pre>\n\n{{#if (eq condition 'Damaged / Missing Parts')}}\n<p><strong>Known Damage / Missing Components:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{damage_description}}</pre>\n{{/if}}\n\n{{#if purpose_of_handover}}\n<p><strong>Purpose of Handover:</strong> {{purpose_of_handover}}</p>\n{{/if}}\n\n<p>By signing below, the Recipient agrees to take full responsibility for the proper use and care of the aforementioned equipment until it is returned. Any loss or damage caused by negligence may result in repair or replacement costs being charged to the Recipient.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'>\n <p><strong>Issued By</strong><br/>\n Name: {{issued_by_name}}<br/>\n {{#if issued_by_title}}Title: {{issued_by_title}}{{/if}}\n <br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span>\n </p>\n </div>\n <div style='margin-bottom: 20px;'>\n <p><strong>Received By</strong><br/>\n Name: {{received_by_name}}<br/>\n {{#if received_by_title}}Title: {{received_by_title}}{{/if}}\n <br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span>\n </p>\n </div>\n</div>",
+  "fields": [
+    { "name": "issued_by_name", "label": "Issued / Handed Over By (Name)", "fieldType": "text", "required": true },
+    { "name": "issued_by_title", "label": "Issuer's Title (Optional)", "fieldType": "text", "required": false },
+    { "name": "received_by_name", "label": "Received By (Name)", "fieldType": "text", "required": true },
+    { "name": "received_by_title", "label": "Recipient's Title (Optional)", "fieldType": "text", "required": false },
+    { "name": "equipment_list", "label": "Equipment List", "fieldType": "textarea", "required": true, "placeholder": "Item - Make/Model - Serial No - Quantity\ne.g., Laptop - Dell XPS 13 - SN:12345 - 1 Unit" },
+    { "name": "condition", "label": "Condition of Equipment", "fieldType": "select", "options": ["Good Working Order", "Damaged / Missing Parts"], "required": true },
+    { "name": "damage_description", "label": "Describe Damages/Issues", "fieldType": "textarea", "required": false, "condition": { "field": "condition", "value": "Damaged / Missing Parts" } },
+    { "name": "purpose_of_handover", "label": "Purpose of Handover (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., Remote work assignment, Repair, Return to IT" },
+    { "name": "handover_date", "label": "Date of Handover", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

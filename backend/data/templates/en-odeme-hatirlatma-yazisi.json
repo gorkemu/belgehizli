@@ -1,0 +1,28 @@
+{
+  "name": "Payment Reminder Letter",
+  "description": "A polite but firm reminder letter sent to a debtor for an overdue payment.",
+  "price": 5,
+  "language": "en",
+  "slug": "payment-reminder-letter",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p><strong>{{creditor_name_title}}</strong><br/>\n  {{creditor_address}}<br/>\n  {{#if creditor_phone}}Phone: {{creditor_phone}}<br/>{{/if}}\n  {{#if creditor_email}}Email: {{creditor_email}}{{/if}}\n  </p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>TO:</strong><br/>{{debtor_name_title}}<br/>{{debtor_address}}</p>\n\n  <p style='margin-top: 20px;'><strong>RE: Overdue Payment for Invoice/Reference No: {{invoice_no_reference}}</strong></p>\n\n  <p>Dear {{debtor_name_title}},</p>\n\n  <p>According to our records, the payment for Invoice/Reference No. <strong>{{invoice_no_reference}}</strong>, which was due on <strong>{{formatDate due_date}}</strong>, remains outstanding. The total amount overdue is <strong>{{debt_amount}}</strong>.</p>\n\n  {{#if (eq is_second_notice 'Yes')}} \n  <p>As this is our second reminder regarding this matter, we urgently request that you address this outstanding balance immediately to avoid any disruption to our services or further collection actions.</p>\n  {{else}}\n  <p>If you have already sent your payment, please disregard this letter and accept our thanks. If you have not yet made the payment, we kindly ask that you arrange for the settlement of this account as soon as possible.</p>\n  {{/if}}\n\n  <p>Please remit the payment by <strong>{{formatDate payment_deadline}}</strong> using the following bank details:</p>\n  <p>Bank Name: {{bank_name}}<br/>\n  Account Number / IBAN: {{account_number}}<br/>\n  Account Name: {{account_holder}}\n  </p>\n\n  <p>If you have any questions regarding this invoice or if you are experiencing difficulties making the payment, please contact us immediately so we can discuss the matter.</p>\n\n  <p>Thank you for your prompt attention to this matter.</p>\n\n  <p>Yours sincerely,</p>\n  <p><strong>{{creditor_name_title}}</strong></p>\n</div>",
+  "fields": [
+    { "name": "creditor_name_title", "label": "Creditor's Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "creditor_address", "label": "Creditor's Address", "fieldType": "textarea", "required": true },
+    { "name": "creditor_phone", "label": "Creditor's Phone (Optional)", "fieldType": "text", "required": false },
+    { "name": "creditor_email", "label": "Creditor's Email (Optional)", "fieldType": "email", "required": false },
+    { "name": "debtor_name_title", "label": "Debtor's Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "debtor_address", "label": "Debtor's Address", "fieldType": "textarea", "required": true },
+    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
+    { "name": "invoice_no_reference", "label": "Invoice No / Reference Code", "fieldType": "text", "required": true },
+    { "name": "due_date", "label": "Original Due Date", "fieldType": "date", "required": true },
+    { "name": "debt_amount", "label": "Overdue Amount (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,500.00" },
+    { "name": "is_second_notice", "label": "Is this a second/final notice?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "payment_deadline", "label": "New Payment Deadline", "fieldType": "date", "required": true },
+    { "name": "bank_name", "label": "Bank Name for Payment", "fieldType": "text", "required": true },
+    { "name": "account_number", "label": "Account Number / IBAN", "fieldType": "text", "required": true },
+    { "name": "account_holder", "label": "Account Holder Name", "fieldType": "text", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -47,6 +47,13 @@ const templateSchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String },
     
+    language: { 
+        type: String, 
+        enum: ['tr', 'en'], 
+        default: 'tr',
+        index: true 
+    },
+
     content: { type: String, default: '' }, 
     
     category: String,
@@ -88,7 +95,7 @@ const templateSchema = new mongoose.Schema({
 });
 
 templateSchema.pre('save', async function (next) {
-    if (this.isModified('name') || this.isNew) {
+    if (this.isModified('name') || this.isModified('language') || this.isNew) {
         if (this.name) {
             const baseSlug = slugify(this.name, { lower: true, strict: true });
 
@@ -96,7 +103,7 @@ templateSchema.pre('save', async function (next) {
                 const randomCode = Math.random().toString(36).substring(2, 8);
                 this.slug = `${baseSlug}-${randomCode}`;
             } else {
-                let uniqueSlug = baseSlug;
+                let uniqueSlug = `${baseSlug}-${this.language}`;
                 let counter = 1;
 
                 while (true) {
@@ -107,7 +114,7 @@ templateSchema.pre('save', async function (next) {
 
                     if (!existingTemplate) break;
 
-                    uniqueSlug = `${baseSlug}-${counter}`;
+                    uniqueSlug = `${baseSlug}-${this.language}-${counter}`;
                     counter++;
                 }
                 this.slug = uniqueSlug;

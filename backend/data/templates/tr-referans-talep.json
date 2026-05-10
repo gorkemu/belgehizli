@@ -1,0 +1,28 @@
+{
+  "_id": "6804926bb989142070477f61",
+  "name": "Referans Talep E-postası/Mektubu Taslağı",
+  "description": "Eski yönetici, öğretmen veya iş arkadaşından referans istemek için nazik ve bilgilendirici taslak.",
+  "price": 0,
+  "language": "tr",
+  "slug": "referans-talep-epostasi-mektubu-taslagi",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p><strong>Konu:</strong> Referans Talebi - {{sizin_ad_soyad}}</p>\n<br/>\n<p>Sayın {{referans_veren_kisi_unvan}} {{referans_veren_kisi_soyad}},</p>\n<br/>\n<p>Umarım iyisinizdir.</p>\n\n<p>Size {{nereden_tanisiklik}} döneminden tanışıklığımıza istinaden yazıyorum. Bildiğiniz üzere, şu sıralar {{basvuru_yapilan_yer_ve_pozisyon}} için bir başvuru sürecindeyim{{#if ek_bilgi}} ve bu süreçte {{ek_bilgi}}{{/if}}.</p>\n\n<p>Bu başvuru sürecimin bir parçası olarak referans mektuplarına ihtiyacım bulunmaktadır. {{referans_veren_ile_iliski}} süresince birlikte çalışma fırsatı bulduğumuz dönemdeki performansım, becerilerim ve çalışma ahlakım hakkında olumlu bir referans mektubu yazarak bana destek olmanız mümkün mü acaba?</p>\n\n<p>Özellikle {{vurgulanmasini_istediginiz_beceriler}} gibi konulardaki deneyimlerimin vurgulanması benim için değerli olacaktır.</p>\n\n<p>Referans mektubunu göndermeniz gereken son tarih {{formatDate son_gonderme_tarihi}} olup, {{gonderme_yontemi}} yoluyla iletmeniz gerekmektedir. Başvurumla ilgili daha fazla bilgi veya özgeçmişimi isterseniz memnuniyetle paylaşabilirim.</p>\n\n<p>Zaman ayırıp talebimi değerlendirebilirseniz çok sevinirim. Şimdiden desteğiniz için çok teşekkür ederim.</p>\n\n<p>Saygılarımla,</p>\n\n<div style='margin-top: 20px;'>\n<p><strong>{{sizin_ad_soyad}}</strong><br/>\n{{sizin_unvan_ve_kurum}}<br/>\nTelefon: {{sizin_telefon}}<br/>\nE-posta: {{sizin_eposta}}<br/>\n{{#if sizin_linkedin}}LinkedIn: {{sizin_linkedin}}{{/if}}\n</p>\n</div>\n</div>",
+  "fields": [
+    { "name": "referans_veren_kisi_unvan", "label": "Referans Verecek Kişinin Unvanı", "fieldType": "text", "required": true, "placeholder": "Örn: Prof. Dr., Sayın, Sevgili" },
+    { "name": "referans_veren_kisi_soyad", "label": "Referans Verecek Kişinin Soyadı", "fieldType": "text", "required": true },
+    { "name": "sizin_ad_soyad", "label": "Sizin Adınız Soyadınız", "fieldType": "text", "required": true },
+    { "name": "nereden_tanisiklik", "label": "Tanışıklığınız Nereden/Hangi Dönemden?", "fieldType": "text", "required": true, "placeholder": "Örn: X Şirketi'ndeki yöneticiliğiniz, Y Üniversitesi'ndeki dersleriniz" },
+    { "name": "basvuru_yapilan_yer_ve_pozisyon", "label": "Başvuru Yaptığınız Yer ve Pozisyon/Program", "fieldType": "text", "required": true, "placeholder": "Örn: Z Firması'ndaki Yazılım Mühendisi pozisyonu, A Üniversitesi Yüksek Lisans" },
+    { "name": "ek_bilgi", "label": "Başvuru Süreciyle İlgili Ek Bilgi (Opsiyonel)", "fieldType": "text", "required": false, "placeholder": "Örn: mülakat aşamasındayım" },
+    { "name": "referans_veren_ile_iliski", "label": "Referans Verecek Kişiyle İlişkiniz", "fieldType": "text", "required": true, "placeholder": "Örn: Yöneticim olarak çalıştığınız, Dersini aldığım" },
+    { "name": "vurgulanmasini_istediginiz_beceriler", "label": "Özellikle Vurgulanmasını İstediğiniz Beceri/Deneyimler", "fieldType": "textarea", "required": true, "placeholder": "Proje yönetimi, takım çalışması, problem çözme yeteneğim vb." },
+    { "name": "son_gonderme_tarihi", "label": "Referans İçin Son Gönderme Tarihi", "fieldType": "date", "required": true },
+    { "name": "gonderme_yontemi", "label": "Referansın Gönderilme Yöntemi", "fieldType": "text", "required": true, "placeholder": "Örn: Şu e-posta adresine, Başvuru portalına yükleyerek" },
+    { "name": "sizin_unvan_ve_kurum", "label": "Sizin Şu Anki Unvanınız ve Kurumunuz (Varsa)", "fieldType": "text", "required": false },
+    { "name": "sizin_telefon", "label": "Sizin Telefon Numaranız", "fieldType": "text", "required": true },
+    { "name": "sizin_eposta", "label": "Sizin E-posta Adresiniz", "fieldType": "email", "required": true },
+    { "name": "sizin_linkedin", "label": "Sizin LinkedIn Profil Linkiniz (Varsa)", "fieldType": "text", "required": false },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği - Kendi Adresiniz)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

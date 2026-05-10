@@ -1,0 +1,29 @@
+{
+  "name": "Hizmet Memnuniyetsizliği Bildirimi ve Talep",
+  "description": "Alınan bir hizmetten memnun kalmama durumunda iade veya düzeltme talebini içeren resmi yazı.",
+  "price": 8,
+  "language": "tr",
+  "slug": "hizmet-memnuniyetsizligi-bildirimi-ve-talep",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p style='text-align: right;'>{{sehir_bilgisi}}, {{formatDate yazi_tarihi}}</p>\n\n  <p><strong>{{hizmet_saglayici_ad_unvan}} DİKKATİNE,</strong></p>\n  <p>{{hizmet_saglayici_adres}}</p>\n\n  <p><strong>Konu:</strong> {{hizmet_tarihi}} Tarihinde Alınan {{hizmet_adi}} Hizmeti Hakkında Memnuniyetsizlik Bildirimi ve Talebimiz</p>\n\n  <p>Şirketinizden/şahsınızdan {{hizmet_tarihi}} tarihinde {{hizmet_yeri}} adresinde/şekilde {{hizmet_adi}} hizmetini almış bulunmaktayım/bulunmaktayız.</p>\n\n  <p>Ancak, alınan hizmetin aşağıda belirtilen nedenlerle beklentilerimizi karşılamadığını ve vaat edilen/standart kaliteye uygun olmadığını üzülerek belirtmek isteriz:</p>\n  <p><strong>Memnuniyetsizlik Nedenleri:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{memnuniyetsizlik_nedenleri}}</pre>\n\n  {{#if ek_kanitlar}}\n  <p>Bu konudaki iddialarımızı destekleyen kanıtlar (fotoğraf, yazışma vb.) ekte sunulmuştur/aşağıdaki linkten erişilebilir:</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ek_kanitlar}}</pre>\n  {{/if}}\n\n  <p>Yukarıda açıklanan nedenlerle, Tüketicinin Korunması Hakkında Kanun ve ilgili mevzuat uyarınca sahip olduğumuz haklara dayanarak, tarafımıza {{talep_turu}} talep etmekteyiz.</p>\n  <p><strong>Talebimizin Detayları:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{talep_detaylari}}</pre>\n\n  <p>Talebimizin işbu yazının tarafınıza tebliğinden itibaren {{yanit_suresi}} gün içinde değerlendirilerek tarafımıza olumlu veya olumsuz bir yanıt verilmesini rica ederiz.</p>\n\n  <p>Belirtilen süre içinde talebimize uygun bir çözüm sunulmaması halinde yasal yollara başvurma hakkımızı saklı tuttuğumuzu bildiririz.</p>\n\n  <p>Saygılarımızla,</p>\n\n  <div style='margin-top: 40px;'>\n    <p>Adı Soyadı: {{musteri_ad_soyad}}<br/>\n    Adres: {{musteri_adres}}<br/>\n    Telefon: {{musteri_telefon}}<br/>\n    E-posta: {{musteri_eposta}}<br/>\n    <br/><br/>İmza: _________________________</p>\n  </div>\n\n</div>",
+  "fields": [
+    { "name": "hizmet_saglayici_ad_unvan", "label": "Hizmet Sağlayıcının Adı/Unvanı", "fieldType": "text", "required": true },
+    { "name": "hizmet_saglayici_adres", "label": "Hizmet Sağlayıcının Adresi", "fieldType": "textarea", "required": true },
+    { "name": "musteri_ad_soyad", "label": "Müşterinin (Sizin) Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "musteri_adres", "label": "Müşterinin Adresi", "fieldType": "textarea", "required": true },
+    { "name": "musteri_telefon", "label": "Müşterinin Telefonu", "fieldType": "text", "required": true },
+    { "name": "musteri_eposta", "label": "Müşterinin E-postası", "fieldType": "email", "required": true },
+    { "name": "sehir_bilgisi", "label": "Yazının Yazıldığı Şehir", "fieldType": "text", "required": true },
+    { "name": "yazi_tarihi", "label": "Yazının Tarihi", "fieldType": "date", "required": true },
+    { "name": "hizmet_adi", "label": "Alınan Hizmetin Adı/Türü", "fieldType": "text", "required": true, "placeholder": "Örn: Ev Tadilatı, Yabancı Dil Kursu, Teknik Servis" },
+    { "name": "hizmet_tarihi", "label": "Hizmetin Alındığı Tarih/Tarih Aralığı", "fieldType": "text", "required": true },
+    { "name": "hizmet_yeri", "label": "Hizmetin Alındığı Yer", "fieldType": "text", "required": true, "placeholder": "Örn: Ev adresim, Şirketinizin merkezi, Online platform" },
+    { "name": "memnuniyetsizlik_nedenleri", "label": "Memnuniyetsizlik Nedenleri (Detaylı)", "fieldType": "textarea", "required": true, "placeholder": "Hizmetin hangi yönlerinin eksik/hatalı olduğunu, beklentilerinizi karşılamadığını açıklayın." },
+    { "name": "ek_kanitlar", "label": "Ek Kanıtlar (Varsa belirtin)", "fieldType": "textarea", "required": false, "placeholder": "Fotoğraflar, yazışmalar, fatura vb. referanslar..." },
+    { "name": "talep_turu", "label": "Temel Talebiniz Nedir?", "fieldType": "select", "options": ["Ücret İadesi", "Hizmetin Yeniden Yapılması", "Ücretsiz Düzeltme/Tamamlama", "Kısmi Ücret İadesi"], "required": true },
+    { "name": "talep_detaylari", "label": "Talebimizin Detayları", "fieldType": "textarea", "required": true, "placeholder": "Tam olarak ne istediğinizi belirtin. İade ise tutar, düzeltme ise nasıl yapılacağı vb." },
+    { "name": "yanit_suresi", "label": "Yanıt İçin Verilen Süre (Gün)", "fieldType": "number", "required": true, "placeholder": "Örn: 7, 14" },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

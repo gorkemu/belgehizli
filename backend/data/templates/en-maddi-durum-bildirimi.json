@@ -1,0 +1,31 @@
+{
+  "name": "Financial Hardship Declaration & Assistance Request",
+  "description": "A formal letter declaring financial hardship and requesting assistance, relief, or a payment plan from an institution or creditor.",
+  "price": 5,
+  "language": "en",
+  "slug": "financial-hardship-declaration-assistance-request",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p><strong>From:</strong><br/>{{applicant_name}}<br/>{{address}}<br/>Phone: {{phone}}</p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>To:</strong><br/>{{institution_name}}<br/>{{city_state}}</p>\n\n  <p style='margin-top: 30px;'><strong>RE: Declaration of Financial Hardship / Request for {{assistance_requested}}</strong></p>\n\n  <p>To Whom It May Concern,</p>\n\n  <p>I am writing to formally declare my current state of financial hardship and to request your assistance regarding <strong>{{assistance_requested}}</strong>. My current employment/occupational status is: <strong>{{occupation_status}}</strong>.</p>\n\n  <p><strong>Applicant Details:</strong></p>\n  <ul>\n    <li>Full Name: {{applicant_name}}</li>\n    <li>ID / SSN: {{ssn_id_number}}</li>\n    <li>Date of Birth: {{formatDate dob}}</li>\n    <li>Marital Status: {{marital_status}}</li>\n    <li>Total Number of Dependents: {{dependents_count}}</li>\n  </ul>\n\n  <p><strong>Financial Summary:</strong></p>\n  <ul>\n    <li>Estimated Total Monthly Income: {{monthly_income}}</li>\n    <li>Primary Source(s) of Income: {{income_sources}}</li>\n    <li>Estimated Monthly Essential Expenses (Rent, Utilities, Food, Medical): {{monthly_expenses}}</li>\n    <li>Significant Assets (if any): {{assets}}</li>\n  </ul>\n\n  <p><strong>Reason for Hardship:</strong></p>\n  <p>Due to unforeseen and difficult circumstances, I am currently unable to meet my basic financial obligations. The specific details of my hardship are as follows:</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{hardship_explanation}}</pre>\n\n  <p>I kindly request that you review my situation and consider granting the assistance or relief I am applying for. I have attached the necessary supporting documentation to corroborate my current financial standing.</p>\n\n  {{#if attached_documents}}\n  <p><strong>Enclosures/Attachments:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{attached_documents}}</pre>\n  {{/if}}\n\n  <p>I certify that the information provided in this declaration is true, accurate, and complete to the best of my knowledge.</p>\n\n  <p style='margin-top: 40px;'>Sincerely,</p>\n  <p>_________________________<br/><strong>{{applicant_name}}</strong></p>\n</div>",
+  "fields": [
+    { "name": "institution_name", "label": "Name of the Institution / Creditor", "fieldType": "text", "required": true, "placeholder": "e.g., Housing Authority, Bank of America, Charity Foundation" },
+    { "name": "city_state", "label": "City, State / Address of Institution", "fieldType": "text", "required": true },
+    { "name": "applicant_name", "label": "Applicant's Full Name", "fieldType": "text", "required": true },
+    { "name": "ssn_id_number", "label": "SSN or ID Number", "fieldType": "text", "required": true },
+    { "name": "dob", "label": "Date of Birth", "fieldType": "date", "required": true },
+    { "name": "address", "label": "Applicant's Address", "fieldType": "textarea", "required": true },
+    { "name": "phone", "label": "Phone Number", "fieldType": "text", "required": true },
+    { "name": "occupation_status", "label": "Employment / Occupational Status", "fieldType": "text", "required": true, "placeholder": "e.g., Unemployed, Disabled, Freelancer, Retired" },
+    { "name": "marital_status", "label": "Marital Status", "fieldType": "select", "options": ["Single", "Married", "Widowed", "Divorced"], "required": true },
+    { "name": "dependents_count", "label": "Number of Dependents (Including yourself)", "fieldType": "number", "required": true },
+    { "name": "monthly_income", "label": "Total Monthly Income (with Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,200" },
+    { "name": "income_sources", "label": "Sources of Income", "fieldType": "text", "required": true, "placeholder": "e.g., Pension, Unemployment benefits, None" },
+    { "name": "monthly_expenses", "label": "Monthly Essential Expenses (with Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,800" },
+    { "name": "assets", "label": "Significant Assets", "fieldType": "text", "required": true, "placeholder": "e.g., 2005 Honda Civic, None" },
+    { "name": "hardship_explanation", "label": "Explanation of Hardship", "fieldType": "textarea", "required": true, "placeholder": "Explain the circumstances (job loss, medical emergency, etc.)." },
+    { "name": "assistance_requested", "label": "Type of Assistance Requested", "fieldType": "text", "required": true, "placeholder": "e.g., Rent Assistance, Payment Deferral, Food Stamps" },
+    { "name": "attached_documents", "label": "Attached Documents (List them)", "fieldType": "textarea", "required": false, "placeholder": "e.g., Bank Statements, Medical Bills, Eviction Notice" },
+    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

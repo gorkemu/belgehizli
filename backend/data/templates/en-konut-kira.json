@@ -1,0 +1,52 @@
+{
+  "name": "Residential Lease Agreement",
+  "description": "A standard contract establishing the terms and conditions of renting a residential property.",
+  "price": 15,
+  "language": "en",
+  "slug": "residential-lease-agreement",
+  "content": "<h2 style='text-align:center;'>RESIDENTIAL LEASE AGREEMENT</h2>\n<p><strong>Property Address:</strong> {{leased_property_address}}</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>A. LANDLORD(S):</strong></p>\n{{#each landlords}}\n<div style='margin-bottom: 10px;'>\n <p style='margin-bottom: 2px;'>  Full Name: {{this.full_name}}</p>\n <p style='margin-bottom: 2px;'>  ID / SSN: {{this.id_number}}</p>\n <p style='margin-bottom: 2px;'>  Address: {{this.address}}</p>\n</div>\n{{/each}}\n\n<p><strong>B. TENANT(S) (Jointly and Severally Liable):</strong></p>\n{{#each tenants}}\n<div style='margin-bottom: 10px;'>\n <p style='margin-bottom: 2px;'>  Full Name: {{this.full_name}}</p>\n <p style='margin-bottom: 2px;'>  ID / SSN: {{this.id_number}}</p>\n <p style='margin-bottom: 2px;'>  Address: {{this.address}}</p>\n</div>\n{{/each}}\n\n<p><strong>2. LEASE TERMS</strong></p>\n<ul>\n <li>Leased Premises: {{leased_property_address}}</li>\n <li>Lease Start Date: {{formatDate start_date}}</li>\n <li>Lease Term: {{lease_duration_months}} Months</li>\n <li>Monthly Rent: <strong>{{monthly_rent_amount}}</strong></li>\n <li>Rent Due Date: On the {{rent_due_day}} day of each month.</li>\n <li>Renewal / Rent Increase: {{#if (eq increase_type 'Fixed Percentage')}}Fixed Rate: {{increase_rate}}% annually{{else}}Subject to mutual agreement and local laws.{{/if}}</li>\n</ul>\n\n<p><strong>3. SECURITY DEPOSIT</strong></p>\n{{#if (eq deposit_collected 'Yes')}}\n<p>The Tenant(s) has deposited the sum of <strong>{{deposit_amount}}</strong> with the Landlord as a security deposit to secure the performance of this Lease.</p>\n{{else}}\n<p>No security deposit has been collected for this Lease.</p>\n{{/if}}\n\n<p><strong>4. SPECIAL CONDITIONS & RULES</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{special_conditions}}</pre>\n\n<p>The Parties hereby agree to the terms and conditions outlined above. This Lease has been read, understood, and signed on {{formatDate signature_date}}.</p>\n\n<div style='margin-top: 40px;'>\n <p><strong>Signatures:</strong></p>\n <div style='display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px; margin-top: 20px;'>\n <p><strong>Landlord(s):</strong></p>\n {{#each landlords}}\n <div style='margin-top: 20px;'>\n <p style='margin-bottom: 5px;'>{{this.full_name}}</p>\n <p><br/><span style='display: inline-block; margin-top: 5px;'>Signature: _________________________</span></p>\n </div>\n {{/each}}\n </div>\n <div style='margin-bottom: 20px; margin-top: 20px;'>\n <p><strong>Tenant(s):</strong></p>\n {{#each tenants}}\n <div style='margin-top: 20px;'>\n <p style='margin-bottom: 5px;'>{{this.full_name}}</p>\n <p><br/><span style='display: inline-block; margin-top: 5px;'>Signature: _________________________</span></p>\n </div>\n {{/each}}\n </div>\n </div>\n</div>",
+  "fields": [
+    {
+      "name": "landlords",
+      "label": "Landlord Information",
+      "blockTitle": "Landlord",
+      "fieldType": "repeatable",
+      "addLabel": "Add Another Landlord",
+      "removeLabel": "Remove Landlord",
+      "minInstances": 1,
+      "subfields": [
+        { "name": "full_name", "label": "Full Name", "fieldType": "text", "required": true },
+        { "name": "id_number", "label": "ID / SSN", "fieldType": "text", "required": true },
+        { "name": "address", "label": "Current Address", "fieldType": "textarea", "required": true }
+      ]
+    },
+    {
+      "name": "tenants",
+      "label": "Tenant Information",
+      "blockTitle": "Tenant",
+      "fieldType": "repeatable",
+      "addLabel": "Add Another Tenant",
+      "removeLabel": "Remove Tenant",
+      "minInstances": 1,
+      "subfields": [
+        { "name": "full_name", "label": "Full Name", "fieldType": "text", "required": true },
+        { "name": "id_number", "label": "ID / SSN", "fieldType": "text", "required": true },
+        { "name": "address", "label": "Current Address", "fieldType": "textarea", "required": true }
+      ]
+    },
+    { "name": "leased_property_address", "label": "Full Address of Leased Property", "fieldType": "textarea", "required": true },
+    { "name": "start_date", "label": "Lease Start Date", "fieldType": "date", "required": true },
+    { "name": "lease_duration_months", "label": "Lease Duration (Months)", "fieldType": "number", "required": true, "placeholder": "e.g., 12" },
+    { "name": "monthly_rent_amount", "label": "Monthly Rent Amount (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,500" },
+    { "name": "rent_due_day", "label": "Rent Due Day (Day of the month)", "fieldType": "number", "required": true, "placeholder": "e.g., 1 or 5" },
+    { "name": "increase_type", "label": "Annual Rent Increase Type", "fieldType": "select", "options": ["Mutual Agreement / Local Law", "Fixed Percentage"], "required": true },
+    { "name": "increase_rate", "label": "Fixed Increase Rate (%)", "fieldType": "number", "required": false, "condition": { "field": "increase_type", "value": "Fixed Percentage" } },
+    { "name": "deposit_collected", "label": "Has a Security Deposit been collected?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "deposit_amount", "label": "Security Deposit Amount (Include Currency)", "fieldType": "text", "required": false, "condition": { "field": "deposit_collected", "value": "Yes" } },
+    { "name": "special_conditions", "label": "Special Conditions & Rules", "fieldType": "textarea", "required": false, "placeholder": "Rules about pets, smoking, maintenance responsibilities, etc." },
+    { "name": "signature_date", "label": "Date of Signature", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}
