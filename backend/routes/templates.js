@@ -89,11 +89,12 @@ try {
 // ─── GET /sablonlar ────────────────────────────────────────────────
 router.get('/sablonlar', async (req, res) => {
     try {
+        const lang = req.query.lang || 'tr';
         const templates = await Template.find(
-            { isSystem: true, isActive: true },
-            '_id name description price slug'
+            { isSystem: true, isActive: true, language: lang },
+            '_id name description price slug language'
         );
-        res.json(templates);
+        res.json({templates });
     } catch (error) {
         console.error('Şablonlar alınırken hata oluştu:', error);
         res.status(500).json({
