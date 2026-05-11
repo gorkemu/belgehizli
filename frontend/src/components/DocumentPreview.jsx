@@ -203,6 +203,7 @@ function DocumentPreview({ templateContent, formData, editorRef, currentStep }) 
                 <div
                     ref={editorRef}
                     className={styles.previewArea}
+                    data-testid="template-preview-box"
                     data-editable={currentStep === 2}
                     dangerouslySetInnerHTML={{ __html: safeHtml }}
                     contentEditable={currentStep === 2}

@@ -96,6 +96,32 @@ function TemplateList() {
 
   const getPreviewImageUrl = (templateId) => `/template-previews/${templateId}.webp`;
 
+  const TemplateImage = ({ templateId, templateName }) => {
+    const [hasError, setHasError] = useState(false);
+
+    if (hasError) {
+      // Resim bulunamazsa gösterilecek modern fallback
+      return (
+        <div className={styles.imagePlaceholder}>
+          <FileText size={48} className={styles.placeholderIcon} />
+          <span className={styles.placeholderLetters}>
+            {templateName.substring(0, 2).toUpperCase()}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <img
+        src={`/template-previews/${templateId}.webp`}
+        alt={templateName}
+        className={styles.cardPreviewImage}
+        loading="lazy"
+        onError={() => setHasError(true)} 
+      />
+    );
+  };
+
   if (error) {
     return (
       <div className={styles.statusContainerError}>
@@ -186,13 +212,7 @@ function TemplateList() {
                   className={styles.templateCard}
                 >
                   <div className={styles.cardImageContainer}>
-                    <img
-                      src={getPreviewImageUrl(template._id)}
-                      alt={template.name}
-                      className={styles.cardPreviewImage}
-                      loading="lazy"
-                      onError={(e) => { e.target.onerror = null; e.target.src = '/template-previews/placeholder.png'; }}
-                    />
+                    <TemplateImage templateId={template._id} templateName={template.name} />
                     <div className={styles.imageOverlay}>
                       <div className={styles.overlayAction}>
                         <FileText size={18} /> {t('templateList.viewForm')}
