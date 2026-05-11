@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a4df4a6478ae3b984e"
+  },
   "name": "Short-Term / Vacation Rental Agreement",
   "description": "A binding contract for the short-term rental of a vacation home, villa, or apartment, detailing house rules, check-in procedures, and damage deposits.",
   "price": 15,
@@ -6,15 +9,63 @@
   "slug": "short-term-vacation-rental-agreement",
   "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center;'>SHORT-TERM VACATION RENTAL AGREEMENT</h2>\n\n  <p><strong>THE PARTIES:</strong><br/>Host / Property Owner: {{host_name}}<br/>Guest / Primary Renter: {{guest_name}}</p>\n\n  <p><strong>RESERVATION DETAILS:</strong><br/>\n  Check-in Date: {{formatDate check_in_date}}<br/>\n  Check-out Date: {{formatDate check_out_date}}<br/>\n  Maximum Number of Guests: {{number_of_guests}}</p>\n\n  <p><strong>FEES AND SECURITY DEPOSIT:</strong><br/>\n  Total Rental Fee: <strong>{{total_rental_fee}}</strong><br/>\n  Security / Damage Deposit: <strong>{{security_deposit}}</strong></p>\n\n  <p><strong>HOUSE RULES & CANCELLATION POLICY:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{rules_and_cancellation}}</pre>\n\n  <p>The Guest agrees to leave the property in the same general state of cleanliness and order as it was received. The Guest acknowledges that any damages caused to the property or its contents during the stay will be deducted from the Security Deposit. If the cost of repairs exceeds the deposit, the Guest shall be held legally liable for the remaining balance.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>Host / Owner</strong></p>\n      <p>{{host_name}}</p>\n      <p><br/>Signature: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Guest</strong></p>\n      <p>{{guest_name}}</p>\n      <p><br/>Signature: ________________</p>\n    </div>\n  </div>\n</div>",
   "fields": [
-    { "name": "host_name", "label": "Host / Property Owner Name", "fieldType": "text", "required": true },
-    { "name": "guest_name", "label": "Guest / Primary Renter Name", "fieldType": "text", "required": true },
-    { "name": "check_in_date", "label": "Check-in Date", "fieldType": "date", "required": true },
-    { "name": "check_out_date", "label": "Check-out Date", "fieldType": "date", "required": true },
-    { "name": "number_of_guests", "label": "Maximum Number of Guests", "fieldType": "number", "required": true },
-    { "name": "total_rental_fee", "label": "Total Rental Fee (Include Currency)", "fieldType": "text", "placeholder": "e.g., $1,500", "required": true },
-    { "name": "security_deposit", "label": "Security / Damage Deposit Amount", "fieldType": "text", "placeholder": "e.g., $300", "required": true },
-    { "name": "rules_and_cancellation", "label": "House Rules & Cancellation Policy", "fieldType": "textarea", "placeholder": "e.g., No parties, No smoking. 100% refund if canceled 14 days prior.", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "host_name",
+      "label": "Host / Property Owner Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "guest_name",
+      "label": "Guest / Primary Renter Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "check_in_date",
+      "label": "Check-in Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "check_out_date",
+      "label": "Check-out Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "number_of_guests",
+      "label": "Maximum Number of Guests",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "total_rental_fee",
+      "label": "Total Rental Fee (Include Currency)",
+      "fieldType": "text",
+      "placeholder": "e.g., $1,500",
+      "required": true
+    },
+    {
+      "name": "security_deposit",
+      "label": "Security / Damage Deposit Amount",
+      "fieldType": "text",
+      "placeholder": "e.g., $300",
+      "required": true
+    },
+    {
+      "name": "rules_and_cancellation",
+      "label": "House Rules & Cancellation Policy",
+      "fieldType": "textarea",
+      "placeholder": "e.g., No parties, No smoking. 100% refund if canceled 14 days prior.",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

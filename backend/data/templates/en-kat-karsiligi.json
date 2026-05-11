@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a2df4a6478ae3b983a"
+  },
   "name": "Land Development Preliminary Agreement (Joint Venture)",
   "description": "A preliminary agreement between a landowner and a developer outlining the profit/asset split and basic terms for a real estate construction project.",
   "price": 35,
@@ -6,19 +9,85 @@
   "slug": "land-development-preliminary-agreement",
   "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px;'>PRELIMINARY LAND DEVELOPMENT AGREEMENT</h2>\n\n  <p><strong>LANDOWNER:</strong> {{landowner_name}} (ID/SSN: {{landowner_id}})<br/><strong>ADDRESS:</strong> {{landowner_address}}</p>\n\n  <p><strong>DEVELOPER / CONTRACTOR:</strong> {{developer_name}}<br/><strong>ADDRESS:</strong> {{developer_address}}</p>\n\n  <p><strong>1. PROPERTY INFORMATION:</strong> The real property located at {{property_address}}, identified by Parcel Number: {{parcel_number}}.</p>\n\n  <p><strong>2. PROFIT / ASSET SPLIT:</strong> The Parties mutually agree that the completed construction project (units/revenue) shall be divided as follows: <strong>{{landowner_share}}%</strong> to the Landowner, and <strong>{{developer_share}}%</strong> to the Developer.</p>\n\n  <p><strong>3. CONSTRUCTION TERMS & STANDARDS:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{construction_terms}}</pre>\n\n  <p><strong>4. DEFINITIVE AGREEMENT:</strong> The Parties agree to execute a formal, legally binding <strong>Definitive Joint Venture and Construction Agreement</strong> before a Notary Public or legal counsel no later than <strong>{{formatDate deadline_for_final_contract}}</strong>, which will incorporate the terms outlined in this preliminary protocol.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>LANDOWNER</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>DEVELOPER</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n  </div>\n  <p style='margin-top: 30px;'><strong>Date of Protocol:</strong> {{formatDate protocol_date}}</p>\n</div>",
   "fields": [
-    { "name": "landowner_name", "label": "Landowner's Full Name / Entity", "fieldType": "text", "required": true },
-    { "name": "landowner_id", "label": "Landowner ID / SSN / Tax No", "fieldType": "text", "required": true },
-    { "name": "landowner_address", "label": "Landowner's Address", "fieldType": "textarea", "required": true },
-    { "name": "developer_name", "label": "Developer / Contractor Name", "fieldType": "text", "required": true },
-    { "name": "developer_address", "label": "Developer's Address", "fieldType": "textarea", "required": true },
-    { "name": "property_address", "label": "Address of the Land/Property", "fieldType": "textarea", "required": true },
-    { "name": "parcel_number", "label": "Parcel / Lot Number", "fieldType": "text", "required": true },
-    { "name": "landowner_share", "label": "Landowner's Share (%)", "fieldType": "number", "required": true },
-    { "name": "developer_share", "label": "Developer's Share (%)", "fieldType": "number", "required": true },
-    { "name": "construction_terms", "label": "Construction Terms & Quality Standards", "fieldType": "textarea", "placeholder": "e.g., Construction to be completed within 24 months of obtaining permits. High-grade materials to be used.", "required": true },
-    { "name": "deadline_for_final_contract", "label": "Deadline for Definitive Agreement", "fieldType": "date", "required": true },
-    { "name": "protocol_date", "label": "Date of this Preliminary Protocol", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "landowner_name",
+      "label": "Landowner's Full Name / Entity",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "landowner_id",
+      "label": "Landowner ID / SSN / Tax No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "landowner_address",
+      "label": "Landowner's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "developer_name",
+      "label": "Developer / Contractor Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "developer_address",
+      "label": "Developer's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "property_address",
+      "label": "Address of the Land/Property",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "parcel_number",
+      "label": "Parcel / Lot Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "landowner_share",
+      "label": "Landowner's Share (%)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "developer_share",
+      "label": "Developer's Share (%)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "construction_terms",
+      "label": "Construction Terms & Quality Standards",
+      "fieldType": "textarea",
+      "placeholder": "e.g., Construction to be completed within 24 months of obtaining permits. High-grade materials to be used.",
+      "required": true
+    },
+    {
+      "name": "deadline_for_final_contract",
+      "label": "Deadline for Definitive Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "protocol_date",
+      "label": "Date of this Preliminary Protocol",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

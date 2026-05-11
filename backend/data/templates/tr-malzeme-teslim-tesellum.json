@@ -7,16 +7,76 @@
   "slug": "malzeme-teslim-tesellum-tutanagi",
   "content": "<h3 style='text-align:center;'>MALZEME TESLİM TESELLÜM TUTANAĞI</h3>\n<p><strong>Tarih:</strong> {{formatDate tutanak_tarihi}}</p>\n<hr style='margin: 15px 0;'/>\n\n<p>Aşağıda bilgileri ve adedi belirtilen malzeme(ler), {{teslim_eden_ad_soyad}} (\"Teslim Eden\") tarafından {{teslim_alan_ad_soyad}} (\"Teslim Alan\")'a eksiksiz ve {{#if (eq durum 'Sağlam Çalışır')}}sağlam/çalışır durumda{{else}}aşağıda belirtilen durumda{{/if}} teslim edilmiştir/alınmıştır.</p>\n\n<p><strong>Teslim Edilen Malzeme(ler):</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{malzeme_listesi}}</pre>\n\n{{#if (eq durum 'Kusurlu/Eksik')}}\n<p><strong>Malzemenin Durumu/Tespit Edilen Eksiklik/Kusur:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{kusur_aciklama}}</pre>\n{{/if}}\n\n{{#if teslim_amaci}}\n<p><strong>Teslim Amacı:</strong> {{teslim_amaci}}</p>\n{{/if}}\n\n<p>İşbu tutanak iki nüsha olarak düzenlenmiş ve taraflarca imza altına alınmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'>\n <p><strong>Teslim Eden</strong><br/>\n Adı Soyadı: {{teslim_eden_ad_soyad}}<br/>\n {{#if teslim_eden_unvan}}Unvanı: {{teslim_eden_unvan}}{{/if}}\n <br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span>\n </p>\n </div>\n <div style='margin-bottom: 20px;'>\n <p><strong>Teslim Alan</strong><br/>\n Adı Soyadı: {{teslim_alan_ad_soyad}}<br/>\n {{#if teslim_alan_unvan}}Unvanı: {{teslim_alan_unvan}}{{/if}}\n <br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span>\n </p>\n </div>\n</div>",
   "fields": [
-    { "name": "teslim_eden_ad_soyad", "label": "Teslim Eden Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "teslim_eden_unvan", "label": "Teslim Eden Unvanı (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "teslim_alan_ad_soyad", "label": "Teslim Alan Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "teslim_alan_unvan", "label": "Teslim Alan Unvanı (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "malzeme_listesi", "label": "Teslim Edilen Malzeme(ler) Listesi", "fieldType": "textarea", "required": true, "placeholder": "Malzeme Adı - Marka/Model - Seri No (varsa) - Adet\nÖrn: Laptop - Dell XPS 13 - ABC123XYZ - 1 Adet" },
-    { "name": "durum", "label": "Malzemenin Teslim Durumu", "fieldType": "select", "options": ["Sağlam Çalışır", "Kusurlu/Eksik"], "required": true },
-    { "name": "kusur_aciklama", "label": "Kusur/Eksiklik Açıklaması (Kusurlu/Eksik ise)", "fieldType": "textarea", "required": false, "condition": { "field": "durum", "value": "Kusurlu/Eksik" } },
-    { "name": "teslim_amaci", "label": "Teslim Amacı (Opsiyonel)", "fieldType": "text", "required": false, "placeholder": "Örn: Kullanım için zimmet, Tamir için, İade" },
-    { "name": "tutanak_tarihi", "label": "Tutanak Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "teslim_eden_ad_soyad",
+      "label": "Teslim Eden Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "teslim_eden_unvan",
+      "label": "Teslim Eden Unvanı (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "teslim_alan_ad_soyad",
+      "label": "Teslim Alan Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "teslim_alan_unvan",
+      "label": "Teslim Alan Unvanı (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "malzeme_listesi",
+      "label": "Teslim Edilen Malzeme(ler) Listesi",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Malzeme Adı - Marka/Model - Seri No (varsa) - Adet\nÖrn: Laptop - Dell XPS 13 - ABC123XYZ - 1 Adet"
+    },
+    {
+      "name": "durum",
+      "label": "Malzemenin Teslim Durumu",
+      "fieldType": "select",
+      "options": [
+        "Sağlam Çalışır",
+        "Kusurlu/Eksik"
+      ],
+      "required": true
+    },
+    {
+      "name": "kusur_aciklama",
+      "label": "Kusur/Eksiklik Açıklaması (Kusurlu/Eksik ise)",
+      "fieldType": "textarea",
+      "required": false,
+      "condition": {
+        "field": "durum",
+        "value": "Kusurlu/Eksik"
+      }
+    },
+    {
+      "name": "teslim_amaci",
+      "label": "Teslim Amacı (Opsiyonel)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Örn: Kullanım için zimmet, Tamir için, İade"
+    },
+    {
+      "name": "tutanak_tarihi",
+      "label": "Tutanak Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

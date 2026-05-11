@@ -7,18 +7,81 @@
   "slug": "genel-ihtarname",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center; margin-bottom: 30px;'>İHTARNAME</h3>\n\n  <p><strong>KEŞİDECİ (İhtar Eden):</strong><br/>\n  Adı Soyadı / Unvanı: {{kesideci_ad_unvan}}<br/>\n  T.C. Kimlik No / Vergi No: {{kesideci_tc_vergi_no}}<br/>\n  Adresi: {{kesideci_adres}}<br/>\n  {{#if kesideci_vekili}}Vekili: {{kesideci_vekili}}{{/if}}\n  </p>\n\n  <p><strong>MUHATAP (İhtar Edilen):</strong><br/>\n  Adı Soyadı / Unvanı: {{muhatap_ad_unvan}}<br/>\n  Adresi: {{muhatap_adres}}<br/>\n  {{#if muhatap_tc_vergi_no}}T.C. Kimlik No / Vergi No: {{muhatap_tc_vergi_no}}{{/if}}\n  </p>\n\n  <p><strong>KONU:</strong> {{konu}}</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{aciklamalar}}</pre>\n\n  <p><strong>TALEP ve SONUÇ:</strong></p>\n  <p>Yukarıda açıklanan nedenlerle;</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{talep_sonuc}}</pre>\n  <p>Aksi takdirde, hakkınızda yasal yollara başvurulacağını, yapılacak her türlü masraf ve avukatlık ücretinin tarafınıza ait olacağını ihtar ederiz.</p>\n\n  <p style='margin-top: 40px;'>Sayın Noter,<br/>Üç nüshadan ibaret olan işbu ihtarnamenin bir nüshasının muhataba tebliğini, bir nüshasının dairenizde saklanmasını, tebliğ şerhini taşıyan bir nüshasının ise tarafımıza verilmesini talep ederiz.</p>\n\n  <p style='text-align: right; margin-top: 30px; margin-bottom: 10px;'>Tarih: {{formatDate ihtar_tarihi}}</p>\n\n  <div style='text-align: right;'>\n    <p><strong>Keşideci (İhtar Eden) / Vekili</strong><br/>\n    {{kesideci_ad_unvan}}<br/>\n    {{#if kesideci_vekili}}{{kesideci_vekili}}<br/>{{/if}}\n    <br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p>\n  </div>\n\n</div>",
   "fields": [
-    { "name": "kesideci_ad_unvan", "label": "Keşideci (İhtar Eden) Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "kesideci_tc_vergi_no", "label": "Keşideci T.C. Kimlik No / Vergi No", "fieldType": "text", "required": true },
-    { "name": "kesideci_adres", "label": "Keşideci Adresi", "fieldType": "textarea", "required": true },
-    { "name": "kesideci_vekili", "label": "Keşideci Vekili (Avukat Adı - Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "muhatap_ad_unvan", "label": "Muhatap (İhtar Edilen) Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "muhatap_adres", "label": "Muhatap Adresi", "fieldType": "textarea", "required": true },
-    { "name": "muhatap_tc_vergi_no", "label": "Muhatap T.C. Kimlik No / Vergi No (Biliyorsanız)", "fieldType": "text", "required": false },
-    { "name": "konu", "label": "İhtarnamenin Konusu", "fieldType": "text", "required": true, "placeholder": "Örn: Ödenmeyen Borcun Tahsili Talebi, Sözleşmeye Aykırılığın Giderilmesi Talebi" },
-    { "name": "aciklamalar", "label": "Açıklamalar", "fieldType": "textarea", "required": true, "placeholder": "Olayı, durumu ve ihtar nedenlerinizi detaylı olarak açıklayınız." },
-    { "name": "talep_sonuc", "label": "Talep ve Sonuç", "fieldType": "textarea", "required": true, "placeholder": "Örn: ... TL borcun 7 gün içinde ödenmesini, aksi halde yasal işlem başlatılacağını..." },
-    { "name": "ihtar_tarihi", "label": "İhtarname Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "kesideci_ad_unvan",
+      "label": "Keşideci (İhtar Eden) Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kesideci_tc_vergi_no",
+      "label": "Keşideci T.C. Kimlik No / Vergi No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kesideci_adres",
+      "label": "Keşideci Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "kesideci_vekili",
+      "label": "Keşideci Vekili (Avukat Adı - Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "muhatap_ad_unvan",
+      "label": "Muhatap (İhtar Edilen) Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "muhatap_adres",
+      "label": "Muhatap Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "muhatap_tc_vergi_no",
+      "label": "Muhatap T.C. Kimlik No / Vergi No (Biliyorsanız)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "konu",
+      "label": "İhtarnamenin Konusu",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Ödenmeyen Borcun Tahsili Talebi, Sözleşmeye Aykırılığın Giderilmesi Talebi"
+    },
+    {
+      "name": "aciklamalar",
+      "label": "Açıklamalar",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Olayı, durumu ve ihtar nedenlerinizi detaylı olarak açıklayınız."
+    },
+    {
+      "name": "talep_sonuc",
+      "label": "Talep ve Sonuç",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: ... TL borcun 7 gün içinde ödenmesini, aksi halde yasal işlem başlatılacağını..."
+    },
+    {
+      "name": "ihtar_tarihi",
+      "label": "İhtarname Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

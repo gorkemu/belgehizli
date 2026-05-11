@@ -7,16 +7,67 @@
   "slug": "malpraktis-tazminat-talebi-dilekcesi",
   "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center;'>{{kurum_adi}} MÜDÜRLÜĞÜ'NE / BAŞHEKİMLİĞİNE</h3>\n\n  <p><strong>BAŞVURAN (HASTA):</strong> {{ad_soyad}} (T.C. No: {{tc_no}})<br/>Adres: {{adres}}</p>\n\n  <p><strong>KONU:</strong> {{formatDate olay_tarihi}} tarihinde gerçekleşen hatalı tıbbi uygulama (malpraktis) nedeniyle uğranılan zararların tazmini talebimiz hakkındadır.</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{olayin_detayi}}</pre>\n\n  <p><strong>TALEPLERİMİZ:</strong> Yukarıda açıklanan hatalı ve eksik tıbbi uygulama neticesinde, vücut bütünlüğümün bozulması ve çekilen ıstırap nedeniyle uğramış olduğum {{maddi_tutar}} TL maddi ve {{manevi_tutar}} TL manevi zararın, kusur oranları nispetinde hastaneniz/kurumunuz tarafından tazmin edilmesini, aksi halde yasal yollara (Tüketici/Asliye Hukuk Mahkemeleri ile Savcılık şikayeti) başvurulacağını ihtaren arz ve talep ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Tarih: {{formatDate dilekce_tarihi}}</p>\n  <div style='text-align: right;'>\n    <p>Adı Soyadı: {{ad_soyad}}<br/><br/><br/>İmza: _________________________</p>\n  </div>\n</div>",
   "fields": [
-    { "name": "kurum_adi", "label": "İlgili Hastane veya Kurum Adı", "fieldType": "text", "required": true },
-    { "name": "ad_soyad", "label": "Adınız Soyadınız (Hasta)", "fieldType": "text", "required": true },
-    { "name": "tc_no", "label": "T.C. Kimlik Numaranız", "fieldType": "text", "required": true },
-    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
-    { "name": "olay_tarihi", "label": "Hatalı Tedavi/Ameliyat Tarihi", "fieldType": "date", "required": true },
-    { "name": "olayin_detayi", "label": "Olayın Detaylı Açıklaması", "fieldType": "textarea", "placeholder": "Doktorun hatasını, yapılan işlemi ve yaşadığınız sağlık problemlerini detaylıca yazın.", "required": true },
-    { "name": "maddi_tutar", "label": "Talep Edilen Maddi Tazminat (TL)", "fieldType": "number", "required": true },
-    { "name": "manevi_tutar", "label": "Talep Edilen Manevi Tazminat (TL)", "fieldType": "number", "required": true },
-    { "name": "dilekce_tarihi", "label": "Dilekçe Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "kurum_adi",
+      "label": "İlgili Hastane veya Kurum Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "ad_soyad",
+      "label": "Adınız Soyadınız (Hasta)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tc_no",
+      "label": "T.C. Kimlik Numaranız",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "adres",
+      "label": "Adresiniz",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "olay_tarihi",
+      "label": "Hatalı Tedavi/Ameliyat Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "olayin_detayi",
+      "label": "Olayın Detaylı Açıklaması",
+      "fieldType": "textarea",
+      "placeholder": "Doktorun hatasını, yapılan işlemi ve yaşadığınız sağlık problemlerini detaylıca yazın.",
+      "required": true
+    },
+    {
+      "name": "maddi_tutar",
+      "label": "Talep Edilen Maddi Tazminat (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "manevi_tutar",
+      "label": "Talep Edilen Manevi Tazminat (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "dilekce_tarihi",
+      "label": "Dilekçe Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

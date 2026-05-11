@@ -7,21 +7,105 @@
   "slug": "etkinlik-katilimci-kayit-ve-onay-formu",
   "content": "<h2 style='text-align:center;'>{{etkinlik_adi}} KATILIMCI KAYIT VE ONAY FORMU</h2>\n<p><strong>Etkinlik Tarihi:</strong> {{etkinlik_tarihi}}</p>\n<p><strong>Etkinlik Yeri:</strong> {{etkinlik_yeri}}</p>\n<p><strong>Organizatör:</strong> {{organizator_adi}}</p>\n\n<hr style='margin: 20px 0;'/>\n\n<p><strong>KATILIMCI BİLGİLERİ</strong></p>\n<p>Adı Soyadı: {{katilimci_ad_soyad}}</p>\n<p>E-posta Adresi: {{katilimci_eposta}}</p>\n<p>Telefon Numarası: {{katilimci_telefon}}</p>\n{{#if katilimci_kurum}}<p>Kurumu/Okulu: {{katilimci_kurum}}</p>{{/if}}\n{{#if acil_durum_kontak_adi}}\n<p>Acil Durumda Ulaşılacak Kişi: {{acil_durum_kontak_adi}} (Yakınlık: {{acil_durum_kontak_yakinlik}}, Tel: {{acil_durum_kontak_tel}})</p>\n{{/if}}\n\n<p><strong>KATILIM KOŞULLARI VE ONAYLAR</strong></p>\n<p>Aşağıdaki maddeleri okuyup anladığımı ve kabul ettiğimi beyan ederim:</p>\n<ul>\n <li>Etkinlik programına ve kurallarına uyacağım.</li>\n <li>Etkinlik sırasında kendi güvenliğimden ve eşyalarımdan sorumlu olduğumu biliyorum.</li>\n <li>Organizatörün, etkinlik sırasında meydana gelebilecek kişisel yaralanmalar veya mal kayıplarından (ağır ihmal durumu hariç) sorumlu olmadığını kabul ediyorum.</li>\n <li>{{#if (eq kvkk_onay 'Evet')}}Etkinlik kapsamında kişisel verilerimin (isim, e-posta, telefon vb.) KVKK kapsamında etkinlik organizasyonu, iletişim ve bilgilendirme amacıyla işlenmesine ve saklanmasına açık rıza veriyorum.{{else}}Kişisel verilerimin işlenmesi hakkında bilgilendirildim ancak pazarlama amaçlı kullanımına onay vermiyorum.{{/if}}</li>\n <li>{{#if (eq fotograf_video_izin 'Evet')}}Etkinlik sırasında çekilecek fotoğraf ve videoların, organizatör tarafından tanıtım ve arşiv amacıyla (web sitesi, sosyal medya vb.) kullanılmasına izin veriyorum.{{else}}Etkinlik sırasında çekilecek fotoğraf ve videolarda görünmek istemediğimi belirtiyorum.{{/if}}</li>\n</ul>\n\n<p style='margin-top: 30px;'><strong>Katılımcı Adı Soyadı:</strong> {{katilimci_ad_soyad}}</p>\n<p><strong>Tarih:</strong> {{formatDate form_doldurma_tarihi}}</p>\n<p><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p><br/>\n\n<p style='font-size: 0.8em; margin-top: 20px; font-style: italic;'>Bu formun imzalanması, yukarıdaki şartların tamamen kabul edildiği anlamına gelir.</p>",
   "fields": [
-    { "name": "etkinlik_adi", "label": "Etkinliğin Adı", "fieldType": "text", "required": true },
-    { "name": "etkinlik_tarihi", "label": "Etkinlik Tarihi / Tarih Aralığı", "fieldType": "text", "required": true },
-    { "name": "etkinlik_yeri", "label": "Etkinlik Yeri / Platformu", "fieldType": "text", "required": true },
-    { "name": "organizator_adi", "label": "Organizatör Adı / Kurumu", "fieldType": "text", "required": true },
-    { "name": "katilimci_ad_soyad", "label": "Katılımcının Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "katilimci_eposta", "label": "Katılımcının E-posta Adresi", "fieldType": "email", "required": true },
-    { "name": "katilimci_telefon", "label": "Katılımcının Telefon Numarası", "fieldType": "text", "required": true },
-    { "name": "katilimci_kurum", "label": "Katılımcının Kurumu/Okulu (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "acil_durum_kontak_adi", "label": "Acil Durumda Ulaşılacak Kişi Adı (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "acil_durum_kontak_yakinlik", "label": "Acil Durum Kontağı Yakınlığı", "fieldType": "text", "placeholder": "Anne, Baba, Arkadaş vb.", "required": false },
-    { "name": "acil_durum_kontak_tel", "label": "Acil Durum Kontağı Telefonu", "fieldType": "text", "required": false },
-    { "name": "kvkk_onay", "label": "Kişisel Verilerin (KVKK) İşlenmesine İzin Veriyor musunuz?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "fotograf_video_izin", "label": "Fotoğraf/Video Çekimi ve Kullanımına İzin Veriyor musunuz?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "form_doldurma_tarihi", "label": "Formu Doldurma Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "etkinlik_adi",
+      "label": "Etkinliğin Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "etkinlik_tarihi",
+      "label": "Etkinlik Tarihi / Tarih Aralığı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "etkinlik_yeri",
+      "label": "Etkinlik Yeri / Platformu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "organizator_adi",
+      "label": "Organizatör Adı / Kurumu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "katilimci_ad_soyad",
+      "label": "Katılımcının Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "katilimci_eposta",
+      "label": "Katılımcının E-posta Adresi",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "katilimci_telefon",
+      "label": "Katılımcının Telefon Numarası",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "katilimci_kurum",
+      "label": "Katılımcının Kurumu/Okulu (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "acil_durum_kontak_adi",
+      "label": "Acil Durumda Ulaşılacak Kişi Adı (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "acil_durum_kontak_yakinlik",
+      "label": "Acil Durum Kontağı Yakınlığı",
+      "fieldType": "text",
+      "placeholder": "Anne, Baba, Arkadaş vb.",
+      "required": false
+    },
+    {
+      "name": "acil_durum_kontak_tel",
+      "label": "Acil Durum Kontağı Telefonu",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "kvkk_onay",
+      "label": "Kişisel Verilerin (KVKK) İşlenmesine İzin Veriyor musunuz?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "fotograf_video_izin",
+      "label": "Fotoğraf/Video Çekimi ve Kullanımına İzin Veriyor musunuz?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "form_doldurma_tarihi",
+      "label": "Formu Doldurma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

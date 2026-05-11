@@ -7,30 +7,163 @@
   "slug": "basit-fotografcilik-hizmet-sozlesmesi",
   "content": "<h2 style='text-align:center;'>FOTOĞRAFÇILIK HİZMET SÖZLEŞMESİ</h2>\n<p>İşbu Sözleşme, bir tarafta Fotoğrafçı {{fotografci_ad_soyad}} ile diğer tarafta Müşteri {{musteri_ad_soyad}} arasında, aşağıda detayları belirtilen fotoğrafçılık hizmetinin sağlanması amacıyla {{formatDate tarih}} tarihinde aşağıdaki şartlarla düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Fotoğrafçı:</strong> {{fotografci_ad_soyad}}, Adres: {{fotografci_adres}}, Tel: {{fotografci_telefon}}, E-posta: {{fotografci_eposta}}</p>\n<p><strong>Müşteri:</strong> {{musteri_ad_soyad}}, Adres: {{musteri_adres}}, Tel: {{musteri_telefon}}, E-posta: {{musteri_eposta}}</p>\n\n<p><strong>2. HİZMETİN KAPSAMI</strong></p>\n<p>Fotoğrafçı, Müşteri için aşağıdaki çekimi gerçekleştirecektir:</p>\n<ul>\n <li>Çekim Türü/Konusu: {{cekim_turu}}</li>\n <li>Çekim Tarihi ve Saati: {{cekim_tarih_saat}}</li>\n <li>Çekim Yeri/Adresi: {{cekim_yeri}}</li>\n <li>Tahmini Çekim Süresi: {{cekim_suresi}}</li>\n <li>Teslim Edilecek Fotoğraf Sayısı (Yaklaşık): {{fotograf_sayisi}} adet</li>\n <li>Teslim Edilecek Format: {{teslim_formati}}</li>\n</ul>\n\n<p><strong>3. ÜCRET VE ÖDEME</strong></p>\n<p>Müşteri, sağlanan fotoğrafçılık hizmeti karşılığında Fotoğrafçı'ya toplam {{toplam_ucret}} TL + KDV ödeyecektir.</p>\n<p>Ödeme Planı: {{odeme_plani}}</p>\n{{#if ek_masraflar}}\n<p>Ek Masraflar (Yol, konaklama, özel ekipman kiralama vb.):</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ek_masraflar}}</pre>\n<p>(Bu masraflar Müşteri tarafından ayrıca ödenecektir.)</p>\n{{/if}}\n\n<p><strong>4. TESLİMAT</strong></p>\n<p>Düzenlenmiş ve seçilmiş fotoğraflar, çekim tarihinden itibaren en geç {{teslim_suresi_gun}} gün içinde {{teslim_yontemi}} yoluyla Müşteri'ye teslim edilecektir.</p>\n\n<p><strong>5. TELİF HAKKI VE KULLANIM HAKLARI</strong></p>\n<p>Çekilen fotoğrafların telif hakları Fotoğrafçı'ya aittir. Fotoğrafçı, Müşteri'ye fotoğrafları {{kullanim_hakki_kapsami}} amacıyla kullanması için münhasır olmayan, süresiz bir lisans verir.</p>\n<p>Fotoğrafçı, Müşteri'nin onayı ile {{#if (eq portfolyo_kullanim_izni 'Evet')}}fotoğrafları kendi portfolyosunda, web sitesinde veya sosyal medya hesaplarında tanıtım amacıyla kullanabilir{{else}}fotoğrafları kendi tanıtım materyallerinde kullanmayacaktır{{/if}}.</p>\n\n<p><strong>6. İPTAL VE ERTELEME</strong></p>\n<p>Çekimin Müşteri veya Fotoğrafçı tarafından iptal edilmesi veya ertelenmesi durumunda uygulanacak koşullar: {{iptal_erteleme_kosullari}}</p>\n\n<p>İşbu Sözleşme taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Fotoğrafçı</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{fotografci_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Müşteri</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{musteri_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "fotografci_ad_soyad", "label": "Fotoğrafçı Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "fotografci_adres", "label": "Fotoğrafçı Adresi", "fieldType": "textarea", "required": true },
-    { "name": "fotografci_telefon", "label": "Fotoğrafçı Telefon", "fieldType": "text", "required": true },
-    { "name": "fotografci_eposta", "label": "Fotoğrafçı E-posta", "fieldType": "email", "required": true },
-    { "name": "musteri_ad_soyad", "label": "Müşteri Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "musteri_adres", "label": "Müşteri Adresi", "fieldType": "textarea", "required": true },
-    { "name": "musteri_telefon", "label": "Müşteri Telefon", "fieldType": "text", "required": true },
-    { "name": "musteri_eposta", "label": "Müşteri E-posta", "fieldType": "email", "required": true },
-    { "name": "cekim_turu", "label": "Çekim Türü/Konusu", "fieldType": "text", "placeholder": "Örn: Düğün Dış Çekimi, Ürün Fotoğrafı", "required": true },
-    { "name": "cekim_tarih_saat", "label": "Çekim Tarihi ve Saati", "fieldType": "text", "placeholder": "GG/AA/YYYY SS:DD", "required": true },
-    { "name": "cekim_yeri", "label": "Çekim Yeri/Adresi", "fieldType": "text", "required": true },
-    { "name": "cekim_suresi", "label": "Tahmini Çekim Süresi (Saat)", "fieldType": "number", "required": true },
-    { "name": "fotograf_sayisi", "label": "Teslim Edilecek Yaklaşık Fotoğraf Sayısı", "fieldType": "number", "required": true },
-    { "name": "teslim_formati", "label": "Teslim Edilecek Format", "fieldType": "text", "placeholder": "Örn: Yüksek çözünürlüklü JPEG, USB", "required": true },
-    { "name": "toplam_ucret", "label": "Toplam Hizmet Bedeli (TL)", "fieldType": "number", "required": true },
-    { "name": "odeme_plani", "label": "Ödeme Planı", "fieldType": "textarea", "placeholder": "Örn: %30 kapora, kalan teslimatta.", "required": true },
-    { "name": "ek_masraflar", "label": "Ek Masraflar (Varsa belirtin)", "fieldType": "textarea", "placeholder": "Yol, konaklama, mekan giriş ücreti vb.", "required": false },
-    { "name": "teslim_suresi_gun", "label": "Teslim Süresi (Gün)", "fieldType": "number", "placeholder": "Çekimden sonra kaç gün içinde?", "required": true },
-    { "name": "teslim_yontemi", "label": "Teslim Yöntemi", "fieldType": "text", "placeholder": "Örn: WeTransfer, Google Drive", "required": true },
-    { "name": "kullanim_hakki_kapsami", "label": "Müşterinin Kullanım Hakkı Kapsamı", "fieldType": "text", "placeholder": "Örn: Kişisel kullanım, Web sitesi", "required": true },
-    { "name": "portfolyo_kullanim_izni", "label": "Fotoğrafçı Portfolyosunda Kullanabilir mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "iptal_erteleme_kosullari", "label": "İptal ve Erteleme Koşulları", "fieldType": "textarea", "placeholder": "Kapora iadesi vb. şartlar", "required": true },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "fotografci_ad_soyad",
+      "label": "Fotoğrafçı Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "fotografci_adres",
+      "label": "Fotoğrafçı Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "fotografci_telefon",
+      "label": "Fotoğrafçı Telefon",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "fotografci_eposta",
+      "label": "Fotoğrafçı E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "musteri_ad_soyad",
+      "label": "Müşteri Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "musteri_adres",
+      "label": "Müşteri Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "musteri_telefon",
+      "label": "Müşteri Telefon",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "musteri_eposta",
+      "label": "Müşteri E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "cekim_turu",
+      "label": "Çekim Türü/Konusu",
+      "fieldType": "text",
+      "placeholder": "Örn: Düğün Dış Çekimi, Ürün Fotoğrafı",
+      "required": true
+    },
+    {
+      "name": "cekim_tarih_saat",
+      "label": "Çekim Tarihi ve Saati",
+      "fieldType": "text",
+      "placeholder": "GG/AA/YYYY SS:DD",
+      "required": true
+    },
+    {
+      "name": "cekim_yeri",
+      "label": "Çekim Yeri/Adresi",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "cekim_suresi",
+      "label": "Tahmini Çekim Süresi (Saat)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "fotograf_sayisi",
+      "label": "Teslim Edilecek Yaklaşık Fotoğraf Sayısı",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "teslim_formati",
+      "label": "Teslim Edilecek Format",
+      "fieldType": "text",
+      "placeholder": "Örn: Yüksek çözünürlüklü JPEG, USB",
+      "required": true
+    },
+    {
+      "name": "toplam_ucret",
+      "label": "Toplam Hizmet Bedeli (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "odeme_plani",
+      "label": "Ödeme Planı",
+      "fieldType": "textarea",
+      "placeholder": "Örn: %30 kapora, kalan teslimatta.",
+      "required": true
+    },
+    {
+      "name": "ek_masraflar",
+      "label": "Ek Masraflar (Varsa belirtin)",
+      "fieldType": "textarea",
+      "placeholder": "Yol, konaklama, mekan giriş ücreti vb.",
+      "required": false
+    },
+    {
+      "name": "teslim_suresi_gun",
+      "label": "Teslim Süresi (Gün)",
+      "fieldType": "number",
+      "placeholder": "Çekimden sonra kaç gün içinde?",
+      "required": true
+    },
+    {
+      "name": "teslim_yontemi",
+      "label": "Teslim Yöntemi",
+      "fieldType": "text",
+      "placeholder": "Örn: WeTransfer, Google Drive",
+      "required": true
+    },
+    {
+      "name": "kullanim_hakki_kapsami",
+      "label": "Müşterinin Kullanım Hakkı Kapsamı",
+      "fieldType": "text",
+      "placeholder": "Örn: Kişisel kullanım, Web sitesi",
+      "required": true
+    },
+    {
+      "name": "portfolyo_kullanim_izni",
+      "label": "Fotoğrafçı Portfolyosunda Kullanabilir mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "iptal_erteleme_kosullari",
+      "label": "İptal ve Erteleme Koşulları",
+      "fieldType": "textarea",
+      "placeholder": "Kapora iadesi vb. şartlar",
+      "required": true
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

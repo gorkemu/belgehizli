@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a4df4a6478ae3b9853"
+  },
   "name": "Tenant's Commitment to Vacate (Eviction Waiver)",
   "description": "A binding agreement where a tenant unconditionally commits to vacating the leased premises by a specific date, acknowledging potential legal consequences for failure to do so.",
   "price": 10,
@@ -6,14 +9,54 @@
   "slug": "tenant-commitment-to-vacate",
   "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center; margin-bottom: 30px;'>COMMITMENT AND AGREEMENT TO VACATE PREMISES</h2>\n\n  <p><strong>TENANT:</strong> {{tenant_name}}<br/>\n  <strong>ID / SSN:</strong> {{tenant_id}}<br/>\n  <strong>LANDLORD:</strong> {{landlord_name}}<br/>\n  <strong>PROPERTY ADDRESS:</strong> {{property_address}}<br/>\n  <strong>ORIGINAL LEASE DATE:</strong> {{formatDate lease_date}}<br/>\n  <strong>AGREED VACATE DATE:</strong> {{formatDate vacate_date}}\n  </p>\n\n  <p>I, the undersigned Tenant, currently occupying the Property Address stated above, hereby unconditionally declare, agree, and commit to vacating the premises on or before the <strong>Agreed Vacate Date</strong> specified above. I will surrender the premises to the Landlord completely vacant of my personal property and in good, broom-clean condition without the need for any further notice or formal demand from the Landlord.</p>\n\n  <p>I fully acknowledge and agree that if I fail to vacate the premises by the Agreed Vacate Date, the Landlord shall have the immediate right to commence formal eviction proceedings against me. Furthermore, I agree that I shall be held fully liable for all court costs, eviction fees, attorney's fees, and any loss of rental income incurred by the Landlord as a direct result of my failure to vacate the premises as promised.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div>\n      <p><strong>Date of Commitment:</strong> {{formatDate commitment_date}}</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Tenant's Signature</strong></p>\n      <p>{{tenant_name}}</p>\n      <p><br/>Signature: _________________________</p>\n    </div>\n  </div>\n</div>",
   "fields": [
-    { "name": "tenant_name", "label": "Tenant's Full Name", "fieldType": "text", "required": true },
-    { "name": "tenant_id", "label": "Tenant's ID / SSN", "fieldType": "text", "required": true },
-    { "name": "landlord_name", "label": "Landlord's Full Name", "fieldType": "text", "required": true },
-    { "name": "property_address", "label": "Address of Premises to be Vacated", "fieldType": "textarea", "required": true },
-    { "name": "lease_date", "label": "Date of Original Lease Agreement", "fieldType": "date", "required": true },
-    { "name": "vacate_date", "label": "Agreed Vacate Date", "fieldType": "date", "required": true },
-    { "name": "commitment_date", "label": "Date this Commitment is Signed", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "tenant_name",
+      "label": "Tenant's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tenant_id",
+      "label": "Tenant's ID / SSN",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "landlord_name",
+      "label": "Landlord's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "property_address",
+      "label": "Address of Premises to be Vacated",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "lease_date",
+      "label": "Date of Original Lease Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "vacate_date",
+      "label": "Agreed Vacate Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "commitment_date",
+      "label": "Date this Commitment is Signed",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -7,23 +7,121 @@
   "slug": "borc-odeme-plani-anlasmasi-yapilandirma",
   "content": "<h2 style='text-align:center;'>BORÇ YAPILANDIRMA VE ÖDEME PLANI ANLAŞMASI</h2>\n<p>İşbu Anlaşma, bir tarafta aşağıda bilgileri yer alan Alacaklı ile diğer tarafta Borçlu arasında, Borçlu'nun Alacaklı'ya olan vadesi geçmiş/geçmek üzere olan borcunun yeniden yapılandırılması ve yeni bir ödeme planına bağlanması amacıyla {{formatDate anlasma_tarihi}} tarihinde aşağıdaki şartlarla düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. ALACAKLI:</strong><br/>\nAdı Soyadı / Unvanı: {{alacakli_ad_unvan}}<br/>\nAdresi: {{alacakli_adres}}<br/>\n{{#if alacakli_iban}}IBAN: {{alacakli_iban}}{{/if}}\n</p>\n<p><strong>B. BORÇLU:</strong><br/>\nAdı Soyadı / Unvanı: {{borclu_ad_unvan}}<br/>\nAdresi: {{borclu_adres}}<br/>\nTelefon: {{borclu_telefon}}\n</p>\n\n<p><strong>2. BORCUN KAYNAĞI VE MİKTARI</strong></p>\n<p>Borçlu, Alacaklı'ya {{borcun_kaynagi}} kaynaklı, anapara olarak toplam {{anapara_borc_miktari}} TL borcu olduğunu kabul eder.</p>\n{{#if islemis_faiz_gecikme_bedeli}}\n<p>Bu borca ek olarak, {{islemis_faiz_gecikme_bedeli}} TL tutarında işlemiş faiz/gecikme bedeli bulunmaktadır.</p>\n<p>Yapılandırmaya esas toplam borç tutarı {{toplam_yapilandirilan_borc}} TL'dir.</p>\n{{else}}\n<p>Yapılandırmaya esas borç tutarı {{anapara_borc_miktari}} TL'dir.</p>\n{{/if}}\n\n<p><strong>3. YENİ ÖDEME PLANI</strong></p>\n<p>Taraflar, yukarıda belirtilen toplam borcun aşağıdaki yeni taksit planına göre ödenmesi konusunda anlaşmışlardır:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{yeni_odeme_plani}}</pre>\n<p>Ödemeler, belirtilen tarihlerde Alacaklı'nın yukarıda belirtilen IBAN numarasına veya {{alternatif_odeme_yontemi}} yoluyla yapılacaktır.</p>\n\n<p><strong>4. YAPILANDIRMA ŞARTLARI</strong></p>\n<ul>\n <li>İşbu yeni ödeme planına uyulduğu sürece, Alacaklı borç ile ilgili yasal takip işlemlerini başlatmayacak/durduracaktır.</li>\n <li>{{#if (eq yeni_faiz_uygulanacak_mi 'Evet')}}Yapılandırılan borcun kalan bakiyesine yıllık %{{yeni_faiz_orani}} oranında faiz işlemeye devam edecektir.{{else}}Yapılandırılan borca bu anlaşma tarihinden itibaren yeni bir faiz işletilmeyecektir.{{/if}}</li>\n <li>Borçlu'nun işbu yeni ödeme planındaki taksitlerden herhangi birini vadesinde ödememesi halinde, {{temerrut_sarti}}.</li>\n</ul>\n\n<p><strong>5. ESKİ ANLAŞMALAR VE İBRA</strong></p>\n<p>İşbu Anlaşma, taraflar arasındaki {{borcun_kaynagi}} ilişkisinden doğan borcun ödenmesine ilişkin önceki tüm sözlü veya yazılı anlaşmaların yerine geçer. Borçlu, yeni ödeme planına tam olarak uyduğu ve borcun tamamını ödediği takdirde, Alacaklı tarafından bu borçtan dolayı tamamen ibra edilmiş olacaktır.</p>\n\n<p>İşbu Anlaşma 5 (beş) maddeden ibaret olup, taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate anlasma_tarihi}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>ALACAKLI</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{alacakli_ad_unvan}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>BORÇLU</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{borclu_ad_unvan}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "alacakli_ad_unvan", "label": "Alacaklının Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "alacakli_adres", "label": "Alacaklının Adresi", "fieldType": "textarea", "required": true },
-    { "name": "alacakli_iban", "label": "Alacaklının IBAN'ı (Ödeme için)", "fieldType": "text", "required": false },
-    { "name": "borclu_ad_unvan", "label": "Borçlunun Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "borclu_adres", "label": "Borçlunun Adresi", "fieldType": "textarea", "required": true },
-    { "name": "borclu_telefon", "label": "Borçlunun Telefonu", "fieldType": "text", "required": true },
-    { "name": "borcun_kaynagi", "label": "Borcun Kaynağı", "fieldType": "text", "placeholder": "Örn: ... tarihli fatura, ... tarihli sözleşme", "required": true },
-    { "name": "anapara_borc_miktari", "label": "Anapara Borç Miktarı (TL)", "fieldType": "number", "required": true },
-    { "name": "islemis_faiz_gecikme_bedeli", "label": "İşlemiş Faiz/Gecikme Bedeli (Varsa, TL)", "fieldType": "number", "required": false },
-    { "name": "toplam_yapilandirilan_borc", "label": "Toplam Yapılandırılan Borç (TL)", "fieldType": "number", "placeholder": "Anapara + Faiz/Gecikme Bedeli (varsa)", "required": true },
-    { "name": "yeni_odeme_plani", "label": "Yeni Ödeme Planı (Taksitler ve Tarihler)", "fieldType": "textarea", "placeholder": "1. Taksit: ... TL - GG/AA/YYYY\n2. Taksit: ... TL - GG/AA/YYYY\n...", "required": true },
-    { "name": "alternatif_odeme_yontemi", "label": "Alternatif Ödeme Yöntemi (IBAN dışında)", "fieldType": "text", "placeholder": "Örn: Elden teslim", "required": false },
-    { "name": "yeni_faiz_uygulanacak_mi", "label": "Yapılandırılan Borca Yeni Faiz İşletilecek mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "yeni_faiz_orani", "label": "Yeni Faiz Oranı (Yıllık %)", "fieldType": "number", "required": false, "condition": { "field": "yeni_faiz_uygulanacak_mi", "value": "Evet" } },
-    { "name": "temerrut_sarti", "label": "Taksit Ödenmezse Ne Olur (Temerrüt Şartı)?", "fieldType": "textarea", "placeholder": "Örn: Kalan borcun tamamı muaccel hale gelir ve yasal takip başlatılır.", "required": true },
-    { "name": "anlasma_tarihi", "label": "Anlaşma Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "alacakli_ad_unvan",
+      "label": "Alacaklının Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "alacakli_adres",
+      "label": "Alacaklının Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "alacakli_iban",
+      "label": "Alacaklının IBAN'ı (Ödeme için)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "borclu_ad_unvan",
+      "label": "Borçlunun Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borclu_adres",
+      "label": "Borçlunun Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "borclu_telefon",
+      "label": "Borçlunun Telefonu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borcun_kaynagi",
+      "label": "Borcun Kaynağı",
+      "fieldType": "text",
+      "placeholder": "Örn: ... tarihli fatura, ... tarihli sözleşme",
+      "required": true
+    },
+    {
+      "name": "anapara_borc_miktari",
+      "label": "Anapara Borç Miktarı (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "islemis_faiz_gecikme_bedeli",
+      "label": "İşlemiş Faiz/Gecikme Bedeli (Varsa, TL)",
+      "fieldType": "number",
+      "required": false
+    },
+    {
+      "name": "toplam_yapilandirilan_borc",
+      "label": "Toplam Yapılandırılan Borç (TL)",
+      "fieldType": "number",
+      "placeholder": "Anapara + Faiz/Gecikme Bedeli (varsa)",
+      "required": true
+    },
+    {
+      "name": "yeni_odeme_plani",
+      "label": "Yeni Ödeme Planı (Taksitler ve Tarihler)",
+      "fieldType": "textarea",
+      "placeholder": "1. Taksit: ... TL - GG/AA/YYYY\n2. Taksit: ... TL - GG/AA/YYYY\n...",
+      "required": true
+    },
+    {
+      "name": "alternatif_odeme_yontemi",
+      "label": "Alternatif Ödeme Yöntemi (IBAN dışında)",
+      "fieldType": "text",
+      "placeholder": "Örn: Elden teslim",
+      "required": false
+    },
+    {
+      "name": "yeni_faiz_uygulanacak_mi",
+      "label": "Yapılandırılan Borca Yeni Faiz İşletilecek mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "yeni_faiz_orani",
+      "label": "Yeni Faiz Oranı (Yıllık %)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "yeni_faiz_uygulanacak_mi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "temerrut_sarti",
+      "label": "Taksit Ödenmezse Ne Olur (Temerrüt Şartı)?",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Kalan borcun tamamı muaccel hale gelir ve yasal takip başlatılır.",
+      "required": true
+    },
+    {
+      "name": "anlasma_tarihi",
+      "label": "Anlaşma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

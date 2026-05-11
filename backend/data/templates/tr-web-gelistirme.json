@@ -7,30 +7,168 @@
   "slug": "web-sitesi-gelistirme-sozlesmesi-basit",
   "content": "<h2 style='text-align:center;'>WEB SİTESİ GELİŞTİRME SÖZLEŞMESİ</h2>\n<p>İşbu Sözleşme, bir tarafta aşağıda bilgileri yer alan Müşteri ile diğer tarafta Geliştirici arasında, {{formatDate tarih}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. Müşteri:</strong><br/>\nAdı Soyadı / Unvanı: {{musteri_ad_unvan}}<br/>\nAdresi: {{musteri_adres}}<br/>\nYetkili Kişi: {{musteri_yetkili}}<br/>\nE-posta: {{musteri_eposta}}\n</p>\n<p><strong>B. Geliştirici:</strong><br/>\nAdı Soyadı / Unvanı: {{gelistirici_ad_unvan}}<br/>\nAdresi: {{gelistirici_adres}}<br/>\n{{#if gelistirici_vergi_no}}Vergi No/T.C. No: {{gelistirici_vergi_no}}<br/>{{/if}}\nE-posta: {{gelistirici_eposta}}\n</p>\n\n<p><strong>2. PROJENİN KAPSAMI</strong></p>\n<p>Geliştirici, Müşteri için aşağıda ana hatları belirtilen web sitesini (\"Site\") geliştirecektir:</p>\n<ul>\n <li>Site Amacı: {{site_amaci}}</li>\n <li>Ana Sayfalar/Bölümler: {{site_bolumleri}}</li>\n <li>Temel İşlevler: {{site_islevleri}}</li>\n <li>Tasarım Yaklaşımı: {{tasarim_yaklasimi}}</li>\n</ul>\n<p>Daha detaylı gereksinimler ekte belirtilmiştir / aşağıdaki gibidir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{detayli_gereksinimler}}</pre>\n\n<p><strong>3. TESLİMAT VE KABUL</strong></p>\n<p>Sitenin tahmini tamamlanma ve Müşteri'ye test için teslim tarihi: {{formatDate teslim_tarihi}}</p>\n<p>Müşteri, siteyi teslim aldıktan sonra {{test_suresi}} gün içinde test edecek ve geri bildirimlerini/onayını Geliştirici'ye iletecektir. Geliştirici, makul ve kapsam dahilindeki düzeltmeleri {{revizyon_suresi}} gün içinde tamamlayacaktır.</p>\n<p>Nihai kabul sonrası site, Müşteri'nin sağlayacağı hosting hesabına yüklenecektir.</p>\n\n<p><strong>4. ÜCRET VE ÖDEME PLANI</strong></p>\n<p>Projenin toplam bedeli {{toplam_ucret}} TL + KDV'dir.</p>\n<p>Ödeme Planı:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{odeme_plani}}</pre>\n\n<p><strong>5. MÜŞTERİNİN SORUMLULUKLARI</strong></p>\n<p>Müşteri, site için gerekli içerikleri (metinler, görseller, logolar vb.) {{formatDate icerik_teslim_tarihi}} tarihine kadar Geliştirici'ye sağlamayı kabul eder. Gecikmeler proje süresini etkileyebilir.</p>\n<p>Müşteri, hosting ve domain adı tescil işlemlerinden ve masraflarından sorumludur.</p>\n\n<p><strong>6. GELİŞTİRİCİNİN SORUMLULUKLARI</strong></p>\n<p>Geliştirici, siteyi kabul edilen kapsama ve modern web standartlarına uygun olarak geliştirmeyi taahhüt eder. Geliştirici, sitenin temel işlevlerinin çalıştığını test edecektir.</p>\n{{#if (eq bakim_destek_varmi 'Evet')}}\n<p>Geliştirici, site tesliminden sonra {{bakim_suresi}} ay süreyle {{bakim_kapsami}} kapsamında ücretsiz teknik destek sağlayacaktır.</p>\n{{/if}}\n\n<p><strong>7. FİKRİ MÜLKİYET</strong></p>\n<p>Proje için özel olarak oluşturulan tasarım ve kodların mülkiyeti, ücretin tamamı ödendikten sonra Müşteri'ye aittir. Geliştiricinin kullandığı hazır kütüphaneler veya frameworkler kendi lisanslarına tabidir.</p>\n\n<p>İşbu Sözleşme taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Müşteri (Yetkili İmza)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{musteri_yetkili}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Geliştirici</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{gelistirici_ad_unvan}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "musteri_ad_unvan", "label": "Müşteri Adı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "musteri_adres", "label": "Müşteri Adresi", "fieldType": "textarea", "required": true },
-    { "name": "musteri_yetkili", "label": "Müşteri Yetkili Kişi", "fieldType": "text", "required": true },
-    { "name": "musteri_eposta", "label": "Müşteri E-posta", "fieldType": "email", "required": true },
-    { "name": "gelistirici_ad_unvan", "label": "Geliştirici Adı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "gelistirici_adres", "label": "Geliştirici Adresi", "fieldType": "textarea", "required": true },
-    { "name": "gelistirici_vergi_no", "label": "Geliştirici Vergi No / T.C. No (Varsa)", "fieldType": "text", "required": false },
-    { "name": "gelistirici_eposta", "label": "Geliştirici E-posta", "fieldType": "email", "required": true },
-    { "name": "site_amaci", "label": "Web Sitesinin Amacı", "fieldType": "text", "placeholder": "Örn: Kurumsal Tanıtım, Blog, E-Ticaret (Basit)", "required": true },
-    { "name": "site_bolumleri", "label": "Sitede Olacak Ana Sayfalar/Bölümler", "fieldType": "textarea", "placeholder": "Ana Sayfa, Hakkımızda, Hizmetler, İletişim vb.", "required": true },
-    { "name": "site_islevleri", "label": "Sitenin Temel İşlevleri", "fieldType": "textarea", "placeholder": "İletişim Formu, Foto Galeri, Harita vb.", "required": true },
-    { "name": "tasarim_yaklasimi", "label": "Tasarım Yaklaşımı", "fieldType": "text", "placeholder": "Örn: Hazır tema özelleştirme, Özel tasarım", "required": true },
-    { "name": "detayli_gereksinimler", "label": "Detaylı Gereksinimler (Varsa)", "fieldType": "textarea", "required": false },
-    { "name": "teslim_tarihi", "label": "Tahmini Tamamlanma ve Test Teslim Tarihi", "fieldType": "date", "required": true },
-    { "name": "test_suresi", "label": "Müşteri Test ve Geri Bildirim Süresi (Gün)", "fieldType": "number", "required": true },
-    { "name": "revizyon_suresi", "label": "Geliştirici Revizyon Tamamlama Süresi (Gün)", "fieldType": "number", "required": true },
-    { "name": "toplam_ucret", "label": "Toplam Proje Bedeli (TL)", "fieldType": "number", "required": true },
-    { "name": "odeme_plani", "label": "Ödeme Planı", "fieldType": "textarea", "placeholder": "Örn: %40 Başlangıçta, %60 Teslimatta", "required": true },
-    { "name": "icerik_teslim_tarihi", "label": "Müşterinin İçerikleri Son Teslim Tarihi", "fieldType": "date", "required": true },
-    { "name": "bakim_destek_varmi", "label": "Teslim Sonrası Bakım/Destek Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "bakim_suresi", "label": "Bakım/Destek Süresi (Ay) (Evet ise)", "fieldType": "number", "required": false, "condition": { "field": "bakim_destek_varmi", "value": "Evet" } },
-    { "name": "bakim_kapsami", "label": "Bakım/Destek Kapsamı (Evet ise)", "fieldType": "textarea", "placeholder": "Örn: Yazılım güncellemeleri, Küçük içerik değişiklikleri", "required": false, "condition": { "field": "bakim_destek_varmi", "value": "Evet" } },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "musteri_ad_unvan",
+      "label": "Müşteri Adı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "musteri_adres",
+      "label": "Müşteri Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "musteri_yetkili",
+      "label": "Müşteri Yetkili Kişi",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "musteri_eposta",
+      "label": "Müşteri E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "gelistirici_ad_unvan",
+      "label": "Geliştirici Adı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "gelistirici_adres",
+      "label": "Geliştirici Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "gelistirici_vergi_no",
+      "label": "Geliştirici Vergi No / T.C. No (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "gelistirici_eposta",
+      "label": "Geliştirici E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "site_amaci",
+      "label": "Web Sitesinin Amacı",
+      "fieldType": "text",
+      "placeholder": "Örn: Kurumsal Tanıtım, Blog, E-Ticaret (Basit)",
+      "required": true
+    },
+    {
+      "name": "site_bolumleri",
+      "label": "Sitede Olacak Ana Sayfalar/Bölümler",
+      "fieldType": "textarea",
+      "placeholder": "Ana Sayfa, Hakkımızda, Hizmetler, İletişim vb.",
+      "required": true
+    },
+    {
+      "name": "site_islevleri",
+      "label": "Sitenin Temel İşlevleri",
+      "fieldType": "textarea",
+      "placeholder": "İletişim Formu, Foto Galeri, Harita vb.",
+      "required": true
+    },
+    {
+      "name": "tasarim_yaklasimi",
+      "label": "Tasarım Yaklaşımı",
+      "fieldType": "text",
+      "placeholder": "Örn: Hazır tema özelleştirme, Özel tasarım",
+      "required": true
+    },
+    {
+      "name": "detayli_gereksinimler",
+      "label": "Detaylı Gereksinimler (Varsa)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "teslim_tarihi",
+      "label": "Tahmini Tamamlanma ve Test Teslim Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "test_suresi",
+      "label": "Müşteri Test ve Geri Bildirim Süresi (Gün)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "revizyon_suresi",
+      "label": "Geliştirici Revizyon Tamamlama Süresi (Gün)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "toplam_ucret",
+      "label": "Toplam Proje Bedeli (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "odeme_plani",
+      "label": "Ödeme Planı",
+      "fieldType": "textarea",
+      "placeholder": "Örn: %40 Başlangıçta, %60 Teslimatta",
+      "required": true
+    },
+    {
+      "name": "icerik_teslim_tarihi",
+      "label": "Müşterinin İçerikleri Son Teslim Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "bakim_destek_varmi",
+      "label": "Teslim Sonrası Bakım/Destek Var mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "bakim_suresi",
+      "label": "Bakım/Destek Süresi (Ay) (Evet ise)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "bakim_destek_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "bakim_kapsami",
+      "label": "Bakım/Destek Kapsamı (Evet ise)",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Yazılım güncellemeleri, Küçük içerik değişiklikleri",
+      "required": false,
+      "condition": {
+        "field": "bakim_destek_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

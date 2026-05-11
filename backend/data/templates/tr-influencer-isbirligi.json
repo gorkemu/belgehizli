@@ -7,31 +7,185 @@
   "slug": "influencer-is-birligi-anlasmasi",
   "content": "<h2 style='text-align:center;'>INFLUENCER / İÇERİK ÜRETİCİ İŞ BİRLİĞİ ANLAŞMASI</h2>\n<p>İşbu Anlaşma, bir tarafta aşağıda bilgileri yer alan Marka Sahibi (\"Marka\") ile diğer tarafta İçerik Üretici (\"Influencer\") arasında, {{formatDate tarih}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. Marka Sahibi:</strong><br/>\nŞirket Adı/Unvanı: {{marka_adi}}<br/>\nAdresi: {{marka_adres}}<br/>\nYetkili Kişi: {{marka_yetkili}}<br/>\nE-posta: {{marka_eposta}}\n</p>\n<p><strong>B. Influencer / İçerik Üretici:</strong><br/>\nAdı Soyadı: {{influencer_ad_soyad}}<br/>\n{{#if influencer_ajans}}Ajansı/Temsilcisi: {{influencer_ajans}}<br/>{{/if}}\nAdresi: {{influencer_adres}}<br/>\nSosyal Medya Hesapları/Platformları: {{influencer_platformlar}}<br/>\nE-posta: {{influencer_eposta}}\n</p>\n\n<p><strong>2. İŞ BİRLİĞİNİN KAPSAMI VE AMACI</strong></p>\n<p>Influencer, Marka'nın {{tanitilacak_urun_hizmet}} ürününü/hizmetini/kampanyasını tanıtmak amacıyla aşağıdaki içerikleri (\"İçerikler\") üretecek ve belirleyeceği platformlarda yayınlayacaktır:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{icerik_detaylari_ve_platformlar}}</pre>\n<p>İş Birliğinin Amacı: {{isbirligi_amaci}}</p>\n<p>Kampanya Süresi: {{formatDate kampanya_baslangic}} - {{formatDate kampanya_bitis}}</p>\n\n<p><strong>3. İÇERİK ONAYI VE YAYINLAMA</strong></p>\n<p>Influencer, hazırladığı İçerik taslaklarını yayınlamadan önce {{onay_suresi}} gün öncesine kadar Marka'nın onayına sunacaktır. Marka, geri bildirimlerini {{geri_bildirim_suresi}} gün içinde iletecektir. Influencer, makul geri bildirimleri dikkate alacaktır. Onaylanan içerikler belirtilen tarihlerde ve platformlarda yayınlanacaktır.</p>\n<p>Yayınlanan içeriklerde, reklam ve iş birliği olduğuna dair yasal olarak zorunlu olan etiketler (örn: #işbirliği, #reklam) Influencer tarafından açıkça kullanılacaktır.</p>\n\n<p><strong>4. ÖDEME</strong></p>\n<p>Marka, Influencer'a bu iş birliği kapsamında {{odeme_miktari}} TL {{#if (eq odeme_tipi 'Takas + Nakit')}}değerinde ürün/hizmet + {{ek_odeme_miktari}} TL nakit{{else}}(+KDV){{/if}} ödeme yapacaktır.</p>\n<p>Ödeme Planı: {{odeme_plani}}</p>\n\n<p><strong>5. MÜLKİYET VE KULLANIM HAKLARI</strong></p>\n<p>Influencer tarafından bu iş birliği için özel olarak üretilen İçeriklerin mülkiyeti ve telif hakları {{telif_hakki_sahibi}}'na aittir.</p>\n{{#if (eq telif_hakki_sahibi 'Marka')}}\n<p>Influencer, İçeriklerin tüm mali haklarını Marka'ya devretmeyi kabul eder.</p>\n{{else}}\n<p>Influencer, Marka'ya İçerikleri {{kullanim_hakki_kapsami}} kapsamında, {{kullanim_suresi}} süreyle kullanma hakkı (lisans) verir.</p>\n{{/if}}\n\n<p><strong>6. DİĞER HÜKÜMLER</strong></p>\n<p>Influencer, iş birliği süresince Marka'nın itibarını zedeleyecek davranışlardan kaçınacaktır. Taraflar arasındaki ilişki bağımsız yüklenici ilişkisidir.</p>\n\n<p>İşbu Anlaşma taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Marka Sahibi (Yetkili İmza)</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p><p>{{marka_yetkili}}</p></div>\n <div style='margin-bottom: 20px;'><p><strong>Influencer / İçerik Üretici</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p><p>{{influencer_ad_soyad}}</p></div>\n</div>",
   "fields": [
-    { "name": "marka_adi", "label": "Marka Adı / Şirket Unvanı", "fieldType": "text", "required": true },
-    { "name": "marka_adres", "label": "Marka Adresi", "fieldType": "textarea", "required": true },
-    { "name": "marka_yetkili", "label": "Marka Yetkili Kişi Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "marka_eposta", "label": "Marka Yetkili E-posta", "fieldType": "email", "required": true },
-    { "name": "influencer_ad_soyad", "label": "Influencer / İçerik Üretici Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "influencer_ajans", "label": "Influencer Ajansı/Temsilcisi (Varsa)", "fieldType": "text", "required": false },
-    { "name": "influencer_adres", "label": "Influencer Adresi", "fieldType": "textarea", "required": true },
-    { "name": "influencer_platformlar", "label": "Influencer Sosyal Medya Hesapları/Platformları", "fieldType": "text", "required": true, "placeholder": "Örn: Instagram @kullanici, YouTube Kanal Adı" },
-    { "name": "influencer_eposta", "label": "Influencer E-posta", "fieldType": "email", "required": true },
-    { "name": "tanitilacak_urun_hizmet", "label": "Tanıtılacak Ürün/Hizmet/Kampanya", "fieldType": "text", "required": true },
-    { "name": "icerik_detaylari_ve_platformlar", "label": "Üretilecek İçerik Detayları ve Yayın Platformları", "fieldType": "textarea", "required": true, "placeholder": "Örn: 1 adet Instagram Reel videosu, 2 adet Instagram Story, vb." },
-    { "name": "isbirligi_amaci", "label": "İş Birliğinin Temel Amacı", "fieldType": "text", "required": true, "placeholder": "Örn: Marka bilinirliğini artırmak, Satışları artırmak" },
-    { "name": "kampanya_baslangic", "label": "Kampanya Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "kampanya_bitis", "label": "Kampanya Bitiş Tarihi", "fieldType": "date", "required": true },
-    { "name": "onay_suresi", "label": "İçerik Onayına Sunma Süresi (Gün Önce)", "fieldType": "number", "required": true, "placeholder": "Örn: 3" },
-    { "name": "geri_bildirim_suresi", "label": "Marka Geri Bildirim Süresi (Gün)", "fieldType": "number", "required": true, "placeholder": "Örn: 2" },
-    { "name": "odeme_tipi", "label": "Ödeme Tipi", "fieldType": "select", "options": ["Nakit/Banka Transferi", "Ürün/Hizmet Takası", "Takas + Nakit"], "required": true },
-    { "name": "odeme_miktari", "label": "Toplam Nakit Ödeme Tutarı / Takas Edilen Ürün Değeri (TL)", "fieldType": "number", "required": true },
-    { "name": "ek_odeme_miktari", "label": "Takasa Ek Nakit Ödeme (TL) (Takas+Nakit ise)", "fieldType": "number", "required": false, "condition": { "field": "odeme_tipi", "value": "Takas + Nakit" } },
-    { "name": "odeme_plani", "label": "Ödeme Planı", "fieldType": "text", "required": true, "placeholder": "Örn: Yayın sonrası fatura karşılığı 15 gün içinde." },
-    { "name": "telif_hakki_sahibi", "label": "İçeriklerin Telif Hakkı Kimde Kalacak?", "fieldType": "select", "options": ["Marka", "Influencer (Lisanslı)"], "required": true },
-    { "name": "kullanim_hakki_kapsami", "label": "Markanın Kullanım Hakkı Kapsamı (Hak Influencer'da ise)", "fieldType": "textarea", "required": false, "placeholder": "Örn: Sadece markanın kendi sosyal medya hesaplarında paylaşım.", "condition": { "field": "telif_hakki_sahibi", "value": "Influencer (Lisanslı)" } },
-    { "name": "kullanim_suresi", "label": "Markanın Kullanım Süresi (Hak Influencer'da ise)", "fieldType": "text", "required": false, "placeholder": "Örn: Süresiz, 1 Yıl", "condition": { "field": "telif_hakki_sahibi", "value": "Influencer (Lisanslı)" } },
-    { "name": "tarih", "label": "Anlaşma Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "marka_adi",
+      "label": "Marka Adı / Şirket Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "marka_adres",
+      "label": "Marka Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "marka_yetkili",
+      "label": "Marka Yetkili Kişi Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "marka_eposta",
+      "label": "Marka Yetkili E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "influencer_ad_soyad",
+      "label": "Influencer / İçerik Üretici Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "influencer_ajans",
+      "label": "Influencer Ajansı/Temsilcisi (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "influencer_adres",
+      "label": "Influencer Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "influencer_platformlar",
+      "label": "Influencer Sosyal Medya Hesapları/Platformları",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Instagram @kullanici, YouTube Kanal Adı"
+    },
+    {
+      "name": "influencer_eposta",
+      "label": "Influencer E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "tanitilacak_urun_hizmet",
+      "label": "Tanıtılacak Ürün/Hizmet/Kampanya",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "icerik_detaylari_ve_platformlar",
+      "label": "Üretilecek İçerik Detayları ve Yayın Platformları",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: 1 adet Instagram Reel videosu, 2 adet Instagram Story, vb."
+    },
+    {
+      "name": "isbirligi_amaci",
+      "label": "İş Birliğinin Temel Amacı",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Marka bilinirliğini artırmak, Satışları artırmak"
+    },
+    {
+      "name": "kampanya_baslangic",
+      "label": "Kampanya Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "kampanya_bitis",
+      "label": "Kampanya Bitiş Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "onay_suresi",
+      "label": "İçerik Onayına Sunma Süresi (Gün Önce)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Örn: 3"
+    },
+    {
+      "name": "geri_bildirim_suresi",
+      "label": "Marka Geri Bildirim Süresi (Gün)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Örn: 2"
+    },
+    {
+      "name": "odeme_tipi",
+      "label": "Ödeme Tipi",
+      "fieldType": "select",
+      "options": [
+        "Nakit/Banka Transferi",
+        "Ürün/Hizmet Takası",
+        "Takas + Nakit"
+      ],
+      "required": true
+    },
+    {
+      "name": "odeme_miktari",
+      "label": "Toplam Nakit Ödeme Tutarı / Takas Edilen Ürün Değeri (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "ek_odeme_miktari",
+      "label": "Takasa Ek Nakit Ödeme (TL) (Takas+Nakit ise)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "odeme_tipi",
+        "value": "Takas + Nakit"
+      }
+    },
+    {
+      "name": "odeme_plani",
+      "label": "Ödeme Planı",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Yayın sonrası fatura karşılığı 15 gün içinde."
+    },
+    {
+      "name": "telif_hakki_sahibi",
+      "label": "İçeriklerin Telif Hakkı Kimde Kalacak?",
+      "fieldType": "select",
+      "options": [
+        "Marka",
+        "Influencer (Lisanslı)"
+      ],
+      "required": true
+    },
+    {
+      "name": "kullanim_hakki_kapsami",
+      "label": "Markanın Kullanım Hakkı Kapsamı (Hak Influencer'da ise)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Örn: Sadece markanın kendi sosyal medya hesaplarında paylaşım.",
+      "condition": {
+        "field": "telif_hakki_sahibi",
+        "value": "Influencer (Lisanslı)"
+      }
+    },
+    {
+      "name": "kullanim_suresi",
+      "label": "Markanın Kullanım Süresi (Hak Influencer'da ise)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Örn: Süresiz, 1 Yıl",
+      "condition": {
+        "field": "telif_hakki_sahibi",
+        "value": "Influencer (Lisanslı)"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Anlaşma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

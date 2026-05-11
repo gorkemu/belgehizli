@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a2df4a6478ae3b9833"
+  },
   "name": "Influencer Marketing Agreement",
   "description": "A contract between a brand and an influencer outlining the terms for sponsored content creation, posting schedules, and payment.",
   "price": 20,
@@ -6,30 +9,176 @@
   "slug": "influencer-marketing-agreement",
   "content": "<h2 style='text-align:center;'>INFLUENCER MARKETING AGREEMENT</h2>\n<p>This Influencer Marketing Agreement (the \"Agreement\") is entered into as of {{formatDate agreement_date}} by and between <strong>{{brand_name}}</strong> (\"Brand\") and <strong>{{influencer_name}}</strong> (\"Influencer\").</p>\n\n<p><strong>1. PARTIES</strong></p>\n<p><strong>Brand:</strong><br/>\nCompany Name: {{brand_name}}<br/>\nAddress: {{brand_address}}<br/>\nRepresentative: {{brand_contact}}<br/>\nEmail: {{brand_email}}\n</p>\n<p><strong>Influencer / Creator:</strong><br/>\nName: {{influencer_name}}<br/>\n{{#if influencer_agency}}Agency/Manager: {{influencer_agency}}<br/>{{/if}}\nAddress: {{influencer_address}}<br/>\nSocial Media Handles: {{influencer_handles}}<br/>\nEmail: {{influencer_email}}\n</p>\n\n<p><strong>2. CAMPAIGN DETAILS AND DELIVERABLES</strong></p>\n<p>The Influencer agrees to produce and publish content (the \"Deliverables\") to promote the Brand's {{product_service}} across their social media platforms. The primary goal of this campaign is: {{campaign_goal}}.</p>\n<p><strong>Content to be Created:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{content_deliverables}}</pre>\n<p>Campaign Duration: {{formatDate campaign_start}} to {{formatDate campaign_end}}</p>\n\n<p><strong>3. APPROVAL AND DISCLOSURE</strong></p>\n<p>The Influencer must submit drafts of all Deliverables to the Brand for review at least <strong>{{approval_days}} days</strong> before the scheduled posting date. The Brand will provide feedback within {{feedback_days}} days. The Influencer agrees to make reasonable revisions as requested.</p>\n<p>The Influencer must comply with all applicable advertising laws and regulations (e.g., FTC guidelines) by clearly disclosing the material connection with the Brand using clear tags such as <em>#ad</em>, <em>#sponsored</em>, or the platform's paid partnership tools.</p>\n\n<p><strong>4. COMPENSATION</strong></p>\n<p>In consideration of the Deliverables, the Brand will provide compensation to the Influencer consisting of <strong>{{payment_amount}}</strong> via {{payment_type}}.</p>\n<p>Payment Schedule: {{payment_schedule}}</p>\n\n<p><strong>5. INTELLECTUAL PROPERTY RIGHTS</strong></p>\n<p>Ownership and usage rights for the Deliverables are as follows: {{copyright_status}}.</p>\n{{#if (eq copyright_status 'Brand owns all rights')}}\n<p>The Influencer hereby assigns to the Brand all copyrights in the Deliverables. The Brand may use, modify, and distribute the content unconditionally.</p>\n{{else}}\n<p>The Influencer retains the copyright to the Deliverables. However, the Influencer grants the Brand a non-exclusive license to use the content for {{usage_duration}} under the following conditions: {{usage_scope}}.</p>\n{{/if}}\n\n<p><strong>6. MISCELLANEOUS</strong></p>\n<p>The Influencer shall not engage in any conduct that could negatively impact the Brand's reputation. The Influencer acts as an independent contractor under this Agreement.</p>\n\n<p>By signing below, the Parties acknowledge and agree to the terms outlined herein.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Brand Representative</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p><p>{{brand_contact}}</p></div>\n <div style='margin-bottom: 20px;'><p><strong>Influencer</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p><p>{{influencer_name}}</p></div>\n</div>",
   "fields": [
-    { "name": "brand_name", "label": "Brand / Company Name", "fieldType": "text", "required": true },
-    { "name": "brand_address", "label": "Brand Address", "fieldType": "textarea", "required": true },
-    { "name": "brand_contact", "label": "Brand Contact Person", "fieldType": "text", "required": true },
-    { "name": "brand_email", "label": "Brand Contact Email", "fieldType": "email", "required": true },
-    { "name": "influencer_name", "label": "Influencer's Full Name", "fieldType": "text", "required": true },
-    { "name": "influencer_agency", "label": "Influencer's Agency (Optional)", "fieldType": "text", "required": false },
-    { "name": "influencer_address", "label": "Influencer's Address", "fieldType": "textarea", "required": true },
-    { "name": "influencer_handles", "label": "Social Media Handles / Platforms", "fieldType": "text", "required": true, "placeholder": "e.g., IG: @username, TikTok: ChannelName" },
-    { "name": "influencer_email", "label": "Influencer's Email", "fieldType": "email", "required": true },
-    { "name": "product_service", "label": "Product/Service being Promoted", "fieldType": "text", "required": true },
-    { "name": "content_deliverables", "label": "Deliverables (Content to be Created)", "fieldType": "textarea", "required": true, "placeholder": "e.g., 2 Instagram Reels, 3 Stories with swipe-up link." },
-    { "name": "campaign_goal", "label": "Goal of the Campaign", "fieldType": "text", "required": true, "placeholder": "e.g., Brand awareness, driving traffic to website." },
-    { "name": "campaign_start", "label": "Campaign Start Date", "fieldType": "date", "required": true },
-    { "name": "campaign_end", "label": "Campaign End Date", "fieldType": "date", "required": true },
-    { "name": "approval_days", "label": "Days Prior for Content Approval", "fieldType": "number", "required": true, "placeholder": "e.g., 5" },
-    { "name": "feedback_days", "label": "Days for Brand Feedback", "fieldType": "number", "required": true, "placeholder": "e.g., 2" },
-    { "name": "payment_type", "label": "Payment Type", "fieldType": "select", "options": ["Cash / Wire Transfer", "Product Barter / Gifting", "Barter + Cash"], "required": true },
-    { "name": "payment_amount", "label": "Payment Amount (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,000 or $500 + $200 Product Value" },
-    { "name": "payment_schedule", "label": "Payment Schedule", "fieldType": "text", "required": true, "placeholder": "e.g., Net 30 after publishing, 50% upfront." },
-    { "name": "copyright_status", "label": "Content Rights & Ownership", "fieldType": "select", "options": ["Brand owns all rights", "Influencer retains rights (Brand gets license)"], "required": true },
-    { "name": "usage_scope", "label": "Usage Scope (If Influencer retains rights)", "fieldType": "textarea", "required": false, "placeholder": "e.g., Brand can repost on their own IG and run ads.", "condition": { "field": "copyright_status", "value": "Influencer retains rights (Brand gets license)" } },
-    { "name": "usage_duration", "label": "Usage Duration (If Influencer retains rights)", "fieldType": "text", "required": false, "placeholder": "e.g., 1 Year, Perpetual", "condition": { "field": "copyright_status", "value": "Influencer retains rights (Brand gets license)" } },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "brand_name",
+      "label": "Brand / Company Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "brand_address",
+      "label": "Brand Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "brand_contact",
+      "label": "Brand Contact Person",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "brand_email",
+      "label": "Brand Contact Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "influencer_name",
+      "label": "Influencer's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "influencer_agency",
+      "label": "Influencer's Agency (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "influencer_address",
+      "label": "Influencer's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "influencer_handles",
+      "label": "Social Media Handles / Platforms",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., IG: @username, TikTok: ChannelName"
+    },
+    {
+      "name": "influencer_email",
+      "label": "Influencer's Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "product_service",
+      "label": "Product/Service being Promoted",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "content_deliverables",
+      "label": "Deliverables (Content to be Created)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., 2 Instagram Reels, 3 Stories with swipe-up link."
+    },
+    {
+      "name": "campaign_goal",
+      "label": "Goal of the Campaign",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Brand awareness, driving traffic to website."
+    },
+    {
+      "name": "campaign_start",
+      "label": "Campaign Start Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "campaign_end",
+      "label": "Campaign End Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "approval_days",
+      "label": "Days Prior for Content Approval",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 5"
+    },
+    {
+      "name": "feedback_days",
+      "label": "Days for Brand Feedback",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 2"
+    },
+    {
+      "name": "payment_type",
+      "label": "Payment Type",
+      "fieldType": "select",
+      "options": [
+        "Cash / Wire Transfer",
+        "Product Barter / Gifting",
+        "Barter + Cash"
+      ],
+      "required": true
+    },
+    {
+      "name": "payment_amount",
+      "label": "Payment Amount (Include Currency)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., $1,000 or $500 + $200 Product Value"
+    },
+    {
+      "name": "payment_schedule",
+      "label": "Payment Schedule",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Net 30 after publishing, 50% upfront."
+    },
+    {
+      "name": "copyright_status",
+      "label": "Content Rights & Ownership",
+      "fieldType": "select",
+      "options": [
+        "Brand owns all rights",
+        "Influencer retains rights (Brand gets license)"
+      ],
+      "required": true
+    },
+    {
+      "name": "usage_scope",
+      "label": "Usage Scope (If Influencer retains rights)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "e.g., Brand can repost on their own IG and run ads.",
+      "condition": {
+        "field": "copyright_status",
+        "value": "Influencer retains rights (Brand gets license)"
+      }
+    },
+    {
+      "name": "usage_duration",
+      "label": "Usage Duration (If Influencer retains rights)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "e.g., 1 Year, Perpetual",
+      "condition": {
+        "field": "copyright_status",
+        "value": "Influencer retains rights (Brand gets license)"
+      }
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true
