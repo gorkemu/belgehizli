@@ -1,6 +1,6 @@
 // frontend/src/pages/TemplateList.jsx
 import React, { useState, useEffect } from 'react';
-import api from '../utils/api';                    
+import api from '../utils/api';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './TemplateList.module.css';
@@ -13,19 +13,18 @@ import { SEOHead } from '../components/SEOHead';
 
 const CATEGORY_KEYS = [
   { id: 'all', labelKey: 'templateList.categories.all', icon: <FolderKanban size={16} />, keywords: [] },
-  { id: 'gayrimenkul', labelKey: 'templateList.categories.realEstate', icon: <Home size={16} />, keywords: ['kira', 'taşınmaz', 'arsa', 'gayrimenkul', 'ev', 'tahliye', 'tapu', 'emlak'] },
-  { id: 'is-kariyer', labelKey: 'templateList.categories.jobCareer', icon: <Briefcase size={16} />, keywords: ['işçi', 'işveren', 'istifa', 'freelancer', 'staj', 'cv', 'özgeçmiş', 'personel', 'bakım'] },
-  { id: 'ticari', labelKey: 'templateList.categories.commercial', icon: <Landmark size={16} />, keywords: ['ortaklık', 'satış', 'teklif', 'danışmanlık', 'gizlilik', 'nda', 'devir', 'gider', 'pazarlama', 'hizmet'] },
-  { id: 'dilekce', labelKey: 'templateList.categories.petitions', icon: <Scale size={16} />, keywords: ['dilekçe', 'ihtarname', 'şikayet', 'başvuru', 'tespit', 'tutanak'] },
-  { id: 'bireysel', labelKey: 'templateList.categories.personal', icon: <User size={16} />, keywords: ['araç', 'borç', 'ödünç', 'emanet', 'eşya', 'fotoğraf', 'evlilik', 'miras', 'seyahat', 'muvafakatname'] }
+  { id: 'gayrimenkul', labelKey: 'templateList.categories.realEstate', icon: <Home size={16} />, keywords: ['kira', 'taşınmaz', 'arsa', 'gayrimenkul', 'ev', 'tahliye', 'tapu', 'emlak', 'lease', 'real estate', 'property', 'vacate', 'housing', 'tenant'] },
+  { id: 'is-kariyer', labelKey: 'templateList.categories.jobCareer', icon: <Briefcase size={16} />, keywords: ['işçi', 'işveren', 'istifa', 'freelancer', 'staj', 'cv', 'özgeçmiş', 'personel', 'bakım', 'employment', 'contractor', 'freelance', 'job', 'career'] },
+  { id: 'ticari', labelKey: 'templateList.categories.commercial', icon: <Landmark size={16} />, keywords: ['ortaklık', 'satış', 'teklif', 'danışmanlık', 'gizlilik', 'nda', 'devir', 'gider', 'pazarlama', 'hizmet', 'commercial', 'partnership', 'sales', 'proposal', 'consulting', 'marketing', 'non-compete', 'bill of sale'] },
+  { id: 'dilekce', labelKey: 'templateList.categories.petitions', icon: <Scale size={16} />, keywords: ['dilekçe', 'ihtarname', 'şikayet', 'başvuru', 'tespit', 'tutanak', 'petition', 'complaint', 'notice', 'cease', 'desist', 'demand', 'lawsuit'] },
+  { id: 'bireysel', labelKey: 'templateList.categories.personal', icon: <User size={16} />, keywords: ['araç', 'borç', 'ödünç', 'emanet', 'eşya', 'fotoğraf', 'evlilik', 'miras', 'seyahat', 'muvafakatname', 'vehicle', 'debt', 'loan', 'personal', 'photography', 'marital', 'divorce', 'estate', 'consent', 'travel', 'promissory'] }
 ];
 
 function TemplateList() {
   const { t } = useTranslation();
-  const { lang } = useParams();                     
-  const currentLang = lang || 'tr';                  
+  const { lang } = useParams();
+  const currentLang = lang || 'tr';
 
-  // Dil bazlı rotalar 
   const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
   const detailRoute = currentLang === 'tr' ? 'sablonlar/detay' : 'templates/detail';
 
@@ -40,9 +39,10 @@ function TemplateList() {
 
   useEffect(() => {
     setLoading(true);
-    api.get('/sablonlar')                
+
+    api.get(`/sablonlar?lang=${currentLang}`)
       .then(response => {
-        setTemplates(response.data);
+        setTemplates(response.data.templates);
         setLoading(false);
       })
       .catch(error => {
@@ -52,7 +52,7 @@ function TemplateList() {
         setError(errorMessage);
         setLoading(false);
       });
-  }, [t]);
+  }, [t, currentLang]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -63,7 +63,6 @@ function TemplateList() {
   const handleSearchChange = (e) => {
     const val = e.target.value;
     setSearchTerm(val);
-    // Navigasyon başına /:lang ekleniyor
     navigate(val
       ? `/${currentLang}/${libraryRoute}?search=${encodeURIComponent(val)}`
       : `/${currentLang}/${libraryRoute}`,
@@ -74,13 +73,19 @@ function TemplateList() {
   const handleSearchSubmit = (e) => e.preventDefault();
 
   const filteredTemplates = templates.filter(template => {
-    const matchesSearch = template.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      template.description.toLowerCase().includes(searchTerm.toLowerCase());
+    const safeName = template.name || '';
+    const safeDescription = template.description || '';
+    const safeSlug = template.slug || '';
+
+    const matchesSearch = safeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      safeDescription.toLowerCase().includes(searchTerm.toLowerCase());
+
     let matchesCategory = true;
+
     if (activeCategory !== 'all') {
       const categoryObj = CATEGORY_KEYS.find(c => c.id === activeCategory);
       matchesCategory = categoryObj.keywords.some(kw =>
-        template.name.toLowerCase().includes(kw) || template.slug.includes(kw)
+        safeName.toLowerCase().includes(kw) || safeSlug.toLowerCase().includes(kw)
       );
     }
     return matchesSearch && matchesCategory;
@@ -104,11 +109,11 @@ function TemplateList() {
   }
 
   return (
-    
+
     <div className={styles.pageWrapper}>
-      <SEOHead 
-          titleKey="templateList.pageTitle" 
-          descKey="templateList.metaDescription" 
+      <SEOHead
+        titleKey="templateList.pageTitle"
+        descKey="templateList.metaDescription"
       />
 
       <div className={styles.disclaimerBanner}>
@@ -176,7 +181,7 @@ function TemplateList() {
             <div className={styles.templateGrid}>
               {displayedTemplates.map(template => (
                 <Link
-                  to={`/${currentLang}/${detailRoute}/${template.slug}`}   
+                  to={`/${currentLang}/${detailRoute}/${template.slug}`}
                   key={template._id}
                   className={styles.templateCard}
                 >
