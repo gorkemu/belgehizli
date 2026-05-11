@@ -16,9 +16,24 @@
       "removeLabel": "Kiraya Vereni Sil",
       "minInstances": 1,
       "subfields": [
-        { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
-        { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
-        { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
+        {
+          "name": "ad_soyad",
+          "label": "Adı Soyadı",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "tc_no",
+          "label": "T.C. Kimlik No",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "adres",
+          "label": "İkametgah Adresi",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
     {
@@ -30,23 +45,121 @@
       "removeLabel": "Kiracıyı Sil",
       "minInstances": 1,
       "subfields": [
-        { "name": "ad_soyad", "label": "Adı Soyadı", "fieldType": "text", "required": true },
-        { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
-        { "name": "adres", "label": "İkametgah Adresi", "fieldType": "textarea", "required": true }
+        {
+          "name": "ad_soyad",
+          "label": "Adı Soyadı",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "tc_no",
+          "label": "T.C. Kimlik No",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "adres",
+          "label": "İkametgah Adresi",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
-    { "name": "kiralanan_adres", "label": "Kiralanan Konutun Tam Adresi", "fieldType": "textarea", "required": true, "placeholder": "Mahalle, Sokak, No, İlçe/İl" },
-    { "name": "baslangic_tarihi", "label": "Kira Sözleşmesi Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "kira_suresi", "label": "Kira Süresi (Ay Olarak)", "fieldType": "number", "required": true, "placeholder": "Örn: 12" },
-    { "name": "aylik_kira_bedeli", "label": "Aylık Kira Bedeli (TL)", "fieldType": "number", "required": true, "placeholder": "Örn: 15000" },
-    { "name": "odeme_gunu", "label": "Kira Ödemesi İçin Ayın Kaçıncı Günü?", "fieldType": "number", "required": true, "placeholder": "1 ile 31 arası" },
-    { "name": "artis_tipi", "label": "Yıllık Kira Artış Yöntemi", "fieldType": "select", "options": ["TÜFE", "Belirtilen Oran"], "required": true },
-    { "name": "artis_orani", "label": "Belirtilen Artış Oranı (%)", "fieldType": "number", "required": false, "placeholder": "Artış Yöntemi 'Belirtilen Oran' ise doldurun", "condition": { "field": "artis_tipi", "value": "Belirtilen Oran" } },
-    { "name": "depozito_alindi", "label": "Depozito Alındı mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "depozito_tutari", "label": "Alınan Depozito Tutarı (TL)", "fieldType": "number", "required": false, "placeholder": "Depozito alındıysa doldurun", "condition": { "field": "depozito_alindi", "value": "Evet" } },
-    { "name": "ozel_kosullar", "label": "Özel Koşullar", "fieldType": "textarea", "required": false, "placeholder": "Sözleşmeye eklemek istediğiniz özel maddeler varsa yazınız." },
-    { "name": "imza_tarihi", "label": "Sözleşme İmza Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "kiralanan_adres",
+      "label": "Kiralanan Konutun Tam Adresi",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Mahalle, Sokak, No, İlçe/İl"
+    },
+    {
+      "name": "baslangic_tarihi",
+      "label": "Kira Sözleşmesi Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "kira_suresi",
+      "label": "Kira Süresi (Ay Olarak)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Örn: 12"
+    },
+    {
+      "name": "aylik_kira_bedeli",
+      "label": "Aylık Kira Bedeli (TL)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Örn: 15000"
+    },
+    {
+      "name": "odeme_gunu",
+      "label": "Kira Ödemesi İçin Ayın Kaçıncı Günü?",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "1 ile 31 arası"
+    },
+    {
+      "name": "artis_tipi",
+      "label": "Yıllık Kira Artış Yöntemi",
+      "fieldType": "select",
+      "options": [
+        "TÜFE",
+        "Belirtilen Oran"
+      ],
+      "required": true
+    },
+    {
+      "name": "artis_orani",
+      "label": "Belirtilen Artış Oranı (%)",
+      "fieldType": "number",
+      "required": false,
+      "placeholder": "Artış Yöntemi 'Belirtilen Oran' ise doldurun",
+      "condition": {
+        "field": "artis_tipi",
+        "value": "Belirtilen Oran"
+      }
+    },
+    {
+      "name": "depozito_alindi",
+      "label": "Depozito Alındı mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "depozito_tutari",
+      "label": "Alınan Depozito Tutarı (TL)",
+      "fieldType": "number",
+      "required": false,
+      "placeholder": "Depozito alındıysa doldurun",
+      "condition": {
+        "field": "depozito_alindi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "ozel_kosullar",
+      "label": "Özel Koşullar",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Sözleşmeye eklemek istediğiniz özel maddeler varsa yazınız."
+    },
+    {
+      "name": "imza_tarihi",
+      "label": "Sözleşme İmza Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

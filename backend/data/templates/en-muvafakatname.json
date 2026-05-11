@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a3df4a6478ae3b9846"
+  },
   "name": "Parental Consent for Child Travel & Passports",
   "description": "A formal letter of consent from a parent or legal guardian allowing a minor child to travel internationally or apply for a passport.",
   "price": 8,
@@ -6,18 +9,81 @@
   "slug": "parental-consent-child-travel-passport",
   "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px; text-decoration: underline;'>PARENTAL CONSENT FOR TRAVEL AND PASSPORT ISSUANCE</h2>\n\n  <p><strong>TO WHOM IT MAY CONCERN:</strong></p>\n\n  <p><strong>I, THE UNDERSIGNED PARENT/GUARDIAN:</strong><br/>\n  Full Name: {{parent_name}}<br/>\n  ID / Passport No: {{parent_id}}<br/>\n  Address: {{parent_address}}<br/>\n  Contact Number: {{parent_phone}}</p>\n\n  <p><strong>DO HEREBY DECLARE THAT I AM THE LAWFUL PARENT / LEGAL GUARDIAN OF:</strong><br/>\n  Child's Full Name: {{child_name}}<br/>\n  Child's Date of Birth: {{formatDate child_dob}}<br/>\n  Child's ID / Passport No: {{child_id}}</p>\n\n  <p><strong>AND I DO HEREBY GIVE MY EXPRESS CONSENT AND PERMISSION FOR THE ABOVE-NAMED CHILD TO:</strong></p>\n  <ul>\n    <li>Apply for, renew, and/or be issued a national passport or travel document.</li>\n    <li>Travel internationally {{#if accompanying_adult}}<strong>under the supervision and accompaniment of: {{accompanying_adult}}</strong>.{{else}}<strong>as an unaccompanied minor.</strong>{{/if}}</li>\n  </ul>\n\n  {{#if travel_destination}}\n  <p><strong>Specific Travel Details (If applicable):</strong><br/>\n  Destination Country/Countries: {{travel_destination}}<br/>\n  Expected Dates of Travel: {{travel_dates}}</p>\n  {{/if}}\n\n  <p>I confirm that I possess the legal authority to grant this consent. I authorize the above actions freely, voluntarily, and without any coercion.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div>\n      <p><strong>Date Signed:</strong> {{formatDate signature_date}}</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Signature of Parent / Guardian</strong></p>\n      <p>{{parent_name}}</p>\n      <p><br/>_________________________</p>\n    </div>\n  </div>\n\n  <p style='margin-top: 40px; font-size: 0.8em; font-style: italic;'><strong>Note to the Signatory:</strong> For international travel, border control authorities generally require this document to be formally notarized by a Notary Public.</p>\n</div>",
   "fields": [
-    { "name": "parent_name", "label": "Parent / Guardian's Full Name", "fieldType": "text", "required": true },
-    { "name": "parent_id", "label": "Parent's ID / Passport Number", "fieldType": "text", "required": true },
-    { "name": "parent_address", "label": "Parent's Address", "fieldType": "textarea", "required": true },
-    { "name": "parent_phone", "label": "Parent's Contact Number", "fieldType": "text", "required": true },
-    { "name": "child_name", "label": "Child's Full Name", "fieldType": "text", "required": true },
-    { "name": "child_dob", "label": "Child's Date of Birth", "fieldType": "date", "required": true },
-    { "name": "child_id", "label": "Child's ID / Passport Number (If any)", "fieldType": "text", "required": true },
-    { "name": "accompanying_adult", "label": "Accompanying Adult (Leave blank if traveling alone)", "fieldType": "text", "placeholder": "e.g., Mother Jane Doe, Coach John Smith", "required": false },
-    { "name": "travel_destination", "label": "Destination Country (Optional)", "fieldType": "text", "placeholder": "e.g., France, USA", "required": false },
-    { "name": "travel_dates", "label": "Expected Travel Dates (Optional)", "fieldType": "text", "placeholder": "e.g., July 1 to July 15, 2026", "required": false },
-    { "name": "signature_date", "label": "Date of Signature", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "parent_name",
+      "label": "Parent / Guardian's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "parent_id",
+      "label": "Parent's ID / Passport Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "parent_address",
+      "label": "Parent's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "parent_phone",
+      "label": "Parent's Contact Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "child_name",
+      "label": "Child's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "child_dob",
+      "label": "Child's Date of Birth",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "child_id",
+      "label": "Child's ID / Passport Number (If any)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "accompanying_adult",
+      "label": "Accompanying Adult (Leave blank if traveling alone)",
+      "fieldType": "text",
+      "placeholder": "e.g., Mother Jane Doe, Coach John Smith",
+      "required": false
+    },
+    {
+      "name": "travel_destination",
+      "label": "Destination Country (Optional)",
+      "fieldType": "text",
+      "placeholder": "e.g., France, USA",
+      "required": false
+    },
+    {
+      "name": "travel_dates",
+      "label": "Expected Travel Dates (Optional)",
+      "fieldType": "text",
+      "placeholder": "e.g., July 1 to July 15, 2026",
+      "required": false
+    },
+    {
+      "name": "signature_date",
+      "label": "Date of Signature",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

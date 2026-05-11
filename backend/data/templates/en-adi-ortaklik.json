@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b9819"
+  },
   "name": "General Partnership Agreement",
   "description": "A foundational agreement for two or more individuals or entities joining together in a business venture for profit.",
   "price": 22,
@@ -15,21 +18,94 @@
       "removeLabel": "Remove Partner",
       "minInstances": 2,
       "subfields": [
-        { "name": "partner_name", "label": "Full Name / Entity Name", "fieldType": "text", "required": true },
-        { "name": "tax_id", "label": "ID / Tax Number / SSN", "fieldType": "text", "required": true },
-        { "name": "address", "label": "Address", "fieldType": "textarea", "required": true }
+        {
+          "name": "partner_name",
+          "label": "Full Name / Entity Name",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "tax_id",
+          "label": "ID / Tax Number / SSN",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "address",
+          "label": "Address",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
-    { "name": "partnership_name", "label": "Name of Partnership (DBA)", "fieldType": "text", "required": true, "placeholder": "e.g., Smith & Doe Consulting" },
-    { "name": "business_purpose", "label": "Business Purpose", "fieldType": "textarea", "required": true, "placeholder": "Describe what the partnership will do." },
-    { "name": "capital_contributions", "label": "Capital Contributions", "fieldType": "textarea", "required": true, "placeholder": "Partner A: $10k, Partner B: Equipment valued at $5k" },
-    { "name": "profit_loss_distribution", "label": "Profit & Loss Distribution", "fieldType": "text", "required": true, "placeholder": "e.g., Split equally 50/50, or proportional to capital" },
-    { "name": "management_structure", "label": "Management & Voting Structure", "fieldType": "textarea", "required": true, "placeholder": "e.g., All partners have equal voting rights. Partner A handles day-to-day operations." },
-    { "name": "term_of_partnership", "label": "Term of Partnership", "fieldType": "text", "required": true, "placeholder": "e.g., Indefinitely, For 5 Years, Until project completion" },
-    { "name": "dissolution_terms", "label": "Dissolution / Withdrawal Terms", "fieldType": "textarea", "required": true, "placeholder": "What happens if someone wants to leave? Buyout options?" },
-    { "name": "jurisdiction", "label": "Governing Law / Jurisdiction", "fieldType": "text", "required": true, "placeholder": "e.g., State of California, UK Law" },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "partnership_name",
+      "label": "Name of Partnership (DBA)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Smith & Doe Consulting"
+    },
+    {
+      "name": "business_purpose",
+      "label": "Business Purpose",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Describe what the partnership will do."
+    },
+    {
+      "name": "capital_contributions",
+      "label": "Capital Contributions",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Partner A: $10k, Partner B: Equipment valued at $5k"
+    },
+    {
+      "name": "profit_loss_distribution",
+      "label": "Profit & Loss Distribution",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Split equally 50/50, or proportional to capital"
+    },
+    {
+      "name": "management_structure",
+      "label": "Management & Voting Structure",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., All partners have equal voting rights. Partner A handles day-to-day operations."
+    },
+    {
+      "name": "term_of_partnership",
+      "label": "Term of Partnership",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Indefinitely, For 5 Years, Until project completion"
+    },
+    {
+      "name": "dissolution_terms",
+      "label": "Dissolution / Withdrawal Terms",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "What happens if someone wants to leave? Buyout options?"
+    },
+    {
+      "name": "jurisdiction",
+      "label": "Governing Law / Jurisdiction",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., State of California, UK Law"
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

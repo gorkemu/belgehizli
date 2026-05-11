@@ -7,24 +7,133 @@
   "slug": "genel-hizmet-sozlesmesi",
   "content": "<h2 style='text-align:center;'>HİZMET SÖZLEŞMESİ</h2>\n<p>İşbu Hizmet Sözleşmesi (\"Sözleşme\"), bir tarafta aşağıda bilgileri yer alan Hizmet Veren ile diğer tarafta Hizmet Alan arasında, {{formatDate imza_tarihi}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Hizmet Veren:</strong><br/>\nAdı/Unvanı: {{hizmet_veren_ad_soyad}}<br/>\nAdresi: {{hizmet_veren_adres}}<br/>\n{{#if hizmet_veren_vergi_dairesi}}Vergi Dairesi: {{hizmet_veren_vergi_dairesi}}<br/>{{/if}}\nVergi No/T.C. Kimlik No: {{hizmet_veren_vergi_no}}\n</p>\n<p><strong>Hizmet Alan:</strong><br/>\nAdı/Unvanı: {{hizmet_alan_ad_soyad}}<br/>\nAdresi: {{hizmet_alan_adres}}<br/>\n{{#if hizmet_alan_vergi_dairesi}}Vergi Dairesi: {{hizmet_alan_vergi_dairesi}}<br/>{{/if}}\nVergi No/T.C. Kimlik No: {{hizmet_alan_vergi_no}}\n</p>\n\n<p><strong>2. SÖZLEŞMENİN KONUSU</strong></p>\n<p>İşbu Sözleşme'nin konusu, Hizmet Veren tarafından Hizmet Alan'a sunulacak olan aşağıdaki hizmetlerin kapsamı, şartları ve ücretlendirilmesidir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{hizmet_tanimi}}</pre>\n\n<p><strong>3. HİZMETİN SÜRESİ</strong></p>\n{{#if (eq sure_tipi 'Belirli Süreli')}}\n<p>Sözleşme, {{formatDate baslangic_tarihi}} tarihinde başlayacak ve {{formatDate bitis_tarihi}} tarihinde sona erecektir.</p>\n{{else}}\n<p>Sözleşme, {{formatDate baslangic_tarihi}} tarihinde başlayacak olup belirsiz sürelidir. Taraflardan herhangi biri, {{fesih_ihbar_suresi}} gün önceden yazılı bildirimde bulunmak kaydıyla Sözleşme'yi feshedebilir.</p>\n{{/if}}\n\n<p><strong>4. HİZMET BEDELİ VE ÖDEME ŞARTLARI</strong></p>\n<p>Sunulacak hizmetler karşılığında Hizmet Alan tarafından Hizmet Veren'e ödenecek toplam bedel {{toplam_ucret}} TL + KDV'dir.</p>\n<p>Ödeme aşağıdaki şekilde yapılacaktır:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{odeme_sekli}}</pre>\n\n<p><strong>5. TARAFLARIN YÜKÜMLÜLÜKLERİ</strong></p>\n<p>Hizmet Veren, Sözleşme konusu hizmeti kararlaştırılan niteliklere uygun olarak, zamanında ve özenle yerine getirmeyi kabul ve taahhüt eder.</p>\n<p>Hizmet Alan, hizmetin gereği gibi ifa edilebilmesi için gerekli bilgi ve belgeleri Hizmet Veren'e zamanında sağlamayı ve kararlaştırılan hizmet bedelini zamanında ödemeyi kabul ve taahhüt eder.</p>\n\n<p><strong>6. GİZLİLİK</strong></p>\n{{#if (eq gizlilik_maddesi 'Evet')}}\n<p>Taraflar, işbu Sözleşme kapsamında birbirleri hakkında edindikleri her türlü ticari sırrı ve özel bilgiyi gizli tutmayı ve diğer tarafın yazılı izni olmaksızın üçüncü kişilerle paylaşmamayı kabul ve taahhüt ederler.</p>\n{{else}}\n<p>Bu sözleşme özelinde ayrı bir gizlilik taahhüdü bulunmamaktadır.</p>\n{{/if}}\n\n<p>İşbu Sözleşme 6 (altı) maddeden ibaret olup, taraflarca okunmuş ve kabul edilerek {{formatDate imza_tarihi}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Hizmet Veren</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{hizmet_veren_ad_soyad}}</span><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Hizmet Alan</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{hizmet_alan_ad_soyad}}</span><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "hizmet_veren_ad_soyad", "label": "Hizmet Veren Adı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "hizmet_veren_adres", "label": "Hizmet Veren Adresi", "fieldType": "textarea", "required": true },
-    { "name": "hizmet_veren_vergi_dairesi", "label": "Hizmet Veren Vergi Dairesi (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "hizmet_veren_vergi_no", "label": "Hizmet Veren Vergi No / T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "hizmet_alan_ad_soyad", "label": "Hizmet Alan Adı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "hizmet_alan_adres", "label": "Hizmet Alan Adresi", "fieldType": "textarea", "required": true },
-    { "name": "hizmet_alan_vergi_dairesi", "label": "Hizmet Alan Vergi Dairesi (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "hizmet_alan_vergi_no", "label": "Hizmet Alan Vergi No / T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "hizmet_tanimi", "label": "Sunulacak Hizmetin Detaylı Tanımı", "fieldType": "textarea", "required": true, "placeholder": "Hizmetin kapsamı, içeriği, teslimat şekli vb." },
-    { "name": "sure_tipi", "label": "Sözleşme Süresi Tipi", "fieldType": "select", "options": ["Belirli Süreli", "Belirsiz Süreli"], "required": true },
-    { "name": "baslangic_tarihi", "label": "Hizmet Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "bitis_tarihi", "label": "Hizmet Bitiş Tarihi (Belirli Süreli ise)", "fieldType": "date", "required": false, "condition": { "field": "sure_tipi", "value": "Belirli Süreli" } },
-    { "name": "fesih_ihbar_suresi", "label": "Fesih İhbar Süresi (Gün) (Belirsiz Süreli ise)", "fieldType": "number", "required": false, "placeholder": "Örn: 30", "condition": { "field": "sure_tipi", "value": "Belirsiz Süreli" } },
-    { "name": "toplam_ucret", "label": "Toplam Hizmet Bedeli (KDV Hariç TL)", "fieldType": "number", "required": true },
-    { "name": "odeme_sekli", "label": "Ödeme Planı ve Şartları", "fieldType": "textarea", "required": true, "placeholder": "Örn: Sözleşme imzasında %50, hizmet tesliminde %50." },
-    { "name": "gizlilik_maddesi", "label": "Gizlilik Maddesi Eklensin mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "imza_tarihi", "label": "Sözleşme İmza Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "hizmet_veren_ad_soyad",
+      "label": "Hizmet Veren Adı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "hizmet_veren_adres",
+      "label": "Hizmet Veren Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "hizmet_veren_vergi_dairesi",
+      "label": "Hizmet Veren Vergi Dairesi (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "hizmet_veren_vergi_no",
+      "label": "Hizmet Veren Vergi No / T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "hizmet_alan_ad_soyad",
+      "label": "Hizmet Alan Adı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "hizmet_alan_adres",
+      "label": "Hizmet Alan Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "hizmet_alan_vergi_dairesi",
+      "label": "Hizmet Alan Vergi Dairesi (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "hizmet_alan_vergi_no",
+      "label": "Hizmet Alan Vergi No / T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "hizmet_tanimi",
+      "label": "Sunulacak Hizmetin Detaylı Tanımı",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Hizmetin kapsamı, içeriği, teslimat şekli vb."
+    },
+    {
+      "name": "sure_tipi",
+      "label": "Sözleşme Süresi Tipi",
+      "fieldType": "select",
+      "options": [
+        "Belirli Süreli",
+        "Belirsiz Süreli"
+      ],
+      "required": true
+    },
+    {
+      "name": "baslangic_tarihi",
+      "label": "Hizmet Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "bitis_tarihi",
+      "label": "Hizmet Bitiş Tarihi (Belirli Süreli ise)",
+      "fieldType": "date",
+      "required": false,
+      "condition": {
+        "field": "sure_tipi",
+        "value": "Belirli Süreli"
+      }
+    },
+    {
+      "name": "fesih_ihbar_suresi",
+      "label": "Fesih İhbar Süresi (Gün) (Belirsiz Süreli ise)",
+      "fieldType": "number",
+      "required": false,
+      "placeholder": "Örn: 30",
+      "condition": {
+        "field": "sure_tipi",
+        "value": "Belirsiz Süreli"
+      }
+    },
+    {
+      "name": "toplam_ucret",
+      "label": "Toplam Hizmet Bedeli (KDV Hariç TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "odeme_sekli",
+      "label": "Ödeme Planı ve Şartları",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: Sözleşme imzasında %50, hizmet tesliminde %50."
+    },
+    {
+      "name": "gizlilik_maddesi",
+      "label": "Gizlilik Maddesi Eklensin mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "imza_tarihi",
+      "label": "Sözleşme İmza Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

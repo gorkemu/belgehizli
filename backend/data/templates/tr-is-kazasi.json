@@ -7,18 +7,80 @@
   "slug": "is-kazasi-tazminat-talebi-dilekcesi",
   "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h3 style='text-align: center;'>{{isveren_unvan}} DİKKATİNE</h3>\n\n  <p><strong>BAŞVURAN (İşçi):</strong> {{ad_soyad}} (T.C. No: {{tc_no}})<br/><strong>ADRES:</strong> {{adres}}</p>\n\n  <p><strong>KONU:</strong> {{formatDate kaza_tarihi}} tarihinde meydana gelen iş kazası nedeniyle maddi ve manevi tazminat talebidir.</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <p>Şirketiniz bünyesinde {{gorev}} olarak çalışmaktayken, {{formatDate kaza_tarihi}} tarihinde {{kaza_yeri}} mevkiinde bir iş kazası meydana gelmiştir. Kaza neticesinde {{yaralanma_detayi}} şeklinde yaralanmış bulunmaktayım.</p>\n\n  <p>Söz konusu kaza; gerekli iş güvenliği önlemlerinin alınmaması, denetim eksikliği ve {{ek_kusurlar}} nedeniyle meydana gelmiştir. Kaza sonrası yaşadığım iş gücü kaybı ve çekilen acılar nedeniyle tazminat sorumluluğunuz doğmuştur.</p>\n\n  <p><strong>TALEPLERİMİZ:</strong></p>\n  <ul>\n    <li>Maddi Tazminat (Tedavi giderleri ve iş gücü kaybı): {{maddi_tutar}} TL</li>\n    <li>Manevi Tazminat: {{manevi_tutar}} TL</li>\n  </ul>\n\n  <p>Yukarıda belirtilen toplam bedelin işbu dilekçenin tebliğinden itibaren 7 gün içinde tarafıma ödenmesini, aksi halde hukuki yollara başvurulacağını bildiririm.</p>\n\n  <p style='text-align: right; margin-top: 40px;'><strong>BAŞVURAN</strong></p>\n  <p style='text-align: right;'>{{ad_soyad}}<br/><br/><br/>İmza: ________________</p>\n</div>",
   "fields": [
-    { "name": "isveren_unvan", "label": "İşveren Firma Ünvanı", "fieldType": "text", "required": true },
-    { "name": "ad_soyad", "label": "Adınız Soyadınız", "fieldType": "text", "required": true },
-    { "name": "tc_no", "label": "T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
-    { "name": "kaza_tarihi", "label": "Kazanın Gerçekleştiği Tarih", "fieldType": "date", "required": true },
-    { "name": "kaza_yeri", "label": "Kazanın Olduğu Yer", "fieldType": "text", "required": true },
-    { "name": "gorev", "label": "Şirketteki Göreviniz", "fieldType": "text", "required": true },
-    { "name": "yaralanma_detayi", "label": "Yaralanma/Sakatlık Durumu (Kısaca)", "fieldType": "text", "placeholder": "Örn: Kol kırılması, %10 iş gücü kaybı", "required": true },
-    { "name": "ek_kusurlar", "label": "İşverenin Varsa Diğer Kusurları", "fieldType": "text", "placeholder": "Örn: Koruyucu ekipman verilmemesi", "required": false },
-    { "name": "maddi_tutar", "label": "Maddi Tazminat Talebi (TL)", "fieldType": "number", "required": true },
-    { "name": "manevi_tutar", "label": "Manevi Tazminat Talebi (TL)", "fieldType": "number", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "isveren_unvan",
+      "label": "İşveren Firma Ünvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "ad_soyad",
+      "label": "Adınız Soyadınız",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tc_no",
+      "label": "T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "adres",
+      "label": "Adresiniz",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "kaza_tarihi",
+      "label": "Kazanın Gerçekleştiği Tarih",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "kaza_yeri",
+      "label": "Kazanın Olduğu Yer",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "gorev",
+      "label": "Şirketteki Göreviniz",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yaralanma_detayi",
+      "label": "Yaralanma/Sakatlık Durumu (Kısaca)",
+      "fieldType": "text",
+      "placeholder": "Örn: Kol kırılması, %10 iş gücü kaybı",
+      "required": true
+    },
+    {
+      "name": "ek_kusurlar",
+      "label": "İşverenin Varsa Diğer Kusurları",
+      "fieldType": "text",
+      "placeholder": "Örn: Koruyucu ekipman verilmemesi",
+      "required": false
+    },
+    {
+      "name": "maddi_tutar",
+      "label": "Maddi Tazminat Talebi (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "manevi_tutar",
+      "label": "Manevi Tazminat Talebi (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

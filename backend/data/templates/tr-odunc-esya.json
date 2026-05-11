@@ -7,23 +7,122 @@
   "slug": "odunc-esya-sozlesmesi-basit",
   "content": "<h3 style='text-align:center;'>ÖDÜNÇ EŞYA SÖZLEŞMESİ</h3>\n<p>İşbu Sözleşme, bir tarafta Ödünç Veren {{odunc_veren_ad_soyad}} ile diğer tarafta Ödünç Alan {{odunc_alan_ad_soyad}} arasında, aşağıda belirtilen eşyanın/ekipmanın ödünç verilmesi konusunda {{formatDate tarih}} tarihinde aşağıdaki şartlarla düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Ödünç Veren:</strong> {{odunc_veren_ad_soyad}}, Adres: {{odunc_veren_adres}}, Tel: {{odunc_veren_telefon}}</p>\n<p><strong>Ödünç Alan:</strong> {{odunc_alan_ad_soyad}}, Adres: {{odunc_alan_adres}}, Tel: {{odunc_alan_telefon}}</p>\n\n<p><strong>2. ÖDÜNÇ VERİLEN EŞYA/EKİPMAN</strong></p>\n<p>Ödünç Veren, mülkiyeti kendisine ait olan aşağıdaki eşyayı/ekipmanı (\"Eşya\") Ödünç Alan'a kullanması amacıyla vermiştir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{esya_tanimi}}</pre>\n<p>Eşyanın Teslim Anındaki Durumu: {{teslim_durumu}}</p>\n\n<p><strong>3. ÖDÜNÇ SÜRESİ VE İADE</strong></p>\n<p>Eşya, Ödünç Alan tarafından {{odunc_suresi}} süreyle kullanılacaktır.</p>\n<p>Ödünç Alan, Eşya'yı en geç {{formatDate iade_tarihi}} tarihinde, teslim aldığı durumdaki gibi (normal kullanımdan kaynaklanan yıpranmalar hariç) Ödünç Veren'e iade etmeyi kabul ve taahhüt eder.</p>\n<p>İade Yeri: {{iade_yeri}}</p>\n\n<p><strong>4. KULLANIM KOŞULLARI VE SORUMLULUK</strong></p>\n<ul>\n <li>Ödünç Alan, Eşya'yı sadece {{kullanim_amaci}} amacıyla kullanacaktır.</li>\n <li>Ödünç Alan, Eşya'yı özenle kullanacak, gerekli bakımı yapacak ve hasar görmemesi için gerekli önlemleri alacaktır.</li>\n <li>Eşya'nın Ödünç Alan'ın kullanımındayken kaybolması, çalınması veya kullanılamaz hale gelecek şekilde hasar görmesi durumunda, Ödünç Alan {{hasar_durumu_sorumluluk}}.</li>\n <li>Ödünç Alan, Eşya'yı Ödünç Veren'in yazılı izni olmaksızın üçüncü kişilere kullandıramaz veya devredemez.</li>\n</ul>\n\n{{#if (eq depozito_alindi 'Evet')}}\n<p><strong>5. GÜVENCE BEDELİ (Depozito)</strong></p>\n<p>Ödünç Alan, Eşya'nın geri getirilmemesi veya hasar görmesi riskine karşılık Ödünç Veren'e {{depozito_miktari}} TL güvence bedeli ödemiştir. Bu bedel, Eşya'nın sözleşmeye uygun olarak iade edilmesi halinde Ödünç Alan'a geri ödenecektir.</p>\n{{/if}}\n\n<p>İşbu sözleşme iki nüsha olarak düzenlenmiş ve taraflarca imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Ödünç Veren</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{odunc_veren_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Ödünç Alan</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{odunc_alan_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "odunc_veren_ad_soyad", "label": "Ödünç Verenin Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "odunc_veren_adres", "label": "Ödünç Verenin Adresi", "fieldType": "textarea", "required": true },
-    { "name": "odunc_veren_telefon", "label": "Ödünç Verenin Telefonu", "fieldType": "text", "required": true },
-    { "name": "odunc_alan_ad_soyad", "label": "Ödünç Alanın Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "odunc_alan_adres", "label": "Ödünç Alanın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "odunc_alan_telefon", "label": "Ödünç Alanın Telefonu", "fieldType": "text", "required": true },
-    { "name": "esya_tanimi", "label": "Ödünç Verilen Eşya/Ekipman Tanımı", "fieldType": "textarea", "placeholder": "Marka, model, seri no, ayırt edici özellikler...", "required": true },
-    { "name": "teslim_durumu", "label": "Eşyanın Teslim Anındaki Durumu", "fieldType": "text", "placeholder": "Örn: Sıfır gibi, İyi durumda, Çalışır durumda", "required": true },
-    { "name": "odunc_suresi", "label": "Ödünç Kullanım Süresi", "fieldType": "text", "placeholder": "Örn: 1 Hafta, 3 Ay, Proje bitene kadar", "required": true },
-    { "name": "iade_tarihi", "label": "En Geç İade Tarihi", "fieldType": "date", "required": true },
-    { "name": "iade_yeri", "label": "İade Yeri", "fieldType": "text", "placeholder": "Örn: Ödünç Verenin adresi", "required": true },
-    { "name": "kullanim_amaci", "label": "Eşyanın Kullanım Amacı", "fieldType": "text", "placeholder": "Örn: Kişisel kullanım, Proje X için çekim", "required": true },
-    { "name": "hasar_durumu_sorumluluk", "label": "Hasar/Kayıp Durumunda Sorumluluk", "fieldType": "text", "placeholder": "Örn: Eşyanın güncel piyasa değerini öder, Tamir masraflarını karşılar", "required": true },
-    { "name": "depozito_alindi", "label": "Depozito Alındı mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "depozito_miktari", "label": "Depozito Miktarı (TL) (Evet ise)", "fieldType": "number", "required": false, "condition": { "field": "depozito_alindi", "value": "Evet" } },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "odunc_veren_ad_soyad",
+      "label": "Ödünç Verenin Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "odunc_veren_adres",
+      "label": "Ödünç Verenin Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "odunc_veren_telefon",
+      "label": "Ödünç Verenin Telefonu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "odunc_alan_ad_soyad",
+      "label": "Ödünç Alanın Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "odunc_alan_adres",
+      "label": "Ödünç Alanın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "odunc_alan_telefon",
+      "label": "Ödünç Alanın Telefonu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "esya_tanimi",
+      "label": "Ödünç Verilen Eşya/Ekipman Tanımı",
+      "fieldType": "textarea",
+      "placeholder": "Marka, model, seri no, ayırt edici özellikler...",
+      "required": true
+    },
+    {
+      "name": "teslim_durumu",
+      "label": "Eşyanın Teslim Anındaki Durumu",
+      "fieldType": "text",
+      "placeholder": "Örn: Sıfır gibi, İyi durumda, Çalışır durumda",
+      "required": true
+    },
+    {
+      "name": "odunc_suresi",
+      "label": "Ödünç Kullanım Süresi",
+      "fieldType": "text",
+      "placeholder": "Örn: 1 Hafta, 3 Ay, Proje bitene kadar",
+      "required": true
+    },
+    {
+      "name": "iade_tarihi",
+      "label": "En Geç İade Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "iade_yeri",
+      "label": "İade Yeri",
+      "fieldType": "text",
+      "placeholder": "Örn: Ödünç Verenin adresi",
+      "required": true
+    },
+    {
+      "name": "kullanim_amaci",
+      "label": "Eşyanın Kullanım Amacı",
+      "fieldType": "text",
+      "placeholder": "Örn: Kişisel kullanım, Proje X için çekim",
+      "required": true
+    },
+    {
+      "name": "hasar_durumu_sorumluluk",
+      "label": "Hasar/Kayıp Durumunda Sorumluluk",
+      "fieldType": "text",
+      "placeholder": "Örn: Eşyanın güncel piyasa değerini öder, Tamir masraflarını karşılar",
+      "required": true
+    },
+    {
+      "name": "depozito_alindi",
+      "label": "Depozito Alındı mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "depozito_miktari",
+      "label": "Depozito Miktarı (TL) (Evet ise)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "depozito_alindi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

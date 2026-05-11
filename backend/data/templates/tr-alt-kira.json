@@ -7,16 +7,67 @@
   "slug": "alt-kira-sozlesmesi",
   "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center;'>ALT KİRA SÖZLEŞMESİ</h2>\n\n  <p><strong>1. TARAFLAR:</strong><br/>\n  <strong>Asıl Kiracı (Alt Kiraya Veren):</strong> {{asil_kiraci_ad}} (T.C. No: {{asil_kiraci_tc}})<br/>\n  <strong>Alt Kiracı:</strong> {{alt_kiraci_ad}} (T.C. No: {{alt_kiraci_tc}})\n  </p>\n\n  <p><strong>2. KİRALANAN YER:</strong> {{adres}}</p>\n\n  <p><strong>3. SÖZLEŞME ŞARTLARI:</strong></p>\n  <ul>\n    <li>Kira Bedeli: Aylık {{aylik_bedel}} TL</li>\n    <li>Başlangıç Tarihi: {{formatDate baslangic_tarihi}}</li>\n    <li>Süre: {{sure_ay}} Ay</li>\n  </ul>\n\n  <p><strong>4. ÖZEL HÜKÜMLER:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{ozel_maddeler}}</pre>\n\n  <p>Alt kiracı, asıl kira sözleşmesindeki tüm yükümlülüklere uymak zorundadır. Asıl kiraya verenin (mal sahibinin) yazılı onayı işbu sözleşmenin geçerliliği için şarttır.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>Alt Kiraya Veren</strong></p>\n      <p>{{asil_kiraci_ad}}</p>\n      <p><br/>İmza: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Alt Kiracı</strong></p>\n      <p>{{alt_kiraci_ad}}</p>\n      <p><br/>İmza: ________________</p>\n    </div>\n  </div>\n</div>",
   "fields": [
-    { "name": "asil_kiraci_ad", "label": "Asıl Kiracı (Sizin) Ad Soyad", "fieldType": "text", "required": true },
-    { "name": "asil_kiraci_tc", "label": "Asıl Kiracı T.C. No", "fieldType": "text", "required": true },
-    { "name": "alt_kiraci_ad", "label": "Alt Kiracı (Yeni Kiracı) Ad Soyad", "fieldType": "text", "required": true },
-    { "name": "alt_kiraci_tc", "label": "Alt Kiracı T.C. No", "fieldType": "text", "required": true },
-    { "name": "adres", "label": "Taşınmazın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "aylik_bedel", "label": "Aylık Alt Kira Bedeli (TL)", "fieldType": "number", "required": true },
-    { "name": "baslangic_tarihi", "label": "Kira Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "sure_ay", "label": "Kira Süresi (Ay)", "fieldType": "number", "required": true },
-    { "name": "ozel_maddeler", "label": "Özel Maddeler", "fieldType": "textarea", "placeholder": "Örn: Elektrik faturası paylaşımlı ödenecektir, ortak alan kullanımı vb.", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "asil_kiraci_ad",
+      "label": "Asıl Kiracı (Sizin) Ad Soyad",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "asil_kiraci_tc",
+      "label": "Asıl Kiracı T.C. No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "alt_kiraci_ad",
+      "label": "Alt Kiracı (Yeni Kiracı) Ad Soyad",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "alt_kiraci_tc",
+      "label": "Alt Kiracı T.C. No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "adres",
+      "label": "Taşınmazın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "aylik_bedel",
+      "label": "Aylık Alt Kira Bedeli (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "baslangic_tarihi",
+      "label": "Kira Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "sure_ay",
+      "label": "Kira Süresi (Ay)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "ozel_maddeler",
+      "label": "Özel Maddeler",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Elektrik faturası paylaşımlı ödenecektir, ortak alan kullanımı vb.",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

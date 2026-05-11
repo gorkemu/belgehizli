@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b9828"
+  },
   "name": "Roommate Agreement",
   "description": "A straightforward agreement among people sharing a residence, defining basic rules, rent splits, and responsibilities.",
   "price": 8,
@@ -6,24 +9,128 @@
   "slug": "roommate-agreement",
   "content": "<h2 style='text-align:center;'>ROOMMATE AGREEMENT</h2>\n<p>This Roommate Agreement (the \"Agreement\") is made on {{formatDate agreement_date}} by and among the individuals listed below (the \"Roommates\") regarding the shared occupancy of the premises located at {{property_address}}.</p>\n\n<p><strong>1. THE ROOMMATES</strong></p>\n<p>The following individuals are parties to this Agreement:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{roommate_details}}</pre>\n\n<p><strong>2. RENT AND SECURITY DEPOSIT</strong></p>\n<p>The total monthly rent for the premises is <strong>{{total_rent}}</strong>. The rent shall be divided among the Roommates as follows:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{rent_breakdown}}</pre>\n<p>Rent must be paid no later than the {{rent_due_day}} day of each month. <strong>{{rent_payer}}</strong> will be responsible for collecting the rent and submitting it to the landlord.</p>\n<p>The total security deposit paid to the landlord is <strong>{{total_deposit}}</strong>. The deposit was contributed, and will be returned, as follows:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{deposit_breakdown}}</pre>\n\n<p><strong>3. UTILITIES AND EXPENSES</strong></p>\n<p>The cost of shared utilities (Electricity, Water, Gas/Heating, Internet, and {{other_expenses}}) will be divided among the Roommates as follows: {{utility_split_method}}.</p>\n<p>The following person(s) is/are responsible for managing and paying the utility bills on time: <strong>{{utility_payer}}</strong>.</p>\n\n<p><strong>4. COMMON AREAS AND CLEANING</strong></p>\n<p>All Roommates agree to keep the common areas (kitchen, living room, bathrooms) clean and tidy. The following cleaning schedule/rules will apply:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{cleaning_rules}}</pre>\n\n<p><strong>5. GUESTS AND OVERNIGHT VISITORS</strong></p>\n<p>The Roommates agree to the following rules regarding guests and overnight visitors:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{guest_rules}}</pre>\n\n<p><strong>6. QUIET HOURS</strong></p>\n<p>To respect each other's rest and privacy, quiet hours shall be observed between <strong>{{quiet_hours}}</strong>.</p>\n\n<p><strong>7. MOVING OUT</strong></p>\n<p>If a Roommate intends to move out before the lease expires, they must give at least <strong>{{notice_period}} days'</strong> notice to the other Roommates and the landlord. The departing roommate is responsible for their share of the rent and utilities until a suitable replacement (approved by the landlord and remaining roommates) is found, unless otherwise agreed.</p>\n\n<p><strong>8. ADDITIONAL AGREEMENTS</strong></p>\n{{#if additional_rules}}\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{additional_rules}}</pre>\n{{else}}\n<p>None specified.</p>\n{{/if}}\n\n<p>By signing below, the Roommates acknowledge that they have read, understood, and agree to abide by the terms of this Agreement.</p>\n\n<div style='margin-top: 40px;'>\n  <p><strong>Signatures:</strong></p>\n  <div style='margin-top: 20px; margin-bottom: 15px;'>\n    <p style='margin-bottom: 5px;'>Print Name: ......................................................</p>\n    <br/><p><span style='display: inline-block; margin-top: 5px;'>Signature: _________________________</span></p>\n  </div>\n  <br/><div style='margin-top: 20px; margin-bottom: 15px;'>\n    <p style='margin-bottom: 5px;'>Print Name: ......................................................</p>\n    <br/><p><span style='display: inline-block; margin-top: 5px;'>Signature: _________________________</span></p>\n  </div>\n</div>",
   "fields": [
-    { "name": "property_address", "label": "Shared Property Address", "fieldType": "textarea", "required": true },
-    { "name": "roommate_details", "label": "Roommate Details (Name, Phone)", "fieldType": "textarea", "required": true, "placeholder": "Person 1: Name, Phone\nPerson 2: Name, Phone" },
-    { "name": "total_rent", "label": "Total Monthly Rent (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $2,000" },
-    { "name": "rent_breakdown", "label": "Rent Breakdown / Split", "fieldType": "textarea", "required": true, "placeholder": "e.g., Divided equally. OR Person A pays $1100, Person B pays $900." },
-    { "name": "rent_due_day", "label": "Rent Due Day (Day of the month)", "fieldType": "number", "required": true, "placeholder": "e.g., 1, 5" },
-    { "name": "rent_payer", "label": "Who pays the landlord?", "fieldType": "text", "required": true, "placeholder": "e.g., Everyone pays the landlord directly, OR Person A collects it." },
-    { "name": "total_deposit", "label": "Total Security Deposit (Include Currency)", "fieldType": "text", "required": true },
-    { "name": "deposit_breakdown", "label": "Deposit Breakdown", "fieldType": "textarea", "required": true, "placeholder": "e.g., Paid equally, refunded equally." },
-    { "name": "other_expenses", "label": "Other Shared Expenses (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., Netflix, cleaning supplies" },
-    { "name": "utility_split_method", "label": "Utility Split Method", "fieldType": "text", "required": true, "placeholder": "e.g., Split equally among all roommates" },
-    { "name": "utility_payer", "label": "Who manages utility bills?", "fieldType": "text", "required": true, "placeholder": "e.g., Person A pays electricity, Person B pays internet." },
-    { "name": "cleaning_rules", "label": "Cleaning Schedule & Rules", "fieldType": "textarea", "required": true, "placeholder": "e.g., Alternating weekly chores, clean up immediately after cooking." },
-    { "name": "guest_rules", "label": "Guest & Overnight Rules", "fieldType": "textarea", "required": true, "placeholder": "e.g., No overnight guests without prior notice. Max 3 nights a week." },
-    { "name": "quiet_hours", "label": "Quiet Hours", "fieldType": "text", "required": true, "placeholder": "e.g., 11:00 PM to 8:00 AM" },
-    { "name": "notice_period", "label": "Moving Out Notice Period (Days)", "fieldType": "number", "required": true, "placeholder": "e.g., 30" },
-    { "name": "additional_rules", "label": "Additional Rules (Optional)", "fieldType": "textarea", "required": false, "placeholder": "Smoking policies, pets, parties, etc." },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "property_address",
+      "label": "Shared Property Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "roommate_details",
+      "label": "Roommate Details (Name, Phone)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Person 1: Name, Phone\nPerson 2: Name, Phone"
+    },
+    {
+      "name": "total_rent",
+      "label": "Total Monthly Rent (Include Currency)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., $2,000"
+    },
+    {
+      "name": "rent_breakdown",
+      "label": "Rent Breakdown / Split",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., Divided equally. OR Person A pays $1100, Person B pays $900."
+    },
+    {
+      "name": "rent_due_day",
+      "label": "Rent Due Day (Day of the month)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 1, 5"
+    },
+    {
+      "name": "rent_payer",
+      "label": "Who pays the landlord?",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Everyone pays the landlord directly, OR Person A collects it."
+    },
+    {
+      "name": "total_deposit",
+      "label": "Total Security Deposit (Include Currency)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "deposit_breakdown",
+      "label": "Deposit Breakdown",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., Paid equally, refunded equally."
+    },
+    {
+      "name": "other_expenses",
+      "label": "Other Shared Expenses (Optional)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "e.g., Netflix, cleaning supplies"
+    },
+    {
+      "name": "utility_split_method",
+      "label": "Utility Split Method",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Split equally among all roommates"
+    },
+    {
+      "name": "utility_payer",
+      "label": "Who manages utility bills?",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Person A pays electricity, Person B pays internet."
+    },
+    {
+      "name": "cleaning_rules",
+      "label": "Cleaning Schedule & Rules",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., Alternating weekly chores, clean up immediately after cooking."
+    },
+    {
+      "name": "guest_rules",
+      "label": "Guest & Overnight Rules",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., No overnight guests without prior notice. Max 3 nights a week."
+    },
+    {
+      "name": "quiet_hours",
+      "label": "Quiet Hours",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., 11:00 PM to 8:00 AM"
+    },
+    {
+      "name": "notice_period",
+      "label": "Moving Out Notice Period (Days)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 30"
+    },
+    {
+      "name": "additional_rules",
+      "label": "Additional Rules (Optional)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Smoking policies, pets, parties, etc."
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

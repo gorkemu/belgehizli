@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "67ff053bd3d0d8e46eebe606"
+  },
   "name": "Ödeme Hatırlatma Yazısı",
   "description": "Vadesi geçmiş bir borcun ödenmesi için borçluya gönderilen nazik hatırlatma mektubu.",
   "price": 5,
@@ -6,23 +9,112 @@
   "slug": "odeme-hatirlatma-yazisi",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p style='text-align: right;'>{{sehir_bilgisi}}, {{formatDate yazi_tarihi}}</p>\n\n  <p><strong>Sayın {{borclu_ad_soyad_unvan}},</strong></p>\n  <p>{{borclu_adres}}</p>\n\n  <p><strong>Konu:</strong> {{fatura_no_referans}} No'lu Fatura / Sözleşme Kaynaklı Vadesi Geçmiş Ödeme Hakkında Hatırlatma</p>\n\n  <p>Muhasebe kayıtlarımıza göre, {{formatDate vade_tarihi}} vade tarihli, {{fatura_no_referans}} numaralı fatura / referanslı {{borc_tutari}} TL tutarındaki borcunuzun ödemesinin henüz yapılmadığı görülmektedir.</p>\n\n  {{#if (eq onceki_hatirlatma_varmi 'Evet')}} \n  <p>Daha önceki hatırlatmamıza rağmen ödemenin gerçekleşmemiş olması nedeniyle bu ikinci hatırlatmayı yapma gereği doğmuştur.</p>\n  {{/if}}\n\n  <p>Yapmış olduğunuz ödeme tarafımıza ulaşmadıysa veya bu hatırlatma ile ilgili bir yanlışlık olduğunu düşünüyorsanız, lütfen en kısa sürede bizimle iletişime geçiniz.</p>\n\n  <p>Eğer ödemeyi henüz yapmadıysanız, yukarıda belirtilen tutarı {{formatDate odeme_son_tarih}} tarihine kadar aşağıdaki hesap bilgilerimize / yöntemle ödemenizi rica ederiz:</p>\n  <p>Banka Adı: {{banka_adi}}<br/>\n  IBAN: {{iban_no}}<br/>\n  Hesap Sahibi: {{hesap_sahibi}}\n  </p>\n\n  <p>Ödemenin belirtilen tarihe kadar yapılmaması durumunda yasal yollara başvurmak zorunda kalacağımızı üzülerek bildiririz.</p>\n\n  <p>İşbirliğiniz için teşekkür eder, iyi çalışmalar dileriz.</p>\n\n  <p>Saygılarımızla,</p>\n\n  <div style='margin-top: 20px;'>\n    <p><strong>{{alacakli_ad_soyad_unvan}}</strong><br/>\n    {{alacakli_adres}}<br/>\n    {{#if alacakli_telefon}}Telefon: {{alacakli_telefon}}<br/>{{/if}}\n    {{#if alacakli_eposta}}E-posta: {{alacakli_eposta}}{{/if}}\n    </p>\n  </div>\n\n</div>",
   "fields": [
-    { "name": "alacakli_ad_soyad_unvan", "label": "Alacaklının Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "alacakli_adres", "label": "Alacaklının Adresi", "fieldType": "textarea", "required": true },
-    { "name": "alacakli_telefon", "label": "Alacaklının Telefonu (Opsiyonel)", "fieldType": "text", "required": false },
-    { "name": "alacakli_eposta", "label": "Alacaklının E-postası (Opsiyonel)", "fieldType": "email", "required": false },
-    { "name": "borclu_ad_soyad_unvan", "label": "Borçlunun Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "borclu_adres", "label": "Borçlunun Adresi", "fieldType": "textarea", "required": true },
-    { "name": "sehir_bilgisi", "label": "Yazının Yazıldığı Şehir", "fieldType": "text", "required": true },
-    { "name": "yazi_tarihi", "label": "Yazının Tarihi", "fieldType": "date", "required": true },
-    { "name": "fatura_no_referans", "label": "Fatura No / Referans Kodu", "fieldType": "text", "required": true },
-    { "name": "vade_tarihi", "label": "Borcun Vade Tarihi", "fieldType": "date", "required": true },
-    { "name": "borc_tutari", "label": "Vadesi Geçmiş Borç Tutarı (TL)", "fieldType": "number", "required": true },
-    { "name": "onceki_hatirlatma_varmi", "label": "Daha Önce Hatırlatma Yapıldı mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "odeme_son_tarih", "label": "Ödeme İçin Verilen Son Tarih", "fieldType": "date", "required": true },
-    { "name": "banka_adi", "label": "Ödeme Yapılacak Banka Adı", "fieldType": "text", "required": true },
-    { "name": "iban_no", "label": "Ödeme Yapılacak IBAN", "fieldType": "text", "required": true },
-    { "name": "hesap_sahibi", "label": "Hesap Sahibi Adı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "alacakli_ad_soyad_unvan",
+      "label": "Alacaklının Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "alacakli_adres",
+      "label": "Alacaklının Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "alacakli_telefon",
+      "label": "Alacaklının Telefonu (Opsiyonel)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "alacakli_eposta",
+      "label": "Alacaklının E-postası (Opsiyonel)",
+      "fieldType": "email",
+      "required": false
+    },
+    {
+      "name": "borclu_ad_soyad_unvan",
+      "label": "Borçlunun Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borclu_adres",
+      "label": "Borçlunun Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "sehir_bilgisi",
+      "label": "Yazının Yazıldığı Şehir",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yazi_tarihi",
+      "label": "Yazının Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "fatura_no_referans",
+      "label": "Fatura No / Referans Kodu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "vade_tarihi",
+      "label": "Borcun Vade Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "borc_tutari",
+      "label": "Vadesi Geçmiş Borç Tutarı (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "onceki_hatirlatma_varmi",
+      "label": "Daha Önce Hatırlatma Yapıldı mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "odeme_son_tarih",
+      "label": "Ödeme İçin Verilen Son Tarih",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "banka_adi",
+      "label": "Ödeme Yapılacak Banka Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "iban_no",
+      "label": "Ödeme Yapılacak IBAN",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "hesap_sahibi",
+      "label": "Hesap Sahibi Adı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

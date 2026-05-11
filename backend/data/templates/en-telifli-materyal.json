@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a4df4a6478ae3b9856"
+  },
   "name": "Copyright Material Release / Usage License",
   "description": "A legal release form granting permission from a copyright owner to a user for the specific use of a copyrighted work.",
   "price": 8,
@@ -6,27 +9,163 @@
   "slug": "copyright-material-release-usage-license",
   "content": "<h3 style='text-align:center;'>COPYRIGHT MATERIAL RELEASE / USAGE LICENSE</h3>\n<p>This Copyright Material Release and Usage License (the \"Release\") is granted by the Licensor, {{licensor_name}}, to the Licensee, {{licensee_name}}, under the terms and conditions outlined below.</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>Licensor (Copyright Owner):</strong> {{licensor_name}}, Address: {{licensor_address}}, Email: {{licensor_email}}</p>\n<p><strong>Licensee (User):</strong> {{licensee_name}}, Address: {{licensee_address}}, Email: {{licensee_email}}</p>\n\n<p><strong>2. DESCRIPTION OF COPYRIGHTED WORK</strong></p>\n<p>Description of Work: {{work_description}}</p>\n<p>Source / URL (If applicable): {{work_source_link}}</p>\n\n<p><strong>3. SCOPE OF LICENSE</strong></p>\n<p>The Licensor hereby grants the Licensee permission to use the Work for the following purposes and within the specified parameters:</p>\n<ul>\n <li>Permitted Use / Purpose: {{permitted_use}}</li>\n <li>Permitted Media / Platforms: {{permitted_media}}</li>\n <li>Duration of License: {{license_duration}}</li>\n <li>Territory: {{license_territory}}</li>\n <li>Exclusivity: {{#if (eq is_exclusive 'Yes')}}This license is EXCLUSIVE (Licensor may not grant these same rights to others).{{else}}This license is NON-EXCLUSIVE (Licensor retains the right to grant these rights to others).{{/if}}</li>\n</ul>\n\n<p><strong>4. TERMS AND CONDITIONS</strong></p>\n<ul>\n <li><strong>Attribution:</strong> The Licensee {{#if (eq attribution_required 'Yes')}}MUST provide credit to the Licensor when using the Work. Credit format: {{attribution_format}}{{else}}is NOT required to provide credit/attribution when using the Work.{{/if}}</li>\n <li><strong>Alterations:</strong> The Licensee {{#if (eq alterations_allowed 'Yes')}}is permitted to make minor alterations (cropping, resizing, filtering) to the Work.{{else}}is STRICTLY PROHIBITED from altering, editing, or modifying the Work in any way.{{/if}}</li>\n <li>This license does not permit the use of the Work for any unlawful, defamatory, or pornographic purposes.</li>\n {{#if additional_conditions}}<li><strong>Additional Conditions:</strong> {{additional_conditions}}</li>{{/if}}\n</ul>\n\n<p><strong>5. COMPENSATION</strong></p>\n{{#if (eq is_compensated 'Yes')}}\n<p>In consideration for the rights granted herein, the Licensee has paid the Licensor a licensing fee of <strong>{{license_fee}}</strong>. This payment represents full and final compensation for the agreed usage.</p>\n{{else}}\n<p>This license is granted gratuitously; no financial compensation has been exchanged.</p>\n{{/if}}\n\n<p>By signing below, the Parties acknowledge they have read, understood, and agreed to the terms of this Release on {{formatDate agreement_date}}.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Licensor (Copyright Owner)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{licensor_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Licensee (User)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{licensee_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "licensor_name", "label": "Licensor's Name (Copyright Owner)", "fieldType": "text", "required": true },
-    { "name": "licensor_address", "label": "Licensor's Address", "fieldType": "textarea", "required": true },
-    { "name": "licensor_email", "label": "Licensor's Email", "fieldType": "email", "required": true },
-    { "name": "licensee_name", "label": "Licensee's Name (User)", "fieldType": "text", "required": true },
-    { "name": "licensee_address", "label": "Licensee's Address", "fieldType": "textarea", "required": true },
-    { "name": "licensee_email", "label": "Licensee's Email", "fieldType": "email", "required": true },
-    { "name": "work_description", "label": "Description of Copyrighted Work", "fieldType": "textarea", "placeholder": "e.g., Photograph titled 'Sunset in NY', Article on AI", "required": true },
-    { "name": "work_source_link", "label": "Source / URL to Work (Optional)", "fieldType": "text", "required": false },
-    { "name": "permitted_use", "label": "Permitted Purpose of Use", "fieldType": "text", "placeholder": "e.g., Commercial website hero image, Educational flyer", "required": true },
-    { "name": "permitted_media", "label": "Permitted Media / Platforms", "fieldType": "text", "placeholder": "e.g., www.mycompany.com only, All Print Media", "required": true },
-    { "name": "license_duration", "label": "Duration of License", "fieldType": "text", "placeholder": "e.g., 1 Year, Perpetuity", "required": true },
-    { "name": "license_territory", "label": "Territory / Region", "fieldType": "text", "placeholder": "e.g., Worldwide, United States Only", "required": true },
-    { "name": "is_exclusive", "label": "Is this an Exclusive license?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "attribution_required", "label": "Is Attribution / Credit required?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "attribution_format", "label": "Format of Attribution (If Yes)", "fieldType": "text", "placeholder": "e.g., Photo by Jane Doe, © 2026 Jane Doe", "required": false, "condition": { "field": "attribution_required", "value": "Yes" } },
-    { "name": "alterations_allowed", "label": "Are Alterations / Edits allowed?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "additional_conditions", "label": "Additional Conditions (Optional)", "fieldType": "textarea", "required": false },
-    { "name": "is_compensated", "label": "Is a licensing fee being paid?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "license_fee", "label": "License Fee Amount (If Yes)", "fieldType": "text", "placeholder": "e.g., $150", "required": false, "condition": { "field": "is_compensated", "value": "Yes" } },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "licensor_name",
+      "label": "Licensor's Name (Copyright Owner)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "licensor_address",
+      "label": "Licensor's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "licensor_email",
+      "label": "Licensor's Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "licensee_name",
+      "label": "Licensee's Name (User)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "licensee_address",
+      "label": "Licensee's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "licensee_email",
+      "label": "Licensee's Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "work_description",
+      "label": "Description of Copyrighted Work",
+      "fieldType": "textarea",
+      "placeholder": "e.g., Photograph titled 'Sunset in NY', Article on AI",
+      "required": true
+    },
+    {
+      "name": "work_source_link",
+      "label": "Source / URL to Work (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "permitted_use",
+      "label": "Permitted Purpose of Use",
+      "fieldType": "text",
+      "placeholder": "e.g., Commercial website hero image, Educational flyer",
+      "required": true
+    },
+    {
+      "name": "permitted_media",
+      "label": "Permitted Media / Platforms",
+      "fieldType": "text",
+      "placeholder": "e.g., www.mycompany.com only, All Print Media",
+      "required": true
+    },
+    {
+      "name": "license_duration",
+      "label": "Duration of License",
+      "fieldType": "text",
+      "placeholder": "e.g., 1 Year, Perpetuity",
+      "required": true
+    },
+    {
+      "name": "license_territory",
+      "label": "Territory / Region",
+      "fieldType": "text",
+      "placeholder": "e.g., Worldwide, United States Only",
+      "required": true
+    },
+    {
+      "name": "is_exclusive",
+      "label": "Is this an Exclusive license?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "attribution_required",
+      "label": "Is Attribution / Credit required?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "attribution_format",
+      "label": "Format of Attribution (If Yes)",
+      "fieldType": "text",
+      "placeholder": "e.g., Photo by Jane Doe, © 2026 Jane Doe",
+      "required": false,
+      "condition": {
+        "field": "attribution_required",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "alterations_allowed",
+      "label": "Are Alterations / Edits allowed?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "additional_conditions",
+      "label": "Additional Conditions (Optional)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "is_compensated",
+      "label": "Is a licensing fee being paid?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "license_fee",
+      "label": "License Fee Amount (If Yes)",
+      "fieldType": "text",
+      "placeholder": "e.g., $150",
+      "required": false,
+      "condition": {
+        "field": "is_compensated",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a4df4a6478ae3b9855"
+  },
   "name": "Business Proposal / Price Quote",
   "description": "A formal document outlining the scope of work, timeline, and pricing for products or services offered to a client.",
   "price": 10,
@@ -6,27 +9,139 @@
   "slug": "business-proposal-price-quote",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; border: 1px solid #eee;'>\n<h2 style='text-align:center; margin-bottom: 25px;'>PROPOSAL / QUOTATION</h2>\n\n<div style='display: flex; justify-content: space-between; margin-bottom: 25px; flex-wrap: wrap;'>\n <div style='flex-basis: 48%;'>\n <p><strong>Submitted By:</strong></p>\n <p>{{provider_name_company}}<br/>\n {{provider_address}}<br/>\n {{#if provider_tax_id}}Tax ID / VAT: {{provider_tax_id}}<br/>{{/if}}\n Tel: {{provider_phone}}<br/>\n Email: {{provider_email}}\n </p>\n </div>\n <div style='flex-basis: 48%; text-align: right;'>\n <p><strong>Quote No:</strong> {{quote_number}}</p>\n <p><strong>Date:</strong> {{formatDate quote_date}}</p>\n <p><strong>Valid Until:</strong> {{validity_days}} Days from Date</p>\n </div>\n</div>\n\n<hr style='margin: 20px 0;'/>\n\n<p><strong>Submitted To (Client):</strong></p>\n<p>{{client_name_company}}<br/>\n{{client_address}}<br/>\n{{#if client_contact_person}}Attn: {{client_contact_person}}<br/>{{/if}}\n{{#if client_phone}}Tel: {{client_phone}}<br/>{{/if}}\n{{#if client_email}}Email: {{client_email}}{{/if}}\n</p>\n\n<p><strong>Project/Subject:</strong> {{quote_subject}}</p>\n\n<p>Dear {{#if client_contact_person}}{{client_contact_person}}{{else}}{{client_name_company}}{{/if}},</p>\n<p>Thank you for the opportunity to provide this proposal. Based on our discussions, please find our scope of work and pricing below regarding {{quote_subject}}:</p>\n\n<p><strong>Scope of Work / Deliverables:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{scope_of_work}}</pre>\n\n<p><strong>Pricing & Breakdown:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{pricing_details}}</pre>\n<p><strong>Grand Total: {{grand_total}} (Excluding Applicable Taxes)</strong></p>\n\n{{#if estimated_timeline}}\n<p><strong>Estimated Timeline:</strong> {{estimated_timeline}}</p>\n{{/if}}\n\n<p><strong>Payment Terms:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{payment_terms}}</pre>\n\n{{#if additional_notes}}\n<p><strong>Additional Notes / Terms:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{additional_notes}}</pre>\n{{/if}}\n\n<p>If you have any questions or require modifications to this proposal, please do not hesitate to contact us. To accept this quote, please sign below and return a copy to us.</p>\n\n<p>Sincerely,</p>\n\n<div style='margin-top: 30px; display: flex; justify-content: space-between;'>\n <div style='flex-basis: 48%;'>\n <p><strong>Provider Signature</strong><br/><br/>\n <span style='display: inline-block; margin-top: 15px;'>_________________________</span><br/>\n {{provider_name_company}}\n </p>\n </div>\n <div style='flex-basis: 48%;'>\n <p><strong>Client Acceptance</strong><br/><br/>\n <span style='display: inline-block; margin-top: 15px;'>_________________________</span><br/>\n Date: _____________\n </p>\n </div>\n</div>\n</div>",
   "fields": [
-    { "name": "provider_name_company", "label": "Your Name / Company Name", "fieldType": "text", "required": true },
-    { "name": "provider_address", "label": "Your Address", "fieldType": "textarea", "required": true },
-    { "name": "provider_tax_id", "label": "Your Tax ID / VAT (Optional)", "fieldType": "text", "required": false },
-    { "name": "provider_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
-    { "name": "provider_email", "label": "Your Email Address", "fieldType": "email", "required": true },
-    { "name": "client_name_company", "label": "Client's Name / Company", "fieldType": "text", "required": true },
-    { "name": "client_address", "label": "Client's Address", "fieldType": "textarea", "required": true },
-    { "name": "client_contact_person", "label": "Client Contact Person (Optional)", "fieldType": "text", "required": false },
-    { "name": "client_phone", "label": "Client Phone (Optional)", "fieldType": "text", "required": false },
-    { "name": "client_email", "label": "Client Email (Optional)", "fieldType": "email", "required": false },
-    { "name": "quote_number", "label": "Quote / Proposal Number", "fieldType": "text", "required": true },
-    { "name": "quote_date", "label": "Date of Quote", "fieldType": "date", "required": true },
-    { "name": "validity_days", "label": "Validity Period (Days)", "fieldType": "number", "required": true, "placeholder": "e.g., 15, 30" },
-    { "name": "quote_subject", "label": "Project / Subject Name", "fieldType": "text", "required": true, "placeholder": "e.g., Website Redesign, SEO Consulting" },
-    { "name": "scope_of_work", "label": "Scope of Work / Deliverables", "fieldType": "textarea", "required": true, "placeholder": "List the services or products being provided." },
-    { "name": "pricing_details", "label": "Pricing Breakdown", "fieldType": "textarea", "required": true, "placeholder": "Itemize the costs. e.g., Design: $500, Development: $1000" },
-    { "name": "grand_total", "label": "Grand Total (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,500.00" },
-    { "name": "estimated_timeline", "label": "Estimated Timeline (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., 4 Weeks from approval" },
-    { "name": "payment_terms", "label": "Payment Terms", "fieldType": "textarea", "required": true, "placeholder": "e.g., 50% deposit upfront, 50% upon completion." },
-    { "name": "additional_notes", "label": "Additional Notes (Optional)", "fieldType": "textarea", "required": false },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "provider_name_company",
+      "label": "Your Name / Company Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "provider_address",
+      "label": "Your Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "provider_tax_id",
+      "label": "Your Tax ID / VAT (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "provider_phone",
+      "label": "Your Phone Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "provider_email",
+      "label": "Your Email Address",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "client_name_company",
+      "label": "Client's Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "client_address",
+      "label": "Client's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "client_contact_person",
+      "label": "Client Contact Person (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "client_phone",
+      "label": "Client Phone (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "client_email",
+      "label": "Client Email (Optional)",
+      "fieldType": "email",
+      "required": false
+    },
+    {
+      "name": "quote_number",
+      "label": "Quote / Proposal Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "quote_date",
+      "label": "Date of Quote",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "validity_days",
+      "label": "Validity Period (Days)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 15, 30"
+    },
+    {
+      "name": "quote_subject",
+      "label": "Project / Subject Name",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Website Redesign, SEO Consulting"
+    },
+    {
+      "name": "scope_of_work",
+      "label": "Scope of Work / Deliverables",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "List the services or products being provided."
+    },
+    {
+      "name": "pricing_details",
+      "label": "Pricing Breakdown",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Itemize the costs. e.g., Design: $500, Development: $1000"
+    },
+    {
+      "name": "grand_total",
+      "label": "Grand Total (Include Currency)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., $1,500.00"
+    },
+    {
+      "name": "estimated_timeline",
+      "label": "Estimated Timeline (Optional)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "e.g., 4 Weeks from approval"
+    },
+    {
+      "name": "payment_terms",
+      "label": "Payment Terms",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., 50% deposit upfront, 50% upon completion."
+    },
+    {
+      "name": "additional_notes",
+      "label": "Additional Notes (Optional)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

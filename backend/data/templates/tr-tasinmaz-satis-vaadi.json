@@ -7,30 +7,167 @@
   "slug": "tasinmaz-satis-vaadi-sozlesmesi",
   "content": "<h2 style='text-align:center;'>TAŞINMAZ SATIŞ VAADİ SÖZLEŞMESİ</h2>\n<p>İşbu Taşınmaz Satış Vaadi Sözleşmesi (\"Sözleşme\"), bir tarafta Satış Vaadinde Bulunan (Vaat Eden Borçlu) ile diğer tarafta Satın Almayı Vaat Eden (Vaat Eden Alacaklı) arasında, aşağıda nitelikleri belirtilen taşınmazın satışı konusunda {{formatDate sozlesme_tarihi}} tarihinde aşağıdaki şartlarla düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. SATIŞ VAADİNDE BULUNAN (Vaat Eden Borçlu):</strong><br/>\nAdı Soyadı / Unvanı: {{satis_vaadi_eden_ad}}<br/>\nT.C. Kimlik No / Vergi No: {{satis_vaadi_eden_tc_vergi_no}}<br/>\nAdresi: {{satis_vaadi_eden_adres}}\n</p>\n<p><strong>B. SATIN ALMAYI VAAT EDEN (Vaat Eden Alacaklı):</strong><br/>\nAdı Soyadı / Unvanı: {{satin_alma_vaadi_eden_ad}}<br/>\nT.C. Kimlik No / Vergi No: {{satin_alma_vaadi_eden_tc_vergi_no}}<br/>\nAdresi: {{satin_alma_vaadi_eden_adres}}\n</p>\n\n<p><strong>2. SATIŞ VAADİNE KONU TAŞINMAZIN BİLGİLERİ</strong></p>\n<p>Satış vaadine konu olan taşınmazın tapu ve adres bilgileri aşağıdaki gibidir:</p>\n<ul>\n <li>İl: {{tasinmaz_il}}</li>\n <li>İlçe: {{tasinmaz_ilce}}</li>\n <li>Mahalle/Köy: {{tasinmaz_mahalle}}</li>\n <li>Ada No: {{tasinmaz_ada_no}}</li>\n <li>Parsel No: {{tasinmaz_parsel_no}}</li>\n <li>Niteliği (Arsa, Konut, İşyeri vb.): {{tasinmaz_nitelik}}</li>\n <li>Açık Adresi: {{tasinmaz_adres}}</li>\n</ul>\n\n<p><strong>3. SATIŞ BEDELİ VE ÖDEME PLANI</strong></p>\n<p>Taraflar, satış vaadine konu taşınmazın satış bedelini toplam {{satis_bedeli}} TL ({{satis_bedeli_yazi}} Türk Lirası) olarak belirlemişlerdir.</p>\n<p>Bu bedelin ödeme planı aşağıdaki gibidir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{odeme_plani}}</pre>\n\n<p><strong>4. TAPU DEVRİ VE TESLİM</strong></p>\n<p>Satış Vaadinde Bulunan, satış bedelinin tamamının ödenmesini müteakip, en geç {{formatDate tapu_devir_tarihi}} tarihine kadar tapu sicil müdürlüğünde taşınmazın mülkiyetini Satın Almayı Vaat Eden adına tescil ettirmeyi kabul ve taahhüt eder.</p>\n<p>Taşınmazın fiili teslimi {{formatDate fiziki_teslim_tarihi}} tarihinde yapılacaktır.</p>\n<p>Tapu devir işlemleri ile ilgili harç ve masraflar {{#if (eq tapu_masraflari_kimde 'Alıcıya Ait')}}Alıcı tarafından karşılanacaktır.{{else if (eq tapu_masraflari_kimde 'Satıcıya Ait')}}Satıcı tarafından karşılanacaktır.{{else}}Taraflarca yarı yarıya paylaşılacaktır.{{/if}}</p>\n\n<p><strong>5. CAYMA AKÇESİ / CEZAİ ŞART (Varsa)</strong></p>\n{{#if (eq cezai_sart_varmi 'Evet')}}\n<p>Taraflardan herhangi birinin işbu sözleşmeden cayması veya sözleşme şartlarına uymaması halinde, kusurlu taraf diğer tarafa {{cezai_sart_miktari}} TL cezai şart ödemeyi kabul ve taahhüt eder. Bu durum, diğer tarafın ayrıca tazminat talep etme hakkını ortadan kaldırmaz.</p>\n{{else}}\n<p>Bu sözleşmede cayma durumunda özel bir cezai şart belirlenmemiştir. Tarafların genel hukuk kurallarından doğan hakları saklıdır.</p>\n{{/if}}\n\n<p><strong>6. SATIŞ VAADİNDE BULUNANIN BEYANLARI</strong></p>\n<p>Satış Vaadinde Bulunan, sözleşme konusu taşınmazın kendi mülkiyetinde olduğunu, üzerinde satışa engel herhangi bir haciz, ipotek, şerh, kısıtlama veya üçüncü şahıs hakkı bulunmadığını, imar durumuyla ilgili bir sorunu olmadığını beyan ve taahhüt eder.</p>\n\n<p><strong>7. DİĞER HÜKÜMLER</strong></p>\n<p>İşbu sözleşme, tarafların serbest iradeleri ile imzalanmış olup, tapuya şerh edilebilir niteliktedir. Sözleşmede hüküm bulunmayan hallerde Türk Borçlar Kanunu hükümleri geçerlidir.</p>\n<p>Sözleşmeden kaynaklanacak uyuşmazlıklarda {{yetkili_mahkeme}} Mahkemeleri ve İcra Daireleri yetkilidir.</p>\n\n<p>İşbu Taşınmaz Satış Vaadi Sözleşmesi 7 (yedi) maddeden ibaret olup, taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate sozlesme_tarihi}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Satış Vaadinde Bulunan</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{satis_vaadi_eden_ad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Satın Almayı Vaat Eden</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{satin_alma_vaadi_eden_ad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "satis_vaadi_eden_ad", "label": "Satış Vaadinde Bulunan Adı Soyadı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "satis_vaadi_eden_tc_vergi_no", "label": "Satış Vaadinde Bulunan T.C. No/Vergi No", "fieldType": "text", "required": true },
-    { "name": "satis_vaadi_eden_adres", "label": "Satış Vaadinde Bulunan Adresi", "fieldType": "textarea", "required": true },
-    { "name": "satin_alma_vaadi_eden_ad", "label": "Satın Almayı Vaat Eden Adı Soyadı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "satin_alma_vaadi_eden_tc_vergi_no", "label": "Satın Almayı Vaat Eden T.C. No/Vergi No", "fieldType": "text", "required": true },
-    { "name": "satin_alma_vaadi_eden_adres", "label": "Satın Almayı Vaat Eden Adresi", "fieldType": "textarea", "required": true },
-    { "name": "tasinmaz_il", "label": "Taşınmazın Bulunduğu İl", "fieldType": "text", "required": true },
-    { "name": "tasinmaz_ilce", "label": "Taşınmazın Bulunduğu İlçe", "fieldType": "text", "required": true },
-    { "name": "tasinmaz_mahalle", "label": "Taşınmazın Bulunduğu Mahalle/Köy", "fieldType": "text", "required": true },
-    { "name": "tasinmaz_ada_no", "label": "Taşınmaz Ada No", "fieldType": "text", "required": true },
-    { "name": "tasinmaz_parsel_no", "label": "Taşınmaz Parsel No", "fieldType": "text", "required": true },
-    { "name": "tasinmaz_nitelik", "label": "Taşınmazın Niteliği", "fieldType": "text", "placeholder": "Örn: Arsa, Mesken (Daire), Dükkan", "required": true },
-    { "name": "tasinmaz_adres", "label": "Taşınmazın Açık Adresi", "fieldType": "textarea", "required": true },
-    { "name": "satis_bedeli", "label": "Satış Bedeli (TL)", "fieldType": "number", "required": true },
-    { "name": "satis_bedeli_yazi", "label": "Satış Bedeli (Yazıyla)", "fieldType": "text", "required": true },
-    { "name": "odeme_plani", "label": "Ödeme Planı", "fieldType": "textarea", "placeholder": "Örn: Sözleşme tarihinde ... TL kapora, kalan ... TL tapu devrinde.", "required": true },
-    { "name": "tapu_devir_tarihi", "label": "En Geç Tapu Devir Tarihi", "fieldType": "date", "required": true },
-    { "name": "fiziki_teslim_tarihi", "label": "Taşınmazın Fiziki Teslim Tarihi", "fieldType": "date", "required": true },
-    { "name": "tapu_masraflari_kimde", "label": "Tapu Harç ve Masrafları Kime Ait?", "fieldType": "select", "options": ["Alıcıya Ait", "Satıcıya Ait", "Yarı Yarıya Paylaşılacak"], "required": true },
-    { "name": "cezai_sart_varmi", "label": "Cayma/Aykırılık Halinde Cezai Şart Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "cezai_sart_miktari", "label": "Cezai Şart Miktarı (TL)", "fieldType": "number", "required": false, "placeholder": "Evet seçildiyse doldurun", "condition": { "field": "cezai_sart_varmi", "value": "Evet" } },
-    { "name": "yetkili_mahkeme", "label": "Yetkili Mahkeme", "fieldType": "text", "placeholder": "Taşınmazın bulunduğu yer mahkemesi", "required": true },
-    { "name": "sozlesme_tarihi", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "satis_vaadi_eden_ad",
+      "label": "Satış Vaadinde Bulunan Adı Soyadı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "satis_vaadi_eden_tc_vergi_no",
+      "label": "Satış Vaadinde Bulunan T.C. No/Vergi No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "satis_vaadi_eden_adres",
+      "label": "Satış Vaadinde Bulunan Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "satin_alma_vaadi_eden_ad",
+      "label": "Satın Almayı Vaat Eden Adı Soyadı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "satin_alma_vaadi_eden_tc_vergi_no",
+      "label": "Satın Almayı Vaat Eden T.C. No/Vergi No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "satin_alma_vaadi_eden_adres",
+      "label": "Satın Almayı Vaat Eden Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_il",
+      "label": "Taşınmazın Bulunduğu İl",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_ilce",
+      "label": "Taşınmazın Bulunduğu İlçe",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_mahalle",
+      "label": "Taşınmazın Bulunduğu Mahalle/Köy",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_ada_no",
+      "label": "Taşınmaz Ada No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_parsel_no",
+      "label": "Taşınmaz Parsel No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_nitelik",
+      "label": "Taşınmazın Niteliği",
+      "fieldType": "text",
+      "placeholder": "Örn: Arsa, Mesken (Daire), Dükkan",
+      "required": true
+    },
+    {
+      "name": "tasinmaz_adres",
+      "label": "Taşınmazın Açık Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "satis_bedeli",
+      "label": "Satış Bedeli (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "satis_bedeli_yazi",
+      "label": "Satış Bedeli (Yazıyla)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "odeme_plani",
+      "label": "Ödeme Planı",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Sözleşme tarihinde ... TL kapora, kalan ... TL tapu devrinde.",
+      "required": true
+    },
+    {
+      "name": "tapu_devir_tarihi",
+      "label": "En Geç Tapu Devir Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "fiziki_teslim_tarihi",
+      "label": "Taşınmazın Fiziki Teslim Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "tapu_masraflari_kimde",
+      "label": "Tapu Harç ve Masrafları Kime Ait?",
+      "fieldType": "select",
+      "options": [
+        "Alıcıya Ait",
+        "Satıcıya Ait",
+        "Yarı Yarıya Paylaşılacak"
+      ],
+      "required": true
+    },
+    {
+      "name": "cezai_sart_varmi",
+      "label": "Cayma/Aykırılık Halinde Cezai Şart Var mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "cezai_sart_miktari",
+      "label": "Cezai Şart Miktarı (TL)",
+      "fieldType": "number",
+      "required": false,
+      "placeholder": "Evet seçildiyse doldurun",
+      "condition": {
+        "field": "cezai_sart_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "yetkili_mahkeme",
+      "label": "Yetkili Mahkeme",
+      "fieldType": "text",
+      "placeholder": "Taşınmazın bulunduğu yer mahkemesi",
+      "required": true
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

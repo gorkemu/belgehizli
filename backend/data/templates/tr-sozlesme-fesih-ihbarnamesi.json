@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "69ccea6baf5c8e5d5dfd55ea"
+  },
   "name": "Sözleşme Fesih İhbarnamesi",
   "description": "Karşı tarafın sözleşme şartlarına uymaması nedeniyle sözleşmenin haklı nedenle feshedildiğini bildiren resmi yazı.",
   "price": 10,
@@ -6,17 +9,75 @@
   "slug": "sozlesme-fesih-ihbarnamesi",
   "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h3 style='text-align: center; padding-bottom: 10px;'>FESİH İHBARNAMESİ</h3>\n\n  <p><strong>KEŞİDECİ:</strong> {{ad_soyad_unvan}}<br/><strong>ADRES:</strong> {{adres}}</p>\n\n  <p><strong>MUHATAP:</strong> {{muhatap_ad_soyad_unvan}}<br/><strong>ADRES:</strong> {{muhatap_adres}}</p>\n\n  <p><strong>KONU:</strong> {{formatDate sozlesme_tarihi}} tarihli {{sozlesme_konusu}} sözleşmesinin haklı nedenle feshi bildirimidir.</p>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <p>Tarafınızla akdedilen sözleşme uyarınca üstlendiğiniz yükümlülükler, aşağıda belirtilen nedenlerle ihlal edilmiştir:</p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{ihlal_nedenleri}}</pre>\n\n  <p>Söz konusu aykırılıkların giderilmesi için tarafınıza daha önce şifahi/yazılı bildirim yapılmış olmasına rağmen herhangi bir düzeltme sağlanmamıştır. Bu nedenle, sözleşmenin {{madde_no}}. maddesine dayanarak sözleşmeyi <strong>HAKLI NEDENLE MÜNFERİDEN FESHETTİĞİMİZİ</strong> bildiririz.</p>\n\n  <p><strong>TALEP VE SONUÇ:</strong> Sözleşmenin feshi ile birlikte doğan {{tazminat_tutar}} TL tutarındaki zararımızın/cezai şartın {{odeme_suresi}} gün içinde ödenmesini, aksi halde yasal yollara başvurulacağını ihtar ederiz.</p>\n\n  <p style='text-align: right; margin-top: 40px;'><strong>İHTAR EDEN</strong></p>\n  <p style='text-align: right;'>{{ad_soyad_unvan}}<br/><br/><br/>İmza: ____________________</p><br/>\n\n  <p style='margin-top: 20px; font-size: 0.9em;'><strong>SAYIN NOTER:</strong> Üç nüshadan ibaret işbu ihbarnamenin bir nüshasının muhataba tebliğini, bir nüshasının dairenizde saklanmasını, tebliğ şerhini havi bir nüshasının tarafıma verilmesini talep ederim.</p>\n</div>",
   "fields": [
-    { "name": "ad_soyad_unvan", "label": "Adınız veya Şirket Ünvanınız", "fieldType": "text", "required": true },
-    { "name": "adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
-    { "name": "muhatap_ad_soyad_unvan", "label": "Karşı Tarafın Adı/Ünvanı", "fieldType": "text", "required": true },
-    { "name": "muhatap_adres", "label": "Karşı Tarafın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "sozlesme_tarihi", "label": "Feshedilen Sözleşmenin Tarihi", "fieldType": "date", "required": true },
-    { "name": "sozlesme_konusu", "label": "Sözleşmenin Konusu", "fieldType": "text", "required": true, "placeholder": "Örn: Yazılım Geliştirme Hizmeti" },
-    { "name": "ihlal_nedenleri", "label": "Fesih Nedenleri (İhlaller)", "fieldType": "textarea", "required": true, "placeholder": "Örn: İşin süresinde teslim edilmemesi, ödemelerin yapılmaması vb." },
-    { "name": "madde_no", "label": "Sözleşmedeki Fesih Maddesi No", "fieldType": "text", "required": true, "placeholder": "Örn: 12" },
-    { "name": "tazminat_tutar", "label": "Varsa Tazminat/Cezai Şart Tutarı (TL)", "fieldType": "number", "required": false },
-    { "name": "odeme_suresi", "label": "Ödeme İçin Verilen Süre (Gün)", "fieldType": "number", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "ad_soyad_unvan",
+      "label": "Adınız veya Şirket Ünvanınız",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "adres",
+      "label": "Adresiniz",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "muhatap_ad_soyad_unvan",
+      "label": "Karşı Tarafın Adı/Ünvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "muhatap_adres",
+      "label": "Karşı Tarafın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Feshedilen Sözleşmenin Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "sozlesme_konusu",
+      "label": "Sözleşmenin Konusu",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Yazılım Geliştirme Hizmeti"
+    },
+    {
+      "name": "ihlal_nedenleri",
+      "label": "Fesih Nedenleri (İhlaller)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: İşin süresinde teslim edilmemesi, ödemelerin yapılmaması vb."
+    },
+    {
+      "name": "madde_no",
+      "label": "Sözleşmedeki Fesih Maddesi No",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: 12"
+    },
+    {
+      "name": "tazminat_tutar",
+      "label": "Varsa Tazminat/Cezai Şart Tutarı (TL)",
+      "fieldType": "number",
+      "required": false
+    },
+    {
+      "name": "odeme_suresi",
+      "label": "Ödeme İçin Verilen Süre (Gün)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

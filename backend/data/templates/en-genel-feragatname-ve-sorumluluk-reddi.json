@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a2df4a6478ae3b982d"
+  },
   "name": "General Waiver and Release of Liability",
   "description": "A formal document stating that an individual understands the risks associated with an activity or service and waives their right to pursue legal action.",
   "price": 5,
@@ -6,15 +9,62 @@
   "slug": "general-waiver-and-release-of-liability",
   "content": "<h2 style='text-align:center;'>WAIVER AND RELEASE OF LIABILITY</h2>\n<p>I, the undersigned <strong>{{participant_name}}</strong>, residing at {{participant_address}} (ID/Passport No: {{participant_id}}), hereby acknowledge and agree to the following terms regarding my participation in / use of <strong>{{activity_service}}</strong>:</p>\n\n<ol>\n  <li>I fully understand and acknowledge the nature, potential risks, and consequences of the {{activity_service}}.</li>\n  <li>I declare that I am participating in / using this {{activity_service}} voluntarily and that I assume all associated risks, known and unknown.</li>\n  <li>I hereby release, waive, discharge, and covenant not to sue <strong>{{released_party}}</strong> (including their employees, officers, agents, and affiliates) from any and all liability, claims, demands, actions, or causes of action arising out of any damage, loss, or injury to my person or property while participating in this {{activity_service}}.</li>\n  <li>I understand that this release includes any claims based on negligence, action, or inaction of {{released_party}}.</li>\n  {{#if additional_clause_1}}<li>{{additional_clause_1}}</li>{{/if}}\n  {{#if additional_clause_2}}<li>{{additional_clause_2}}</li>{{/if}}\n</ol>\n\n<p style='margin-top: 20px; font-weight: bold; text-transform: uppercase;'>I HAVE CAREFULLY READ THIS AGREEMENT AND FULLY UNDERSTAND ITS CONTENTS. I AM AWARE THAT THIS IS A RELEASE OF LIABILITY AND A CONTRACT BETWEEN MYSELF AND {{released_party}} AND I SIGN IT OF MY OWN FREE WILL.</p>\n\n<p style='margin-top: 40px;'>Date: {{formatDate date_of_signing}}</p>\n\n<div style='margin-top: 20px;'>\n  <p><strong>Participant's Name:</strong> {{participant_name}}</p>\n  <br/><br/><p><strong>Signature:</strong> _________________________</p>\n</div>",
   "fields": [
-    { "name": "participant_name", "label": "Participant's Full Name", "fieldType": "text", "required": true },
-    { "name": "participant_id", "label": "ID or Passport Number", "fieldType": "text", "required": true },
-    { "name": "participant_address", "label": "Participant's Address", "fieldType": "textarea", "required": true },
-    { "name": "activity_service", "label": "Activity, Service, or Event", "fieldType": "text", "required": true, "placeholder": "e.g., Hiking Excursion, Gym Membership, Workshop" },
-    { "name": "released_party", "label": "Party Released from Liability", "fieldType": "text", "required": true, "placeholder": "e.g., ABC Organization, Gym LLC, Instructor's Name" },
-    { "name": "additional_clause_1", "label": "Additional Clause 1 (Optional)", "fieldType": "textarea", "required": false },
-    { "name": "additional_clause_2", "label": "Additional Clause 2 (Optional)", "fieldType": "textarea", "required": false },
-    { "name": "date_of_signing", "label": "Date of Signing", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "participant_name",
+      "label": "Participant's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "participant_id",
+      "label": "ID or Passport Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "participant_address",
+      "label": "Participant's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "activity_service",
+      "label": "Activity, Service, or Event",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Hiking Excursion, Gym Membership, Workshop"
+    },
+    {
+      "name": "released_party",
+      "label": "Party Released from Liability",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., ABC Organization, Gym LLC, Instructor's Name"
+    },
+    {
+      "name": "additional_clause_1",
+      "label": "Additional Clause 1 (Optional)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "additional_clause_2",
+      "label": "Additional Clause 2 (Optional)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "date_of_signing",
+      "label": "Date of Signing",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -7,14 +7,54 @@
   "slug": "tahliye-taahhutnamesi",
   "content": "<div style='font-family: Inter, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center; margin-bottom: 30px;'>TAHLİYE TAAHHÜTNAMESİ</h2>\n\n  <p><strong>TAAHHÜT EDEN (Kiracı):</strong> {{kiraci_ad_soyad}}<br/>\n  <strong>T.C. KİMLİK NO:</strong> {{kiraci_tc_no}}<br/>\n  <strong>MAL SAHİBİ (Kiralayan):</strong> {{kiralayan_ad_soyad}}<br/>\n  <strong>TAHLİYE EDİLECEK ADRES:</strong> {{tahliye_adresi}}<br/>\n  <strong>KİRA SÖZLEŞMESİ TARİHİ:</strong> {{formatDate sozlesme_tarihi}}<br/>\n  <strong>TAHLİYE TARİHİ:</strong> {{formatDate tahliye_tarihi}}\n  </p>\n\n  <p>Halen kiracı olarak kullanmakta olduğum yukarıda adresi belirtilen taşınmazı, hiçbir ihtar ve ihbara gerek kalmaksızın, yukarıda belirtilen tahliye tarihinde boş ve sağlam olarak tahliye edeceğimi, taşınmazı mal sahibine teslim edeceğimi beyan, kabul ve taahhüt ederim.</p>\n\n  <p>Tahliye tarihinde taşınmazı boşaltmadığım takdirde, mal sahibinin aleyhime icra takibi başlatarak tahliye davası açabileceğini, bu uğurda yapılacak tüm yargılama giderleri, icra masrafları ve avukatlık ücretinin tarafıma ait olacağını şimdiden kabul ve taahhüt ederim.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div>\n      <p><strong>Taahhüt Tarihi:</strong> {{formatDate taahhut_tarihi}}</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Taahhüt Eden (Kiracı)</strong></p>\n      <p>{{kiraci_ad_soyad}}</p>\n      <p><br/>İmza: _________________________</p>\n    </div>\n  </div>\n</div>",
   "fields": [
-    { "name": "kiraci_ad_soyad", "label": "Kiracı Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "kiraci_tc_no", "label": "Kiracı T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "kiralayan_ad_soyad", "label": "Mal Sahibi (Kiralayan) Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "tahliye_adresi", "label": "Tahliye Edilecek Taşınmazın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "sozlesme_tarihi", "label": "Kira Sözleşmesinin Yapıldığı Tarih", "fieldType": "date", "required": true },
-    { "name": "tahliye_tarihi", "label": "Evin Boşaltılacağı (Tahliye) Tarih", "fieldType": "date", "required": true },
-    { "name": "taahhut_tarihi", "label": "Taahhütnamenin İmzalandığı Tarih", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "kiraci_ad_soyad",
+      "label": "Kiracı Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kiraci_tc_no",
+      "label": "Kiracı T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kiralayan_ad_soyad",
+      "label": "Mal Sahibi (Kiralayan) Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tahliye_adresi",
+      "label": "Tahliye Edilecek Taşınmazın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Kira Sözleşmesinin Yapıldığı Tarih",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "tahliye_tarihi",
+      "label": "Evin Boşaltılacağı (Tahliye) Tarih",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "taahhut_tarihi",
+      "label": "Taahhütnamenin İmzalandığı Tarih",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

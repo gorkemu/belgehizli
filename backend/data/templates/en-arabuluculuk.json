@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b981c"
+  },
   "name": "Employment Mediation Request Form",
   "description": "A formal application to initiate mediation for employment and labor disputes (e.g., severance pay, wrongful termination).",
   "price": 10,
@@ -6,18 +9,80 @@
   "slug": "employment-mediation-request-form",
   "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center;'>TO THE MEDIATION AGENCY / BOARD</h3>\n  <p style='text-align: center; margin-bottom: 30px;'>{{agency_name}}</p>\n\n  <p><strong>APPLICANT (Employee/Employer):</strong><br/>\n  Name: {{applicant_name}}<br/>\n  ID / SSN: {{applicant_id}}<br/>\n  Address: {{applicant_address}}<br/>\n  Phone: {{applicant_phone}}</p>\n\n  <p><strong>RESPONDENT (Opposing Party):</strong><br/>\n  Company/Name: {{respondent_name}}<br/>\n  Address: {{respondent_address}}</p>\n\n  <p><strong>SUBJECT:</strong> Request for mandatory/voluntary mediation regarding an employment law dispute.</p>\n\n  <p><strong>CLAIMS / RELIEF SOUGHT:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{claims_summary}}</pre>\n\n  <p><strong>STATEMENT OF FACTS:</strong></p>\n  <p>I was employed by the Respondent from {{formatDate employment_start_date}} to {{formatDate employment_end_date}}. Following the termination of my employment contract, the above-listed claims have arisen. I respectfully request the appointment of a mediator to resolve this dispute amicably prior to any formal litigation.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Date: {{formatDate application_date}}</p>\n  <div style='text-align: right;'>\n    <p>Applicant Name: {{applicant_name}}<br/><br/><br/>Signature: _________________________</p>\n  </div>\n</div>",
   "fields": [
-    { "name": "agency_name", "label": "Name of Mediation Board / Court", "fieldType": "text", "placeholder": "e.g., National Labor Relations Board, Local Mediation Office", "required": true },
-    { "name": "applicant_name", "label": "Applicant's Full Name", "fieldType": "text", "required": true },
-    { "name": "applicant_id", "label": "Applicant's ID / SSN", "fieldType": "text", "required": true },
-    { "name": "applicant_address", "label": "Applicant's Address", "fieldType": "textarea", "required": true },
-    { "name": "applicant_phone", "label": "Applicant's Phone Number", "fieldType": "text", "required": true },
-    { "name": "respondent_name", "label": "Respondent (Company/Employer) Name", "fieldType": "text", "required": true },
-    { "name": "respondent_address", "label": "Respondent's Address", "fieldType": "textarea", "required": true },
-    { "name": "claims_summary", "label": "Summary of Claims", "fieldType": "textarea", "placeholder": "e.g., Unpaid severance, Unpaid overtime, Wrongful termination claim", "required": true },
-    { "name": "employment_start_date", "label": "Employment Start Date", "fieldType": "date", "required": true },
-    { "name": "employment_end_date", "label": "Employment End Date", "fieldType": "date", "required": true },
-    { "name": "application_date", "label": "Date of Application", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "agency_name",
+      "label": "Name of Mediation Board / Court",
+      "fieldType": "text",
+      "placeholder": "e.g., National Labor Relations Board, Local Mediation Office",
+      "required": true
+    },
+    {
+      "name": "applicant_name",
+      "label": "Applicant's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "applicant_id",
+      "label": "Applicant's ID / SSN",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "applicant_address",
+      "label": "Applicant's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "applicant_phone",
+      "label": "Applicant's Phone Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "respondent_name",
+      "label": "Respondent (Company/Employer) Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "respondent_address",
+      "label": "Respondent's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "claims_summary",
+      "label": "Summary of Claims",
+      "fieldType": "textarea",
+      "placeholder": "e.g., Unpaid severance, Unpaid overtime, Wrongful termination claim",
+      "required": true
+    },
+    {
+      "name": "employment_start_date",
+      "label": "Employment Start Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "employment_end_date",
+      "label": "Employment End Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "application_date",
+      "label": "Date of Application",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

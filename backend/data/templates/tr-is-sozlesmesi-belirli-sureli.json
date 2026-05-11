@@ -7,32 +7,185 @@
   "slug": "is-sozlesmesi-belirli-sureli",
   "content": "<h2 style='text-align:center;'>BELİRLİ SÜRELİ İŞ SÖZLEŞMESİ</h2>\n<p>İşbu İş Sözleşmesi, aşağıda bilgileri yazılı İşveren ile İşçi arasında 4857 sayılı İş Kanunu'nun 11. maddesi ve ilgili diğer mevzuat hükümleri çerçevesinde, belirli süreli iş ilişkisi kurmak amacıyla aşağıdaki şartlarla imzalanmıştır.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. İŞVEREN</strong><br/>\nUnvanı/Adı Soyadı: {{isveren_unvan}}<br/>\nAdresi: {{isveren_adres}}<br/>\nVergi Dairesi/No (varsa): {{isveren_vergi_dairesi_no}}<br/>\nSGK İşyeri Sicil No: {{isveren_sgk_sicil}}\n</p>\n<p><strong>B. İŞÇİ</strong><br/>\nAdı Soyadı: {{isci_ad_soyad}}<br/>\nT.C. Kimlik No: {{isci_tc_no}}<br/>\nİkametgah Adresi: {{isci_adres}}<br/>\nTelefon: {{isci_telefon}}<br/>\nE-posta: {{isci_eposta}}\n</p>\n\n<p><strong>2. İŞİN NİTELİĞİ VE YAPILACAĞI YER</strong></p>\n<p>İşçinin Görevi/Unvanı: {{isci_gorev}}<br/>\nİşin Yapılacağı Yer (İşyeri Adresi): {{isyeri_adres}}\n</p>\n\n<p><strong>3. SÖZLEŞMENİN SÜRESİ VE DAYANAĞI</strong></p>\n<p>İşbu sözleşme <strong>Belirli Süreli</strong> olarak akdedilmiştir.<br/>\nSözleşmenin Yapılma Nedeni (Objektif Neden): {{belirli_sure_nedeni}}<br/>\nİşe Başlama Tarihi: {{formatDate ise_baslama_tarihi}}<br/>\nSözleşmenin Bitiş Tarihi: {{formatDate bitis_tarihi}}\n</p>\n<p><i>Not: İş Kanunu'na göre belirli süreli iş sözleşmesi, esaslı bir neden olmadıkça birden fazla üst üste (zincirleme) yapılamaz.</i></p>\n\n<p><strong>4. ÇALIŞMA SÜRELERİ VE DİNLENME</strong></p>\n<p>Haftalık Çalışma Süresi: {{haftalik_calisma_saati}} saattir.<br/>\nÇalışma Günleri: {{calisma_gunleri}}<br/>\nGünlük Çalışma Saatleri: {{gunluk_calisma_saatleri}}<br/>\nAra Dinlenmesi: Yasal düzenlemelere uygun olarak kullandırılacaktır.<br/>\nFazla Çalışma: {{#if (eq fazla_calisma_kabul 'Evet')}}İşçinin onayı ile yasal sınırlar ve ücretlendirme dahilinde fazla çalışma yapılabilecektir.{{else}}Kural olarak fazla çalışma yapılmayacaktır.{{/if}}\n</p>\n\n<p><strong>5. ÜCRET VE ÖDEME ZAMANI</strong></p>\n<p>İşçinin Aylık Brüt/Net Ücreti: {{aylik_ucret}} TL ({{ucret_tipi}})<br/>\nÖdeme Zamanı: Her ayın {{odeme_gunu}}. günü banka hesabına yatırılacaktır.<br/>\n{{#if (eq sozlesme_sonu_odeme 'Evet')}}Sözleşme sonunda ayrıca {{sozlesme_sonu_odeme_tutari}} TL ödeme yapılacaktır.{{/if}}\n</p>\n\n<p><strong>6. YILLIK ÜCRETLİ İZİN</strong></p>\n<p>İşçi, çalışma süresi bir yılı doldurmasa dahi, çalıştığı süreyle orantılı olarak İş Kanunu'ndaki yıllık izin sürelerine göre izin hakkına sahiptir (veya ücreti ödenir).</p>\n\n<p><strong>7. ÖZEL ŞARTLAR (Varsa)</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{#if ozel_sartlar}}{{ozel_sartlar}}{{else}}Bu sözleşmede özel şart bulunmamaktadır.{{/if}}</pre>\n\n<p><strong>8. SÖZLEŞMENİN SONA ERMESİ</strong></p>\n<p>İşbu belirli süreli iş sözleşmesi, yukarıda belirtilen bitiş tarihinde herhangi bir bildirime gerek kalmaksızın kendiliğinden sona erer. Tarafların haklı nedenle derhal fesih hakları saklıdır.</p>\n\n<p>İşbu Belirli Süreli İş Sözleşmesi 8 (sekiz) maddeden ibaret olup, taraflarca okunup anlaşılarak {{formatDate imza_tarihi}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n  <div style='margin-bottom: 20px;'><p><strong>İŞVEREN</strong><br/><p>{{isveren_unvan}}</p><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n  <div style='margin-bottom: 20px;'><p><strong>İŞÇİ</strong><br/><p>{{isci_ad_soyad}}</p><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "isveren_unvan", "label": "İşveren Unvanı / Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "isveren_adres", "label": "İşveren Adresi", "fieldType": "textarea", "required": true },
-    { "name": "isveren_vergi_dairesi_no", "label": "İşveren Vergi Dairesi / Vergi No (Varsa)", "fieldType": "text", "required": false },
-    { "name": "isveren_sgk_sicil", "label": "İşveren SGK İşyeri Sicil No", "fieldType": "text", "required": true },
-    { "name": "isci_ad_soyad", "label": "İşçinin Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "isci_tc_no", "label": "İşçinin T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "isci_adres", "label": "İşçinin İkametgah Adresi", "fieldType": "textarea", "required": true },
-    { "name": "isci_telefon", "label": "İşçinin Telefon Numarası", "fieldType": "text", "required": true },
-    { "name": "isci_eposta", "label": "İşçinin E-posta Adresi", "fieldType": "email", "required": true },
-    { "name": "isci_gorev", "label": "İşçinin Görevi / Unvanı", "fieldType": "text", "required": true },
-    { "name": "isyeri_adres", "label": "İşin Yapılacağı Yer (İşyeri Adresi)", "fieldType": "textarea", "required": true, "placeholder": "İşveren adresi ile aynı ise tekrar yazınız." },
-    { "name": "belirli_sure_nedeni", "label": "Belirli Süre Nedeniniz (Objektif Neden)", "fieldType": "textarea", "required": true, "placeholder": "Örn: Belirli bir projenin tamamlanması, Mevsimlik iş, Kampanya dönemi..." },
-    { "name": "ise_baslama_tarihi", "label": "İşe Başlama Tarihi", "fieldType": "date", "required": true },
-    { "name": "bitis_tarihi", "label": "Sözleşme Bitiş Tarihi", "fieldType": "date", "required": true },
-    { "name": "haftalik_calisma_saati", "label": "Haftalık Çalışma Süresi (Saat)", "fieldType": "number", "required": true, "placeholder": "Genelde 45" },
-    { "name": "calisma_gunleri", "label": "Çalışma Günleri", "fieldType": "text", "required": true, "placeholder": "Örn: Pazartesi - Cuma" },
-    { "name": "gunluk_calisma_saatleri", "label": "Günlük Çalışma Saatleri", "fieldType": "text", "required": true, "placeholder": "Örn: 09:00 - 18:00" },
-    { "name": "fazla_calisma_kabul", "label": "Fazla Çalışma Yapılmasını Kabul Ediyor mu?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "ucret_tipi", "label": "Ücret Tipi", "fieldType": "select", "options": ["Brüt", "Net"], "required": true },
-    { "name": "aylik_ucret", "label": "Aylık Ücret (TL)", "fieldType": "number", "required": true },
-    { "name": "odeme_gunu", "label": "Maaş Ödeme Günü", "fieldType": "number", "required": true, "placeholder": "Her ayın kaçıncı günü? Örn: 5" },
-    { "name": "sozlesme_sonu_odeme", "label": "Sözleşme Sonunda Ek Ödeme Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "sozlesme_sonu_odeme_tutari", "label": "Ek Ödeme Tutarı (TL)", "fieldType": "number", "required": false, "condition": { "field": "sozlesme_sonu_odeme", "value": "Evet" } },
-    { "name": "ozel_sartlar", "label": "Özel Şartlar (Varsa)", "fieldType": "textarea", "required": false, "placeholder": "Gizlilik, rekabet yasağı, ek haklar vb." },
-    { "name": "imza_tarihi", "label": "Sözleşme İmza Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "isveren_unvan",
+      "label": "İşveren Unvanı / Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isveren_adres",
+      "label": "İşveren Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "isveren_vergi_dairesi_no",
+      "label": "İşveren Vergi Dairesi / Vergi No (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "isveren_sgk_sicil",
+      "label": "İşveren SGK İşyeri Sicil No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isci_ad_soyad",
+      "label": "İşçinin Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isci_tc_no",
+      "label": "İşçinin T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isci_adres",
+      "label": "İşçinin İkametgah Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "isci_telefon",
+      "label": "İşçinin Telefon Numarası",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isci_eposta",
+      "label": "İşçinin E-posta Adresi",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "isci_gorev",
+      "label": "İşçinin Görevi / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "isyeri_adres",
+      "label": "İşin Yapılacağı Yer (İşyeri Adresi)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "İşveren adresi ile aynı ise tekrar yazınız."
+    },
+    {
+      "name": "belirli_sure_nedeni",
+      "label": "Belirli Süre Nedeniniz (Objektif Neden)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: Belirli bir projenin tamamlanması, Mevsimlik iş, Kampanya dönemi..."
+    },
+    {
+      "name": "ise_baslama_tarihi",
+      "label": "İşe Başlama Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "bitis_tarihi",
+      "label": "Sözleşme Bitiş Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "haftalik_calisma_saati",
+      "label": "Haftalık Çalışma Süresi (Saat)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Genelde 45"
+    },
+    {
+      "name": "calisma_gunleri",
+      "label": "Çalışma Günleri",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Pazartesi - Cuma"
+    },
+    {
+      "name": "gunluk_calisma_saatleri",
+      "label": "Günlük Çalışma Saatleri",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: 09:00 - 18:00"
+    },
+    {
+      "name": "fazla_calisma_kabul",
+      "label": "Fazla Çalışma Yapılmasını Kabul Ediyor mu?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "ucret_tipi",
+      "label": "Ücret Tipi",
+      "fieldType": "select",
+      "options": [
+        "Brüt",
+        "Net"
+      ],
+      "required": true
+    },
+    {
+      "name": "aylik_ucret",
+      "label": "Aylık Ücret (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "odeme_gunu",
+      "label": "Maaş Ödeme Günü",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Her ayın kaçıncı günü? Örn: 5"
+    },
+    {
+      "name": "sozlesme_sonu_odeme",
+      "label": "Sözleşme Sonunda Ek Ödeme Var mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "sozlesme_sonu_odeme_tutari",
+      "label": "Ek Ödeme Tutarı (TL)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "sozlesme_sonu_odeme",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "ozel_sartlar",
+      "label": "Özel Şartlar (Varsa)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Gizlilik, rekabet yasağı, ek haklar vb."
+    },
+    {
+      "name": "imza_tarihi",
+      "label": "Sözleşme İmza Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

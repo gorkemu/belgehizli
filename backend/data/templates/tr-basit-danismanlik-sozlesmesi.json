@@ -7,27 +7,164 @@
   "slug": "basit-danismanlik-sozlesmesi",
   "content": "<h2 style='text-align:center;'>DANIŞMANLIK HİZMET SÖZLEŞMESİ</h2>\n<p>İşbu Danışmanlık Hizmet Sözleşmesi (\"Sözleşme\"), bir tarafta aşağıda bilgileri yer alan Danışman ile diğer tarafta Müşteri arasında, {{formatDate tarih}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. Danışman:</strong><br/>\nAdı Soyadı / Unvanı: {{danisman_ad_unvan}}<br/>\nAdresi: {{danisman_adres}}<br/>\n{{#if danisman_tc_vergi_no}}T.C. Kimlik No / Vergi No: {{danisman_tc_vergi_no}}{{/if}}<br/>\nE-posta: {{danisman_eposta}}\n</p>\n<p><strong>B. Müşteri:</strong><br/>\nAdı Soyadı / Unvanı: {{musteri_ad_unvan}}<br/>\nAdresi: {{musteri_adres}}<br/>\n{{#if musteri_tc_vergi_no}}T.C. Kimlik No / Vergi No: {{musteri_tc_vergi_no}}{{/if}}<br/>\nE-posta: {{musteri_eposta}}\n</p>\n\n<p><strong>2. HİZMETİN KONUSU VE KAPSAMI</strong></p>\n<p>Danışman, Müşteri'ye {{danismanlik_konusu}} konusunda danışmanlık hizmeti (\"Hizmet\") sunacaktır. Hizmetin kapsamı şunları içerir (ancak bunlarla sınırlı değildir):</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{hizmet_kapsami}}</pre>\n\n<p><strong>3. HİZMET SÜRESİ</strong></p>\n<p>Hizmet, {{formatDate baslangic_tarihi}} tarihinde başlayacak ve {{#if (eq sure_tipi 'Proje Bazlı')}}proje tamamlanana kadar (tahmini {{tahmini_sure}}){{else}}{{hizmet_suresi}} {{hizmet_sure_birimi}} süreyle{{/if}} devam edecektir.</p>\n\n<p><strong>4. ÜCRETLENDİRME VE ÖDEME</strong></p>\n<p>Müşteri, Danışman'a sunulan Hizmetler karşılığında {{ucret_tipi}} olarak {{ucret_miktari}} TL {{#if (eq ucret_tipi 'Saatlik Ücret')}} / saat{{/if}} + KDV ödeyecektir.</p>\n<p>Ödeme Koşulları: {{odeme_kosullari}}</p>\n{{#if masraflar}}\n<p>Danışman tarafından Hizmet ile ilgili yapılacak makul seyahat ve diğer masraflar Müşteri tarafından ayrıca ödenecektir: {{masraflar}}</p>\n{{/if}}\n\n<p><strong>5. GİZLİLİK</strong></p>\n<p>Taraflar, bu Sözleşme kapsamında birbirleri hakkında edindikleri tüm ticari, mali, teknik ve özel bilgileri gizli tutmayı ve diğer tarafın yazılı izni olmaksızın üçüncü şahıslarla paylaşmamayı kabul ve taahhüt ederler.</p>\n\n<p><strong>6. FİKRİ MÜLKİYET</strong></p>\n<p>Danışman tarafından bu Sözleşme kapsamında Müşteri'ye özel olarak hazırlanan raporlar, analizler ve sunumlar gibi materyallerin mülkiyeti, ödemenin tamamlanmasıyla Müşteri'ye ait olacaktır. Danışmanın genel uzmanlığı, metodolojileri ve önceden sahip olduğu fikri hakları Danışman'a aittir.</p>\n\n<p><strong>7. BAĞIMSIZLIK</strong></p>\n<p>Danışman, hizmetlerini bağımsız bir yüklenici olarak sunmaktadır. Bu Sözleşme, taraflar arasında bir işçi-işveren ilişkisi yaratmaz.</p>\n\n<p>İşbu Sözleşme taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Danışman</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p><p>{{danisman_ad_unvan}}</p></div>\n <div style='margin-bottom: 20px;'><p><strong>Müşteri</strong><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p><p>{{musteri_ad_unvan}}</p></div>\n</div>",
   "fields": [
-    { "name": "danisman_ad_unvan", "label": "Danışman Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "danisman_adres", "label": "Danışman Adresi", "fieldType": "textarea", "required": true },
-    { "name": "danisman_tc_vergi_no", "label": "Danışman T.C. No / Vergi No (Varsa)", "fieldType": "text", "required": false },
-    { "name": "danisman_eposta", "label": "Danışman E-posta", "fieldType": "email", "required": true },
-    { "name": "musteri_ad_unvan", "label": "Müşteri Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "musteri_adres", "label": "Müşteri Adresi", "fieldType": "textarea", "required": true },
-    { "name": "musteri_tc_vergi_no", "label": "Müşteri T.C. No / Vergi No (Varsa)", "fieldType": "text", "required": false },
-    { "name": "musteri_eposta", "label": "Müşteri E-posta", "fieldType": "email", "required": true },
-    { "name": "danismanlik_konusu", "label": "Danışmanlık Konusu", "fieldType": "text", "required": true, "placeholder": "Örn: Pazarlama Stratejisi, Finansal Planlama, Yazılım Mimarisi" },
-    { "name": "hizmet_kapsami", "label": "Hizmet Kapsamı (Detaylı)", "fieldType": "textarea", "required": true, "placeholder": "Analiz, raporlama, toplantılar, öneriler vb." },
-    { "name": "sure_tipi", "label": "Hizmet Süresi Tipi", "fieldType": "select", "options": ["Proje Bazlı", "Belirli Süreli"], "required": true },
-    { "name": "baslangic_tarihi", "label": "Hizmet Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "tahmini_sure", "label": "Tahmini Süre (Proje Bazlı ise)", "fieldType": "text", "required": false, "placeholder": "Örn: 3 Ay, 40 Saat", "condition": { "field": "sure_tipi", "value": "Proje Bazlı" } },
-    { "name": "hizmet_suresi", "label": "Hizmet Süresi (Sayı)", "fieldType": "number", "required": false, "condition": { "field": "sure_tipi", "value": "Belirli Süreli" } },
-    { "name": "hizmet_sure_birimi", "label": "Süre Birimi", "fieldType": "select", "options": ["Ay", "Hafta", "Gün"], "required": false, "condition": { "field": "sure_tipi", "value": "Belirli Süreli" } },
-    { "name": "ucret_tipi", "label": "Ücretlendirme Tipi", "fieldType": "select", "options": ["Saatlik Ücret", "Proje Bazlı Sabit Ücret", "Aylık Sabit Ücret (Retainer)"], "required": true },
-    { "name": "ucret_miktari", "label": "Ücret Miktarı (TL)", "fieldType": "number", "required": true, "placeholder": "Saatlik veya toplam/aylık tutar" },
-    { "name": "odeme_kosullari", "label": "Ödeme Koşulları", "fieldType": "textarea", "required": true, "placeholder": "Örn: Her ay sonunda fatura karşılığı.\nÖrn: %50 peşin, %50 proje tesliminde." },
-    { "name": "masraflar", "label": "Ek Masraflar (Seyahat vb. - Opsiyonel)", "fieldType": "text", "required": false, "placeholder": "Ön onaylı masraflar ayrıca faturalandırılacaktır." },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "danisman_ad_unvan",
+      "label": "Danışman Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "danisman_adres",
+      "label": "Danışman Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "danisman_tc_vergi_no",
+      "label": "Danışman T.C. No / Vergi No (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "danisman_eposta",
+      "label": "Danışman E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "musteri_ad_unvan",
+      "label": "Müşteri Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "musteri_adres",
+      "label": "Müşteri Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "musteri_tc_vergi_no",
+      "label": "Müşteri T.C. No / Vergi No (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "musteri_eposta",
+      "label": "Müşteri E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "danismanlik_konusu",
+      "label": "Danışmanlık Konusu",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: Pazarlama Stratejisi, Finansal Planlama, Yazılım Mimarisi"
+    },
+    {
+      "name": "hizmet_kapsami",
+      "label": "Hizmet Kapsamı (Detaylı)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Analiz, raporlama, toplantılar, öneriler vb."
+    },
+    {
+      "name": "sure_tipi",
+      "label": "Hizmet Süresi Tipi",
+      "fieldType": "select",
+      "options": [
+        "Proje Bazlı",
+        "Belirli Süreli"
+      ],
+      "required": true
+    },
+    {
+      "name": "baslangic_tarihi",
+      "label": "Hizmet Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "tahmini_sure",
+      "label": "Tahmini Süre (Proje Bazlı ise)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Örn: 3 Ay, 40 Saat",
+      "condition": {
+        "field": "sure_tipi",
+        "value": "Proje Bazlı"
+      }
+    },
+    {
+      "name": "hizmet_suresi",
+      "label": "Hizmet Süresi (Sayı)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "sure_tipi",
+        "value": "Belirli Süreli"
+      }
+    },
+    {
+      "name": "hizmet_sure_birimi",
+      "label": "Süre Birimi",
+      "fieldType": "select",
+      "options": [
+        "Ay",
+        "Hafta",
+        "Gün"
+      ],
+      "required": false,
+      "condition": {
+        "field": "sure_tipi",
+        "value": "Belirli Süreli"
+      }
+    },
+    {
+      "name": "ucret_tipi",
+      "label": "Ücretlendirme Tipi",
+      "fieldType": "select",
+      "options": [
+        "Saatlik Ücret",
+        "Proje Bazlı Sabit Ücret",
+        "Aylık Sabit Ücret (Retainer)"
+      ],
+      "required": true
+    },
+    {
+      "name": "ucret_miktari",
+      "label": "Ücret Miktarı (TL)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "Saatlik veya toplam/aylık tutar"
+    },
+    {
+      "name": "odeme_kosullari",
+      "label": "Ödeme Koşulları",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Örn: Her ay sonunda fatura karşılığı.\nÖrn: %50 peşin, %50 proje tesliminde."
+    },
+    {
+      "name": "masraflar",
+      "label": "Ek Masraflar (Seyahat vb. - Opsiyonel)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Ön onaylı masraflar ayrıca faturalandırılacaktır."
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

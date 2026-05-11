@@ -16,21 +16,93 @@
       "removeLabel": "Ortağı Sil",
       "minInstances": 2,
       "subfields": [
-        { "name": "ad_soyad_unvan", "label": "Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-        { "name": "tc_vergi_no", "label": "T.C. Kimlik No / Vergi No", "fieldType": "text", "required": true },
-        { "name": "adres", "label": "Adresi", "fieldType": "textarea", "required": true }
+        {
+          "name": "ad_soyad_unvan",
+          "label": "Adı Soyadı / Unvanı",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "tc_vergi_no",
+          "label": "T.C. Kimlik No / Vergi No",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "adres",
+          "label": "Adresi",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
-    { "name": "ortaklik_adi", "label": "Ortaklığın Adı (Varsa)", "fieldType": "text", "required": false },
-    { "name": "ortaklik_amaci", "label": "Ortaklığın Amacı", "fieldType": "textarea", "placeholder": "Ortaklığın hangi işi yapmak için kurulduğunu yazınız.", "required": true },
-    { "name": "sermaye_katkilari", "label": "Ortakların Sermaye Katkıları", "fieldType": "textarea", "placeholder": "Örn: Ortak 1: 50.000 TL Nakit\nOrtak 2: 30.000 TL Değerinde Mal", "required": true },
-    { "name": "kar_zarar_paylasimi", "label": "Kar ve Zararın Paylaşım Oranı/Şekli", "fieldType": "text", "placeholder": "Örn: Eşit olarak / Katılım payları oranında / %60 - %40", "required": true },
-    { "name": "yonetim_sekli", "label": "Yönetim ve Temsil Şekli", "fieldType": "textarea", "placeholder": "Örn: Tüm kararlar oybirliği ile alınacaktır. Ortaklığı X kişisi tek başına temsil edecektir.", "required": true },
-    { "name": "ortaklik_suresi", "label": "Ortaklık Süresi", "fieldType": "text", "placeholder": "Örn: Belirsiz süreli / 2 Yıl / Proje tamamlanana kadar", "required": true },
-    { "name": "fesih_sartlari", "label": "Ortaklığın Sona Erme Şartları", "fieldType": "textarea", "placeholder": "Tüm ortakların fesih kararı, sürenin dolması vb.", "required": true },
-    { "name": "yetkili_mahkeme", "label": "Yetkili Mahkeme", "fieldType": "text", "placeholder": "Örn: İstanbul", "required": true },
-    { "name": "sozlesme_tarihi", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "ortaklik_adi",
+      "label": "Ortaklığın Adı (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "ortaklik_amaci",
+      "label": "Ortaklığın Amacı",
+      "fieldType": "textarea",
+      "placeholder": "Ortaklığın hangi işi yapmak için kurulduğunu yazınız.",
+      "required": true
+    },
+    {
+      "name": "sermaye_katkilari",
+      "label": "Ortakların Sermaye Katkıları",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Ortak 1: 50.000 TL Nakit\nOrtak 2: 30.000 TL Değerinde Mal",
+      "required": true
+    },
+    {
+      "name": "kar_zarar_paylasimi",
+      "label": "Kar ve Zararın Paylaşım Oranı/Şekli",
+      "fieldType": "text",
+      "placeholder": "Örn: Eşit olarak / Katılım payları oranında / %60 - %40",
+      "required": true
+    },
+    {
+      "name": "yonetim_sekli",
+      "label": "Yönetim ve Temsil Şekli",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Tüm kararlar oybirliği ile alınacaktır. Ortaklığı X kişisi tek başına temsil edecektir.",
+      "required": true
+    },
+    {
+      "name": "ortaklik_suresi",
+      "label": "Ortaklık Süresi",
+      "fieldType": "text",
+      "placeholder": "Örn: Belirsiz süreli / 2 Yıl / Proje tamamlanana kadar",
+      "required": true
+    },
+    {
+      "name": "fesih_sartlari",
+      "label": "Ortaklığın Sona Erme Şartları",
+      "fieldType": "textarea",
+      "placeholder": "Tüm ortakların fesih kararı, sürenin dolması vb.",
+      "required": true
+    },
+    {
+      "name": "yetkili_mahkeme",
+      "label": "Yetkili Mahkeme",
+      "fieldType": "text",
+      "placeholder": "Örn: İstanbul",
+      "required": true
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

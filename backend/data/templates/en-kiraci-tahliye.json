@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a3df4a6478ae3b983d"
+  },
   "name": "Tenant Notice to Vacate / Intent to Move Out",
   "description": "A formal written notice from a tenant to a landlord stating their intention to terminate the lease and vacate the property.",
   "price": 5,
@@ -6,17 +9,74 @@
   "slug": "tenant-notice-to-vacate",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p><strong>From:</strong><br/>\n{{tenant_name}}<br/>\n{{property_address}}<br/>\nPhone: {{tenant_phone}}\n</p>\n\n<p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate notice_date}}</p>\n\n<p style='margin-top: 20px;'><strong>To:</strong><br/>\n{{landlord_name}}<br/>\n{{landlord_address}}\n</p>\n\n<p style='margin-top: 30px; text-decoration: underline;'><strong>RE: Thirty (30) Day Notice to Vacate</strong></p>\n\n<p>Dear {{landlord_name}},</p>\n\n<p>Please accept this letter as formal, written notice of my intention to vacate the premises located at <strong>{{property_address}}</strong>. I will be terminating my lease, which originally began on {{formatDate lease_start_date}}, and moving out of the property on or before <strong>{{formatDate move_out_date}}</strong>.</p>\n\n<p>I am vacating the premises due to: {{reason_for_leaving}}.</p>\n\n<p>I will ensure that all of my personal belongings are removed and the property is left in a clean and broom-swept condition. Please let me know when you are available to conduct a final move-out inspection and collect the keys.</p>\n\n<p>Additionally, please send my refundable security deposit, along with an itemized statement of any lawful deductions, to my new forwarding address within the time frame required by state law. My forwarding address is:</p>\n<p><strong>{{forwarding_address}}</strong></p>\n\n<p>Thank you for your cooperation and for providing me with a great place to live during my tenancy.</p>\n\n<p style='margin-top: 40px;'>Sincerely,</p>\n<p>_________________________<br/><strong>{{tenant_name}}</strong></p>\n</div>",
   "fields": [
-    { "name": "tenant_name", "label": "Your Full Name (Tenant)", "fieldType": "text", "required": true },
-    { "name": "tenant_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
-    { "name": "property_address", "label": "Address of Leased Property", "fieldType": "textarea", "required": true },
-    { "name": "landlord_name", "label": "Landlord's / Property Manager's Name", "fieldType": "text", "required": true },
-    { "name": "landlord_address", "label": "Landlord's Mailing Address", "fieldType": "textarea", "required": true },
-    { "name": "notice_date", "label": "Date of this Notice", "fieldType": "date", "required": true },
-    { "name": "lease_start_date", "label": "Original Lease Start Date", "fieldType": "date", "required": true },
-    { "name": "move_out_date", "label": "Intended Move-Out Date", "fieldType": "date", "required": true },
-    { "name": "reason_for_leaving", "label": "Reason for Vacating (Optional)", "fieldType": "text", "placeholder": "e.g., expiration of lease term, relocation for work", "required": true },
-    { "name": "forwarding_address", "label": "Your New Forwarding Address", "fieldType": "textarea", "placeholder": "For the return of your security deposit.", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "tenant_name",
+      "label": "Your Full Name (Tenant)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "tenant_phone",
+      "label": "Your Phone Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "property_address",
+      "label": "Address of Leased Property",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "landlord_name",
+      "label": "Landlord's / Property Manager's Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "landlord_address",
+      "label": "Landlord's Mailing Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "notice_date",
+      "label": "Date of this Notice",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "lease_start_date",
+      "label": "Original Lease Start Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "move_out_date",
+      "label": "Intended Move-Out Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "reason_for_leaving",
+      "label": "Reason for Vacating (Optional)",
+      "fieldType": "text",
+      "placeholder": "e.g., expiration of lease term, relocation for work",
+      "required": true
+    },
+    {
+      "name": "forwarding_address",
+      "label": "Your New Forwarding Address",
+      "fieldType": "textarea",
+      "placeholder": "For the return of your security deposit.",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -7,35 +7,228 @@
   "slug": "etkinlik-konusmaci-sozlesmesi",
   "content": "<h2 style='text-align:center;'>ETKİNLİK KONUŞMACI SÖZLEŞMESİ</h2>\n<p>İşbu Sözleşme, bir tarafta aşağıda bilgileri yer alan Etkinlik Organizatörü (\"Organizatör\") ile diğer tarafta Konuşmacı (\"Konuşmacı\") arasında, {{etkinlik_adi}} adlı etkinlikte Konuşmacı'nın yer almasına ilişkin olarak {{formatDate tarih}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. Organizatör:</strong><br/>\nAdı/Unvanı: {{organizator_ad_unvan}}<br/>\nAdresi: {{organizator_adres}}<br/>\nYetkili Kişi: {{organizator_yetkili}}<br/>\nE-posta: {{organizator_eposta}}\n</p>\n<p><strong>B. Konuşmacı:</strong><br/>\nAdı Soyadı: {{konusmaci_ad_soyad}}<br/>\nUnvanı/Kurumu: {{konusmaci_unvan_kurum}}<br/>\nAdresi: {{konusmaci_adres}}<br/>\nE-posta: {{konusmaci_eposta}}\n</p>\n\n<p><strong>2. ETKİNLİK VE SUNUM BİLGİLERİ</strong></p>\n<p>Etkinlik Adı: {{etkinlik_adi}}<br/>\nEtkinlik Tarihi: {{formatDate etkinlik_tarihi}}<br/>\nEtkinlik Yeri: {{etkinlik_yeri}}<br/>\nKonuşmacı'nın Sunum Başlığı/Konusu: {{sunum_basligi}}<br/>\nKonuşmacı'nın Sunum Tarihi ve Saati: {{sunum_tarih_saat}}<br/>\nKonuşmacı'nın Sunum Süresi: {{sunum_suresi}} dakika\n</p>\n\n<p><strong>3. KONUŞMACININ YÜKÜMLÜLÜKLERİ</strong></p>\n<ul>\n <li>Belirtilen tarih, saat ve yerde sunumunu gerçekleştirmek.</li>\n <li>Sunum içeriğini {{sunum_icerik_ozeti}} doğrultusunda hazırlamak.</li>\n {{#if (eq sunum_materyal_teslim 'Evet')}}\n <li>Sunum materyallerini (slayt vb.) en geç {{sunum_materyal_teslim_tarihi}} tarihine kadar Organizatör'e iletmek.</li>\n {{/if}}\n <li>Etkinlik programına ve Organizatör'ün makul talimatlarına uymak.</li>\n</ul>\n\n<p><strong>4. ORGANİZATÖRÜN YÜKÜMLÜLÜKLERİ</strong></p>\n<ul>\n <li>Konuşmacı için gerekli teknik ekipmanı (projeksiyon, ses sistemi, mikrofon vb.) sağlamak: {{teknik_ekipman}}</li>\n <li>Konuşmacı'nın sunumu hakkında katılımcıları bilgilendirmek ve tanıtım materyallerinde Konuşmacı'ya yer vermek.</li>\n {{#if (eq ucret_odeme_varmi 'Evet')}}\n <li>Aşağıda belirtilen ücreti Konuşmacı'ya ödemek.</li>\n {{/if}}\n {{#if (eq masraf_karsilama_varmi 'Evet')}}\n <li>Aşağıda belirtilen masrafları karşılamak/geri ödemek.</li>\n {{/if}}\n</ul>\n\n<p><strong>5. ÜCRET VE MASRAFLAR (Varsa)</strong></p>\n{{#if (eq ucret_odeme_varmi 'Evet')}}\n<p>Organizatör, Konuşmacı'ya sunumu karşılığında {{ucret_miktari}} TL + KDV konuşmacı ücreti ödeyecektir. Ödeme, {{ucret_odeme_zamani}} yapılacaktır.</p>\n{{else}}\n<p>Konuşmacı, bu etkinlikte gönüllü olarak yer alacak olup herhangi bir konuşmacı ücreti talep etmemektedir.</p>\n{{/if}}\n{{#if (eq masraf_karsilama_varmi 'Evet')}}\n<p>Organizatör, Konuşmacı'nın aşağıdaki makul ve belgelendirilmiş masraflarını karşılayacaktır/geri ödeyecektir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{karsilanacak_masraflar}}</pre>\n{{/if}}\n\n<p><strong>6. İPTAL DURUMU</strong></p>\n<p>Taraflardan herhangi birinin mücbir sebepler dışında Sözleşme'yi iptal etmesi durumunda uygulanacak koşullar: {{iptal_kosullari}}</p>\n\n<p><strong>7. KAYIT VE YAYIN HAKLARI</strong></p>\n<p>Organizatör, Konuşmacı'nın sunumunu {{#if (eq kayit_hakki 'Evet')}}{{kayit_amaci}} amacıyla kaydetme hakkına sahiptir. Kaydedilmesi durumunda, bu kayıtların kullanım hakları {{kayit_kullanim_hakki}}'na ait olacaktır.{{else}}kaydetme hakkına sahip değildir.{{/if}}</p>\n\n<p>İşbu Sözleşme taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Organizatör (Yetkili İmza)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{organizator_yetkili}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Konuşmacı</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{konusmaci_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "organizator_ad_unvan", "label": "Organizatör Adı/Unvanı", "fieldType": "text", "required": true },
-    { "name": "organizator_adres", "label": "Organizatör Adresi", "fieldType": "textarea", "required": true },
-    { "name": "organizator_yetkili", "label": "Organizatör Yetkili Kişi", "fieldType": "text", "required": true },
-    { "name": "organizator_eposta", "label": "Organizatör E-posta", "fieldType": "email", "required": true },
-    { "name": "konusmaci_ad_soyad", "label": "Konuşmacı Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "konusmaci_unvan_kurum", "label": "Konuşmacı Unvanı / Kurumu", "fieldType": "text", "required": true },
-    { "name": "konusmaci_adres", "label": "Konuşmacı Adresi", "fieldType": "textarea", "required": true },
-    { "name": "konusmaci_eposta", "label": "Konuşmacı E-posta", "fieldType": "email", "required": true },
-    { "name": "etkinlik_adi", "label": "Etkinliğin Adı", "fieldType": "text", "required": true },
-    { "name": "etkinlik_tarihi", "label": "Etkinlik Tarihi", "fieldType": "date", "required": true },
-    { "name": "etkinlik_yeri", "label": "Etkinlik Yeri", "fieldType": "text", "placeholder": "Örn: X Kongre Merkezi, Online Platform", "required": true },
-    { "name": "sunum_basligi", "label": "Sunum Başlığı / Konusu", "fieldType": "text", "required": true },
-    { "name": "sunum_tarih_saat", "label": "Sunum Tarihi ve Saati", "fieldType": "text", "placeholder": "Örn: GG/AA/YYYY - SS:DD", "required": true },
-    { "name": "sunum_suresi", "label": "Sunum Süresi (Dakika)", "fieldType": "number", "required": true },
-    { "name": "sunum_icerik_ozeti", "label": "Sunum İçeriği Özeti", "fieldType": "textarea", "required": true },
-    { "name": "sunum_materyal_teslim", "label": "Sunum Materyali Teslim Edilecek mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "sunum_materyal_teslim_tarihi", "label": "Materyal Son Teslim Tarihi (Evet ise)", "fieldType": "date", "required": false, "condition": { "field": "sunum_materyal_teslim", "value": "Evet" } },
-    { "name": "teknik_ekipman", "label": "Sağlanacak Teknik Ekipman", "fieldType": "text", "placeholder": "Projeksiyon, Ses Sistemi, Mikrofon vb.", "required": true },
-    { "name": "ucret_odeme_varmi", "label": "Konuşmacıya Ücret Ödenecek mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "ucret_miktari", "label": "Konuşmacı Ücreti (TL) (Evet ise)", "fieldType": "number", "required": false, "condition": { "field": "ucret_odeme_varmi", "value": "Evet" } },
-    { "name": "ucret_odeme_zamani", "label": "Ücret Ödeme Zamanı (Evet ise)", "fieldType": "text", "placeholder": "Örn: Etkinlikten sonra 1 hafta içinde", "required": false, "condition": { "field": "ucret_odeme_varmi", "value": "Evet" } },
-    { "name": "masraf_karsilama_varmi", "label": "Konuşmacının Masrafları Karşılanacak mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "karsilanacak_masraflar", "label": "Karşılanacak Masraflar (Evet ise)", "fieldType": "textarea", "placeholder": "Örn: Ulaşım (Uçak/Tren), Konaklama (1 gece), Yemek", "required": false, "condition": { "field": "masraf_karsilama_varmi", "value": "Evet" } },
-    { "name": "iptal_kosullari", "label": "İptal Koşulları", "fieldType": "textarea", "placeholder": "Taraflardan birinin iptali durumunda ne olacağını belirtin.", "required": true },
-    { "name": "kayit_hakki", "label": "Organizatör Sunumu Kaydedebilir mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "kayit_amaci", "label": "Kayıt Amacı (Evet ise)", "fieldType": "text", "placeholder": "Örn: Arşiv, Eğitim, Online Yayın", "required": false, "condition": { "field": "kayit_hakki", "value": "Evet" } },
-    { "name": "kayit_kullanim_hakki", "label": "Kaydın Kullanım Hakkı (Evet ise)", "fieldType": "text", "placeholder": "Örn: Organizatöre aittir, Konuşmacının onayı ile kullanılır", "required": false, "condition": { "field": "kayit_hakki", "value": "Evet" } },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "organizator_ad_unvan",
+      "label": "Organizatör Adı/Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "organizator_adres",
+      "label": "Organizatör Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "organizator_yetkili",
+      "label": "Organizatör Yetkili Kişi",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "organizator_eposta",
+      "label": "Organizatör E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "konusmaci_ad_soyad",
+      "label": "Konuşmacı Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "konusmaci_unvan_kurum",
+      "label": "Konuşmacı Unvanı / Kurumu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "konusmaci_adres",
+      "label": "Konuşmacı Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "konusmaci_eposta",
+      "label": "Konuşmacı E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "etkinlik_adi",
+      "label": "Etkinliğin Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "etkinlik_tarihi",
+      "label": "Etkinlik Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "etkinlik_yeri",
+      "label": "Etkinlik Yeri",
+      "fieldType": "text",
+      "placeholder": "Örn: X Kongre Merkezi, Online Platform",
+      "required": true
+    },
+    {
+      "name": "sunum_basligi",
+      "label": "Sunum Başlığı / Konusu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "sunum_tarih_saat",
+      "label": "Sunum Tarihi ve Saati",
+      "fieldType": "text",
+      "placeholder": "Örn: GG/AA/YYYY - SS:DD",
+      "required": true
+    },
+    {
+      "name": "sunum_suresi",
+      "label": "Sunum Süresi (Dakika)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "sunum_icerik_ozeti",
+      "label": "Sunum İçeriği Özeti",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "sunum_materyal_teslim",
+      "label": "Sunum Materyali Teslim Edilecek mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "sunum_materyal_teslim_tarihi",
+      "label": "Materyal Son Teslim Tarihi (Evet ise)",
+      "fieldType": "date",
+      "required": false,
+      "condition": {
+        "field": "sunum_materyal_teslim",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "teknik_ekipman",
+      "label": "Sağlanacak Teknik Ekipman",
+      "fieldType": "text",
+      "placeholder": "Projeksiyon, Ses Sistemi, Mikrofon vb.",
+      "required": true
+    },
+    {
+      "name": "ucret_odeme_varmi",
+      "label": "Konuşmacıya Ücret Ödenecek mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "ucret_miktari",
+      "label": "Konuşmacı Ücreti (TL) (Evet ise)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "ucret_odeme_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "ucret_odeme_zamani",
+      "label": "Ücret Ödeme Zamanı (Evet ise)",
+      "fieldType": "text",
+      "placeholder": "Örn: Etkinlikten sonra 1 hafta içinde",
+      "required": false,
+      "condition": {
+        "field": "ucret_odeme_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "masraf_karsilama_varmi",
+      "label": "Konuşmacının Masrafları Karşılanacak mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "karsilanacak_masraflar",
+      "label": "Karşılanacak Masraflar (Evet ise)",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Ulaşım (Uçak/Tren), Konaklama (1 gece), Yemek",
+      "required": false,
+      "condition": {
+        "field": "masraf_karsilama_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "iptal_kosullari",
+      "label": "İptal Koşulları",
+      "fieldType": "textarea",
+      "placeholder": "Taraflardan birinin iptali durumunda ne olacağını belirtin.",
+      "required": true
+    },
+    {
+      "name": "kayit_hakki",
+      "label": "Organizatör Sunumu Kaydedebilir mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "kayit_amaci",
+      "label": "Kayıt Amacı (Evet ise)",
+      "fieldType": "text",
+      "placeholder": "Örn: Arşiv, Eğitim, Online Yayın",
+      "required": false,
+      "condition": {
+        "field": "kayit_hakki",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "kayit_kullanim_hakki",
+      "label": "Kaydın Kullanım Hakkı (Evet ise)",
+      "fieldType": "text",
+      "placeholder": "Örn: Organizatöre aittir, Konuşmacının onayı ile kullanılır",
+      "required": false,
+      "condition": {
+        "field": "kayit_hakki",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

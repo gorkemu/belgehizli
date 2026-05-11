@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a2df4a6478ae3b9832"
+  },
   "name": "Notice of Dissatisfaction and Claim",
   "description": "A formal letter expressing dissatisfaction with a provided service and requesting a refund or remedy.",
   "price": 8,
@@ -6,22 +9,114 @@
   "slug": "notice-of-dissatisfaction-and-claim",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p><strong>From:</strong><br/>{{customer_name}}<br/>{{customer_address}}<br/>Phone: {{customer_phone}}<br/>Email: {{customer_email}}</p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>TO:</strong><br/>{{service_provider_name}}<br/>{{service_provider_address}}</p>\n\n  <p style='margin-top: 20px;'><strong>RE: Complaint Regarding {{service_name}} Provided on {{service_date}}</strong></p>\n\n  <p>Dear Sir/Madam,</p>\n\n  <p>I am writing to formally express my dissatisfaction with the <strong>{{service_name}}</strong> provided to me by your company on {{service_date}} at {{service_location}}.</p>\n\n  <p>Regrettably, the service provided fell significantly short of the promised standards and my reasonable expectations. Specifically, the issues I encountered are as follows:</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{reasons_for_dissatisfaction}}</pre>\n\n  {{#if attached_evidence}}\n  <p>Please find attached/linked the supporting evidence (e.g., photos, correspondence) regarding my claim:</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{attached_evidence}}</pre>\n  {{/if}}\n\n  <p>Under consumer protection laws, services must be carried out with reasonable care and skill. As this was not the case, I am exercising my legal rights to request the following remedy: <strong>{{type_of_claim}}</strong>.</p>\n  \n  <p><strong>Details of my claim:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{claim_details}}</pre>\n\n  <p>I request that you review this matter and respond to my claim within <strong>{{response_days}} days</strong> of receiving this letter. If I do not hear from you within this timeframe, or if we cannot reach a satisfactory resolution, I will have no choice but to escalate the matter to the relevant consumer protection agency or seek legal advice.</p>\n\n  <p>I look forward to hearing from you soon to resolve this matter amicably.</p>\n\n  <p>Yours faithfully,</p>\n\n  <p style='margin-top: 40px;'>_________________________<br/>{{customer_name}}</p>\n</div>",
   "fields": [
-    { "name": "service_provider_name", "label": "Service Provider's Name / Company", "fieldType": "text", "required": true },
-    { "name": "service_provider_address", "label": "Service Provider's Address", "fieldType": "textarea", "required": true },
-    { "name": "customer_name", "label": "Your Full Name", "fieldType": "text", "required": true },
-    { "name": "customer_address", "label": "Your Address", "fieldType": "textarea", "required": true },
-    { "name": "customer_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
-    { "name": "customer_email", "label": "Your Email Address", "fieldType": "email", "required": true },
-    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
-    { "name": "service_name", "label": "Name/Type of Service Received", "fieldType": "text", "required": true, "placeholder": "e.g., Home Renovation, Language Course, Repair Service" },
-    { "name": "service_date", "label": "Date(s) of Service", "fieldType": "text", "required": true },
-    { "name": "service_location", "label": "Location of Service", "fieldType": "text", "required": true, "placeholder": "e.g., My home address, Your main office, Online" },
-    { "name": "reasons_for_dissatisfaction", "label": "Reasons for Dissatisfaction (Details)", "fieldType": "textarea", "required": true, "placeholder": "Explain exactly what went wrong and how it failed to meet expectations." },
-    { "name": "attached_evidence", "label": "Attached Evidence (if any)", "fieldType": "textarea", "required": false, "placeholder": "Mention photos, emails, invoices, or provide links..." },
-    { "name": "type_of_claim", "label": "Primary Request/Remedy", "fieldType": "select", "options": ["Full Refund", "Service Redone (Fix)", "Free Repair/Completion", "Partial Refund"], "required": true },
-    { "name": "claim_details", "label": "Details of Your Claim", "fieldType": "textarea", "required": true, "placeholder": "Be specific. If requesting a refund, state the amount. If requesting a fix, state how." },
-    { "name": "response_days", "label": "Days Allowed for Response", "fieldType": "number", "required": true, "placeholder": "e.g., 7, 14" },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "service_provider_name",
+      "label": "Service Provider's Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "service_provider_address",
+      "label": "Service Provider's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "customer_name",
+      "label": "Your Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "customer_address",
+      "label": "Your Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "customer_phone",
+      "label": "Your Phone Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "customer_email",
+      "label": "Your Email Address",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "letter_date",
+      "label": "Date of Letter",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "service_name",
+      "label": "Name/Type of Service Received",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., Home Renovation, Language Course, Repair Service"
+    },
+    {
+      "name": "service_date",
+      "label": "Date(s) of Service",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "service_location",
+      "label": "Location of Service",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., My home address, Your main office, Online"
+    },
+    {
+      "name": "reasons_for_dissatisfaction",
+      "label": "Reasons for Dissatisfaction (Details)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Explain exactly what went wrong and how it failed to meet expectations."
+    },
+    {
+      "name": "attached_evidence",
+      "label": "Attached Evidence (if any)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Mention photos, emails, invoices, or provide links..."
+    },
+    {
+      "name": "type_of_claim",
+      "label": "Primary Request/Remedy",
+      "fieldType": "select",
+      "options": [
+        "Full Refund",
+        "Service Redone (Fix)",
+        "Free Repair/Completion",
+        "Partial Refund"
+      ],
+      "required": true
+    },
+    {
+      "name": "claim_details",
+      "label": "Details of Your Claim",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Be specific. If requesting a refund, state the amount. If requesting a fix, state how."
+    },
+    {
+      "name": "response_days",
+      "label": "Days Allowed for Response",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 7, 14"
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true
