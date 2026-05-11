@@ -7,18 +7,80 @@
   "slug": "arabuluculuk-basvuru-formu-is-hukuku",
   "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center;'>ARABULUCULUK BÜROSU'NA</h3>\n  <p style='text-align: center; margin-bottom: 30px;'>{{adliye_adi}} ADLİYESİ</p>\n\n  <p><strong>BAŞVURAN (İşçi/İşveren):</strong> {{basvuran_ad_soyad}} (T.C. No: {{basvuran_tc}})<br/>Adres: {{basvuran_adres}}<br/>Tel: {{basvuran_telefon}}</p>\n\n  <p><strong>KARŞI TARAF:</strong> {{karsi_taraf_unvan}}<br/>Adres: {{karsi_taraf_adres}}</p>\n\n  <p><strong>KONU:</strong> İş Hukuku kapsamında uyuşmazlığın arabuluculuk yoluyla çözülmesi talebidir.</p>\n\n  <p><strong>TALEPLERİMİZ:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{talepler_ozeti}}</pre>\n\n  <p><strong>AÇIKLAMALAR:</strong></p>\n  <p>Karşı taraf nezdinde {{formatDate ise_baslama_tarihi}} - {{formatDate isten_ayrilma_tarihi}} tarihleri arasında çalışmış bulunmaktayım. İş akdimin feshi sonrasında doğan yukarıdaki taleplerimin çözümü için arabulucu görevlendirilmesini arz ve talep ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px;'>Tarih: {{formatDate basvuru_tarihi}}</p>\n  <div style='text-align: right;'>\n    <p>Adı Soyadı: {{basvuran_ad_soyad}}<br/><br/><br/>İmza: _________________________</p>\n  </div>\n</div>",
   "fields": [
-    { "name": "adliye_adi", "label": "Adliye Adı", "fieldType": "text", "placeholder": "Örn: İstanbul (Çağlayan)", "required": true },
-    { "name": "basvuran_ad_soyad", "label": "Adınız Soyadınız", "fieldType": "text", "required": true },
-    { "name": "basvuran_tc", "label": "T.C. Kimlik Numaranız", "fieldType": "text", "required": true },
-    { "name": "basvuran_adres", "label": "Adresiniz", "fieldType": "textarea", "required": true },
-    { "name": "basvuran_telefon", "label": "Telefonunuz", "fieldType": "text", "required": true },
-    { "name": "karsi_taraf_unvan", "label": "Karşı Taraf (Şirket/Şahıs) Ünvanı", "fieldType": "text", "required": true },
-    { "name": "karsi_taraf_adres", "label": "Karşı Tarafın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "talepler_ozeti", "label": "Talepleriniz", "fieldType": "textarea", "placeholder": "Örn: İşe iade, Kıdem tazminatı, Fazla mesai ücreti vb.", "required": true },
-    { "name": "ise_baslama_tarihi", "label": "İşe Başlama Tarihi", "fieldType": "date", "required": true },
-    { "name": "isten_ayrilma_tarihi", "label": "İşten Ayrılma Tarihi", "fieldType": "date", "required": true },
-    { "name": "basvuru_tarihi", "label": "Başvuru Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "adliye_adi",
+      "label": "Adliye Adı",
+      "fieldType": "text",
+      "placeholder": "Örn: İstanbul (Çağlayan)",
+      "required": true
+    },
+    {
+      "name": "basvuran_ad_soyad",
+      "label": "Adınız Soyadınız",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "basvuran_tc",
+      "label": "T.C. Kimlik Numaranız",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "basvuran_adres",
+      "label": "Adresiniz",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "basvuran_telefon",
+      "label": "Telefonunuz",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "karsi_taraf_unvan",
+      "label": "Karşı Taraf (Şirket/Şahıs) Ünvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "karsi_taraf_adres",
+      "label": "Karşı Tarafın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "talepler_ozeti",
+      "label": "Talepleriniz",
+      "fieldType": "textarea",
+      "placeholder": "Örn: İşe iade, Kıdem tazminatı, Fazla mesai ücreti vb.",
+      "required": true
+    },
+    {
+      "name": "ise_baslama_tarihi",
+      "label": "İşe Başlama Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "isten_ayrilma_tarihi",
+      "label": "İşten Ayrılma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "basvuru_tarihi",
+      "label": "Başvuru Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

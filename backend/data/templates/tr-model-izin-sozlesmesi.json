@@ -7,25 +7,140 @@
   "slug": "model-kullanim-izin-sozlesmesi",
   "content": "<h2 style='text-align:center;'>MODEL KULLANIM HAKLARI İZİN SÖZLEŞMESİ</h2>\n<p>İşbu Sözleşme, {{cekimi_yapan_ad}} (\"Fotoğrafçı/Videograf\") ile {{model_ad_soyad}} (\"Model\") arasında, {{formatDate tarih}} tarihinde düzenlenmiştir.</p>\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Fotoğrafçı/Videograf:</strong> {{cekimi_yapan_ad}}<br/>Adres: {{cekimi_yapan_adres}}<br/>E-posta: {{cekimi_yapan_eposta}}</p>\n<p><strong>Model:</strong> {{model_ad_soyad}}<br/>Adres: {{model_adres}}<br/>Telefon: {{model_telefon}}<br/>E-posta: {{model_eposta}}</p>\n{{#if (eq model_yas_kucuk 'Evet')}}\n<p>Veli/Vasi: {{veli_vasi_ad_soyad}}<br/>Telefon: {{veli_vasi_telefon}}</p>\n{{/if}}\n<p><strong>2. ÇEKİM BİLGİLERİ</strong></p>\n<p>{{formatDate cekım_tarihi}} tarihinde {{cekım_yeri}} adresinde gerçekleştirilen {{cekım_konusu}} konulu çekimler için geçerlidir.</p>\n<p><strong>3. KULLANIM İZNİ</strong></p>\n<p>Görsellerin kullanım amaçları:</p><pre>{{kullanim_amaclari}}</pre>\n<p>Kullanım mecraları:</p><pre>{{kullanim_mecralari}}</pre>\n{{#if (eq odeme_varmi 'Evet')}}\n<p>Ödeme: {{odeme_miktari}} TL yapılmıştır.</p>\n{{else}}\n<p>Maddi karşılık beklenmeksizin verilmiştir.</p>\n{{/if}}\n<p style='margin-top: 40px;'>Tarih: {{formatDate tarih}}</p>\n<div><p>Fotoğrafçı: {{cekimi_yapan_ad}}</p><p>Model: {{model_ad_soyad}}</p>{{#if (eq model_yas_kucuk 'Evet')}}<p>Veli/Vasi: {{veli_vasi_ad_soyad}}</p>{{/if}}</div>",
   "fields": [
-    { "name": "cekimi_yapan_ad", "label": "Çekimi Yapanın Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "cekimi_yapan_adres", "label": "Çekimi Yapanın Adresi", "fieldType": "textarea", "required": true },
-    { "name": "cekimi_yapan_eposta", "label": "Çekimi Yapanın E-postası", "fieldType": "email", "required": true },
-    { "name": "model_ad_soyad", "label": "Modelin Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "model_adres", "label": "Modelin Adresi", "fieldType": "textarea", "required": true },
-    { "name": "model_telefon", "label": "Modelin Telefonu", "fieldType": "text", "required": true },
-    { "name": "model_eposta", "label": "Modelin E-postası", "fieldType": "email", "required": false },
-    { "name": "model_yas_kucuk", "label": "Model 18 Yaşından Küçük mü?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "veli_vasi_ad_soyad", "label": "Veli/Vasi Adı Soyadı", "fieldType": "text", "required": false, "condition": { "field": "model_yas_kucuk", "value": "Evet" } },
-    { "name": "veli_vasi_telefon", "label": "Veli/Vasi Telefonu", "fieldType": "text", "required": false, "condition": { "field": "model_yas_kucuk", "value": "Evet" } },
-    { "name": "cekım_tarihi", "label": "Çekim Tarihi", "fieldType": "date", "required": true },
-    { "name": "cekım_yeri", "label": "Çekim Yeri", "fieldType": "text", "required": true },
-    { "name": "cekım_konusu", "label": "Çekim Konusu", "fieldType": "text", "required": true },
-    { "name": "kullanim_amaclari", "label": "Kullanım Amaçları", "fieldType": "textarea", "required": true },
-    { "name": "kullanim_mecralari", "label": "Kullanım Mecraları", "fieldType": "textarea", "required": true },
-    { "name": "odeme_varmi", "label": "Ödeme Yapıldı mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "odeme_miktari", "label": "Ödeme Miktarı (TL)", "fieldType": "number", "required": false, "condition": { "field": "odeme_varmi", "value": "Evet" } },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Gönderim İçin)", "fieldType": "email", "required": true }
+    {
+      "name": "cekimi_yapan_ad",
+      "label": "Çekimi Yapanın Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "cekimi_yapan_adres",
+      "label": "Çekimi Yapanın Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "cekimi_yapan_eposta",
+      "label": "Çekimi Yapanın E-postası",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "model_ad_soyad",
+      "label": "Modelin Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "model_adres",
+      "label": "Modelin Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "model_telefon",
+      "label": "Modelin Telefonu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "model_eposta",
+      "label": "Modelin E-postası",
+      "fieldType": "email",
+      "required": false
+    },
+    {
+      "name": "model_yas_kucuk",
+      "label": "Model 18 Yaşından Küçük mü?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "veli_vasi_ad_soyad",
+      "label": "Veli/Vasi Adı Soyadı",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "model_yas_kucuk",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "veli_vasi_telefon",
+      "label": "Veli/Vasi Telefonu",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "model_yas_kucuk",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "cekım_tarihi",
+      "label": "Çekim Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "cekım_yeri",
+      "label": "Çekim Yeri",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "cekım_konusu",
+      "label": "Çekim Konusu",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kullanim_amaclari",
+      "label": "Kullanım Amaçları",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "kullanim_mecralari",
+      "label": "Kullanım Mecraları",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "odeme_varmi",
+      "label": "Ödeme Yapıldı mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "odeme_miktari",
+      "label": "Ödeme Miktarı (TL)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "odeme_varmi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Gönderim İçin)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

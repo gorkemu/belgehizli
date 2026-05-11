@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "67ff183dd3d0d8e46eebe609"
+  },
   "name": "Genel Feragatname ve Sorumluluk Reddi",
   "description": "Belirli bir etkinlik, hizmet veya durumla ilgili riskleri anladığını ve haklarından feragat ettiğini belirten belge.",
   "price": 5,
@@ -6,15 +9,62 @@
   "slug": "genel-feragatname-ve-sorumluluk-reddi",
   "content": "<h2 style='text-align:center;'>FERAGATNAME VE SORUMLULUK REDDİ BEYANI</h2>\n<p>Ben, aşağıda imzası bulunan {{feragat_eden_ad_soyad}}, T.C. Kimlik No: {{feragat_eden_tc_no}}, Adres: {{feragat_eden_adres}};</p>\n\n<p>Katılacağım / Kullanacağım {{etkinlik_hizmet_durum}} ile ilgili olarak aşağıdakileri beyan, kabul ve taahhüt ederim:</p>\n\n<ol>\n  <li>Söz konusu {{etkinlik_hizmet_durum}}'nin niteliğini, olası risklerini ve sonuçlarını tam olarak anladım.</li>\n  <li>Bu {{etkinlik_hizmet_durum}}'ne kendi serbest irademle ve riskleri kabul ederek katıldığımı/kullanacağımı beyan ederim.</li>\n  <li>{{etkinlik_hizmet_durum}} sırasında veya sonrasında meydana gelebilecek herhangi bir yaralanma, kaza, maddi veya manevi zarardan dolayı {{sorumluluktan_feragat_edilen_taraf}}'ı (ve onun çalışanlarını, temsilcilerini, bağlı kuruluşlarını) sorumlu tutmayacağımı, kendilerine karşı herhangi bir dava veya talep hakkından gayri kabili rücu feragat ettiğimi kabul ederim.</li>\n  <li>Bu feragatnamenin, ihmal dahil olmak üzere her türlü sorumluluk iddiasını kapsadığını anlıyorum.</li>\n  {{#if ek_madde_1}}<li>{{ek_madde_1}}</li>{{/if}}\n  {{#if ek_madde_2}}<li>{{ek_madde_2}}</li>{{/if}}\n  <li>Bu belgeyi okuduğumu, anladığımı ve yasal haklarımdan feragat ettiğimin bilincinde olarak imzaladığımı beyan ederim.</li>\n</ol>\n\n<p style='margin-top: 40px;'>Tarih: {{formatDate beyan_tarihi}}</p>\n\n<div style='margin-top: 20px;'>\n  <p><strong>Feragat Edenin Adı Soyadı:</strong> {{feragat_eden_ad_soyad}}</p>\n  <br/><br/><p><strong>İmza:</strong> _________________________</p>\n</div>",
   "fields": [
-    { "name": "feragat_eden_ad_soyad", "label": "Feragat Edenin Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "feragat_eden_tc_no", "label": "Feragat Edenin T.C. Kimlik No", "fieldType": "text", "required": true },
-    { "name": "feragat_eden_adres", "label": "Feragat Edenin Adresi", "fieldType": "textarea", "required": true },
-    { "name": "etkinlik_hizmet_durum", "label": "Feragat Edilen Etkinlik/Hizmet/Durum", "fieldType": "text", "required": true, "placeholder": "Örn: X Doğa Yürüyüşü Etkinliği, Y Spor Salonu Üyeliği, Z Atölye Çalışması" },
-    { "name": "sorumluluktan_feragat_edilen_taraf", "label": "Sorumluluktan Feragat Edilen Taraf(lar)", "fieldType": "text", "required": true, "placeholder": "Örn: ABC Organizasyon Şirketi, Spor Salonu İşletmesi, Eğitmen Adı Soyadı" },
-    { "name": "ek_madde_1", "label": "Ek Madde 1 (Opsiyonel)", "fieldType": "textarea", "required": false },
-    { "name": "ek_madde_2", "label": "Ek Madde 2 (Opsiyonel)", "fieldType": "textarea", "required": false },
-    { "name": "beyan_tarihi", "label": "Beyan/İmza Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "feragat_eden_ad_soyad",
+      "label": "Feragat Edenin Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "feragat_eden_tc_no",
+      "label": "Feragat Edenin T.C. Kimlik No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "feragat_eden_adres",
+      "label": "Feragat Edenin Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "etkinlik_hizmet_durum",
+      "label": "Feragat Edilen Etkinlik/Hizmet/Durum",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: X Doğa Yürüyüşü Etkinliği, Y Spor Salonu Üyeliği, Z Atölye Çalışması"
+    },
+    {
+      "name": "sorumluluktan_feragat_edilen_taraf",
+      "label": "Sorumluluktan Feragat Edilen Taraf(lar)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "Örn: ABC Organizasyon Şirketi, Spor Salonu İşletmesi, Eğitmen Adı Soyadı"
+    },
+    {
+      "name": "ek_madde_1",
+      "label": "Ek Madde 1 (Opsiyonel)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "ek_madde_2",
+      "label": "Ek Madde 2 (Opsiyonel)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "beyan_tarihi",
+      "label": "Beyan/İmza Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

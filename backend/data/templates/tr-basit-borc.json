@@ -7,20 +7,104 @@
   "slug": "basit-borc-senedi",
   "content": "<div style='border: 1px solid #666; padding: 25px; margin: 20px; max-width: 700px; font-family: Inter, sans-serif;'>\n<h3 style='text-align:center; margin-bottom:20px;'>BASİT BORÇ SENEDİ</h3>\n\n<p><strong>Vade Tarihi:</strong> {{formatDate vade_tarihi}}</p>\n<p><strong>Ödeme Yeri:</strong> {{odeme_yeri}}</p>\n<p><strong>Tanzim Tarihi:</strong> {{formatDate tanzim_tarihi}}</p>\n\n<hr style='margin: 15px 0;'/>\n\n<p>İşbu senet mukabilinde, {{formatDate vade_tarihi}} tarihinde, <strong>{{lehtar_ad_soyad}}</strong>'a (\"Lehtar\") veya emrine, yukarıda vadesi yazılı tarihte <strong>{{borc_miktari_yazi_ile}} ({{borc_miktari}} TL)</strong> ödeyeceğimi kayıtsız şartsız kabul ve taahhüt ederim.</p>\n\n{{#if faiz_orani}}\n<p>Vadesinden itibaren yıllık %{{faiz_orani}} temerrüt faizi uygulanacaktır.</p>\n{{/if}}\n\n{{#if (eq kefil_var_mi 'Evet')}}\n<p><strong>Müteselsil Kefil:</strong> {{kefil_ad_soyad}} (T.C. No: {{kefil_tc_no}})</p>\n<p style='font-size: 0.9em;'>Yukarıda belirtilen borca ve ferilerine müteselsil kefil sıfatıyla imza ediyorum.</p>\n<p style='margin-top: 15px;'><br/><span>Kefil İmzası: _________________________</span></p>\n<br/>\n{{/if}}\n\n<p style='margin-top: 30px;'><strong>Borçlu:</strong></p>\n<div style='margin-top: 10px;'>\n <p style='margin-bottom: 5px;'>Adı Soyadı / Unvanı: {{borclu_ad_unvan}}</p>\n <p style='margin-bottom: 5px;'>Adresi: {{borclu_adres}}</p>\n <p style='margin-bottom: 15px;'>T.C. Kimlik No / Vergi No: {{borclu_tc_vergi_no}}</p>\n <br/><p>İmza: _________________________</p>\n</div>\n</div>",
   "fields": [
-    { "name": "lehtar_ad_soyad", "label": "Lehtar (Alacaklı) Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "borclu_ad_unvan", "label": "Borçlu Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "borclu_adres", "label": "Borçlu Adresi", "fieldType": "textarea", "required": true },
-    { "name": "borclu_tc_vergi_no", "label": "Borçlu T.C. Kimlik No / Vergi No", "fieldType": "text", "required": true },
-    { "name": "borc_miktari", "label": "Borç Miktarı (Sayısal TL)", "fieldType": "number", "required": true },
-    { "name": "borc_miktari_yazi_ile", "label": "Borç Miktarı (Yazıyla)", "fieldType": "text", "placeholder": "Örn: ON BİN TÜRK LİRASI", "required": true },
-    { "name": "vade_tarihi", "label": "Vade Tarihi (Ödeme Tarihi)", "fieldType": "date", "required": true },
-    { "name": "tanzim_tarihi", "label": "Tanzim Tarihi (Senedin Düzenlendiği Tarih)", "fieldType": "date", "required": true },
-    { "name": "odeme_yeri", "label": "Ödeme Yeri", "fieldType": "text", "placeholder": "Örn: İstanbul, Lehtarın adresi", "required": true },
-    { "name": "faiz_orani", "label": "Vadeden Sonra İşleyecek Yıllık Faiz Oranı (%) (Opsiyonel)", "fieldType": "number", "required": false },
-    { "name": "kefil_var_mi", "label": "Borca Kefil Olacak Biri Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "kefil_ad_soyad", "label": "Kefil Adı Soyadı", "fieldType": "text", "required": false, "condition": { "field": "kefil_var_mi", "value": "Evet" } },
-    { "name": "kefil_tc_no", "label": "Kefil T.C. Kimlik No", "fieldType": "text", "required": false, "condition": { "field": "kefil_var_mi", "value": "Evet" } },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "lehtar_ad_soyad",
+      "label": "Lehtar (Alacaklı) Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borclu_ad_unvan",
+      "label": "Borçlu Adı Soyadı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borclu_adres",
+      "label": "Borçlu Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "borclu_tc_vergi_no",
+      "label": "Borçlu T.C. Kimlik No / Vergi No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "borc_miktari",
+      "label": "Borç Miktarı (Sayısal TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "borc_miktari_yazi_ile",
+      "label": "Borç Miktarı (Yazıyla)",
+      "fieldType": "text",
+      "placeholder": "Örn: ON BİN TÜRK LİRASI",
+      "required": true
+    },
+    {
+      "name": "vade_tarihi",
+      "label": "Vade Tarihi (Ödeme Tarihi)",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "tanzim_tarihi",
+      "label": "Tanzim Tarihi (Senedin Düzenlendiği Tarih)",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "odeme_yeri",
+      "label": "Ödeme Yeri",
+      "fieldType": "text",
+      "placeholder": "Örn: İstanbul, Lehtarın adresi",
+      "required": true
+    },
+    {
+      "name": "faiz_orani",
+      "label": "Vadeden Sonra İşleyecek Yıllık Faiz Oranı (%) (Opsiyonel)",
+      "fieldType": "number",
+      "required": false
+    },
+    {
+      "name": "kefil_var_mi",
+      "label": "Borca Kefil Olacak Biri Var mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "kefil_ad_soyad",
+      "label": "Kefil Adı Soyadı",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "kefil_var_mi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "kefil_tc_no",
+      "label": "Kefil T.C. Kimlik No",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "kefil_var_mi",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -7,19 +7,97 @@
   "slug": "rekabet-etmeme-sozlesmesi-basit",
   "content": "<h3 style='text-align:center;'>REKABET ETMEME SÖZLEŞMESİ</h3>\n<p>İşbu Rekabet Etmeme Sözleşmesi (\"Sözleşme\"), bir tarafta {{sirket_ad_unvan}} (\"Şirket\") ile diğer tarafta {{kisi_ad_soyad}} (\"Yüklenici\") arasında, Taraflar arasındaki {{iliski_turu}} ilişkisine istinaden {{formatDate tarih}} tarihinde aşağıdaki şartlarla düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Şirket:</strong> {{sirket_ad_unvan}}, Adres: {{sirket_adres}}</p>\n<p><strong>Yüklenici:</strong> {{kisi_ad_soyad}}, Adres: {{kisi_adres}}</p>\n\n<p><strong>2. REKABET ETMEME TAAHHÜDÜ</strong></p>\n<p>Yüklenici, Taraflar arasındaki {{iliski_turu}} ilişkisinin devam ettiği süre boyunca ve bu ilişkinin sona ermesinden itibaren {{sure}} süreyle, {{cografi_alan}} sınırları dahilinde, Şirket'in faaliyet gösterdiği {{faaliyet_alani}} alanında faaliyet gösteren rakip firmalarda çalışmamayı, onlara danışmanlık yapmamayı, onlarla ortaklık kurmamayı veya doğrudan ya da dolaylı olarak Şirket ile rekabet edecek şekilde kendi işini kurmamayı kabul ve taahhüt eder.</p>\n\n<p><strong>3. GİZLİLİK</strong></p>\n<p>Yüklenici, Şirket ile olan ilişkisi sırasında öğrendiği tüm ticari sırları, müşteri bilgilerini, finansal verileri ve diğer gizli bilgileri, ilişki sona erdikten sonra da süresiz olarak gizli tutmayı ve kendi veya üçüncü şahısların menfaatine kullanmamayı taahhüt eder.</p>\n\n<p><strong>4. SÖZLEŞMENİN İHLALİ VE CEZAİ ŞART (Varsa)</strong></p>\n{{#if (eq cezai_sart_var 'Evet')}}\n<p>Yüklenici'nin işbu Sözleşme'deki rekabet etmeme veya gizlilik yükümlülüklerini ihlal etmesi halinde, Yüklenici, Şirket'e {{cezai_sart_miktari}} TL cezai şart ödemeyi kabul eder. Bu cezai şartın ödenmesi, Şirket'in uğradığı zararlar için ayrıca tazminat talep etme ve ihtiyati tedbir gibi diğer yasal haklarını kullanma hakkını ortadan kaldırmaz.</p>\n{{else}}\n<p>Yüklenici'nin işbu Sözleşme'deki yükümlülüklerini ihlal etmesi halinde, Şirket'in genel hukuk kuralları çerçevesinde tazminat talep etme ve diğer yasal yollara başvurma hakkı saklıdır.</p>\n{{/if}}\n\n<p><strong>5. GEÇERLİLİK VE UYGULANACAK HUKUK</strong></p>\n<p>İşbu Sözleşme, Tarafların imzasıyla yürürlüğe girer. Sözleşmenin yorumunda ve uygulanmasında Türk Hukuku geçerli olup, uyuşmazlıkların çözümünde {{yetkili_mahkeme}} Mahkemeleri yetkilidir.</p>\n\n<p>İşbu Rekabet Etmeme Sözleşmesi taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Şirket Yetkilisi</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{sirket_ad_unvan}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza/Kaşe: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Yüklenici</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{kisi_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "sirket_ad_unvan", "label": "Şirket Adı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "sirket_adres", "label": "Şirket Adresi", "fieldType": "textarea", "required": true },
-    { "name": "kisi_ad_soyad", "label": "Yüklenicinin (Çalışan/Danışman) Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "kisi_adres", "label": "Yüklenicinin Adresi", "fieldType": "textarea", "required": true },
-    { "name": "iliski_turu", "label": "Taraflar Arasındaki İlişkinin Türü", "fieldType": "text", "placeholder": "Örn: Danışmanlık Sözleşmesi, Freelancer Sözleşmesi", "required": true },
-    { "name": "sure", "label": "Rekabet Yasağı Süresi (İlişki bittikten sonra)", "fieldType": "text", "placeholder": "Örn: 1 Yıl, 6 Ay", "required": true },
-    { "name": "cografi_alan", "label": "Rekabet Yasağının Geçerli Olduğu Coğrafi Alan", "fieldType": "text", "placeholder": "Örn: Tüm Türkiye, İstanbul İli", "required": true },
-    { "name": "faaliyet_alani", "label": "Şirketin Faaliyet Alanı (Rekabetin Yasaklandığı)", "fieldType": "text", "placeholder": "Örn: Yazılım Geliştirme, E-ticaret Danışmanlığı", "required": true },
-    { "name": "cezai_sart_var", "label": "İhlal Halinde Cezai Şart Var mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "cezai_sart_miktari", "label": "Cezai Şart Miktarı (TL) (Evet ise)", "fieldType": "number", "required": false, "condition": { "field": "cezai_sart_var", "value": "Evet" } },
-    { "name": "yetkili_mahkeme", "label": "Yetkili Mahkeme", "fieldType": "text", "placeholder": "Örn: İstanbul Çağlayan", "required": true },
-    { "name": "tarih", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "sirket_ad_unvan",
+      "label": "Şirket Adı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "sirket_adres",
+      "label": "Şirket Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "kisi_ad_soyad",
+      "label": "Yüklenicinin (Çalışan/Danışman) Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "kisi_adres",
+      "label": "Yüklenicinin Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "iliski_turu",
+      "label": "Taraflar Arasındaki İlişkinin Türü",
+      "fieldType": "text",
+      "placeholder": "Örn: Danışmanlık Sözleşmesi, Freelancer Sözleşmesi",
+      "required": true
+    },
+    {
+      "name": "sure",
+      "label": "Rekabet Yasağı Süresi (İlişki bittikten sonra)",
+      "fieldType": "text",
+      "placeholder": "Örn: 1 Yıl, 6 Ay",
+      "required": true
+    },
+    {
+      "name": "cografi_alan",
+      "label": "Rekabet Yasağının Geçerli Olduğu Coğrafi Alan",
+      "fieldType": "text",
+      "placeholder": "Örn: Tüm Türkiye, İstanbul İli",
+      "required": true
+    },
+    {
+      "name": "faaliyet_alani",
+      "label": "Şirketin Faaliyet Alanı (Rekabetin Yasaklandığı)",
+      "fieldType": "text",
+      "placeholder": "Örn: Yazılım Geliştirme, E-ticaret Danışmanlığı",
+      "required": true
+    },
+    {
+      "name": "cezai_sart_var",
+      "label": "İhlal Halinde Cezai Şart Var mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "cezai_sart_miktari",
+      "label": "Cezai Şart Miktarı (TL) (Evet ise)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "cezai_sart_var",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "yetkili_mahkeme",
+      "label": "Yetkili Mahkeme",
+      "fieldType": "text",
+      "placeholder": "Örn: İstanbul Çağlayan",
+      "required": true
+    },
+    {
+      "name": "tarih",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -7,13 +7,50 @@
   "slug": "miras-taksim-sozlesmesi",
   "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center;'>MİRAS TAKSİM SÖZLEŞMESİ</h2>\n\n  <p><strong>MURİS (Miras Bırakan):</strong> {{muris_ad_soyad}} (T.C. No: {{muris_tc}})<br/><strong>VEFAT TARİHİ:</strong> {{formatDate vefat_tarihi}}</p>\n\n  <p><strong>MİRASÇILAR:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{mirascilar_listesi}}</pre>\n\n  <p>Yukarıda bilgileri yazılı mirasçılar, muris {{muris_ad_soyad}}'ın vefatı ile intikal eden terekedeki taşınır ve taşınmaz malları, aşağıdaki şartlar dahilinde taksim etme konusunda tam bir mutabakata varmışlardır:</p>\n\n  <p><strong>1. PAYLAŞIM ESASLARI:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{paylasim_detayi}}</pre>\n\n  <p><strong>2. BEYAN VE KABUL:</strong></p>\n  <p>Mirasçılar, yukarıdaki paylaşım neticesinde paylarına düşen hakları eksiksiz aldıklarını, birbirlerinden başkaca miras hak ve alacakları kalmadığını, bu taksimat ile terekenin tamamen tasfiye edildiğini kabul ve beyan ederler.</p>\n\n  <p style='margin-top: 40px;'><strong>TARİH:</strong> {{formatDate sozlesme_tarihi}}</p>\n\n  <div style='margin-top: 20px;'>\n    <p><strong>MİRASÇILARIN İMZALARI:</strong></p>\n    <p><br/>1. ________________________<br/><br/>2. ________________________<br/><br/>3. ________________________</p>\n  </div>\n</div>",
   "fields": [
-    { "name": "muris_ad_soyad", "label": "Vefat Eden (Muris) Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "muris_tc", "label": "Muris T.C. No", "fieldType": "text", "required": true },
-    { "name": "vefat_tarihi", "label": "Vefat Tarihi", "fieldType": "date", "required": true },
-    { "name": "mirascilar_listesi", "label": "Mirasçıların Ad, Soyad ve T.C. Bilgileri", "fieldType": "textarea", "placeholder": "1- Ad Soyad (TC...)\n2- Ad Soyad (TC...)", "required": true },
-    { "name": "paylasim_detayi", "label": "Paylaşım Detayları (Kim neyi alıyor?)", "fieldType": "textarea", "placeholder": "Örn: İstanbul'daki daire A mirasçısına, Bankadaki para B mirasçısına bırakılmıştır.", "required": true },
-    { "name": "sozlesme_tarihi", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "muris_ad_soyad",
+      "label": "Vefat Eden (Muris) Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "muris_tc",
+      "label": "Muris T.C. No",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "vefat_tarihi",
+      "label": "Vefat Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "mirascilar_listesi",
+      "label": "Mirasçıların Ad, Soyad ve T.C. Bilgileri",
+      "fieldType": "textarea",
+      "placeholder": "1- Ad Soyad (TC...)\n2- Ad Soyad (TC...)",
+      "required": true
+    },
+    {
+      "name": "paylasim_detayi",
+      "label": "Paylaşım Detayları (Kim neyi alıyor?)",
+      "fieldType": "textarea",
+      "placeholder": "Örn: İstanbul'daki daire A mirasçısına, Bankadaki para B mirasçısına bırakılmıştır.",
+      "required": true
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

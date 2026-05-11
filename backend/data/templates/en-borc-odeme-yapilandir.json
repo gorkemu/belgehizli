@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b9821"
+  },
   "name": "Debt Settlement & Payment Plan Agreement",
   "description": "A formal protocol between a creditor and debtor acknowledging a debt and establishing a restructured payment schedule.",
   "price": 12,
@@ -6,23 +9,122 @@
   "slug": "debt-settlement-payment-plan-agreement",
   "content": "<h2 style='text-align:center;'>DEBT SETTLEMENT AND PAYMENT PLAN AGREEMENT</h2>\n<p>This Debt Settlement and Payment Plan Agreement (the \"Agreement\") is entered into on {{formatDate agreement_date}} by and between the Creditor and the Debtor named below, for the purpose of restructuring and settling an outstanding debt.</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>A. CREDITOR:</strong><br/>\nName / Company: {{creditor_name}}<br/>\nAddress: {{creditor_address}}<br/>\n{{#if creditor_bank_details}}Payment Routing/Bank Info: {{creditor_bank_details}}{{/if}}\n</p>\n<p><strong>B. DEBTOR:</strong><br/>\nName / Company: {{debtor_name}}<br/>\nAddress: {{debtor_address}}<br/>\nPhone: {{debtor_phone}}\n</p>\n\n<p><strong>2. ACKNOWLEDGMENT OF DEBT</strong></p>\n<p>The Debtor acknowledges and agrees that they currently owe the Creditor a principal debt in the amount of <strong>{{principal_debt_amount}}</strong>, arising from: {{source_of_debt}}.</p>\n{{#if accrued_interest_fees}}\n<p>In addition to the principal amount, accrued interest and late fees total <strong>{{accrued_interest_fees}}</strong>.</p>\n<p>The total consolidated debt amount to be restructured under this Agreement is <strong>{{total_restructured_debt}}</strong>.</p>\n{{else}}\n<p>The total debt amount to be restructured under this Agreement is <strong>{{principal_debt_amount}}</strong>.</p>\n{{/if}}\n\n<p><strong>3. RESTRUCTURED PAYMENT PLAN</strong></p>\n<p>The Parties agree that the total consolidated debt shall be paid off according to the following schedule:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{new_payment_schedule}}</pre>\n<p>Payments shall be made via {{payment_method}} to the Creditor.</p>\n\n<p><strong>4. TERMS AND CONDITIONS</strong></p>\n<ul>\n <li><strong>Forbearance:</strong> As long as the Debtor makes payments in strict accordance with the schedule above, the Creditor agrees to pause and withhold any legal action or collection efforts regarding this debt.</li>\n <li><strong>Future Interest:</strong> {{#if (eq apply_new_interest 'Yes')}}The unpaid balance of the restructured debt shall accrue interest at an annual rate of {{new_interest_rate}}% until paid in full.{{else}}No further interest shall accrue on the restructured debt provided payments are made on time.{{/if}}</li>\n <li><strong>Default / Acceleration Clause:</strong> If the Debtor fails to make any payment when due under this Agreement, {{default_consequences}}.</li>\n</ul>\n\n<p><strong>5. FULL AND FINAL SETTLEMENT (RELEASE)</strong></p>\n<p>This Agreement supersedes all prior agreements, oral or written, regarding the referenced debt. Upon the Debtor's successful completion of all payments listed in Section 3, the Creditor will fully and forever release, discharge, and acquit the Debtor from this specific debt obligation.</p>\n\n<p>IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first above written.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>CREDITOR</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{creditor_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>DEBTOR</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{debtor_name}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "creditor_name", "label": "Creditor's Name / Company", "fieldType": "text", "required": true },
-    { "name": "creditor_address", "label": "Creditor's Address", "fieldType": "textarea", "required": true },
-    { "name": "creditor_bank_details", "label": "Creditor's Bank/Routing Details (Optional)", "fieldType": "text", "required": false },
-    { "name": "debtor_name", "label": "Debtor's Name / Company", "fieldType": "text", "required": true },
-    { "name": "debtor_address", "label": "Debtor's Address", "fieldType": "textarea", "required": true },
-    { "name": "debtor_phone", "label": "Debtor's Phone Number", "fieldType": "text", "required": true },
-    { "name": "source_of_debt", "label": "Source of Debt", "fieldType": "text", "placeholder": "e.g., Invoice #1234, Personal Loan dated Jan 1st", "required": true },
-    { "name": "principal_debt_amount", "label": "Principal Debt Amount (Include Currency)", "fieldType": "text", "placeholder": "e.g., $5,000", "required": true },
-    { "name": "accrued_interest_fees", "label": "Accrued Interest / Late Fees (If any)", "fieldType": "text", "placeholder": "e.g., $250", "required": false },
-    { "name": "total_restructured_debt", "label": "Total Restructured Debt (Principal + Fees)", "fieldType": "text", "required": true },
-    { "name": "new_payment_schedule", "label": "New Payment Schedule", "fieldType": "textarea", "placeholder": "e.g., Payment 1: $1000 on June 1st.\nPayment 2: $1000 on July 1st.", "required": true },
-    { "name": "payment_method", "label": "Payment Method", "fieldType": "text", "placeholder": "e.g., Wire Transfer, Cashier's Check", "required": true },
-    { "name": "apply_new_interest", "label": "Will new interest apply to the balance?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "new_interest_rate", "label": "New Interest Rate (Annual %)", "fieldType": "number", "required": false, "condition": { "field": "apply_new_interest", "value": "Yes" } },
-    { "name": "default_consequences", "label": "Consequences of Default (Acceleration)", "fieldType": "textarea", "placeholder": "e.g., The entire remaining balance becomes immediately due, and legal action will resume.", "required": true },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "creditor_name",
+      "label": "Creditor's Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "creditor_address",
+      "label": "Creditor's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "creditor_bank_details",
+      "label": "Creditor's Bank/Routing Details (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "debtor_name",
+      "label": "Debtor's Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "debtor_address",
+      "label": "Debtor's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "debtor_phone",
+      "label": "Debtor's Phone Number",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "source_of_debt",
+      "label": "Source of Debt",
+      "fieldType": "text",
+      "placeholder": "e.g., Invoice #1234, Personal Loan dated Jan 1st",
+      "required": true
+    },
+    {
+      "name": "principal_debt_amount",
+      "label": "Principal Debt Amount (Include Currency)",
+      "fieldType": "text",
+      "placeholder": "e.g., $5,000",
+      "required": true
+    },
+    {
+      "name": "accrued_interest_fees",
+      "label": "Accrued Interest / Late Fees (If any)",
+      "fieldType": "text",
+      "placeholder": "e.g., $250",
+      "required": false
+    },
+    {
+      "name": "total_restructured_debt",
+      "label": "Total Restructured Debt (Principal + Fees)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "new_payment_schedule",
+      "label": "New Payment Schedule",
+      "fieldType": "textarea",
+      "placeholder": "e.g., Payment 1: $1000 on June 1st.\nPayment 2: $1000 on July 1st.",
+      "required": true
+    },
+    {
+      "name": "payment_method",
+      "label": "Payment Method",
+      "fieldType": "text",
+      "placeholder": "e.g., Wire Transfer, Cashier's Check",
+      "required": true
+    },
+    {
+      "name": "apply_new_interest",
+      "label": "Will new interest apply to the balance?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "new_interest_rate",
+      "label": "New Interest Rate (Annual %)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "apply_new_interest",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "default_consequences",
+      "label": "Consequences of Default (Acceleration)",
+      "fieldType": "textarea",
+      "placeholder": "e.g., The entire remaining balance becomes immediately due, and legal action will resume.",
+      "required": true
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a3df4a6478ae3b983e"
+  },
   "name": "Residential Lease Agreement",
   "description": "A standard contract establishing the terms and conditions of renting a residential property.",
   "price": 15,
@@ -15,9 +18,24 @@
       "removeLabel": "Remove Landlord",
       "minInstances": 1,
       "subfields": [
-        { "name": "full_name", "label": "Full Name", "fieldType": "text", "required": true },
-        { "name": "id_number", "label": "ID / SSN", "fieldType": "text", "required": true },
-        { "name": "address", "label": "Current Address", "fieldType": "textarea", "required": true }
+        {
+          "name": "full_name",
+          "label": "Full Name",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "id_number",
+          "label": "ID / SSN",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "address",
+          "label": "Current Address",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
     {
@@ -29,23 +47,118 @@
       "removeLabel": "Remove Tenant",
       "minInstances": 1,
       "subfields": [
-        { "name": "full_name", "label": "Full Name", "fieldType": "text", "required": true },
-        { "name": "id_number", "label": "ID / SSN", "fieldType": "text", "required": true },
-        { "name": "address", "label": "Current Address", "fieldType": "textarea", "required": true }
+        {
+          "name": "full_name",
+          "label": "Full Name",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "id_number",
+          "label": "ID / SSN",
+          "fieldType": "text",
+          "required": true
+        },
+        {
+          "name": "address",
+          "label": "Current Address",
+          "fieldType": "textarea",
+          "required": true
+        }
       ]
     },
-    { "name": "leased_property_address", "label": "Full Address of Leased Property", "fieldType": "textarea", "required": true },
-    { "name": "start_date", "label": "Lease Start Date", "fieldType": "date", "required": true },
-    { "name": "lease_duration_months", "label": "Lease Duration (Months)", "fieldType": "number", "required": true, "placeholder": "e.g., 12" },
-    { "name": "monthly_rent_amount", "label": "Monthly Rent Amount (Include Currency)", "fieldType": "text", "required": true, "placeholder": "e.g., $1,500" },
-    { "name": "rent_due_day", "label": "Rent Due Day (Day of the month)", "fieldType": "number", "required": true, "placeholder": "e.g., 1 or 5" },
-    { "name": "increase_type", "label": "Annual Rent Increase Type", "fieldType": "select", "options": ["Mutual Agreement / Local Law", "Fixed Percentage"], "required": true },
-    { "name": "increase_rate", "label": "Fixed Increase Rate (%)", "fieldType": "number", "required": false, "condition": { "field": "increase_type", "value": "Fixed Percentage" } },
-    { "name": "deposit_collected", "label": "Has a Security Deposit been collected?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "deposit_amount", "label": "Security Deposit Amount (Include Currency)", "fieldType": "text", "required": false, "condition": { "field": "deposit_collected", "value": "Yes" } },
-    { "name": "special_conditions", "label": "Special Conditions & Rules", "fieldType": "textarea", "required": false, "placeholder": "Rules about pets, smoking, maintenance responsibilities, etc." },
-    { "name": "signature_date", "label": "Date of Signature", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "leased_property_address",
+      "label": "Full Address of Leased Property",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "start_date",
+      "label": "Lease Start Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "lease_duration_months",
+      "label": "Lease Duration (Months)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 12"
+    },
+    {
+      "name": "monthly_rent_amount",
+      "label": "Monthly Rent Amount (Include Currency)",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., $1,500"
+    },
+    {
+      "name": "rent_due_day",
+      "label": "Rent Due Day (Day of the month)",
+      "fieldType": "number",
+      "required": true,
+      "placeholder": "e.g., 1 or 5"
+    },
+    {
+      "name": "increase_type",
+      "label": "Annual Rent Increase Type",
+      "fieldType": "select",
+      "options": [
+        "Mutual Agreement / Local Law",
+        "Fixed Percentage"
+      ],
+      "required": true
+    },
+    {
+      "name": "increase_rate",
+      "label": "Fixed Increase Rate (%)",
+      "fieldType": "number",
+      "required": false,
+      "condition": {
+        "field": "increase_type",
+        "value": "Fixed Percentage"
+      }
+    },
+    {
+      "name": "deposit_collected",
+      "label": "Has a Security Deposit been collected?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "deposit_amount",
+      "label": "Security Deposit Amount (Include Currency)",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "deposit_collected",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "special_conditions",
+      "label": "Special Conditions & Rules",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Rules about pets, smoking, maintenance responsibilities, etc."
+    },
+    {
+      "name": "signature_date",
+      "label": "Date of Signature",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

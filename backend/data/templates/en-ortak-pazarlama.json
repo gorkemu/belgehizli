@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a3df4a6478ae3b984a"
+  },
   "name": "Co-Marketing Agreement",
   "description": "A contract between two businesses or individuals to promote each other, cross-sell, or run a joint marketing campaign.",
   "price": 10,
@@ -6,23 +9,123 @@
   "slug": "co-marketing-agreement",
   "content": "<h2 style='text-align:center;'>CO-MARKETING AGREEMENT</h2>\n<p>This Co-Marketing Agreement (the \"Agreement\") is entered into as of {{formatDate agreement_date}} by and between <strong>{{party_1_name}}</strong> (\"Party 1\") and <strong>{{party_2_name}}</strong> (\"Party 2\"). Together, they are referred to as the \"Parties\".</p>\n\n<p><strong>1. THE PARTIES</strong></p>\n<p><strong>Party 1:</strong><br/>\nCompany / Name: {{party_1_name}}<br/>\nAddress: {{party_1_address}}<br/>\nAuthorized Representative: {{party_1_rep}}\n</p>\n<p><strong>Party 2:</strong><br/>\nCompany / Name: {{party_2_name}}<br/>\nAddress: {{party_2_address}}<br/>\nAuthorized Representative: {{party_2_rep}}\n</p>\n\n<p><strong>2. PURPOSE AND SCOPE OF MARKETING ACTIVITIES</strong></p>\n<p>The Parties wish to collaborate on a joint marketing campaign to cross-promote their respective businesses. The specific marketing activities and campaigns (the \"Activities\") are outlined as follows:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{marketing_activities_scope}}</pre>\n\n<p><strong>3. RESPONSIBILITIES OF THE PARTIES</strong></p>\n<p><strong>Party 1's Responsibilities:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{party_1_responsibilities}}</pre>\n<p><strong>Party 2's Responsibilities:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{party_2_responsibilities}}</pre>\n\n<p><strong>4. TERM AND TIMELINE</strong></p>\n<p>The marketing Activities shall commence on {{formatDate start_date}} and conclude on {{formatDate end_date}}.</p>\n{{#if timeline_schedule}}<p>Detailed Timeline:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{timeline_schedule}}</pre>{{/if}}\n\n<p><strong>5. COSTS AND EXPENSES</strong></p>\n{{#if (eq share_costs 'Yes')}}\n<p>The Parties agree to share the costs associated with the Activities. Specifically, the costs for <strong>{{shared_cost_items}}</strong> will be divided as follows: <strong>{{cost_split_ratio}}</strong>. Each Party shall bear their own internal operational costs.</p>\n{{else}}\n<p>There is no joint cost sharing under this Agreement. Each Party shall bear its own expenses and costs incurred in the performance of its respective responsibilities.</p>\n{{/if}}\n\n<p><strong>6. TRADEMARK LICENSE AND APPROVALS</strong></p>\n<p>Each Party grants the other a non-exclusive, non-transferable, revocable license to use its trademarks, logos, and branding solely for the purposes of executing the Activities outlined in this Agreement. All co-branded marketing materials, social media posts, and public communications must be reviewed and approved in writing by both Parties prior to publication.</p>\n\n<p><strong>7. CONFIDENTIALITY</strong></p>\n<p>During the term of this Agreement, each Party may have access to the confidential information of the other Party. Both Parties agree to maintain the strict confidentiality of all shared proprietary data, strategies, and customer lists.</p>\n\n<p>IN WITNESS WHEREOF, the Parties have executed this Agreement as of the date first above written.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>For Party 1</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{party_1_rep}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>For Party 2</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{party_2_rep}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "party_1_name", "label": "Party 1 Name / Company", "fieldType": "text", "required": true },
-    { "name": "party_1_address", "label": "Party 1 Address", "fieldType": "textarea", "required": true },
-    { "name": "party_1_rep", "label": "Party 1 Authorized Representative", "fieldType": "text", "required": true },
-    { "name": "party_2_name", "label": "Party 2 Name / Company", "fieldType": "text", "required": true },
-    { "name": "party_2_address", "label": "Party 2 Address", "fieldType": "textarea", "required": true },
-    { "name": "party_2_rep", "label": "Party 2 Authorized Representative", "fieldType": "text", "required": true },
-    { "name": "marketing_activities_scope", "label": "Scope of Marketing Activities", "fieldType": "textarea", "placeholder": "e.g., Hosting a joint webinar, cross-promoting on Instagram...", "required": true },
-    { "name": "party_1_responsibilities", "label": "Responsibilities of Party 1", "fieldType": "textarea", "required": true },
-    { "name": "party_2_responsibilities", "label": "Responsibilities of Party 2", "fieldType": "textarea", "required": true },
-    { "name": "start_date", "label": "Campaign Start Date", "fieldType": "date", "required": true },
-    { "name": "end_date", "label": "Campaign End Date", "fieldType": "date", "required": true },
-    { "name": "timeline_schedule", "label": "Detailed Timeline (Optional)", "fieldType": "textarea", "required": false },
-    { "name": "share_costs", "label": "Will costs be shared?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "shared_cost_items", "label": "Shared Cost Items (If Yes)", "fieldType": "text", "placeholder": "e.g., Ad spend, Event Space Rental", "required": false, "condition": { "field": "share_costs", "value": "Yes" } },
-    { "name": "cost_split_ratio", "label": "Cost Split Ratio (If Yes)", "fieldType": "text", "placeholder": "e.g., 50/50, or Party 1 covers 70%", "required": false, "condition": { "field": "share_costs", "value": "Yes" } },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "party_1_name",
+      "label": "Party 1 Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "party_1_address",
+      "label": "Party 1 Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "party_1_rep",
+      "label": "Party 1 Authorized Representative",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "party_2_name",
+      "label": "Party 2 Name / Company",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "party_2_address",
+      "label": "Party 2 Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "party_2_rep",
+      "label": "Party 2 Authorized Representative",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "marketing_activities_scope",
+      "label": "Scope of Marketing Activities",
+      "fieldType": "textarea",
+      "placeholder": "e.g., Hosting a joint webinar, cross-promoting on Instagram...",
+      "required": true
+    },
+    {
+      "name": "party_1_responsibilities",
+      "label": "Responsibilities of Party 1",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "party_2_responsibilities",
+      "label": "Responsibilities of Party 2",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "start_date",
+      "label": "Campaign Start Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "end_date",
+      "label": "Campaign End Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "timeline_schedule",
+      "label": "Detailed Timeline (Optional)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "share_costs",
+      "label": "Will costs be shared?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "shared_cost_items",
+      "label": "Shared Cost Items (If Yes)",
+      "fieldType": "text",
+      "placeholder": "e.g., Ad spend, Event Space Rental",
+      "required": false,
+      "condition": {
+        "field": "share_costs",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "cost_split_ratio",
+      "label": "Cost Split Ratio (If Yes)",
+      "fieldType": "text",
+      "placeholder": "e.g., 50/50, or Party 1 covers 70%",
+      "required": false,
+      "condition": {
+        "field": "share_costs",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

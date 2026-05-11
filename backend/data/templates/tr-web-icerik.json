@@ -7,27 +7,153 @@
   "slug": "web-sitesi-icerik-yazarligi-sozlesmesi",
   "content": "<h2 style='text-align:center;'>WEB SİTESİ İÇERİK YAZARLIĞI HİZMET SÖZLEŞMESİ</h2>\n<p>İşbu Sözleşme, bir tarafta aşağıda bilgileri yer alan Hizmet Alan (Site Sahibi) ile diğer tarafta Hizmet Veren (Yazar) arasında, {{formatDate sozlesme_tarihi}} tarihinde aşağıdaki şartlarla akdedilmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>A. HİZMET ALAN (Site Sahibi):</strong><br/>\nAdı Soyadı / Şirket Adı: {{site_sahibi_ad}}<br/>\nAdresi: {{site_sahibi_adres}}<br/>\nWeb Sitesi: {{web_sitesi_url}}<br/>\nE-posta: {{site_sahibi_eposta}}\n</p>\n<p><strong>B. HİZMET VEREN (Yazar):</strong><br/>\nAdı Soyadı: {{yazar_ad_soyad}}<br/>\nAdresi: {{yazar_adres}}<br/>\n{{#if yazar_tc_vergi_no}}T.C. Kimlik No / Vergi No: {{yazar_tc_vergi_no}}{{/if}}<br/>\nE-posta: {{yazar_eposta}}\n</p>\n\n<p><strong>2. SÖZLEŞMENİN KONUSU</strong></p>\n<p>İşbu Sözleşme'nin konusu, Yazar tarafından Site Sahibi'nin {{web_sitesi_url}} adresli web sitesi için aşağıda belirtilen içeriklerin (\"İçerikler\") hazırlanması hizmetinin kapsamı, teslim şartları, telif hakları ve ücretlendirilmesidir.</p>\n<p><strong>Üretilecek İçeriklerin Detayları:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{icerik_detaylari}}</pre>\n\n<p><strong>3. TESLİMAT VE REVİZYON</strong></p>\n<p>İçerikler, aşağıdaki takvime uygun olarak Yazar tarafından Site Sahibi'ne teslim edilecektir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{teslim_takvimi}}</pre>\n<p>Teslim Formatı: {{teslim_formati}}</p>\n<p>Site Sahibi, teslim edilen her bir içerik için {{revizyon_suresi}} gün içinde geri bildirimde bulunma hakkına sahiptir. Yazar, makul ve sözleşme kapsamındaki geri bildirimlere göre {{revizyon_hakki_sayisi}} defaya kadar ücretsiz revizyon yapmayı kabul eder.</p>\n\n<p><strong>4. ÜCRET VE ÖDEME</strong></p>\n<p>Site Sahibi, Yazar'a bu sözleşme kapsamındaki hizmetleri karşılığında {{ucret_belirleme_yontemi}} olarak toplam/adet başına {{ucret_miktari}} TL + KDV ödeyecektir.</p>\n<p>Ödeme Planı: {{odeme_plani}}</p>\n<p>Ödeme Yöntemi: {{odeme_yontemi}}</p>\n\n<p><strong>5. TELİF HAKLARI VE KULLANIM HAKKI</strong></p>\n{{#if (eq telif_hakki 'Site Sahibine Devir')}}\n<p>Yazar tarafından üretilen ve ücreti tamamen ödenen İçeriklerin tüm yayın, çoğaltma, işleme, temsil ve umuma iletim dahil olmak üzere Fikir ve Sanat Eserleri Kanunu kapsamındaki mali hakları, süre ve yer sınırı olmaksızın münhasıran Site Sahibi'ne devredilmiş olacaktır. Yazar, içeriklerin Site Sahibi tarafından istenildiği gibi kullanılacağını kabul eder.</p>\n{{else}}\n<p>Yazar, İçeriklerin Fikir ve Sanat Eserleri Kanunu kapsamındaki mali haklarını elinde tutar. Yazar, ücreti tamamen ödenen İçeriklerin Site Sahibi tarafından {{lisans_kapsami}} kapsamında {{web_sitesi_url}} adresli web sitesinde yayınlanması için münhasır olmayan/münhasır, süresiz/süreli bir kullanım lisansı verir.</p>\n{{/if}}\n<p>Yazar, ürettiği içeriklerin özgün olduğunu ve üçüncü şahısların haklarını ihlal etmediğini beyan ve taahhüt eder.</p>\n\n<p><strong>6. GİZLİLİK</strong></p>\n<p>Taraflar, işbu sözleşme nedeniyle öğrendikleri diğer tarafa ait gizli bilgileri koruyacaklardır.</p>\n\n<p>İşbu Sözleşme 6 (altı) maddeden ibaret olup, taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate sozlesme_tarihi}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>HİZMET ALAN (Site Sahibi)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{site_sahibi_ad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>HİZMET VEREN (Yazar)</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{yazar_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "site_sahibi_ad", "label": "Site Sahibi Adı / Şirket Adı", "fieldType": "text", "required": true },
-    { "name": "site_sahibi_adres", "label": "Site Sahibi Adresi", "fieldType": "textarea", "required": true },
-    { "name": "web_sitesi_url", "label": "Web Sitesi Adresi (URL)", "fieldType": "text", "required": true },
-    { "name": "site_sahibi_eposta", "label": "Site Sahibi E-posta", "fieldType": "email", "required": true },
-    { "name": "yazar_ad_soyad", "label": "Yazar Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "yazar_adres", "label": "Yazar Adresi", "fieldType": "textarea", "required": true },
-    { "name": "yazar_tc_vergi_no", "label": "Yazar T.C. No / Vergi No (Varsa)", "fieldType": "text", "required": false },
-    { "name": "yazar_eposta", "label": "Yazar E-posta", "fieldType": "email", "required": true },
-    { "name": "icerik_detaylari", "label": "Üretilecek İçeriklerin Konusu/Başlıkları/Detayları", "fieldType": "textarea", "placeholder": "Örn: 5 adet SEO blog yazısı, Her biri min. 800 kelime.", "required": true },
-    { "name": "teslim_takvimi", "label": "Teslimat Takvimi", "fieldType": "textarea", "placeholder": "Örn: Her hafta 1 yazı, Cuma günleri teslim.", "required": true },
-    { "name": "teslim_formati", "label": "Teslimat Formatı", "fieldType": "text", "placeholder": "Örn: Word (.docx), Google Docs linki", "required": true },
-    { "name": "revizyon_suresi", "label": "Geri Bildirim Süresi (Gün)", "fieldType": "number", "placeholder": "Örn: 3", "required": true },
-    { "name": "revizyon_hakki_sayisi", "label": "Ücretsiz Revizyon Hakkı Sayısı", "fieldType": "number", "placeholder": "Örn: 2", "required": true },
-    { "name": "ucret_belirleme_yontemi", "label": "Ücret Belirleme Yöntemi", "fieldType": "select", "options": ["Toplam Proje Bedeli", "Yazı Başına Ücret", "Kelime Başına Ücret"], "required": true },
-    { "name": "ucret_miktari", "label": "Toplam / Yazı Başına / Kelime Başına Ücret (TL)", "fieldType": "number", "required": true },
-    { "name": "odeme_plani", "label": "Ödeme Planı", "fieldType": "text", "placeholder": "Örn: İş sonunda fatura karşılığı.", "required": true },
-    { "name": "odeme_yontemi", "label": "Ödeme Yöntemi", "fieldType": "text", "placeholder": "Örn: Banka Havalesi / EFT", "required": true },
-    { "name": "telif_hakki", "label": "Telif Hakları Durumu", "fieldType": "select", "options": ["Site Sahibine Devir", "Yazara Ait (Lisanslı)"], "required": true },
-    { "name": "lisans_kapsami", "label": "Lisans Kapsamı (Haklar Yazarda Kalacaksa)", "fieldType": "text", "placeholder": "Örn: Sadece belirtilen web sitesinde süresiz yayınlama", "required": false, "condition": { "field": "telif_hakki", "value": "Yazara Ait (Lisanslı)" } },
-    { "name": "sozlesme_tarihi", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "site_sahibi_ad",
+      "label": "Site Sahibi Adı / Şirket Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "site_sahibi_adres",
+      "label": "Site Sahibi Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "web_sitesi_url",
+      "label": "Web Sitesi Adresi (URL)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "site_sahibi_eposta",
+      "label": "Site Sahibi E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "yazar_ad_soyad",
+      "label": "Yazar Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yazar_adres",
+      "label": "Yazar Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "yazar_tc_vergi_no",
+      "label": "Yazar T.C. No / Vergi No (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "yazar_eposta",
+      "label": "Yazar E-posta",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "icerik_detaylari",
+      "label": "Üretilecek İçeriklerin Konusu/Başlıkları/Detayları",
+      "fieldType": "textarea",
+      "placeholder": "Örn: 5 adet SEO blog yazısı, Her biri min. 800 kelime.",
+      "required": true
+    },
+    {
+      "name": "teslim_takvimi",
+      "label": "Teslimat Takvimi",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Her hafta 1 yazı, Cuma günleri teslim.",
+      "required": true
+    },
+    {
+      "name": "teslim_formati",
+      "label": "Teslimat Formatı",
+      "fieldType": "text",
+      "placeholder": "Örn: Word (.docx), Google Docs linki",
+      "required": true
+    },
+    {
+      "name": "revizyon_suresi",
+      "label": "Geri Bildirim Süresi (Gün)",
+      "fieldType": "number",
+      "placeholder": "Örn: 3",
+      "required": true
+    },
+    {
+      "name": "revizyon_hakki_sayisi",
+      "label": "Ücretsiz Revizyon Hakkı Sayısı",
+      "fieldType": "number",
+      "placeholder": "Örn: 2",
+      "required": true
+    },
+    {
+      "name": "ucret_belirleme_yontemi",
+      "label": "Ücret Belirleme Yöntemi",
+      "fieldType": "select",
+      "options": [
+        "Toplam Proje Bedeli",
+        "Yazı Başına Ücret",
+        "Kelime Başına Ücret"
+      ],
+      "required": true
+    },
+    {
+      "name": "ucret_miktari",
+      "label": "Toplam / Yazı Başına / Kelime Başına Ücret (TL)",
+      "fieldType": "number",
+      "required": true
+    },
+    {
+      "name": "odeme_plani",
+      "label": "Ödeme Planı",
+      "fieldType": "text",
+      "placeholder": "Örn: İş sonunda fatura karşılığı.",
+      "required": true
+    },
+    {
+      "name": "odeme_yontemi",
+      "label": "Ödeme Yöntemi",
+      "fieldType": "text",
+      "placeholder": "Örn: Banka Havalesi / EFT",
+      "required": true
+    },
+    {
+      "name": "telif_hakki",
+      "label": "Telif Hakları Durumu",
+      "fieldType": "select",
+      "options": [
+        "Site Sahibine Devir",
+        "Yazara Ait (Lisanslı)"
+      ],
+      "required": true
+    },
+    {
+      "name": "lisans_kapsami",
+      "label": "Lisans Kapsamı (Haklar Yazarda Kalacaksa)",
+      "fieldType": "text",
+      "placeholder": "Örn: Sadece belirtilen web sitesinde süresiz yayınlama",
+      "required": false,
+      "condition": {
+        "field": "telif_hakki",
+        "value": "Yazara Ait (Lisanslı)"
+      }
+    },
+    {
+      "name": "sozlesme_tarihi",
+      "label": "Sözleşme Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b9820"
+  },
   "name": "Guest Blogger Agreement & Release Form",
   "description": "Terms, conditions, and copyright release form for authors submitting guest posts to a blog or website.",
   "price": 8,
@@ -6,23 +9,130 @@
   "slug": "guest-blogger-agreement-and-release",
   "content": "<h2 style='text-align:center;'>GUEST BLOGGER AGREEMENT AND PUBLICATION RELEASE</h2>\n<p>This Agreement outlines the terms and conditions between <strong>{{author_name}}</strong> (\"Author\") and <strong>{{blog_owner_name}}</strong> (\"Blog Owner\") regarding the submission and publication of a guest post on <strong>{{blog_name}}</strong> ({{blog_url}}).</p>\n\n<p><strong>1. AUTHOR DETAILS</strong></p>\n<p>Name: {{author_name}}<br/>\nEmail: {{author_email}}<br/>\n{{#if author_website}}Website/Blog: {{author_website}}{{/if}}<br/>\n{{#if author_social_media}}Social Media: {{author_social_media}}{{/if}}\n</p>\n\n<p><strong>2. PROPOSED POST DETAILS</strong></p>\n<p>Working Title: {{post_title}}<br/>\nSummary/Topic: {{post_summary}}\n</p>\n\n<p><strong>3. PUBLICATION TERMS & WARRANTIES</strong></p>\n<p>The Author warrants and agrees to the following:</p>\n<ul>\n <li>The submitted post is 100% original, has not been published elsewhere (in print or digitally), and does not infringe upon any third-party copyright, trademark, or intellectual property rights.</li>\n <li>The post adheres to the Blog's quality standards and {{#if guidelines_link}}<a href='{{guidelines_link}}' target='_blank'>editorial guidelines</a>{{else}}stated submission rules{{/if}}.</li>\n <li>The Blog Owner reserves the right to edit the post for clarity, grammar, SEO, formatting, and title adjustments. Significant content changes will be discussed with the Author prior to publication.</li>\n <li>The Blog Owner does not guarantee publication. The final decision to publish rests solely with the Blog Owner.</li>\n <li>Once published, {{#if (eq can_author_remove 'Yes')}}the Author may request the removal of the post by providing reasonable written notice{{else}}the Author may not demand the removal of the post without the express consent of the Blog Owner{{/if}}.</li>\n</ul>\n\n<p><strong>4. COPYRIGHT & LICENSING</strong></p>\n{{#if (eq copyright_status 'Transferred to Blog Owner')}}\n<p>The Author hereby permanently transfers and assigns all copyrights and proprietary rights of the submitted post to the Blog Owner. The Blog Owner may repurpose, modify, or distribute the content as they see fit without further compensation.</p>\n{{else}}\n<p>The Author retains the original copyright to the post. However, the Author grants the Blog Owner a perpetual, worldwide, non-exclusive license to publish the post on {{blog_url}} and to use the content for promotional purposes across the Blog's social media and newsletters. Additional Terms: {{license_scope}}</p>\n{{/if}}\n\n<p><strong>5. AUTHOR CREDIT</strong></p>\n<p>The Author will receive proper attribution for the post. {{#if (eq include_author_bio 'Yes')}}An author bio box, including the bio below and provided links, will accompany the published post.{{/if}}</p>\n{{#if (eq include_author_bio 'Yes')}}\n<p><strong>Author Bio:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{author_bio}}</pre>\n{{/if}}\n\n<p>By signing below, I acknowledge that I have read, understood, and agree to the terms of this Guest Blogger Agreement.</p>\n\n<p style='margin-top: 30px;'><strong>Date:</strong> {{formatDate agreement_date}}</p>\n\n<div style='margin-top: 20px;'>\n <p><strong>Author Signature:</strong></p>\n <p>_________________________<br/>\n {{author_name}}</p>\n</div>",
   "fields": [
-    { "name": "blog_name", "label": "Blog / Website Name", "fieldType": "text", "required": true },
-    { "name": "blog_url", "label": "Blog URL", "fieldType": "text", "required": true, "placeholder": "e.g., https://www.myblog.com" },
-    { "name": "blog_owner_name", "label": "Blog Owner / Editor Name", "fieldType": "text", "required": true },
-    { "name": "author_name", "label": "Guest Author's Name", "fieldType": "text", "required": true },
-    { "name": "author_email", "label": "Author's Email", "fieldType": "email", "required": true },
-    { "name": "author_website", "label": "Author's Website (Optional)", "fieldType": "text", "required": false },
-    { "name": "author_social_media", "label": "Author's Social Media Link (Optional)", "fieldType": "text", "required": false },
-    { "name": "post_title", "label": "Proposed Post Title", "fieldType": "text", "required": true },
-    { "name": "post_summary", "label": "Post Summary / Topic", "fieldType": "textarea", "required": true },
-    { "name": "guidelines_link", "label": "Editorial Guidelines Link (Optional)", "fieldType": "text", "required": false },
-    { "name": "can_author_remove", "label": "Can the author request post removal later?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "copyright_status", "label": "Copyright Status", "fieldType": "select", "options": ["Transferred to Blog Owner", "Retained by Author (Licensed)"], "required": true },
-    { "name": "license_scope", "label": "License Scope (If Retained by Author)", "fieldType": "text", "required": false, "placeholder": "e.g., Granted perpetual license for the website only.", "condition": { "field": "copyright_status", "value": "Retained by Author (Licensed)" } },
-    { "name": "include_author_bio", "label": "Include Author Bio?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "author_bio", "label": "Author Bio", "fieldType": "textarea", "required": false, "condition": { "field": "include_author_bio", "value": "Yes" } },
-    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "blog_name",
+      "label": "Blog / Website Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "blog_url",
+      "label": "Blog URL",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., https://www.myblog.com"
+    },
+    {
+      "name": "blog_owner_name",
+      "label": "Blog Owner / Editor Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "author_name",
+      "label": "Guest Author's Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "author_email",
+      "label": "Author's Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "author_website",
+      "label": "Author's Website (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "author_social_media",
+      "label": "Author's Social Media Link (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "post_title",
+      "label": "Proposed Post Title",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "post_summary",
+      "label": "Post Summary / Topic",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "guidelines_link",
+      "label": "Editorial Guidelines Link (Optional)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "can_author_remove",
+      "label": "Can the author request post removal later?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "copyright_status",
+      "label": "Copyright Status",
+      "fieldType": "select",
+      "options": [
+        "Transferred to Blog Owner",
+        "Retained by Author (Licensed)"
+      ],
+      "required": true
+    },
+    {
+      "name": "license_scope",
+      "label": "License Scope (If Retained by Author)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "e.g., Granted perpetual license for the website only.",
+      "condition": {
+        "field": "copyright_status",
+        "value": "Retained by Author (Licensed)"
+      }
+    },
+    {
+      "name": "include_author_bio",
+      "label": "Include Author Bio?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "author_bio",
+      "label": "Author Bio",
+      "fieldType": "textarea",
+      "required": false,
+      "condition": {
+        "field": "include_author_bio",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "agreement_date",
+      "label": "Date of Agreement",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

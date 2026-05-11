@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b9822"
+  },
   "name": "Standard Resume (CV)",
   "description": "A clean, modern, and professional resume template to highlight your skills, experience, and education for job applications.",
   "price": 5,
@@ -6,19 +9,93 @@
   "slug": "standard-professional-resume-cv",
   "content": "<div style='font-family: \"Helvetica Neue\", Helvetica, Arial, sans-serif; color: #333; max-width: 800px; margin: auto; padding: 40px; background: #fff; border: 1px solid #eaeaea; box-shadow: 0 4px 10px rgba(0,0,0,0.05);'>\n  <div style='text-align: center; border-bottom: 3px solid #2c3e50; padding-bottom: 20px; margin-bottom: 25px;'>\n    <h1 style='margin: 0; color: #2c3e50; font-size: 2.2em; text-transform: uppercase; letter-spacing: 1px;'>{{full_name}}</h1>\n    <p style='margin: 10px 0 0 0; font-size: 1.05em; color: #555;'>\n      {{address}}<br/>\n      {{phone}} &nbsp;|&nbsp; {{email}}\n      {{#if website_portfolio}}<br/>{{website_portfolio}}{{/if}}\n    </p>\n    {{#if dob}}<p style='margin: 5px 0 0 0; font-size: 0.9em; color: #777;'>Date of Birth: {{formatDate dob}}</p>{{/if}}\n  </div>\n\n  {{#if professional_summary}}\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>Professional Summary</h2>\n    <p style='margin: 0; line-height: 1.6; text-align: justify;'>{{professional_summary}}</p>\n  </div>\n  {{/if}}\n\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>Professional Experience</h2>\n    <pre style='margin: 0; line-height: 1.6; font-family: inherit; white-space: pre-wrap; word-wrap: break-word;'>{{work_experience}}</pre>\n  </div>\n\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>Education</h2>\n    <pre style='margin: 0; line-height: 1.6; font-family: inherit; white-space: pre-wrap; word-wrap: break-word;'>{{education}}</pre>\n  </div>\n\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>Skills & Competencies</h2>\n    <pre style='margin: 0; line-height: 1.6; font-family: inherit; white-space: pre-wrap; word-wrap: break-word;'>{{skills}}</pre>\n  </div>\n\n  {{#if certifications}}\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>Certifications</h2>\n    <pre style='margin: 0; line-height: 1.6; font-family: inherit; white-space: pre-wrap; word-wrap: break-word;'>{{certifications}}</pre>\n  </div>\n  {{/if}}\n\n  {{#if references}}\n  <div style='margin-bottom: 25px;'>\n    <h2 style='color: #2c3e50; font-size: 1.3em; border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 10px; text-transform: uppercase;'>References</h2>\n    <pre style='margin: 0; line-height: 1.6; font-family: inherit; white-space: pre-wrap; word-wrap: break-word;'>{{references}}</pre>\n  </div>\n  {{/if}}\n</div>",
   "fields": [
-    { "name": "full_name", "label": "Full Name", "fieldType": "text", "required": true },
-    { "name": "phone", "label": "Phone Number", "fieldType": "text", "required": true, "placeholder": "e.g., +1 (555) 123-4567" },
-    { "name": "email", "label": "Email Address", "fieldType": "email", "required": true },
-    { "name": "address", "label": "Address (City, State / Country)", "fieldType": "textarea", "required": true, "placeholder": "e.g., New York, NY" },
-    { "name": "website_portfolio", "label": "Website / Portfolio Link (Optional)", "fieldType": "text", "required": false, "placeholder": "https://linkedin.com/in/..." },
-    { "name": "dob", "label": "Date of Birth (Optional)", "fieldType": "date", "required": false },
-    { "name": "professional_summary", "label": "Professional Summary", "fieldType": "textarea", "required": false, "placeholder": "A brief 2-3 sentence overview of your career and goals." },
-    { "name": "work_experience", "label": "Work Experience", "fieldType": "textarea", "required": true, "placeholder": "Company Name | Job Title | Dates\n- Key achievement or responsibility\n- Key achievement..." },
-    { "name": "education", "label": "Education", "fieldType": "textarea", "required": true, "placeholder": "University Name | Degree / Major | Graduation Year" },
-    { "name": "skills", "label": "Skills", "fieldType": "textarea", "required": true, "placeholder": "Hard Skills (Software, Tools)\nSoft Skills\nLanguages" },
-    { "name": "certifications", "label": "Certifications (Optional)", "fieldType": "textarea", "required": false, "placeholder": "Certification Name - Issuing Organization - Year" },
-    { "name": "references", "label": "References (Optional)", "fieldType": "textarea", "required": false, "placeholder": "Available upon request OR\nName - Title - Company - Contact Info" },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "full_name",
+      "label": "Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "phone",
+      "label": "Phone Number",
+      "fieldType": "text",
+      "required": true,
+      "placeholder": "e.g., +1 (555) 123-4567"
+    },
+    {
+      "name": "email",
+      "label": "Email Address",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "address",
+      "label": "Address (City, State / Country)",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., New York, NY"
+    },
+    {
+      "name": "website_portfolio",
+      "label": "Website / Portfolio Link (Optional)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "https://linkedin.com/in/..."
+    },
+    {
+      "name": "dob",
+      "label": "Date of Birth (Optional)",
+      "fieldType": "date",
+      "required": false
+    },
+    {
+      "name": "professional_summary",
+      "label": "Professional Summary",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "A brief 2-3 sentence overview of your career and goals."
+    },
+    {
+      "name": "work_experience",
+      "label": "Work Experience",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Company Name | Job Title | Dates\n- Key achievement or responsibility\n- Key achievement..."
+    },
+    {
+      "name": "education",
+      "label": "Education",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "University Name | Degree / Major | Graduation Year"
+    },
+    {
+      "name": "skills",
+      "label": "Skills",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "Hard Skills (Software, Tools)\nSoft Skills\nLanguages"
+    },
+    {
+      "name": "certifications",
+      "label": "Certifications (Optional)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Certification Name - Issuing Organization - Year"
+    },
+    {
+      "name": "references",
+      "label": "References (Optional)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Available upon request OR\nName - Title - Company - Contact Info"
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

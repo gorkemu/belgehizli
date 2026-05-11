@@ -7,23 +7,131 @@
   "slug": "blog-misafir-yazarlik-kosullari-ve-izin-formu",
   "content": "<h2 style='text-align:center;'>{{blog_adi}} MİSAFİR YAZARLIK KOŞULLARI VE YAYIN İZİN FORMU</h2>\n<p>Bu form, {{blog_adi}} ({{blog_url}}) (\"Blog\")'da misafir yazar olarak içerik yayınlamak isteyen {{yazar_ad_soyad}} (\"Yazar\") ile Blog Sahibi/Yöneticisi {{blog_sahibi_adi}} (\"Blog Sahibi\") arasındaki koşulları ve izinleri düzenler.</p>\n\n<p><strong>Yazar Bilgileri:</strong></p>\n<p>Adı Soyadı: {{yazar_ad_soyad}}<br/>\nE-posta: {{yazar_eposta}}<br/>\n{{#if yazar_websitesi}}Web Sitesi/Blog: {{yazar_websitesi}}{{/if}}<br/>\n{{#if yazar_sosyal_medya}}Sosyal Medya Profili: {{yazar_sosyal_medya}}{{/if}}\n</p>\n\n<p><strong>Yayınlanması Teklif Edilen Yazı Bilgileri:</strong></p>\n<p>Yazı Başlığı: {{yazi_basligi}}<br/>\nYazı Konusu/Özeti: {{yazi_konusu}}\n</p>\n\n<p><strong>YAYINLANMA KOŞULLARI:</strong></p>\n<p>Yazar, aşağıdakileri kabul ve taahhüt eder:</p>\n<ul>\n <li>Gönderilen yazı tamamen özgündür, daha önce başka bir yerde (basılı veya dijital) yayınlanmamıştır ve üçüncü şahısların telif haklarını ihlal etmemektedir.</li>\n <li>Yazı, Blog'un genel içerik çizgisine, kalite standartlarına ve {{#if yazi_rehberi_linki}}<a href='{{yazi_rehberi_linki}}' target='_blank'>yazım rehberine</a>{{else}}belirlenen yazım kurallarına{{/if}} uygundur.</li>\n <li>Blog Sahibi, yazıyı yayınlamadan önce editoryal düzenlemeler (başlık değiştirme, dilbilgisi düzeltmeleri, formatlama vb.) yapma hakkına sahiptir. Önemli içerik değişiklikleri için Yazar'a bilgi verilecektir.</li>\n <li>Blog Sahibi, gönderilen her yazıyı yayınlama garantisi vermez. Yayınlanıp yayınlanmayacağına dair nihai karar Blog Sahibi'ne aittir.</li>\n <li>Yazı yayınlandıktan sonra, {{#if (eq yazar_kaldirabilir_mi 'Evet')}}Yazar, makul bir süre önceden bildirmek kaydıyla yazının kaldırılmasını talep edebilir{{else}}Yazar, Blog Sahibi'nin onayı olmadan yazının kaldırılmasını talep edemez{{/if}}.</li>\n</ul>\n\n<p><strong>TELİF HAKKI VE KULLANIM İZNİ:</strong></p>\n{{#if (eq telif_hakki_durumu 'Blog Sahibine Devir')}}\n<p>Yazar, işbu form ile yayınlanması kabul edilen yazının tüm mali haklarını (yayınlama, çoğaltma, işleme vb.) süre ve yer sınırı olmaksızın münhasıran Blog Sahibi'ne devreder.</p>\n{{else}}\n<p>Yazar, yazının telif haklarını elinde tutar. Yazar, işbu form ile Blog Sahibi'ne yazıyı {{blog_url}} adresinde süresiz olarak yayınlama ve Blog'un tanıtımı amacıyla kullanma hakkı (münhasır olmayan lisans) verir. Özel Şartlar: {{lisans_kapsami}}</p>\n{{/if}}\n\n<p><strong>YAZAR TANITIMI:</strong></p>\n<p>Yayınlanan yazının sonunda/başında Yazar'ın adı soyadı ve {{#if (eq yazar_bio_kabul 'Evet')}}kısa biyografisi ile birlikte belirttiği web sitesi/sosyal medya linklerine{{else}}sadece adına{{/if}} yer verilecektir.</p>\n{{#if (eq yazar_bio_kabul 'Evet')}}\n<p>Yazar Biyografisi:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{yazar_bio}}</pre>\n{{/if}}\n\n<p>Yukarıdaki koşulları okudum, anladım ve kabul ediyorum.</p>\n\n<p style='margin-top: 30px;'><strong>Tarih:</strong> {{formatDate form_tarihi}}</p>\n\n<div style='margin-top: 20px;'>\n <p><strong>Yazar Adı Soyadı:</strong> {{yazar_ad_soyad}}<br/>\n <br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span>\n </p>\n</div>",
   "fields": [
-    { "name": "blog_adi", "label": "Blog Adı", "fieldType": "text", "required": true },
-    { "name": "blog_url", "label": "Blog Adresi (URL)", "fieldType": "text", "required": true },
-    { "name": "blog_sahibi_adi", "label": "Blog Sahibi / Yöneticisi Adı", "fieldType": "text", "required": true },
-    { "name": "yazar_ad_soyad", "label": "Misafir Yazar Adı Soyadı", "fieldType": "text", "required": true },
-    { "name": "yazar_eposta", "label": "Yazar E-posta Adresi", "fieldType": "email", "required": true },
-    { "name": "yazar_websitesi", "label": "Yazar Web Sitesi/Blog (Varsa)", "fieldType": "text", "required": false },
-    { "name": "yazar_sosyal_medya", "label": "Yazar Sosyal Medya Profili (Varsa)", "fieldType": "text", "required": false, "placeholder": "Örn: LinkedIn veya Twitter" },
-    { "name": "yazi_basligi", "label": "Önerilen Yazı Başlığı", "fieldType": "text", "required": true },
-    { "name": "yazi_konusu", "label": "Yazı Konusu / Özeti", "fieldType": "textarea", "required": true },
-    { "name": "yazi_rehberi_linki", "label": "Yazım Rehberi Linki (Varsa)", "fieldType": "text", "required": false },
-    { "name": "yazar_kaldirabilir_mi", "label": "Yazar Yayınlanan Yazıyı Kaldırma Talebinde Bulunabilir mi?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "telif_hakki_durumu", "label": "Yazının Telif Hakkı Durumu", "fieldType": "select", "options": ["Blog Sahibine Devir", "Yazara Ait (Lisanslı)"], "required": true },
-    { "name": "lisans_kapsami", "label": "Lisans Kapsamı (Haklar Yazarda Kalacaksa)", "fieldType": "text", "required": false, "placeholder": "Örn: Sadece belirtilen web sitesinde süresiz yayınlama", "condition": { "field": "telif_hakki_durumu", "value": "Yazara Ait (Lisanslı)" } },
-    { "name": "yazar_bio_kabul", "label": "Yazıda Yazar Biyografisi Yer Alacak mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "yazar_bio", "label": "Yazar Biyografisi (Evet ise)", "fieldType": "textarea", "required": false, "placeholder": "Kendinizi kısaca tanıtın (1-2 cümle).", "condition": { "field": "yazar_bio_kabul", "value": "Evet" } },
-    { "name": "form_tarihi", "label": "Form Doldurma Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "blog_adi",
+      "label": "Blog Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "blog_url",
+      "label": "Blog Adresi (URL)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "blog_sahibi_adi",
+      "label": "Blog Sahibi / Yöneticisi Adı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yazar_ad_soyad",
+      "label": "Misafir Yazar Adı Soyadı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yazar_eposta",
+      "label": "Yazar E-posta Adresi",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "yazar_websitesi",
+      "label": "Yazar Web Sitesi/Blog (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "yazar_sosyal_medya",
+      "label": "Yazar Sosyal Medya Profili (Varsa)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Örn: LinkedIn veya Twitter"
+    },
+    {
+      "name": "yazi_basligi",
+      "label": "Önerilen Yazı Başlığı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "yazi_konusu",
+      "label": "Yazı Konusu / Özeti",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "yazi_rehberi_linki",
+      "label": "Yazım Rehberi Linki (Varsa)",
+      "fieldType": "text",
+      "required": false
+    },
+    {
+      "name": "yazar_kaldirabilir_mi",
+      "label": "Yazar Yayınlanan Yazıyı Kaldırma Talebinde Bulunabilir mi?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "telif_hakki_durumu",
+      "label": "Yazının Telif Hakkı Durumu",
+      "fieldType": "select",
+      "options": [
+        "Blog Sahibine Devir",
+        "Yazara Ait (Lisanslı)"
+      ],
+      "required": true
+    },
+    {
+      "name": "lisans_kapsami",
+      "label": "Lisans Kapsamı (Haklar Yazarda Kalacaksa)",
+      "fieldType": "text",
+      "required": false,
+      "placeholder": "Örn: Sadece belirtilen web sitesinde süresiz yayınlama",
+      "condition": {
+        "field": "telif_hakki_durumu",
+        "value": "Yazara Ait (Lisanslı)"
+      }
+    },
+    {
+      "name": "yazar_bio_kabul",
+      "label": "Yazıda Yazar Biyografisi Yer Alacak mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "yazar_bio",
+      "label": "Yazar Biyografisi (Evet ise)",
+      "fieldType": "textarea",
+      "required": false,
+      "placeholder": "Kendinizi kısaca tanıtın (1-2 cümle).",
+      "condition": {
+        "field": "yazar_bio_kabul",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "form_tarihi",
+      "label": "Form Doldurma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

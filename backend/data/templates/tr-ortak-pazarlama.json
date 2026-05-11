@@ -7,23 +7,123 @@
   "slug": "basit-ortak-pazarlama-anlasmasi",
   "content": "<h2 style='text-align:center;'>ORTAK PAZARLAMA (CO-MARKETING) ANLAŞMASI</h2>\n<p>İşbu Anlaşma, bir tarafta {{taraf_1_ad_unvan}} (\"Taraf 1\") ile diğer tarafta {{taraf_2_ad_unvan}} (\"Taraf 2\") arasında, aşağıda belirtilen ortak pazarlama faaliyetlerinin yürütülmesi amacıyla {{formatDate tarih}} tarihinde aşağıdaki şartlarla düzenlenmiştir. (Taraflar birlikte \"Taraflar\" olarak anılacaktır).</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Taraf 1:</strong> {{taraf_1_ad_unvan}}, Adres: {{taraf_1_adres}}, Yetkili: {{taraf_1_yetkili}}</p>\n<p><strong>Taraf 2:</strong> {{taraf_2_ad_unvan}}, Adres: {{taraf_2_adres}}, Yetkili: {{taraf_2_yetkili}}</p>\n\n<p><strong>2. ANLAŞMANIN AMACI VE KAPSAMI</strong></p>\n<p>Bu Anlaşmanın amacı, Tarafların hedef kitlelerine daha etkin bir şekilde ulaşmak, marka bilinirliklerini artırmak ve potansiyel müşteri sayılarını yükseltmek için aşağıdaki ortak pazarlama faaliyetlerini (\"Faaliyetler\") birlikte yürütmeleridir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{faaliyet_kapsami}}</pre>\n\n<p><strong>3. TARAFLARIN SORUMLULUKLARI</strong></p>\n<p><strong>Taraf 1'in Sorumlulukları:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{taraf_1_sorumluluklar}}</pre>\n<p><strong>Taraf 2'nin Sorumlulukları:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{taraf_2_sorumluluklar}}</pre>\n\n<p><strong>4. SÜRE VE ZAMAN ÇİZELGESİ</strong></p>\n<p>Ortak pazarlama faaliyetleri {{formatDate baslangic_tarihi}} tarihinde başlayacak ve {{formatDate bitis_tarihi}} tarihinde sona erecektir.</p>\n{{#if zaman_cizelgesi}}<p>Faaliyetlerin detaylı zaman çizelgesi aşağıdaki gibidir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{zaman_cizelgesi}}</pre>{{/if}}\n\n<p><strong>5. MALİYET PAYLAŞIMI (Varsa)</strong></p>\n{{#if (eq maliyet_paylasimi_var 'Evet')}}\n<p>Faaliyetler kapsamında oluşacak {{maliyet_kalemleri}} gibi maliyetler, Taraflar arasında {{maliyet_paylasim_orani}} oranında paylaşılacaktır.</p>\n{{else}}\n<p>Bu iş birliği kapsamında Taraflar kendi pazarlama maliyetlerinden sorumlu olacaktır, ortak bir maliyet paylaşımı yapılmayacaktır.</p>\n{{/if}}\n\n<p><strong>6. MARKA KULLANIMI VE ONAYLAR</strong></p>\n<p>Taraflar, bu iş birliği kapsamında birbirlerinin marka isimlerini, logolarını ve tanıtım materyallerini sadece anlaşılan faaliyetler çerçevesinde ve diğer tarafın ön onayını alarak kullanacaklardır. Tüm ortak pazarlama materyalleri yayınlanmadan önce her iki tarafça da onaylanacaktır.</p>\n\n<p><strong>7. GİZLİLİK</strong></p>\n<p>Taraflar, iş birliği süresince birbirleri hakkında edindikleri gizli bilgileri koruyacaklardır.</p>\n\n<p>İşbu Anlaşma taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate tarih}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Taraf 1 Yetkilisi</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{taraf_1_yetkili}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Taraf 2 Yetkilisi</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{taraf_2_yetkili}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
   "fields": [
-    { "name": "taraf_1_ad_unvan", "label": "Taraf 1 Adı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "taraf_1_adres", "label": "Taraf 1 Adresi", "fieldType": "textarea", "required": true },
-    { "name": "taraf_1_yetkili", "label": "Taraf 1 Yetkili Kişi", "fieldType": "text", "required": true },
-    { "name": "taraf_2_ad_unvan", "label": "Taraf 2 Adı / Unvanı", "fieldType": "text", "required": true },
-    { "name": "taraf_2_adres", "label": "Taraf 2 Adresi", "fieldType": "textarea", "required": true },
-    { "name": "taraf_2_yetkili", "label": "Taraf 2 Yetkili Kişi", "fieldType": "text", "required": true },
-    { "name": "faaliyet_kapsami", "label": "Ortak Pazarlama Faaliyetlerinin Kapsamı", "fieldType": "textarea", "placeholder": "Örn: Sosyal medyada birbirini tanıtma, Ortak webinar düzenleme...", "required": true },
-    { "name": "taraf_1_sorumluluklar", "label": "Taraf 1'in Sorumlulukları", "fieldType": "textarea", "required": true },
-    { "name": "taraf_2_sorumluluklar", "label": "Taraf 2'nin Sorumlulukları", "fieldType": "textarea", "required": true },
-    { "name": "baslangic_tarihi", "label": "Faaliyet Başlangıç Tarihi", "fieldType": "date", "required": true },
-    { "name": "bitis_tarihi", "label": "Faaliyet Bitiş Tarihi", "fieldType": "date", "required": true },
-    { "name": "zaman_cizelgesi", "label": "Detaylı Zaman Çizelgesi (Varsa)", "fieldType": "textarea", "required": false },
-    { "name": "maliyet_paylasimi_var", "label": "Ortak Maliyet Paylaşımı Olacak mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
-    { "name": "maliyet_kalemleri", "label": "Paylaşılacak Maliyet Kalemleri (Evet ise)", "fieldType": "text", "placeholder": "Örn: Reklam Giderleri, Etkinlik Mekan Kirası", "required": false, "condition": { "field": "maliyet_paylasimi_var", "value": "Evet" } },
-    { "name": "maliyet_paylasim_orani", "label": "Maliyet Paylaşım Oranı (Evet ise)", "fieldType": "text", "placeholder": "Örn: %50-%50, Taraf 1 %60 - Taraf 2 %40", "required": false, "condition": { "field": "maliyet_paylasimi_var", "value": "Evet" } },
-    { "name": "tarih", "label": "Anlaşma Tarihi", "fieldType": "date", "required": true },
-    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+    {
+      "name": "taraf_1_ad_unvan",
+      "label": "Taraf 1 Adı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "taraf_1_adres",
+      "label": "Taraf 1 Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "taraf_1_yetkili",
+      "label": "Taraf 1 Yetkili Kişi",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "taraf_2_ad_unvan",
+      "label": "Taraf 2 Adı / Unvanı",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "taraf_2_adres",
+      "label": "Taraf 2 Adresi",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "taraf_2_yetkili",
+      "label": "Taraf 2 Yetkili Kişi",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "faaliyet_kapsami",
+      "label": "Ortak Pazarlama Faaliyetlerinin Kapsamı",
+      "fieldType": "textarea",
+      "placeholder": "Örn: Sosyal medyada birbirini tanıtma, Ortak webinar düzenleme...",
+      "required": true
+    },
+    {
+      "name": "taraf_1_sorumluluklar",
+      "label": "Taraf 1'in Sorumlulukları",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "taraf_2_sorumluluklar",
+      "label": "Taraf 2'nin Sorumlulukları",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "baslangic_tarihi",
+      "label": "Faaliyet Başlangıç Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "bitis_tarihi",
+      "label": "Faaliyet Bitiş Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "zaman_cizelgesi",
+      "label": "Detaylı Zaman Çizelgesi (Varsa)",
+      "fieldType": "textarea",
+      "required": false
+    },
+    {
+      "name": "maliyet_paylasimi_var",
+      "label": "Ortak Maliyet Paylaşımı Olacak mı?",
+      "fieldType": "radio",
+      "options": [
+        "Evet",
+        "Hayır"
+      ],
+      "required": true
+    },
+    {
+      "name": "maliyet_kalemleri",
+      "label": "Paylaşılacak Maliyet Kalemleri (Evet ise)",
+      "fieldType": "text",
+      "placeholder": "Örn: Reklam Giderleri, Etkinlik Mekan Kirası",
+      "required": false,
+      "condition": {
+        "field": "maliyet_paylasimi_var",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "maliyet_paylasim_orani",
+      "label": "Maliyet Paylaşım Oranı (Evet ise)",
+      "fieldType": "text",
+      "placeholder": "Örn: %50-%50, Taraf 1 %60 - Taraf 2 %40",
+      "required": false,
+      "condition": {
+        "field": "maliyet_paylasimi_var",
+        "value": "Evet"
+      }
+    },
+    {
+      "name": "tarih",
+      "label": "Anlaşma Tarihi",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "belge_email",
+      "label": "E-posta (Belgenin Gönderileceği)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

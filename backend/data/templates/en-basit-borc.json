@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a1df4a6478ae3b981e"
+  },
   "name": "Promissory Note (Unsecured)",
   "description": "A legally binding, unconditional promise in writing made by one person to pay a specific sum of money to another on a definite date.",
   "price": 5,
@@ -6,20 +9,105 @@
   "slug": "promissory-note-unsecured",
   "content": "<div style='border: 1px solid #666; padding: 25px; margin: 20px; max-width: 700px; font-family: Inter, sans-serif;'>\n<h3 style='text-align:center; margin-bottom:20px;'>PROMISSORY NOTE</h3>\n\n<p><strong>Due Date:</strong> {{formatDate due_date}}</p>\n<p><strong>Place of Payment:</strong> {{place_of_payment}}</p>\n<p><strong>Date of Issue:</strong> {{formatDate issue_date}}</p>\n\n<hr style='margin: 15px 0;'/>\n\n<p>FOR VALUE RECEIVED, I, <strong>{{maker_name}}</strong> (the \"Maker\"), hereby unconditionally promise to pay to the order of <strong>{{payee_name}}</strong> (the \"Payee\"), the principal sum of <strong>{{principal_amount}}</strong> ({{amount_in_words}}), on the Due Date written above.</p>\n\n{{#if interest_rate}}\n<p>If the principal sum is not paid by the Due Date, interest shall accrue on the unpaid balance at an annual rate of {{interest_rate}}% until paid in full.</p>\n{{/if}}\n\n{{#if (eq has_guarantor 'Yes')}}\n<p><strong>Guarantor:</strong> {{guarantor_name}} (ID: {{guarantor_id}})</p>\n<p style='font-size: 0.9em;'>The undersigned Guarantor jointly and severally guarantees the prompt and full payment of this Note.</p>\n<p style='margin-top: 15px;'><br/><span>Guarantor Signature: _________________________</span></p>\n<br/>\n{{/if}}\n\n<p style='margin-top: 30px;'><strong>MAKER (Borrower):</strong></p>\n<div style='margin-top: 10px;'>\n <p style='margin-bottom: 5px;'>Name: {{maker_name}}</p>\n <p style='margin-bottom: 5px;'>Address: {{maker_address}}</p>\n <p style='margin-bottom: 15px;'>ID / SSN: {{maker_id}}</p>\n <br/><p>Maker Signature: _________________________</p>\n</div>\n</div>",
   "fields": [
-    { "name": "payee_name", "label": "Payee Name (The Creditor/Lender)", "fieldType": "text", "required": true },
-    { "name": "maker_name", "label": "Maker Name (The Borrower)", "fieldType": "text", "required": true },
-    { "name": "maker_address", "label": "Maker's Address", "fieldType": "textarea", "required": true },
-    { "name": "maker_id", "label": "Maker's ID / SSN", "fieldType": "text", "required": true },
-    { "name": "principal_amount", "label": "Principal Amount (Numerical with Currency)", "fieldType": "text", "placeholder": "e.g., $10,000", "required": true },
-    { "name": "amount_in_words", "label": "Amount in Words", "fieldType": "text", "placeholder": "e.g., Ten Thousand US Dollars", "required": true },
-    { "name": "due_date", "label": "Due Date / Maturity Date", "fieldType": "date", "required": true },
-    { "name": "issue_date", "label": "Date of Issue", "fieldType": "date", "required": true },
-    { "name": "place_of_payment", "label": "Place of Payment", "fieldType": "text", "placeholder": "e.g., Payee's address or specified bank", "required": true },
-    { "name": "interest_rate", "label": "Annual Default Interest Rate (%) (Optional)", "fieldType": "number", "required": false },
-    { "name": "has_guarantor", "label": "Is there a Guarantor (Co-signer)?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "guarantor_name", "label": "Guarantor's Name", "fieldType": "text", "required": false, "condition": { "field": "has_guarantor", "value": "Yes" } },
-    { "name": "guarantor_id", "label": "Guarantor's ID / SSN", "fieldType": "text", "required": false, "condition": { "field": "has_guarantor", "value": "Yes" } },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "payee_name",
+      "label": "Payee Name (The Creditor/Lender)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "maker_name",
+      "label": "Maker Name (The Borrower)",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "maker_address",
+      "label": "Maker's Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "maker_id",
+      "label": "Maker's ID / SSN",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "principal_amount",
+      "label": "Principal Amount (Numerical with Currency)",
+      "fieldType": "text",
+      "placeholder": "e.g., $10,000",
+      "required": true
+    },
+    {
+      "name": "amount_in_words",
+      "label": "Amount in Words",
+      "fieldType": "text",
+      "placeholder": "e.g., Ten Thousand US Dollars",
+      "required": true
+    },
+    {
+      "name": "due_date",
+      "label": "Due Date / Maturity Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "issue_date",
+      "label": "Date of Issue",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "place_of_payment",
+      "label": "Place of Payment",
+      "fieldType": "text",
+      "placeholder": "e.g., Payee's address or specified bank",
+      "required": true
+    },
+    {
+      "name": "interest_rate",
+      "label": "Annual Default Interest Rate (%) (Optional)",
+      "fieldType": "number",
+      "required": false
+    },
+    {
+      "name": "has_guarantor",
+      "label": "Is there a Guarantor (Co-signer)?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "guarantor_name",
+      "label": "Guarantor's Name",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "has_guarantor",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "guarantor_id",
+      "label": "Guarantor's ID / SSN",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "has_guarantor",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true

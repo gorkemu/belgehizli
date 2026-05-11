@@ -1,4 +1,7 @@
 {
+  "_id": {
+    "$oid": "6a0135a3df4a6478ae3b9845"
+  },
   "name": "Model Release Agreement",
   "description": "Legal permission from a model allowing a photographer/videographer to use their likeness in visuals.",
   "price": 10,
@@ -6,25 +9,142 @@
   "slug": "model-release-agreement",
   "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<h2 style='text-align:center;'>MODEL RELEASE AGREEMENT</h2>\n<p>This Agreement is made on {{formatDate agreement_date}} between {{photographer_name}} (\"Photographer/Videographer\") and {{model_name}} (\"Model\").</p>\n\n<p><strong>1. PARTIES</strong></p>\n<p><strong>Photographer/Videographer:</strong> {{photographer_name}}<br/>Address: {{photographer_address}}<br/>Email: {{photographer_email}}</p>\n<p><strong>Model:</strong> {{model_name}}<br/>Address: {{model_address}}<br/>Phone: {{model_phone}}<br/>Email: {{model_email}}</p>\n{{#if (eq is_minor 'Yes')}}\n<p><strong>Guardian/Parent:</strong> {{guardian_name}}<br/>Phone: {{guardian_phone}}</p>\n{{/if}}\n\n<p><strong>2. SESSION INFORMATION</strong></p>\n<p>This release applies to visuals (the \"Work\") created on {{formatDate session_date}} at {{session_location}} regarding the project: {{project_name}}.</p>\n\n<p><strong>3. GRANT OF RIGHTS</strong></p>\n<p>The Model (and Guardian, if applicable) hereby grants the Photographer the irrevocable and unrestricted right to use and publish the Work for the following purposes:</p>\n<pre>{{usage_purposes}}</pre>\n<p>Across the following media/platforms:</p>\n<pre>{{media_channels}}</pre>\n\n{{#if (eq was_paid 'Yes')}}\n<p><strong>Compensation:</strong> The Model has received {{payment_amount}} as full and final payment for the rights granted herein.</p>\n{{else}}\n<p><strong>Compensation:</strong> This release is granted without monetary compensation, for the mutual benefit of the parties (e.g., portfolio use).</p>\n{{/if}}\n\n<p><strong>4. RELEASE & INDEMNITY</strong></p>\n<p>I hereby release and discharge the Photographer from any and all claims and demands arising out of or in connection with the use of the Work, including without limitation any and all claims for libel or invasion of privacy.</p>\n\n<p style='margin-top: 40px;'>Date: {{formatDate agreement_date}}</p>\n<div>\n<p>Photographer: _________________________</p>\n<p>Model: _________________________</p>\n{{#if (eq is_minor 'Yes')}}\n<p>Guardian: _________________________</p>\n{{/if}}\n</div>\n</div>",
   "fields": [
-    { "name": "photographer_name", "label": "Photographer/Company Name", "fieldType": "text", "required": true },
-    { "name": "photographer_address", "label": "Photographer Address", "fieldType": "textarea", "required": true },
-    { "name": "photographer_email", "label": "Photographer Email", "fieldType": "email", "required": true },
-    { "name": "model_name", "label": "Model's Full Name", "fieldType": "text", "required": true },
-    { "name": "model_address", "label": "Model Address", "fieldType": "textarea", "required": true },
-    { "name": "model_phone", "label": "Model Phone", "fieldType": "text", "required": true },
-    { "name": "model_email", "label": "Model Email", "fieldType": "email", "required": false },
-    { "name": "is_minor", "label": "Is the Model under 18?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "guardian_name", "label": "Guardian Name (if minor)", "fieldType": "text", "required": false, "condition": { "field": "is_minor", "value": "Yes" } },
-    { "name": "guardian_phone", "label": "Guardian Phone (if minor)", "fieldType": "text", "required": false, "condition": { "field": "is_minor", "value": "Yes" } },
-    { "name": "session_date", "label": "Session Date", "fieldType": "date", "required": true },
-    { "name": "session_location", "label": "Session Location", "fieldType": "text", "required": true },
-    { "name": "project_name", "label": "Project/Subject Name", "fieldType": "text", "required": true },
-    { "name": "usage_purposes", "label": "Usage Purposes", "fieldType": "textarea", "required": true, "placeholder": "e.g., Commercial, Portfolio, Social Media" },
-    { "name": "media_channels", "label": "Media Channels", "fieldType": "textarea", "required": true, "placeholder": "e.g., Website, Print, Digital Ads" },
-    { "name": "was_paid", "label": "Is there a payment involved?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
-    { "name": "payment_amount", "label": "Payment Amount (include currency)", "fieldType": "text", "required": false, "condition": { "field": "was_paid", "value": "Yes" } },
-    { "name": "agreement_date", "label": "Agreement Date", "fieldType": "date", "required": true },
-    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+    {
+      "name": "photographer_name",
+      "label": "Photographer/Company Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "photographer_address",
+      "label": "Photographer Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "photographer_email",
+      "label": "Photographer Email",
+      "fieldType": "email",
+      "required": true
+    },
+    {
+      "name": "model_name",
+      "label": "Model's Full Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "model_address",
+      "label": "Model Address",
+      "fieldType": "textarea",
+      "required": true
+    },
+    {
+      "name": "model_phone",
+      "label": "Model Phone",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "model_email",
+      "label": "Model Email",
+      "fieldType": "email",
+      "required": false
+    },
+    {
+      "name": "is_minor",
+      "label": "Is the Model under 18?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "guardian_name",
+      "label": "Guardian Name (if minor)",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "is_minor",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "guardian_phone",
+      "label": "Guardian Phone (if minor)",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "is_minor",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "session_date",
+      "label": "Session Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "session_location",
+      "label": "Session Location",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "project_name",
+      "label": "Project/Subject Name",
+      "fieldType": "text",
+      "required": true
+    },
+    {
+      "name": "usage_purposes",
+      "label": "Usage Purposes",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., Commercial, Portfolio, Social Media"
+    },
+    {
+      "name": "media_channels",
+      "label": "Media Channels",
+      "fieldType": "textarea",
+      "required": true,
+      "placeholder": "e.g., Website, Print, Digital Ads"
+    },
+    {
+      "name": "was_paid",
+      "label": "Is there a payment involved?",
+      "fieldType": "radio",
+      "options": [
+        "Yes",
+        "No"
+      ],
+      "required": true
+    },
+    {
+      "name": "payment_amount",
+      "label": "Payment Amount (include currency)",
+      "fieldType": "text",
+      "required": false,
+      "condition": {
+        "field": "was_paid",
+        "value": "Yes"
+      }
+    },
+    {
+      "name": "agreement_date",
+      "label": "Agreement Date",
+      "fieldType": "date",
+      "required": true
+    },
+    {
+      "name": "document_email",
+      "label": "Email (For delivery)",
+      "fieldType": "email",
+      "required": true
+    }
   ],
   "isActive": true,
   "isSystem": true
