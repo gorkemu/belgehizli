@@ -1,0 +1,29 @@
+{
+  "_id": "6805c7d6b989142070477f98",
+  "name": "Kira Sözleşmesi Fesih Protokolü (Karşılıklı)",
+  "description": "Kiracı ve kiraya verenin kira sözleşmesini anlaşarak sona erdirmesine ilişkin protokol.",
+  "price": 12,
+  "language": "tr",
+  "slug": "kira-sozlesmesi-fesih-protokolu-karsilikli",
+  "content": "<h2 style='text-align:center;'>KİRA SÖZLEŞMESİ FESİH PROTOKOLÜ</h2>\n<p>İşbu Fesih Protokolü, bir tarafta Kiraya Veren {{kiralayan_ad_soyad}} ile diğer tarafta Kiracı {{kiraci_ad_soyad}} arasında, {{formatDate kira_baslangic_tarihi}} başlangıç tarihli kira sözleşmesi ile kiralanmış olan {{kiralanan_adres}} adresindeki taşınmazın kira ilişkisinin karşılıklı anlaşma ile sona erdirilmesi amacıyla {{formatDate protokol_tarihi}} tarihinde düzenlenmiştir.</p>\n\n<p><strong>1. TARAFLAR</strong></p>\n<p><strong>Kiraya Veren:</strong> {{kiralayan_ad_soyad}}, Adres: {{kiralayan_adres}}</p>\n<p><strong>Kiracı:</strong> {{kiraci_ad_soyad}}, Adres: {{kiraci_adres}}</p>\n\n<p><strong>2. FESİH KARARI VE TARİHİ</strong></p>\n<p>Taraflar, aralarındaki {{formatDate kira_baslangic_tarihi}} başlangıç tarihli kira sözleşmesini, işbu Protokol'ün imzalandığı tarih itibarıyla veya en geç {{formatDate fesih_tarihi}} tarihi itibarıyla karşılıklı anlaşarak feshetme konusunda mutabık kalmışlardır.</p>\n\n<p><strong>3. TAHLİYE VE ANAHTAR TESLİMİ</strong></p>\n<p>Kiracı, kiralanan taşınmazı en geç {{formatDate tahliye_tarihi}} tarihinde tamamen boşaltarak anahtarlarını Kiraya Veren'e teslim etmeyi kabul ve taahhüt eder.</p>\n\n<p><strong>4. DEPOZİTO İADESİ</strong></p>\n<p>Kiracı tarafından sözleşme başlangıcında ödenen {{depozito_miktari}} TL depozito bedelinden, {{#if (eq kesinti_yapilacak_mi 'Evet')}}aşağıda belirtilen kesintiler yapıldıktan sonra kalan {{kalan_depozito_miktari}} TL{{else}}herhangi bir kesinti yapılmaksızın tamamı{{/if}}, taşınmazın kontrolü ve anahtar teslimini müteakip {{depozito_iade_suresi}} gün içinde Kiracı'nın belirttiği {{kiraci_iban}} IBAN numaralı hesabına iade edilecektir.</p>\n{{#if (eq kesinti_yapilacak_mi 'Evet')}}\n<p><strong>Depozitodan Yapılacak Kesintiler:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{kesinti_nedenleri_ve_tutarlari}}</pre>\n{{/if}}\n\n<p><strong>5. SON FATURA VE BORÇLAR</strong></p>\n<p>Kiracı, tahliye tarihine kadar olan tüm elektrik, su, doğalgaz, aidat vb. fatura borçlarını ödemeyi kabul eder. Ödenmemiş borç kalması halinde, Kiraya Veren'in depozitodan mahsup etme veya yasal yollara başvurma hakkı saklıdır.</p>\n\n<p><strong>6. İBRA</strong></p>\n<p>Taraflar, işbu Protokol'de belirtilen şartların yerine getirilmesiyle birlikte, feshedilen kira sözleşmesinden kaynaklanan (ödenmemiş faturalar ve hasarlar hariç) tüm hak ve alacaklarından birbirlerini gayri kabili rücu ibra ettiklerini kabul ve beyan ederler.</p>\n\n<p>İşbu Fesih Protokolü 6 (altı) maddeden ibaret olup, taraflarca okunmuş, anlaşılmış ve kabul edilerek {{formatDate protokol_tarihi}} tarihinde iki nüsha olarak imzalanmıştır.</p>\n\n<div style='margin-top: 40px; display: flex; justify-content: space-between; flex-wrap: wrap;'>\n <div style='margin-bottom: 20px;'><p><strong>Kiraya Veren</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{kiralayan_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n <div style='margin-bottom: 20px;'><p><strong>Kiracı</strong><br/><span style='display: inline-block; margin-top: 5px;'>{{kiraci_ad_soyad}}</span><br/><br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p></div>\n</div>",
+  "fields": [
+    { "name": "kiralayan_ad_soyad", "label": "Kiraya Verenin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "kiralayan_adres", "label": "Kiraya Verenin Adresi", "fieldType": "textarea", "required": true },
+    { "name": "kiraci_ad_soyad", "label": "Kiracının Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "kiraci_adres", "label": "Kiracının Adresi", "fieldType": "textarea", "required": true },
+    { "name": "kiralanan_adres", "label": "Kiralanan Taşınmazın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "kira_baslangic_tarihi", "label": "Başlangıç Tarihi (Feshedilen Kira Sözleşmesinin)", "fieldType": "date", "required": true },
+    { "name": "fesih_tarihi", "label": "Kira Sözleşmesinin Fesih Tarihi", "fieldType": "date", "required": true },
+    { "name": "tahliye_tarihi", "label": "Taşınmazın Son Tahliye Tarihi", "fieldType": "date", "required": true },
+    { "name": "depozito_miktari", "label": "Ödenmiş Olan Depozito Miktarı (TL)", "fieldType": "number", "required": true },
+    { "name": "kesinti_yapilacak_mi", "label": "Depozitodan Kesinti Yapılacak mı?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
+    { "name": "kesinti_nedenleri_ve_tutarlari", "label": "Kesinti Nedenleri ve Tutarları (Evet ise)", "fieldType": "textarea", "placeholder": "Örn: Boya masrafı: X TL, Ödenmemiş fatura: Y TL", "required": false, "condition": { "field": "kesinti_yapilacak_mi", "value": "Evet" } },
+    { "name": "kalan_depozito_miktari", "label": "İade Edilecek Kalan Depozito Miktarı (TL)", "fieldType": "number", "required": false, "condition": { "field": "kesinti_yapilacak_mi", "value": "Evet" } },
+    { "name": "depozito_iade_suresi", "label": "Depozito İade Süresi (Gün)", "fieldType": "number", "placeholder": "Tahliye ve kontrolden sonra kaç gün içinde?", "required": true },
+    { "name": "kiraci_iban", "label": "Kiracının IBAN'ı (Depozito İadesi İçin)", "fieldType": "text", "required": true },
+    { "name": "protokol_tarihi", "label": "Protokol İmza Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

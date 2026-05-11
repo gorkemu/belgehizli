@@ -1,0 +1,25 @@
+{
+  "_id": "68061551b989142070477fa3",
+  "name": "İhtarname (Faaliyet Durdurma Talebi - Basit)",
+  "description": "Bir kişinin/kurumun rahatsız edici veya hak ihlali yaratan bir faaliyeti durdurmasını talep eden uyarı.",
+  "price": 10,
+  "language": "tr",
+  "slug": "ihtarname-faaliyet-durdurma-talebi-basit",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n <h3 style='text-align: center; margin-bottom: 30px;'>İHTARNAME</h3>\n\n <p><strong>KEŞİDECİ (İhtar Eden):</strong><br/>\n Adı Soyadı / Unvanı: {{kesideci_ad_unvan}}<br/>\n T.C. Kimlik No / Vergi No: {{kesideci_tc_vergi_no}}<br/>\n Adresi: {{kesideci_adres}}<br/>\n {{#if kesideci_vekili}}Vekili: {{kesideci_vekili}}{{/if}}\n </p>\n\n <p><strong>MUHATAP (İhtar Edilen):</strong><br/>\n Adı Soyadı / Unvanı: {{muhatap_ad_unvan}}<br/>\n Adresi: {{muhatap_adres}}<br/>\n {{#if muhatap_tc_vergi_no}}T.C. Kimlik No / Vergi No: {{muhatap_tc_vergi_no}}{{/if}}\n </p>\n\n <p><strong>KONU:</strong> {{durdurulmasi_istenen_faaliyet}} Faaliyetinizin Durdurulması Talebi Hk.</p>\n\n <p><strong>AÇIKLAMALAR:</strong></p>\n <p>Tarafınızca sürdürülen {{durdurulmasi_istenen_faaliyet}} şeklindeki faaliyetleriniz, aşağıdaki nedenlerle tarafımı/müvekkilimi rahatsız etmekte ve/veya yasal haklarımı ihlal etmektedir:</p>\n <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ihlalin_aciklamasi}}</pre>\n\n <p><strong>TALEP:</strong></p>\n <p>Yukarıda açıklanan nedenlerle, işbu ihtarnamenin tarafınıza tebliğinden itibaren derhal {{durdurulmasi_istenen_faaliyet}} faaliyetinize son vermenizi talep ediyoruz.</p>\n\n <p>Aksi takdirde, söz konusu faaliyete son verilmemesi halinde hakkınızda her türlü yasal yola başvurulacağını, yapılacak tüm masrafların ve avukatlık ücretinin tarafınıza ait olacağını ihtar ederiz.</p>\n\n {{#if (eq noter_kanali_isteniyor 'Evet')}}\n <p style='margin-top: 40px;'>Sayın Noter,<br/>Üç nüshadan ibaret olan işbu ihtarnamenin bir nüshasının muhataba tebliğini, bir nüshasının dairenizde saklanmasını, tebliğ şerhini taşıyan bir nüshasının ise tarafımıza verilmesini talep ederiz.</p>\n {{/if}}\n\n <p style='text-align: right; margin-top: 30px; margin-bottom: 10px;'>Tarih: {{formatDate ihtar_tarihi}}</p>\n\n <div style='text-align: right;'>\n <p><strong>Keşideci (İhtar Eden) / Vekili</strong><br/>\n <span style='display: inline-block; margin-top: 5px;'>{{kesideci_ad_unvan}}</span><br/>\n {{#if kesideci_vekili}}<span style='display: inline-block; margin-top: 5px;'>({{kesideci_vekili}})</span><br/>{{/if}}\n <br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span>\n </p>\n </div>\n\n</div>",
+  "fields": [
+    { "name": "kesideci_ad_unvan", "label": "Keşideci (İhtar Eden) Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
+    { "name": "kesideci_tc_vergi_no", "label": "Keşideci T.C. Kimlik No / Vergi No", "fieldType": "text", "required": true },
+    { "name": "kesideci_adres", "label": "Keşideci Adresi", "fieldType": "textarea", "required": true },
+    { "name": "kesideci_vekili", "label": "Keşideci Vekili (Avukat Adı - Opsiyonel)", "fieldType": "text", "required": false },
+    { "name": "muhatap_ad_unvan", "label": "Muhatap (İhtar Edilen) Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
+    { "name": "muhatap_adres", "label": "Muhatap Adresi", "fieldType": "textarea", "required": true },
+    { "name": "muhatap_tc_vergi_no", "label": "Muhatap T.C. Kimlik No / Vergi No (Biliyorsanız)", "fieldType": "text", "required": false },
+    { "name": "durdurulmasi_istenen_faaliyet", "label": "Durdurulması İstenen Faaliyet (Kısaca)", "fieldType": "text", "placeholder": "Örn: Marka hakkı ihlali, Haksız rekabet, Rahatsız edici gürültü", "required": true },
+    { "name": "ihlalin_aciklamasi", "label": "İhlalin veya Rahatsızlığın Detaylı Açıklaması", "fieldType": "textarea", "placeholder": "Hangi davranışların neden sorun teşkil ettiğini somut örneklerle açıklayın.", "required": true },
+    { "name": "noter_kanali_isteniyor", "label": "Noter Kanalıyla Gönderim İsteniyor mu?", "fieldType": "radio", "options": ["Evet", "Hayır"], "required": true },
+    { "name": "ihtar_tarihi", "label": "İhtarname Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

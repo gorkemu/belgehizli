@@ -1,0 +1,22 @@
+{
+  "_id": "69ca05789e4b82aaf809ed42",
+  "name": "Sezonluk / Tatil Amaçlı Kira Sözleşmesi",
+  "description": "Yazlık, villa veya apart dairelerin kısa süreli (sezonluk/günlük) kiralanması için hasar depozitosu vurgulu sözleşme.",
+  "price": 15,
+  "language": "tr",
+  "slug": "sezonluk-konut-kira-sozlesmesi",
+  "content": "<div style='font-family: Inter, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h2 style='text-align:center;'>KISA SÜRELİ TATİL AMAÇLI KİRA SÖZLEŞMESİ</h2>\n\n  <p><strong>TARAFLAR:</strong><br/>Ev Sahibi: {{ev_sahibi_ad}}<br/>Kiracı (Misafir): {{kiraci_ad}}</p>\n\n  <p><strong>REZERVASYON BİLGİLERİ:</strong><br/>\n  Giriş Tarihi (Check-in): {{formatDate giris_tarihi}}<br/>\n  Çıkış Tarihi (Check-out): {{formatDate cikis_tarihi}}<br/>\n  Konaklayacak Kişi Sayısı: {{kisi_sayisi}}</p>\n\n  <p><strong>ÖDEME VE DEPOZİTO:</strong><br/>\n  Toplam Konaklama Bedeli: {{toplam_ucret}} TL<br/>\n  Hasar Depozitosu: {{depozito_ucret}} TL</p>\n\n  <p><strong>KOŞULLAR VE İPTAL POLİTİKASI:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word; background: transparent; border: none; padding: 0; font-family: inherit;'>{{iptal_ve_hasar_kosullari}}</pre>\n\n  <p>Kiracı, çıkış yaparken evi teslim aldığı tertip ve temizlikte bırakmayı, kullanımından kaynaklı herhangi bir hasar durumunda bu zararın öncelikle depozitodan mahsup edileceğini, aşan kısım için yasal yollara başvurulabileceğini kabul eder.</p>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>Ev Sahibi</strong></p>\n      <p>{{ev_sahibi_ad}}</p>\n      <p><br/>İmza: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>Kiracı</strong></p>\n      <p>{{kiraci_ad}}</p>\n      <p><br/>İmza: ________________</p>\n    </div>\n  </div>\n</div>",
+  "fields": [
+    { "name": "ev_sahibi_ad", "label": "Ev Sahibi Ad Soyad", "fieldType": "text", "required": true },
+    { "name": "kiraci_ad", "label": "Kiracı (Misafir) Ad Soyad", "fieldType": "text", "required": true },
+    { "name": "giris_tarihi", "label": "Check-in (Giriş) Tarihi", "fieldType": "date", "required": true },
+    { "name": "cikis_tarihi", "label": "Check-out (Çıkış) Tarihi", "fieldType": "date", "required": true },
+    { "name": "kisi_sayisi", "label": "Konaklayacak Kişi Sayısı", "fieldType": "number", "required": true },
+    { "name": "toplam_ucret", "label": "Toplam Kiralama Bedeli (TL)", "fieldType": "number", "required": true },
+    { "name": "depozito_ucret", "label": "Hasar Depozitosu (TL)", "fieldType": "number", "required": true },
+    { "name": "iptal_ve_hasar_kosullari", "label": "Kurallar ve İptal Şartları", "fieldType": "textarea", "placeholder": "Örn: Saat 22:00'den sonra gürültü yasaktır. İptal durumunda ücret iadesi yapılmaz.", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

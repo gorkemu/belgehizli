@@ -1,0 +1,26 @@
+{
+  "_id": "68027abfd3d0d8e46eebe652",
+  "name": "İstifa Dilekçesi (İşçi Tarafından Fesih)",
+  "description": "Çalışanın iş sözleşmesini sonlandırmak için işverene sunduğu resmi istifa dilekçesi.",
+  "price": 5,
+  "language": "tr",
+  "slug": "istifa-dilekcesi-isci-tarafindan-fesih",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <h3 style='text-align: center; margin-bottom: 30px;'>{{isveren_firma_adi}} YÖNETİM KURULU BAŞKANLIĞI'NA / İNSAN KAYNAKLARI MÜDÜRLÜĞÜ'NE</h3>\n  <p style='text-align: right; margin-bottom: 20px;'>{{sehir_bilgisi}}</p>\n\n  <p>Şirketiniz bünyesinde {{formatDate ise_giris_tarihi}} tarihinden itibaren {{pozisyon}} olarak çalışmaktayım.</p>\n\n  <p>{{istifa_nedeni}} nedeniyle, iş sözleşmemi İş Kanunu'nun ilgili maddeleri uyarınca {{yasal_ihbar_suresi}} günlük yasal ihbar süremi kullanarak (veya ihbar süresi kullanmadan derhal) {{formatDate istifa_tarihi}} tarihi itibarıyla feshediyorum.</p>\n\n  <p>Şirketinizdeki görevimden {{formatDate son_calisma_gunu}} tarihi itibarıyla ayrılmış olacağım.</p>\n\n  <p>Çalıştığım süre boyunca göstermiş olduğunuz anlayış ve işbirliği için teşekkür ederim.</p>\n\n  <p>Gerekli işlemlerin yapılmasını ve yasal haklarımın (kıdem tazminatı, kullanılmayan yıllık izin ücreti vb.) tarafıma ödenmesini arz ederim.</p>\n\n  <p style='text-align: right; margin-top: 40px; margin-bottom: 10px;'>Tarih: {{formatDate dilekce_tarihi}}</p>\n\n  <div style='text-align: right;'>\n    <p>Adı Soyadı: {{calisan_ad_soyad}}<br/>\n    T.C. Kimlik No: {{calisan_tc_no}}<br/>\n    Adres: {{calisan_adres}}<br/>\n    <br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span></p>\n  </div>\n</div>",
+  "fields": [
+    { "name": "isveren_firma_adi", "label": "İşveren Firma Adı / Departman", "fieldType": "text", "required": true, "placeholder": "Örn: ABC Teknoloji A.Ş. Yönetim Kurulu Başkanlığı'na" },
+    { "name": "sehir_bilgisi", "label": "Şehir Bilgisi", "fieldType": "text", "required": true, "placeholder": "Örn: İSTANBUL" },
+    { "name": "ise_giris_tarihi", "label": "İşe Giriş Tarihiniz", "fieldType": "date", "required": true },
+    { "name": "pozisyon", "label": "Pozisyonunuz / Göreviniz", "fieldType": "text", "required": true },
+    { "name": "istifa_nedeni", "label": "İstifa Nedeniniz (Kısa Açıklama)", "fieldType": "textarea", "required": true, "placeholder": "Örn: Kariyer hedeflerim doğrultusunda, Özel sebeplerle..." },
+    { "name": "yasal_ihbar_suresi", "label": "Yasal İhbar Süreniz (Gün)", "fieldType": "number", "required": true, "placeholder": "Örn: 14, 28, 42, 56 (Derhal ise 0 yazın)" },
+    { "name": "istifa_tarihi", "label": "İstifa Tarihi (Dilekçenin Verildiği Tarih)", "fieldType": "date", "required": true },
+    { "name": "son_calisma_gunu", "label": "Son Çalışma Gününüz", "fieldType": "date", "required": true, "placeholder": "İstifa tarihine ihbar süresini ekleyerek hesaplayınız." },
+    { "name": "dilekce_tarihi", "label": "Dilekçe Yazım Tarihi", "fieldType": "date", "required": true },
+    { "name": "calisan_ad_soyad", "label": "Çalışanın Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "calisan_tc_no", "label": "Çalışanın T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "calisan_adres", "label": "Çalışanın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

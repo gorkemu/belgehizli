@@ -1,0 +1,32 @@
+{
+  "name": "Internship Cover Letter",
+  "description": "A professional cover letter used when applying for an internship position, highlighting academic background and motivation.",
+  "price": 5,
+  "language": "en",
+  "slug": "internship-cover-letter",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p><strong>{{full_name}}</strong><br/>{{address}}<br/>{{phone}}<br/>{{email}}<br/>{{#if linkedin_portfolio}}LinkedIn/Portfolio: {{linkedin_portfolio}}{{/if}}</p>\n<p style='margin-top: 20px;'>{{formatDate letter_date}}</p>\n<p style='margin-top: 20px;'><strong>{{company_name}}</strong><br/>{{#if attention_to}}Attn: {{attention_to}}{{else}}Human Resources / Internship Coordinator{{/if}}<br/>{{company_address}}</p>\n\n<p style='margin-top: 20px;'><strong>RE: Application for {{internship_field}} Internship</strong></p>\n\n<p>Dear {{#if attention_to}}{{attention_to}}{{else}}Hiring Manager{{/if}},</p>\n\n<p>I am writing to express my enthusiastic interest in a <strong>{{internship_field}}</strong> internship with {{company_name}}, as advertised on {{discovery_source}}. I am currently a {{year_of_study}} year student pursuing a degree in <strong>{{major_degree}}</strong> at <strong>{{university_name}}</strong>. I am eager to apply the theoretical concepts I have learned in my studies to real-world challenges within your esteemed organization during the {{internship_term}}.</p>\n\n<p>I have followed {{company_name}}'s work closely, and I am particularly impressed by {{company_highlight}}. I believe an internship with your team would be the ideal environment for me to develop my skills in {{areas_of_interest}} while making a meaningful contribution to your ongoing projects.</p>\n\n<p><strong>My Qualifications & Skills:</strong></p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{skills_and_qualifications}}</pre>\n\n<p>Through my academic projects and extracurricular activities, I have developed a strong foundation in this field, along with excellent problem-solving and communication skills. I am highly motivated, eager to learn, and ready to take on new responsibilities.</p>\n\n<p>Please find my resume {{#if (eq transcript_attached 'Yes')}}and academic transcript {{/if}}attached for your review. I would welcome the opportunity to discuss how my background, skills, and enthusiasm align with the goals of your internship program.</p>\n\n<p>Thank you very much for your time and consideration.</p>\n\n<p>Sincerely,</p>\n\n<p style='margin-top: 40px;'>_________________________<br/><strong>{{full_name}}</strong></p>\n</div>",
+  "fields": [
+    { "name": "full_name", "label": "Your Full Name", "fieldType": "text", "required": true },
+    { "name": "address", "label": "Your Address (City/State)", "fieldType": "text", "required": true },
+    { "name": "phone", "label": "Phone Number", "fieldType": "text", "required": true },
+    { "name": "email", "label": "Email Address", "fieldType": "email", "required": true },
+    { "name": "linkedin_portfolio", "label": "LinkedIn/Portfolio Link (Optional)", "fieldType": "text", "required": false },
+    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
+    { "name": "company_name", "label": "Company/Organization Name", "fieldType": "text", "required": true },
+    { "name": "attention_to", "label": "Recipient Name or Dept. (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., Mr. Smith, Internship Coordinator" },
+    { "name": "company_address", "label": "Company Address (Optional)", "fieldType": "textarea", "required": false },
+    { "name": "internship_field", "label": "Internship Field / Department", "fieldType": "text", "required": true, "placeholder": "e.g., Marketing, Software Engineering" },
+    { "name": "discovery_source", "label": "Where did you see the posting?", "fieldType": "text", "required": true, "placeholder": "e.g., your website, university career portal" },
+    { "name": "university_name", "label": "University/College Name", "fieldType": "text", "required": true },
+    { "name": "major_degree", "label": "Your Major / Degree", "fieldType": "text", "required": true, "placeholder": "e.g., B.S. in Computer Science" },
+    { "name": "year_of_study", "label": "Year of Study", "fieldType": "text", "required": true, "placeholder": "e.g., Junior, Senior, 3rd" },
+    { "name": "internship_term", "label": "Desired Internship Term", "fieldType": "text", "required": true, "placeholder": "e.g., Summer 2026, Fall Semester" },
+    { "name": "areas_of_interest", "label": "Specific Areas of Interest", "fieldType": "text", "required": true, "placeholder": "e.g., data analysis, brand management" },
+    { "name": "company_highlight", "label": "What impresses you about the company?", "fieldType": "text", "required": true, "placeholder": "e.g., your recent sustainability initiative" },
+    { "name": "skills_and_qualifications", "label": "Your Skills and Qualifications", "fieldType": "textarea", "required": true, "placeholder": "Mention software skills, relevant coursework, leadership roles..." },
+    { "name": "transcript_attached", "label": "Is your transcript attached?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Reference Request Email / Letter Draft",
+  "description": "A polite and professional template for requesting a letter of recommendation from a former manager, professor, or colleague.",
+  "price": 0,
+  "language": "en",
+  "slug": "reference-request-email-letter",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p><strong>Subject:</strong> Reference Request - {{your_full_name}}</p>\n<br/>\n<p>Dear {{referrer_title}} {{referrer_last_name}},</p>\n<br/>\n<p>I hope this email finds you well.</p>\n\n<p>I am reaching out to you because I am currently in the process of applying for the <strong>{{position_applied_for}}</strong> role at <strong>{{organization_name}}</strong>{{#if additional_context}}, and {{additional_context}}{{/if}}.</p>\n\n<p>Because of our positive experience working together during my time {{relationship_context}}, I thought you would be the perfect person to speak to my skills and professional character. Would you be comfortable writing a letter of recommendation or serving as a reference for my application?</p>\n\n<p>If you are able to help, it would be wonderful if you could highlight my experience in <strong>{{skills_to_highlight}}</strong>, as these are critical to the position I am targeting.</p>\n\n<p>The deadline for submitting the reference is <strong>{{formatDate submission_deadline}}</strong>, and it needs to be sent via {{submission_method}}. If you need any more information to make writing the letter easier, I would be happy to send over my updated resume and the job description.</p>\n\n<p>I completely understand if you don't have the time to write a reference right now. Either way, I appreciate your time and consideration.</p>\n\n<p>Best regards,</p>\n\n<div style='margin-top: 20px;'>\n<p><strong>{{your_full_name}}</strong><br/>\n{{your_current_title_company}}<br/>\nPhone: {{your_phone}}<br/>\nEmail: {{your_email}}<br/>\n{{#if your_linkedin}}LinkedIn: {{your_linkedin}}{{/if}}\n</p>\n</div>\n</div>",
+  "fields": [
+    { "name": "referrer_title", "label": "Referrer's Title", "fieldType": "text", "required": true, "placeholder": "e.g., Professor, Mr., Ms., Dr." },
+    { "name": "referrer_last_name", "label": "Referrer's Last Name", "fieldType": "text", "required": true },
+    { "name": "your_full_name", "label": "Your Full Name", "fieldType": "text", "required": true },
+    { "name": "position_applied_for", "label": "Position / Program Applied For", "fieldType": "text", "required": true, "placeholder": "e.g., Senior Developer, Master's Program" },
+    { "name": "organization_name", "label": "Organization / University Name", "fieldType": "text", "required": true, "placeholder": "e.g., Tech Corp, Harvard University" },
+    { "name": "additional_context", "label": "Additional Context (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., I've made it to the final interview round" },
+    { "name": "relationship_context", "label": "Your Relationship Context", "fieldType": "text", "required": true, "placeholder": "e.g., at XYZ Company, in your Advanced Physics class" },
+    { "name": "skills_to_highlight", "label": "Skills / Experiences to Highlight", "fieldType": "textarea", "required": true, "placeholder": "e.g., my project management skills, analytical thinking" },
+    { "name": "submission_deadline", "label": "Submission Deadline", "fieldType": "date", "required": true },
+    { "name": "submission_method", "label": "Submission Method", "fieldType": "text", "required": true, "placeholder": "e.g., an online portal, emailing HR directly at hr@company.com" },
+    { "name": "your_current_title_company", "label": "Your Current Title & Company (Optional)", "fieldType": "text", "required": false },
+    { "name": "your_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
+    { "name": "your_email", "label": "Your Email Address", "fieldType": "email", "required": true },
+    { "name": "your_linkedin", "label": "Your LinkedIn Profile (Optional)", "fieldType": "text", "required": false },
+    { "name": "document_email", "label": "Email (For delivery - Your Email)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

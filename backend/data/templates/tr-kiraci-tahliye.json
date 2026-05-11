@@ -1,0 +1,25 @@
+{
+  "_id": "68061216b989142070477fa0",
+  "name": "Kiracı Tahliye Bildirimi",
+  "description": "Kiracının, kira sözleşmesini sonlandırarak evden ayrılacağını bildiren yazı.",
+  "price": 5,
+  "language": "tr",
+  "slug": "kiraci-tahliye-bildirimi",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n<p style='text-align: right;'>{{sehir_bilgisi}}, {{formatDate bildirim_tarihi}}</p>\n<br/>\n<p><strong>{{kiralayan_ad_soyad}} DİKKATİNE,</strong></p>\n<p>{{kiralayan_adres}}</p>\n<br/>\n<p><strong>Konu:</strong> {{kiralanan_adres}} Adresindeki Taşınmazın Tahliyesi Hakkında Bildirim</p>\n<br/>\n<p>Sayın {{kiralayan_ad_soyad}},</p>\n\n<p>Kiracısı olarak ikamet etmekte olduğum {{kiralanan_adres}} adresindeki taşınmaza ilişkin, {{formatDate kira_baslangic_tarihi}} başlangıç tarihli kira sözleşmemizi, {{fesih_gerekcesi}} nedeniyle, yasal ihbar sürelerine uyarak {{formatDate tahliye_tarihi}} tarihi itibarıyla feshedeceğimi ve bu tarihte taşınmazı tahliye edeceğimi tarafınıza bildiririm.</p>\n\n<p>Taşınmazı boş ve temiz bir şekilde teslim etmeye özen göstereceğim. Anahtar teslimi ve depozito iadesi konusunda uygun bir zamanda iletişime geçmenizi rica ederim.</p>\n\n<p>Gereğini bilgilerinize sunarım.</p>\n\n<p>Saygılarımla,</p>\n\n<div style='margin-top: 40px;'>\n <p><strong>Kiracı</strong><br/>\n <span style='display: inline-block; margin-top: 5px;'>{{kiraci_ad_soyad}}</span><br/>\n <span style='display: inline-block; margin-top: 5px;'>T.C. Kimlik No: {{kiraci_tc_no}}</span><br/>\n <span style='display: inline-block; margin-top: 5px;'>Telefon: {{kiraci_telefon}}</span><br/>\n <br/><span style='display: inline-block; margin-top: 15px;'>İmza: _________________________</span>\n </p>\n</div>\n</div>",
+  "fields": [
+    { "name": "kiralayan_ad_soyad", "label": "Kiraya Verenin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "kiralayan_adres", "label": "Kiraya Verenin Adresi (Tebligat için)", "fieldType": "textarea", "required": true },
+    { "name": "kiraci_ad_soyad", "label": "Kiracının Adı Soyadı (Siz)", "fieldType": "text", "required": true },
+    { "name": "kiraci_tc_no", "label": "Kiracının T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "kiraci_telefon", "label": "Kiracının Telefon Numarası", "fieldType": "text", "required": true },
+    { "name": "kiralanan_adres", "label": "Kiralanan Taşınmazın Adresi", "fieldType": "textarea", "required": true },
+    { "name": "kira_baslangic_tarihi", "label": "Kira Sözleşmesinin Başlangıç Tarihi", "fieldType": "date", "required": true },
+    { "name": "fesih_gerekcesi", "label": "Fesih Gerekçesi (Kısaca)", "fieldType": "text", "placeholder": "Örn: Taşınma, Sözleşme süresinin dolması", "required": true },
+    { "name": "tahliye_tarihi", "label": "Taşınmazı Tahliye Edeceğiniz Tarih", "fieldType": "date", "required": true },
+    { "name": "sehir_bilgisi", "label": "Bildirimin Yazıldığı Şehir", "fieldType": "text", "required": true },
+    { "name": "bildirim_tarihi", "label": "Bildirim Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

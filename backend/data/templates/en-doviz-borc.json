@@ -1,0 +1,23 @@
+{
+  "name": "Foreign Currency Loan Agreement",
+  "description": "A loan agreement where the principal amount is disbursed and must be repaid in a specified foreign currency to mitigate exchange rate risks.",
+  "price": 10,
+  "language": "en",
+  "slug": "foreign-currency-loan-agreement",
+  "content": "<div style=\"font-family: 'Inter', sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px; color: #000;\">\n  <h2 style='text-align: center; padding-bottom: 10px;'>FOREIGN CURRENCY LOAN AGREEMENT</h2>\n\n  <p><strong>LENDER:</strong> {{lender_name}} (ID/SSN: {{lender_id}})<br/>\n  <strong>BORROWER:</strong> {{borrower_name}} (ID/SSN: {{borrower_id}})</p>\n\n  <p><strong>1. THE LOAN:</strong> For value received, the Lender has loaned to the Borrower, and the Borrower acknowledges receipt of, the principal sum of <strong>{{loan_amount}} {{currency_code}}</strong> on {{formatDate loan_date}}.</p>\n\n  <p><strong>2. REPAYMENT TERMS:</strong> The Borrower promises to repay the full principal amount to the Lender on or before <strong>{{formatDate maturity_date}}</strong>. The repayment shall be made in the exact currency borrowed (<strong>{{currency_code}}</strong>). If repayment is made in local currency, it must be calculated using the official central bank exchange rate effective on the actual date of payment.</p>\n\n  <p><strong>3. SPECIAL CONDITIONS & INTEREST:</strong></p>\n  <pre style='white-space: pre-wrap; background: transparent; border: none; padding: 0; font-family: \"Inter\", sans-serif;'>{{special_conditions}}</pre>\n\n  <div style='margin-top: 50px; display: flex; justify-content: space-between;'>\n    <div style='text-align: center;'>\n      <p><strong>LENDER</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n    <div style='text-align: center;'>\n      <p><strong>BORROWER</strong></p>\n      <p><br/>Signature: ________________</p>\n    </div>\n  </div>\n  <p style='margin-top: 30px;'><strong>Date Signed:</strong> {{formatDate signature_date}}</p>\n</div>",
+  "fields": [
+    { "name": "lender_name", "label": "Lender's Name", "fieldType": "text", "required": true },
+    { "name": "lender_id", "label": "Lender's ID / SSN", "fieldType": "text", "required": true },
+    { "name": "borrower_name", "label": "Borrower's Name", "fieldType": "text", "required": true },
+    { "name": "borrower_id", "label": "Borrower's ID / SSN", "fieldType": "text", "required": true },
+    { "name": "loan_amount", "label": "Loan Amount (Numerical)", "fieldType": "number", "required": true },
+    { "name": "currency_code", "label": "Currency Code (e.g., USD, EUR, GBP)", "fieldType": "text", "required": true },
+    { "name": "loan_date", "label": "Date Loan was Disbursed", "fieldType": "date", "required": true },
+    { "name": "maturity_date", "label": "Due Date / Maturity Date", "fieldType": "date", "required": true },
+    { "name": "special_conditions", "label": "Special Conditions / Interest Rate", "fieldType": "textarea", "placeholder": "e.g., 5% annual interest. Late payment incurs a 2% penalty.", "required": false },
+    { "name": "signature_date", "label": "Date of Signature", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

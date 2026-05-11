@@ -1,0 +1,24 @@
+{
+  "name": "Formal Demand Letter / Legal Notice",
+  "description": "A formal letter used to officially demand action, payment, or cease-and-desist from another party prior to legal action.",
+  "price": 10,
+  "language": "en",
+  "slug": "formal-demand-letter-legal-notice",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p style='text-align: right; text-transform: uppercase;'><strong>Sent Via {{delivery_method}}</strong></p>\n\n  <p><strong>FROM:</strong><br/>\n  Name / Company: {{sender_name_title}}<br/>\n  Address: {{sender_address}}<br/>\n  {{#if sender_counsel}}Legal Counsel: {{sender_counsel}}{{/if}}\n  </p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>TO:</strong><br/>\n  Name / Company: {{recipient_name_title}}<br/>\n  Address: {{recipient_address}}\n  </p>\n\n  <p style='margin-top: 30px; text-decoration: underline;'><strong>RE: FORMAL DEMAND NOTICE - {{subject}}</strong></p>\n\n  <p>Dear {{recipient_name_title}},</p>\n\n  <p>This letter serves as a formal demand regarding the aforementioned subject matter. Please consider this correspondence an official notice intended to resolve the issue before pursuing formal legal proceedings.</p>\n\n  <p><strong>BACKGROUND AND FACTS:</strong></p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{explanations_facts}}</pre>\n\n  <p><strong>DEMANDS AND REQUIRED ACTION:</strong></p>\n  <p>Based on the foregoing, we hereby demand that you take the following action(s) immediately:</p>\n  <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{demand_and_conclusion}}</pre>\n  \n  <p>If you fail to comply with these demands by <strong>{{formatDate deadline_date}}</strong>, we will have no alternative but to pursue all available legal remedies to protect our rights and interests. This may include initiating a lawsuit against you, in which case we will also seek to hold you liable for all court costs, legal fees, and accrued interest.</p>\n\n  <p>We strongly urge you to treat this matter with the seriousness it warrants and respond accordingly within the stipulated timeframe.</p>\n\n  <p>Govern yourself accordingly.</p>\n\n  <p style='margin-top: 40px;'>Sincerely,</p>\n  <p><strong>{{sender_name_title}}</strong><br/>\n  {{#if sender_counsel}}Represented by: {{sender_counsel}}<br/>{{/if}}\n  <br/><span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span></p>\n</div>",
+  "fields": [
+    { "name": "delivery_method", "label": "Method of Delivery", "fieldType": "text", "required": true, "placeholder": "e.g., Certified Mail, Return Receipt Requested" },
+    { "name": "sender_name_title", "label": "Sender's Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "sender_address", "label": "Sender's Address", "fieldType": "textarea", "required": true },
+    { "name": "sender_counsel", "label": "Sender's Legal Counsel (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., John Doe, Esq." },
+    { "name": "letter_date", "label": "Date of Notice", "fieldType": "date", "required": true },
+    { "name": "recipient_name_title", "label": "Recipient's Name / Company Name", "fieldType": "text", "required": true },
+    { "name": "recipient_address", "label": "Recipient's Address", "fieldType": "textarea", "required": true },
+    { "name": "subject", "label": "Subject / Reference", "fieldType": "text", "required": true, "placeholder": "e.g., Breach of Contract, Outstanding Debt of $5000" },
+    { "name": "explanations_facts", "label": "Background and Facts", "fieldType": "textarea", "required": true, "placeholder": "Explain the situation, dates, and reasons for this notice clearly." },
+    { "name": "demand_and_conclusion", "label": "Demands / Required Action", "fieldType": "textarea", "required": true, "placeholder": "State exactly what the recipient must do (e.g., pay $5000, stop an action)." },
+    { "name": "deadline_date", "label": "Deadline to Comply", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

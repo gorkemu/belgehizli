@@ -1,0 +1,37 @@
+{
+  "_id": "6805bfc3b989142070477f91",
+  "name": "Adi Ortaklık Sözleşmesi",
+  "description": "İki veya daha fazla kişinin belirli bir amaç için emek veya mallarını birleştirdiği basit ortaklık anlaşması.",
+  "price": 22,
+  "language": "tr",
+  "slug": "adi-ortaklik-sozlesmesi",
+  "content": "<h2 style='text-align:center;'>ADİ ORTAKLIK SÖZLEŞMESİ</h2>\n<p>İşbu Adi Ortaklık Sözleşmesi (\"Sözleşme\"), aşağıda bilgileri belirtilen ortaklar arasında, {{formatDate sozlesme_tarihi}} tarihinde Türk Borçlar Kanunu'nun adi ortaklığa ilişkin hükümleri çerçevesinde aşağıdaki şartlarla kurulmuştur.</p>\n\n<p><strong>1. ORTAKLAR</strong></p>\n<p>İşbu ortaklığın tarafları (\"Ortaklar\") şunlardır:</p>\n{{#each ortaklar}}\n<p><strong>Ortak:</strong><br/>\nAdı Soyadı/Unvanı: {{this.ad_soyad_unvan}}<br/>\nT.C. Kimlik No/Vergi No: {{this.tc_vergi_no}}<br/>\nAdresi: {{this.adres}}\n</p>\n{{/each}}\n\n<p><strong>2. ORTAKLIĞIN ADI VE AMACI</strong></p>\n{{#if ortaklik_adi}}<p>Ortaklığın Ticari Adı (varsa): {{ortaklik_adi}}</p>{{/if}}\n<p>Ortaklığın Amacı: Aşağıda belirtilen iş veya amaçları gerçekleştirmektir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ortaklik_amaci}}</pre>\n\n<p><strong>3. SERMAYE KATILIM PAYLARI</strong></p>\n<p>Ortakların ortaklığa katılım payları (sermaye taahhütleri) aşağıdaki gibidir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{sermaye_katkilari}}</pre>\n<p>Ortaklar, taahhüt ettikleri katılım paylarını ortaklığa getirmeyi kabul ve taahhüt ederler.</p>\n\n<p><strong>4. KAR VE ZARARIN PAYLAŞILMASI</strong></p>\n<p>Ortaklığın faaliyetlerinden elde edilecek kar ve meydana gelecek zararlar, ortaklar arasında aşağıdaki oranda paylaşılacaktır:</p>\n<p>{{kar_zarar_paylasimi}}</p>\n<p><i>(Not: Aksi kararlaştırılmadıkça, kar ve zarar ortakların katılım payları oranında paylaşılır.)</i></p>\n\n<p><strong>5. YÖNETİM VE TEMSİL</strong></p>\n<p>Ortaklığın yönetimi ve temsili aşağıdaki şekilde yürütülecektir:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{yonetim_sekli}}</pre>\n<p><i>(Not: Aksi kararlaştırılmadıkça, yönetim hakkı tüm ortaklara aittir.)</i></p>\n\n<p><strong>6. ORTAKLIK SÜRESİ</strong></p>\n<p>Ortaklık, {{ortaklik_suresi}} olarak kurulmuştur.</p>\n\n<p><strong>7. SÖZLEŞMENİN DEĞİŞTİRİLMESİ VE FESHİ</strong></p>\n<p>İşbu Sözleşme ancak tüm ortakların yazılı mutabakatı ile değiştirilebilir.</p>\n<p>Ortaklık aşağıdaki hallerde sona erer:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{fesih_sartlari}}</pre>\n\n<p><strong>8. UYUŞMAZLIKLARIN ÇÖZÜMÜ</strong></p>\n<p>İşbu Sözleşme'den kaynaklanabilecek uyuşmazlıkların çözümünde Türk Hukuku uygulanacak olup, {{yetkili_mahkeme}} Mahkemeleri ve İcra Daireleri yetkilidir.</p>\n\n<p>İşbu Adi Ortaklık Sözleşmesi 8 (sekiz) maddeden ibaret olup, tüm ortaklar tarafından okunmuş, anlaşılmış ve kabul edilerek {{formatDate sozlesme_tarihi}} tarihinde imzalanmıştır.</p>\n\n<div style='margin-top: 40px;'>\n <p><strong>Ortakların İmzaları:</strong></p>\n {{#each ortaklar}}\n <div style='margin-top: 20px; margin-bottom: 15px;'>\n <p style='margin-bottom: 5px;'>{{this.ad_soyad_unvan}}</p>\n <p><br/><span style='display: inline-block; margin-top: 5px;'>İmza: _________________________</span></p><br/>\n </div>\n {{/each}}\n</div>",
+  "fields": [
+    {
+      "name": "ortaklar",
+      "label": "Ortak Bilgileri",
+      "fieldType": "repeatable",
+      "blockTitle": "Ortak",
+      "addLabel": "Yeni Ortak Ekle",
+      "removeLabel": "Ortağı Sil",
+      "minInstances": 2,
+      "subfields": [
+        { "name": "ad_soyad_unvan", "label": "Adı Soyadı / Unvanı", "fieldType": "text", "required": true },
+        { "name": "tc_vergi_no", "label": "T.C. Kimlik No / Vergi No", "fieldType": "text", "required": true },
+        { "name": "adres", "label": "Adresi", "fieldType": "textarea", "required": true }
+      ]
+    },
+    { "name": "ortaklik_adi", "label": "Ortaklığın Adı (Varsa)", "fieldType": "text", "required": false },
+    { "name": "ortaklik_amaci", "label": "Ortaklığın Amacı", "fieldType": "textarea", "placeholder": "Ortaklığın hangi işi yapmak için kurulduğunu yazınız.", "required": true },
+    { "name": "sermaye_katkilari", "label": "Ortakların Sermaye Katkıları", "fieldType": "textarea", "placeholder": "Örn: Ortak 1: 50.000 TL Nakit\nOrtak 2: 30.000 TL Değerinde Mal", "required": true },
+    { "name": "kar_zarar_paylasimi", "label": "Kar ve Zararın Paylaşım Oranı/Şekli", "fieldType": "text", "placeholder": "Örn: Eşit olarak / Katılım payları oranında / %60 - %40", "required": true },
+    { "name": "yonetim_sekli", "label": "Yönetim ve Temsil Şekli", "fieldType": "textarea", "placeholder": "Örn: Tüm kararlar oybirliği ile alınacaktır. Ortaklığı X kişisi tek başına temsil edecektir.", "required": true },
+    { "name": "ortaklik_suresi", "label": "Ortaklık Süresi", "fieldType": "text", "placeholder": "Örn: Belirsiz süreli / 2 Yıl / Proje tamamlanana kadar", "required": true },
+    { "name": "fesih_sartlari", "label": "Ortaklığın Sona Erme Şartları", "fieldType": "textarea", "placeholder": "Tüm ortakların fesih kararı, sürenin dolması vb.", "required": true },
+    { "name": "yetkili_mahkeme", "label": "Yetkili Mahkeme", "fieldType": "text", "placeholder": "Örn: İstanbul", "required": true },
+    { "name": "sozlesme_tarihi", "label": "Sözleşme Tarihi", "fieldType": "date", "required": true },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

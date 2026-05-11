@@ -1,0 +1,27 @@
+{
+  "name": "Letter of Resignation",
+  "description": "A formal letter submitted by an employee to an employer announcing their intent to leave their position.",
+  "price": 5,
+  "language": "en",
+  "slug": "letter-of-resignation",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n  <p><strong>From:</strong><br/>{{employee_name}}<br/>{{employee_address}}<br/>{{employee_email}}<br/>{{employee_phone}}</p>\n\n  <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate letter_date}}</p>\n\n  <p style='margin-top: 20px;'><strong>To:</strong><br/>{{manager_hr_name}}<br/>{{company_name}}<br/>{{company_address}}</p>\n\n  <p style='margin-top: 30px;'>Dear {{manager_hr_name}},</p>\n\n  <p>Please accept this letter as formal notification that I am resigning from my position as <strong>{{job_title}}</strong> at {{company_name}}.</p>\n\n  {{#if (eq providing_notice 'Yes')}}\n  <p>In accordance with my employment contract / company policy, I am providing <strong>{{notice_period}} weeks'</strong> notice. My last day of employment will be <strong>{{formatDate last_working_day}}</strong>.</p>\n  {{else}}\n  <p>Due to {{resignation_reason}}, my resignation is effective immediately, and my last day of employment is <strong>{{formatDate last_working_day}}</strong>.</p>\n  {{/if}}\n\n  <p>I have truly appreciated the opportunities I’ve had during my time with the company since {{formatDate start_date}}. Thank you for the support, guidance, and professional development you have provided me during my tenure.</p>\n\n  <p>During my remaining time here, I am fully committed to ensuring a smooth transition of my responsibilities. Please let me know how I can best assist with training team members or wrapping up ongoing projects before my departure.</p>\n\n  <p>I wish the company and my colleagues all the best and continued success in the future. Please let me know the process regarding final payroll, benefits, and the return of company property.</p>\n\n  <p style='margin-top: 40px;'>Sincerely,</p>\n  <p>_________________________<br/><strong>{{employee_name}}</strong></p>\n</div>",
+  "fields": [
+    { "name": "employee_name", "label": "Your Full Name", "fieldType": "text", "required": true },
+    { "name": "employee_address", "label": "Your Address", "fieldType": "textarea", "required": true },
+    { "name": "employee_email", "label": "Your Email", "fieldType": "email", "required": true },
+    { "name": "employee_phone", "label": "Your Phone Number", "fieldType": "text", "required": true },
+    { "name": "letter_date", "label": "Date of Letter", "fieldType": "date", "required": true },
+    { "name": "manager_hr_name", "label": "Manager / HR Contact Name", "fieldType": "text", "required": true, "placeholder": "e.g., Ms. Jane Smith, HR Department" },
+    { "name": "company_name", "label": "Company Name", "fieldType": "text", "required": true },
+    { "name": "company_address", "label": "Company Address", "fieldType": "textarea", "required": false },
+    { "name": "job_title", "label": "Your Job Title", "fieldType": "text", "required": true },
+    { "name": "providing_notice", "label": "Are you providing a notice period?", "fieldType": "radio", "options": ["Yes", "No"], "required": true },
+    { "name": "notice_period", "label": "Notice Period (in weeks)", "fieldType": "number", "required": false, "condition": { "field": "providing_notice", "value": "Yes" }, "placeholder": "e.g., 2, 4" },
+    { "name": "resignation_reason", "label": "Reason for Resignation (Optional / Short)", "fieldType": "text", "required": false, "condition": { "field": "providing_notice", "value": "No" }, "placeholder": "e.g., personal reasons, unforeseen circumstances" },
+    { "name": "last_working_day", "label": "Last Working Day", "fieldType": "date", "required": true },
+    { "name": "start_date", "label": "Employment Start Date", "fieldType": "date", "required": false },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

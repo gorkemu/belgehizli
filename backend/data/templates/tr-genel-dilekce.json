@@ -1,0 +1,24 @@
+{
+  "_id": "6805a709b989142070477f83",
+  "name": "Genel Amaçlı Dilekçe",
+  "description": "Resmi kurumlara veya özel kişilere talep, şikayet veya bilgi sunmak için standart dilekçe formatı.",
+  "price": 5,
+  "language": "tr",
+  "slug": "genel-amacli-dilekce",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n <h3 style='text-align: center; margin-bottom: 30px;'>{{makam_adi}} MAKAMINA</h3>\n <p style='text-align: right; margin-bottom: 20px;'>{{sehir_bilgisi}}</p>\n\n <p><strong>Konu:</strong> {{konu}}</p>\n\n <div style='margin-top: 30px; margin-bottom: 30px;'>\n <pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{aciklama_metni}}</pre>\n </div>\n\n <p>Gereğinin yapılmasını arz ederim.</p>\n\n <p style='text-align: right; margin-top: 40px; margin-bottom: 10px;'>Tarih: {{formatDate dilekce_tarihi}}</p>\n\n <div style='text-align: right;'>\n <p style='margin-bottom: 5px;'>Adı Soyadı: {{dilekce_sahibi_ad_soyad}}</p>\n <p style='margin-bottom: 5px;'>T.C. Kimlik No: {{dilekce_sahibi_tc_no}}</p>\n <p style='margin-bottom: 5px;'>Adres: {{dilekce_sahibi_adres}}</p>\n <p style='margin-bottom: 15px;'>Telefon: {{dilekce_sahibi_telefon}}</p>\n <p><br/><span style='display: inline-block; margin-top: 5px;'>İmza: _________________________</span></p>\n </div>\n\n {{#if ekler}}\n <div style='margin-top: 30px;'>\n <p><strong>Ekler:</strong></p>\n <pre style='white-space: pre-wrap; word-wrap: break-word;'>{{ekler}}</pre>\n </div>\n {{/if}}\n</div>",
+  "fields": [
+    { "name": "makam_adi", "label": "Başvurulacak Makamın Adı", "fieldType": "text", "required": true, "placeholder": "Örn: X Belediye Başkanlığı'na, Y Şirketi Genel Müdürlüğü'ne" },
+    { "name": "sehir_bilgisi", "label": "Şehir Bilgisi", "fieldType": "text", "required": true, "placeholder": "Örn: ANKARA, İSTANBUL" },
+    { "name": "konu", "label": "Dilekçenin Konusu", "fieldType": "text", "required": true, "placeholder": "Kısa ve öz olarak belirtiniz." },
+    { "name": "aciklama_metni", "label": "Açıklama / Talep / Şikayet Metni", "fieldType": "textarea", "required": true, "placeholder": "Durumu ve talebinizi detaylı olarak açıklayınız." },
+    { "name": "dilekce_tarihi", "label": "Dilekçe Tarihi", "fieldType": "date", "required": true },
+    { "name": "dilekce_sahibi_ad_soyad", "label": "Dilekçe Sahibinin Adı Soyadı", "fieldType": "text", "required": true },
+    { "name": "dilekce_sahibi_tc_no", "label": "Dilekçe Sahibinin T.C. Kimlik No", "fieldType": "text", "required": true },
+    { "name": "dilekce_sahibi_adres", "label": "Dilekçe Sahibinin Adresi", "fieldType": "textarea", "required": true },
+    { "name": "dilekce_sahibi_telefon", "label": "Dilekçe Sahibinin Telefon Numarası", "fieldType": "text", "required": true },
+    { "name": "ekler", "label": "Ekler (Varsa, listeleyiniz)", "fieldType": "textarea", "required": false, "placeholder": "1- Kimlik Fotokopisi\n2- İlgili Belge Örneği" },
+    { "name": "belge_email", "label": "E-posta (Belgenin Gönderileceği)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

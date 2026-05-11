@@ -1,0 +1,23 @@
+{
+  "name": "Cease and Desist Letter",
+  "description": "A formal legal notice demanding that an individual or business stop an alleged illegal or infringing activity immediately.",
+  "price": 10,
+  "language": "en",
+  "slug": "cease-and-desist-letter",
+  "content": "<div style='font-family: Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: auto; padding: 20px;'>\n <p style='text-align: right; text-transform: uppercase;'><strong>Sent Via {{delivery_method}}</strong></p>\n\n <p><strong>FROM:</strong><br/>\n Name / Entity: {{sender_name}}<br/>\n Address: {{sender_address}}<br/>\n {{#if sender_counsel}}Legal Counsel: {{sender_counsel}}{{/if}}\n </p>\n\n <p style='margin-top: 20px;'><strong>Date:</strong> {{formatDate notice_date}}</p>\n\n <p style='margin-top: 20px;'><strong>TO:</strong><br/>\n Name / Entity: {{recipient_name}}<br/>\n Address: {{recipient_address}}\n </p>\n\n <p style='margin-top: 30px; text-decoration: underline;'><strong>RE: CEASE AND DESIST DEMAND REGARDING {{infringing_activity}}</strong></p>\n\n <p>Dear {{recipient_name}},</p>\n\n <p>This letter serves as a formal demand that you immediately cease and desist your activities regarding <strong>{{infringing_activity}}</strong>.</p>\n\n <p>It has come to my/our attention that you have engaged in the following conduct which infringes upon my/our legal rights:</p>\n <pre style='white-space: pre-wrap; word-wrap: break-word; font-family: inherit;'>{{details_of_infringement}}</pre>\n\n <p>Such actions constitute a violation of applicable laws and are causing significant harm and/or damages. Therefore, I/we demand that you immediately stop the aforementioned activities and refrain from engaging in any similar conduct in the future.</p>\n\n <p>If you fail to comply with this demand within <strong>{{compliance_days}} days</strong> of receiving this letter, I/we will be forced to pursue all available legal remedies to protect our rights. This may include seeking injunctive relief, monetary damages, and holding you liable for all legal costs and attorney's fees incurred.</p>\n\n <p>This letter does not constitute a waiver of any rights, claims, or remedies available to me/us, all of which are expressly reserved.</p>\n\n <p>Govern yourself accordingly.</p>\n\n <p style='margin-top: 40px;'>Sincerely,</p>\n <p><strong>{{sender_name}}</strong><br/>\n {{#if sender_counsel}}Represented by: {{sender_counsel}}<br/>{{/if}}\n <span style='display: inline-block; margin-top: 15px;'>Signature: _________________________</span>\n </p>\n</div>",
+  "fields": [
+    { "name": "delivery_method", "label": "Method of Delivery", "fieldType": "text", "required": true, "placeholder": "e.g., Certified Mail, Return Receipt Requested" },
+    { "name": "sender_name", "label": "Sender's Name / Company", "fieldType": "text", "required": true },
+    { "name": "sender_address", "label": "Sender's Address", "fieldType": "textarea", "required": true },
+    { "name": "sender_counsel", "label": "Sender's Legal Counsel (Optional)", "fieldType": "text", "required": false, "placeholder": "e.g., John Doe, Esq." },
+    { "name": "recipient_name", "label": "Recipient's Name / Company", "fieldType": "text", "required": true },
+    { "name": "recipient_address", "label": "Recipient's Address", "fieldType": "textarea", "required": true },
+    { "name": "infringing_activity", "label": "Subject of the Notice (Short)", "fieldType": "text", "required": true, "placeholder": "e.g., Trademark Infringement, Defamation, Harassment" },
+    { "name": "details_of_infringement", "label": "Details of the Infringement / Conduct", "fieldType": "textarea", "required": true, "placeholder": "Describe specifically what the recipient is doing wrong." },
+    { "name": "compliance_days", "label": "Days to Comply", "fieldType": "number", "required": true, "placeholder": "e.g., 5, 10" },
+    { "name": "notice_date", "label": "Date of Notice", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}

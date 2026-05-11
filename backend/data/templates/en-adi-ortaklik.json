@@ -1,0 +1,36 @@
+{
+  "name": "General Partnership Agreement",
+  "description": "A foundational agreement for two or more individuals or entities joining together in a business venture for profit.",
+  "price": 22,
+  "language": "en",
+  "slug": "general-partnership-agreement",
+  "content": "<h2 style='text-align:center;'>GENERAL PARTNERSHIP AGREEMENT</h2>\n<p>This General Partnership Agreement (the \"Agreement\") is made and entered into on {{formatDate agreement_date}} by and among the undersigned Partners, for the purpose of forming a general partnership (the \"Partnership\") in accordance with the laws of {{jurisdiction}}.</p>\n\n<p><strong>1. THE PARTNERS</strong></p>\n<p>The parties to this Agreement (the \"Partners\") are:</p>\n{{#each partners}}\n<p><strong>Partner:</strong><br/>\nName/Entity: {{this.partner_name}}<br/>\nID/Tax No: {{this.tax_id}}<br/>\nAddress: {{this.address}}\n</p>\n{{/each}}\n\n<p><strong>2. PARTNERSHIP NAME AND PURPOSE</strong></p>\n<p>Name of Partnership: The business of the Partnership shall be conducted under the name <strong>{{partnership_name}}</strong>.</p>\n<p>Business Purpose: The primary purpose of the Partnership is to engage in the business of:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{business_purpose}}</pre>\n\n<p><strong>3. CAPITAL CONTRIBUTIONS</strong></p>\n<p>The initial capital of the Partnership shall be contributed by the Partners as follows:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{capital_contributions}}</pre>\n<p>No Partner shall be obligated to make any additional capital contributions unless unanimously agreed upon by all Partners.</p>\n\n<p><strong>4. PROFIT AND LOSS DISTRIBUTION</strong></p>\n<p>The net profits and losses of the Partnership shall be divided among the Partners in the following proportions/manner:</p>\n<p><strong>{{profit_loss_distribution}}</strong></p>\n\n<p><strong>5. MANAGEMENT AND VOTING RIGHTS</strong></p>\n<p>Management of the Partnership: {{management_structure}}</p>\n<p>Unless otherwise stated, all major decisions affecting the Partnership (such as taking on debt, admitting new partners, or selling major assets) require the unanimous consent of all Partners.</p>\n\n<p><strong>6. TERM OF PARTNERSHIP</strong></p>\n<p>The Partnership shall commence on {{formatDate agreement_date}} and shall continue {{term_of_partnership}}.</p>\n\n<p><strong>7. DISSOLUTION AND WITHDRAWAL</strong></p>\n<p>The Partnership shall be dissolved upon the occurrence of any of the following events: (a) unanimous written consent of all Partners; (b) the bankruptcy, death, or withdrawal of a Partner (unless the remaining Partners agree to continue); or (c) as otherwise required by law.</p>\n<p>Additional Dissolution Terms:</p>\n<pre style='white-space: pre-wrap; word-wrap: break-word;'>{{dissolution_terms}}</pre>\n\n<p><strong>8. GOVERNING LAW</strong></p>\n<p>This Agreement shall be governed by and construed in accordance with the laws of {{jurisdiction}}.</p>\n\n<p>IN WITNESS WHEREOF, the Partners have duly executed this Agreement as of the date first above written.</p>\n\n<div style='margin-top: 40px;'>\n <p><strong>Signatures of Partners:</strong></p>\n {{#each partners}}\n <div style='margin-top: 20px; margin-bottom: 15px;'>\n <p style='margin-bottom: 5px;'>{{this.partner_name}}</p>\n <p><br/><span style='display: inline-block; margin-top: 5px;'>Signature: _________________________</span></p><br/>\n </div>\n {{/each}}\n</div>",
+  "fields": [
+    {
+      "name": "partners",
+      "label": "Partner Information",
+      "fieldType": "repeatable",
+      "blockTitle": "Partner",
+      "addLabel": "Add Another Partner",
+      "removeLabel": "Remove Partner",
+      "minInstances": 2,
+      "subfields": [
+        { "name": "partner_name", "label": "Full Name / Entity Name", "fieldType": "text", "required": true },
+        { "name": "tax_id", "label": "ID / Tax Number / SSN", "fieldType": "text", "required": true },
+        { "name": "address", "label": "Address", "fieldType": "textarea", "required": true }
+      ]
+    },
+    { "name": "partnership_name", "label": "Name of Partnership (DBA)", "fieldType": "text", "required": true, "placeholder": "e.g., Smith & Doe Consulting" },
+    { "name": "business_purpose", "label": "Business Purpose", "fieldType": "textarea", "required": true, "placeholder": "Describe what the partnership will do." },
+    { "name": "capital_contributions", "label": "Capital Contributions", "fieldType": "textarea", "required": true, "placeholder": "Partner A: $10k, Partner B: Equipment valued at $5k" },
+    { "name": "profit_loss_distribution", "label": "Profit & Loss Distribution", "fieldType": "text", "required": true, "placeholder": "e.g., Split equally 50/50, or proportional to capital" },
+    { "name": "management_structure", "label": "Management & Voting Structure", "fieldType": "textarea", "required": true, "placeholder": "e.g., All partners have equal voting rights. Partner A handles day-to-day operations." },
+    { "name": "term_of_partnership", "label": "Term of Partnership", "fieldType": "text", "required": true, "placeholder": "e.g., Indefinitely, For 5 Years, Until project completion" },
+    { "name": "dissolution_terms", "label": "Dissolution / Withdrawal Terms", "fieldType": "textarea", "required": true, "placeholder": "What happens if someone wants to leave? Buyout options?" },
+    { "name": "jurisdiction", "label": "Governing Law / Jurisdiction", "fieldType": "text", "required": true, "placeholder": "e.g., State of California, UK Law" },
+    { "name": "agreement_date", "label": "Date of Agreement", "fieldType": "date", "required": true },
+    { "name": "document_email", "label": "Email (For delivery)", "fieldType": "email", "required": true }
+  ],
+  "isActive": true,
+  "isSystem": true
+}
