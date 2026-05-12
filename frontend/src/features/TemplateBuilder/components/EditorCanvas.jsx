@@ -370,7 +370,18 @@ const EditorCanvas = () => {
 
       {/* --- Bubble Menu (Soruya Dönüştür) --- */}
       {formatMenu.show && selectionMenu.show && mode === 'build' && (
-        <div className={styles.combinedBubbleMenu} style={{ top: formatMenu.top, left: formatMenu.left }} onMouseDown={e => e.preventDefault()}>
+        <div 
+          className={styles.combinedBubbleMenu} 
+          style={{ top: formatMenu.top, left: formatMenu.left }} 
+          onMouseDown={(e) => {
+            // INPUT, SELECT veya OPTION etiketlerine tıklanıyorsa varsayılan davranışa izin ver
+            if (['INPUT', 'SELECT', 'OPTION'].includes(e.target.tagName)) {
+              return;
+            }
+            // Diğer alanlara (div, buton vs.) tıklanıyorsa editör focus'unu kaybetmemek için engelle
+            e.preventDefault();
+          }}
+        >
           <div className={styles.bubbleSelectionGroup}>
             {selectionMenu.mode === 'button' ? (
               <button type="button" onClick={() => {
