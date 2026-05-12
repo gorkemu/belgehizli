@@ -1,6 +1,6 @@
 // frontend/src/features/TemplateBuilder/components/Header.jsx
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
@@ -17,6 +17,9 @@ import { THEMES } from '../utils/constants';
 const Header = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { lang } = useParams(); 
+  const currentLang = lang || 'tr'; 
+  
   const { 
     formData, setFormData, 
     formErrors, setFormErrors,
@@ -35,6 +38,11 @@ const Header = () => {
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [themePopover, setThemePopover] = useState(false);
 
+  const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
+
+  const handleBackToProjects = () => {
+    navigate(`/${currentLang}/${projectsRoute}`);
+  };
 
   const handleSaveClick = async () => {
     const err = {};
@@ -135,11 +143,11 @@ const Header = () => {
     return () => clearTimeout(timer);
   }, [formData]);
 
-    return (
+  return (
     <header className={styles.header}>
       <Button 
         variant="secondary" 
-        onClick={() => navigate('/panel/projects')} 
+        onClick={handleBackToProjects} 
         leftIcon={<ArrowLeft size={16} />}
       >
         <span>{t('templateBuilder.header.myTemplates')}</span>
