@@ -40,32 +40,75 @@ const { format } = require('date-fns');
 
 app.get('/sitemap.xml', async (req, res) => {
     try {
-        const templates = await Template.find({}, 'slug updatedAt').lean();
-        let xml = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+        let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`;
 
+        // 1. Statik Sayfalar (Hreflang ile Diller Arası Bağlantı)
         const staticUrls = [
-            { loc: 'https://www.belgehizli.com/', changefreq: 'weekly', priority: '1.0' },
-            { loc: 'https://www.belgehizli.com/sablonlar', changefreq: 'daily', priority: '0.9' },
-            { loc: 'https://www.belgehizli.com/hakkimizda', changefreq: 'monthly', priority: '0.7' },
-            { loc: 'https://www.belgehizli.com/iletisim', changefreq: 'monthly', priority: '0.7' },
-            { loc: 'https://www.belgehizli.com/gizlilik-politikasi', changefreq: 'monthly', priority: '0.5' },
-            { loc: 'https://www.belgehizli.com/kullanim-sartlari', changefreq: 'monthly', priority: '0.5' },
-            { loc: 'https://www.belgehizli.com/on-bilgilendirme-formu', changefreq: 'monthly', priority: '0.5' },
+            { pathTR: '/tr', pathEN: '/en', changefreq: 'weekly', priority: '1.0' },
+            { pathTR: '/tr/sablonlar', pathEN: '/en/templates', changefreq: 'daily', priority: '0.9' },
+            { pathTR: '/tr/hakkimizda', pathEN: '/en/about-us', changefreq: 'monthly', priority: '0.7' },
+            { pathTR: '/tr/iletisim', pathEN: '/en/contact', changefreq: 'monthly', priority: '0.7' },
+            { pathTR: '/tr/gizlilik-politikasi', pathEN: '/en/privacy-policy', changefreq: 'monthly', priority: '0.5' },
+            { pathTR: '/tr/kullanim-sartlari', pathEN: '/en/terms-of-service', changefreq: 'monthly', priority: '0.5' },
+            { pathTR: '/tr/on-bilgilendirme-formu', pathEN: '/en/pre-contractual-info', changefreq: 'monthly', priority: '0.5' },
         ];
 
         staticUrls.forEach(url => {
-            xml += `<url><loc>${url.loc}</loc><changefreq>${url.changefreq}</changefreq><priority>${url.priority}</priority></url>`;
+            // Türkçe Versiyon
+            xml += `
+    <url>
+        <loc>https://www.belgehizli.com${url.pathTR}</loc>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://www.belgehizli.com${url.pathTR}" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.belgehizli.com${url.pathEN}" />
+        <changefreq>${url.changefreq}</changefreq>
+        <priority>${url.priority}</priority>
+    </url>`;
+            // İngilizce Versiyon
+            xml += `
+    <url>
+        <loc>https://www.belgehizli.com${url.pathEN}</loc>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://www.belgehizli.com${url.pathTR}" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.belgehizli.com${url.pathEN}" />
+        <changefreq>${url.changefreq}</changefreq>
+        <priority>${url.priority}</priority>
+    </url>`;
         });
 
+        // 2. Dinamik Şablon Sayfaları
+        const templates = await Template.find({}, '_id slug updatedAt language').lean();
+        
         templates.forEach(template => {
             if (template.slug) {
-                const lastMod = template.updatedAt ? format(new Date(template.updatedAt), 'yyyy-MM-dd') : format(new Date(), 'yyyy-MM-dd');
-                const loc = `https://www.belgehizli.com/sablonlar/detay/${template.slug}`;
-                xml += `<url><loc>${loc}</loc><lastmod>${lastMod}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>`;
+                const lang = template.language === 'en' ? 'en' : 'tr';
+                const route = lang === 'en' ? 'templates/detail' : 'sablonlar/detay';
+                const loc = `https://www.belgehizli.com/${lang}/${route}/${template.slug}`;
+                
+                // Resim URL'si 
+                const imageUrl = `https://www.belgehizli.com/template-previews/${template._id}.webp`;
+
+                const lastMod = template.updatedAt 
+                    ? format(new Date(template.updatedAt), 'yyyy-MM-dd') 
+                    : format(new Date(), 'yyyy-MM-dd');
+
+                xml += `
+    <url>
+        <loc>${loc}</loc>
+        <lastmod>${lastMod}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>${imageUrl}</image:loc>
+            <image:title>${template.slug}</image:title>
+        </image:image>
+    </url>`;
             }
         });
 
-        xml += `</urlset>`;
+        xml += `\n</urlset>`;
+        
         res.header('Content-Type', 'application/xml');
         res.send(xml);
     } catch (error) {
