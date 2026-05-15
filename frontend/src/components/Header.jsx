@@ -73,18 +73,18 @@ function Header() {
             {/* Dil Değiştirici */}
             <div className={styles.languageSwitcher}>
               <button
-                className={`${styles.langOption} ${currentLang === 'tr' ? styles.langOptionActive : ''}`}
-                onClick={() => switchLanguage('tr')}
-                aria-label="Türkçe"
-              >
-                TR
-              </button>
-              <button
                 className={`${styles.langOption} ${currentLang === 'en' ? styles.langOptionActive : ''}`}
                 onClick={() => switchLanguage('en')}
                 aria-label="English"
               >
-                EN
+                English
+              </button>
+              <button
+                className={`${styles.langOption} ${currentLang === 'tr' ? styles.langOptionActive : ''}`}
+                onClick={() => switchLanguage('tr')}
+                aria-label="Türkçe"
+              >
+                Türkçe
               </button>
             </div>
 
