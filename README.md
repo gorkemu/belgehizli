@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Visit Website](https://img.shields.io/badge/🌐_Visit_Website-belgehizli.com-0d6efd)](https://www.belgehizli.com/)
 
-Belge Hızlı is a modern, full-stack SaaS platform designed to help users create, manage, and generate legal contracts, petitions, and official documents through an intuitive Smart Form builder. 
+Belge Hızlı is a full-stack SaaS platform designed to help users create, manage, and generate legal contracts, petitions, and official documents. 
 
 ## Key Features
 
@@ -15,7 +15,7 @@ Belge Hızlı is a modern, full-stack SaaS platform designed to help users creat
 
 ### Dynamic Form Engine
 * **Auto-UI:** Forms are automatically generated based on the variables set in the Template Builder.
-* **Conditional Logic (If-Else):** Document paragraphs dynamically show or hide based on specific answers provided in the form.
+* **Conditional Logic:** Document paragraphs dynamically show or hide based on specific answers provided in the form.
 * **Public Sharing:** Generate a link to let clients or partners fill out the form and download the final PDF without needing an account.
 
 ### PDF Generation & Delivery
@@ -27,43 +27,6 @@ Belge Hızlı is a modern, full-stack SaaS platform designed to help users creat
 * **Frontend:** React (Vite), React Router v6, CSS Modules, Tiptap (ProseMirror), Handlebars.js, React-Helmet-Async.
 * **Backend:** Node.js, Express.js, MongoDB Atlas, Mongoose, JWT.
 * **Services & Hosting:** Browserless.io (PDF rendering), Vercel (Frontend), Render (Backend).
-
-## Architecture & Data Flow
-
-Templates and their dynamic fields are structured within a unified `Project` model in MongoDB. 
-
-### Field Structure Example
-```json
-{
-    "name": "kira_bedeli",
-    "label": "Aylık Kira Bedeli (TL)",
-    "fieldType": "number",
-    "required": true,
-    "condition": null
-}
-```
-
-#### Conditional Field Example
-```json
-{
-    "name": "depozito_tutari",
-    "label": "Alınan Depozito Tutarı (TL)",
-    "fieldType": "number",
-    "condition": { "field": "depozito_alindi", "value": "Evet" }
-}
-```
-
-### Handlebars Integration
-
-The system uses Handlebars logic inside the document strings to inject data and handle conditions visually:
-
-```handlebars
-{{#if (eq depozito_alindi 'Evet')}}
-<p>Kiracıdan toplam {{depozito_tutari}} TL depozito alınmıştır.</p>
-{{else}}
-<p>Bu sözleşme kapsamında depozito alınmamıştır.</p>
-{{/if}}
-```
 
 ## License
 
