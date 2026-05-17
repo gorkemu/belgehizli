@@ -319,8 +319,11 @@ function HomePage() {
             ].map(c => (
               <div key={c.titleKey} className={styles.useCaseCard}>
                 <div className={styles.ucIcon}>{c.icon}</div>
-                <h3>{t(c.titleKey)}</h3>
-                <p>{t(c.descKey)}</p>
+
+                <div className={styles.ucContent}>
+                  <h3>{t(c.titleKey)}</h3>
+                  <p>{t(c.descKey)}</p>
+                </div>
               </div>
             ))}
           </div>
