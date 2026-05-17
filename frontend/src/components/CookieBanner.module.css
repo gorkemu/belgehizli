@@ -5,8 +5,8 @@
   --cookie-text: #f8fafc;
   --cookie-muted: #a8a29e;
   --cookie-border: #44403c;
-  --cookie-btn-bg: var(--text-primary); 
-  --cookie-btn-text: var(--bg-surface);
+  --cookie-btn-bg: #2563eb; 
+  --cookie-btn-text: #f8fafc;
   --cookie-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
