@@ -11,10 +11,15 @@ const CookieBanner = ({
   declineButtonText,
   cookieName = "belgeHizliCookieConsent",
   expires = 150,
-  privacyPolicyPath = "/gizlilik-politikasi",
   children 
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+
+  const currentLang = i18n.language?.split('-')[0] || 'tr';
+
+  const privacyPolicyPath = currentLang === 'tr' 
+    ? `/${currentLang}/gizlilik-politikasi` 
+    : `/${currentLang}/privacy-policy`;
 
   const acceptText = buttonText || t('cookie.accept');
   const declineText = declineButtonText || t('cookie.decline');
@@ -56,7 +61,6 @@ CookieBanner.propTypes = {
   declineButtonText: PropTypes.string,
   cookieName: PropTypes.string,
   expires: PropTypes.number,
-  privacyPolicyPath: PropTypes.string,
   children: PropTypes.node
 };
 
