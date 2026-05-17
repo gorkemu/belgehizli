@@ -5,6 +5,9 @@ import Handlebars from 'handlebars';
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import styles from '../TemplateBuilder.module.css';
+
+import inputStyles from '../../../components/ui/Input.module.css';
+
 import { Wand2, Zap, Link as LinkIcon, CheckCircle2, Copy, Printer, X, Sparkles, AlertCircle } from 'lucide-react';
 import { VARIABLE_FORMATS } from '../utils/constants';
 import { getTriggerSymbols, generateVarName, convertToHandlebars } from '../utils/helpers';
@@ -172,10 +175,11 @@ const Modals = () => {
               <button className={styles.modalClose} onClick={() => setCondModal(false)}><X size={18} /></button>
             </div>
             <div className={styles.modalBody}>
-              <div className={styles.fg}>
-                <label>{t('templateBuilder.modals.conditional.whichQuestion')}</label>
+              
+              <div className={inputStyles.inputWrapper}>
+                <label className={inputStyles.label}>{t('templateBuilder.modals.conditional.whichQuestion')}</label>
                 <select
-                  className={styles.sel}
+                  className={inputStyles.input}
                   value={condField}
                   onChange={e => { setCondField(e.target.value); setCondValue(''); }}
                 >
@@ -185,11 +189,12 @@ const Modals = () => {
                   ))}
                 </select>
               </div>
+
               {condField && (
-                <div className={styles.fg}>
-                  <label>{t('templateBuilder.modals.conditional.whichAnswer')}</label>
+                <div className={inputStyles.inputWrapper}>
+                  <label className={inputStyles.label}>{t('templateBuilder.modals.conditional.whichAnswer')}</label>
                   <select
-                    className={styles.sel}
+                    className={inputStyles.input}
                     value={condValue}
                     onChange={e => setCondValue(e.target.value)}
                   >
@@ -200,6 +205,7 @@ const Modals = () => {
                   </select>
                 </div>
               )}
+
             </div>
             <div className={styles.modalFoot}>
               <Button variant="ghost" onClick={() => setCondModal(false)}>

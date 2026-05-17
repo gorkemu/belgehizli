@@ -1,4 +1,5 @@
-/* Dashboard.module.css */
+/* frontend/src/pages/Dashboard.module.css */
+
 .root {
     padding: 40px;
     max-width: 1040px;
@@ -13,11 +14,11 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: #57534e;
+    color: var(--text-secondary);
 }
 
 .spinner {
-    color: #a8a29e;
+    color: var(--text-muted);
     animation: spin 1s linear infinite;
 }
 
@@ -38,25 +39,26 @@
     gap: 8px;
     padding: 10px 20px;
     border-radius: 40px;
-    color: white;
     font-weight: 600;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--shadow-lg);
     font-size: 0.9rem;
     animation: slideDown 0.2s ease-out forwards;
 }
 
 .toastSuccess {
-    background-color: #1c1917;
+    background-color: var(--text-primary);
+    color: var(--bg-surface);
 }
 
 .toastError {
-    background-color: #dc2626;
+    background-color: var(--danger);
+    color: #ffffff;
 }
 
 .modalOverlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(28, 25, 23, 0.4);
+    background-color: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(2px);
     display: flex;
     justify-content: center;
@@ -65,40 +67,41 @@
 }
 
 .modalCard {
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
     padding: 32px;
     border-radius: 16px;
     width: 100%;
     max-width: 420px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
     text-align: center;
     animation: scaleIn 0.2s ease-out;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
     cursor: default;
 }
 
 .modalIconBox {
     width: 48px;
     height: 48px;
-    background-color: #fef2f2;
+    background-color: rgba(220, 38, 38, 0.05); 
     border-radius: 12px;
-    border: 1px solid #fecaca;
+    border: 1px solid rgba(220, 38, 38, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 20px;
+    color: var(--danger);
 }
 
 .modalTitle {
     margin: 0 0 8px 0;
-    color: #1c1917;
+    color: var(--text-primary);
     font-size: 1.2rem;
     font-weight: 800;
 }
 
 .modalText {
     margin: 0 0 24px 0;
-    color: #57534e;
+    color: var(--text-secondary);
     line-height: 1.6;
     font-size: 0.9rem;
 }
@@ -121,7 +124,7 @@
 
 .greeting {
     margin: 0;
-    color: #1c1917;
+    color: var(--text-primary);
     font-size: 1.8rem;
     font-weight: 800;
     letter-spacing: -0.02em;
@@ -129,7 +132,7 @@
 
 .subtitle {
     margin: 8px 0 0 0;
-    color: #57534e;
+    color: var(--text-secondary);
     font-size: 1rem;
     line-height: 1.6;
 }
@@ -147,7 +150,7 @@
     gap: 16px;
     padding: 20px;
     border-radius: 16px;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
     text-align: left;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -155,30 +158,31 @@
 }
 
 .heroCardPrimary {
-    background-color: #1c1917;
-    border-color: #1c1917;
-    color: white;
+    background-color: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-surface);
 }
 
 .heroCardPrimary:hover {
-    background-color: #292524;
-    box-shadow: 0 8px 20px rgba(28, 25, 23, 0.15);
+    opacity: 0.9;
+    box-shadow: var(--shadow-lg);
 }
 
 .heroCardSecondary {
-    background-color: #ffffff;
-    color: #1c1917;
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
 }
 
 .heroCardSecondary:hover {
-    border-color: #cbd5e1;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+    border-color: var(--border-strong);
+    background-color: var(--bg-hover);
+    box-shadow: var(--shadow-sm);
 }
 
 .heroCardIconPrimary {
     width: 48px;
     height: 48px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(128, 128, 128, 0.2); 
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -189,8 +193,8 @@
 .heroCardIconSecondary {
     width: 48px;
     height: 48px;
-    background-color: #f5f5f4;
-    border: 1px solid #e7e5e4;
+    background-color: var(--bg-app);
+    border: 1px solid var(--border);
     border-radius: 12px;
     display: flex;
     align-items: center;
@@ -207,38 +211,39 @@
 .heroCardPrimary .heroCardContent p {
     margin: 0;
     font-size: 0.85rem;
-    color: #a8a29e;
+    color: var(--bg-surface);
+    opacity: 0.8;
     font-weight: 500;
 }
 
 .heroCardSecondary .heroCardContent p {
     margin: 0;
     font-size: 0.85rem;
-    color: #57534e;
+    color: var(--text-secondary);
     font-weight: 500;
 }
 
 .projectsSection {
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
     border-radius: 16px;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
     width: 100%;
 }
 
 .sectionHeader {
     padding: 20px 24px;
-    border-bottom: 1px solid #e7e5e4;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fafaf9;
+    background-color: var(--bg-app);
     border-radius: 16px 16px 0 0;
 }
 
 .sectionTitle {
     margin: 0;
     font-size: 0.95rem;
-    color: #1c1917;
+    color: var(--text-primary);
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -246,22 +251,23 @@
 
 .viewAllLink {
     font-size: 0.85rem;
-    color: #57534e;
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 4px;
-    transition: color 0.15s;
-    background-color: #ffffff;
+    transition: all 0.15s;
+    background-color: var(--bg-surface);
     padding: 6px 12px;
     border-radius: 6px;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
 }
 
 .viewAllLink:hover {
-    background-color: #f5f5f4;
-    color: #1c1917;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
 }
 
 .projectList {
@@ -272,7 +278,7 @@
 .emptyProjects {
     padding: 60px 20px;
     text-align: center;
-    color: #a8a29e;
+    color: var(--text-muted);
     font-size: 0.9rem;
     display: flex;
     flex-direction: column;
@@ -283,12 +289,12 @@
 .emptyIcon {
     width: 48px;
     height: 48px;
-    background-color: #f5f5f4;
+    background-color: var(--bg-hover);
     border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
 }
 
 .projectRow {
@@ -298,7 +304,7 @@
     padding: 16px 24px;
     transition: background-color 0.15s;
     position: relative;
-    border-bottom: 1px solid #f5f5f4;
+    border-bottom: 1px solid var(--border);
 }
 
 .projectRow:last-child {
@@ -306,7 +312,7 @@
 }
 
 .projectRow:hover {
-    background-color: #fafaf9;
+    background-color: var(--bg-hover);
 }
 
 .projectInfo {
@@ -320,8 +326,8 @@
 .projectIconWrapper {
     width: 40px;
     height: 40px;
-    background-color: #ffffff;
-    border: 1px solid #e7e5e4;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -331,8 +337,8 @@
 }
 
 .projectRow:hover .projectIconWrapper {
-    background-color: #f5f5f4;
-    border-color: #d6d3d1;
+    background-color: var(--bg-app);
+    border-color: var(--border-strong);
 }
 
 .projectTextData {
@@ -344,14 +350,14 @@
 
 .projectName {
     margin: 0 0 4px 0;
-    color: #1c1917;
+    color: var(--text-primary);
     font-size: 0.95rem;
     font-weight: 700;
 }
 
 .projectDate {
     font-size: 0.8rem;
-    color: #a8a29e;
+    color: var(--text-muted);
     font-weight: 500;
 }
 
@@ -360,15 +366,15 @@
     max-width: 300px;
     padding: 4px 8px;
     margin-left: -8px;
-    border: 1.5px solid #1c1917;
+    border: 1.5px solid var(--accent);
     border-radius: 6px;
     font-size: 0.95rem;
     outline: none;
     font-weight: 700;
     font-family: inherit;
-    color: #1c1917;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(28, 25, 23, 0.1);
+    color: var(--text-primary);
+    background-color: var(--bg-surface);
+    box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 .projectMenu {
@@ -381,7 +387,7 @@
     padding: 6px;
     border-radius: 6px;
     cursor: pointer;
-    color: #a8a29e;
+    color: var(--text-muted);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -389,18 +395,18 @@
 }
 
 .menuTrigger:hover {
-    background-color: #e7e5e4;
-    color: #1c1917;
+    background-color: var(--border);
+    color: var(--text-primary);
 }
 
 .menuDropdown {
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: #ffffff;
-    border: 1px solid #e7e5e4;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border);
     border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-lg);
     z-index: 100;
     min-width: 180px;
     padding: 4px;
@@ -416,7 +422,7 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    color: #44403c;
+    color: var(--text-primary);
     font-size: 0.85rem;
     font-weight: 600;
     transition: background-color 0.15s;
@@ -424,23 +430,23 @@
 }
 
 .menuItem:hover {
-    background-color: #f5f5f4;
-    color: #1c1917;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .menuDivider {
     height: 1px;
-    background-color: #f5f5f4;
+    background-color: var(--border);
     margin: 4px 0;
 }
 
 .menuItemDanger {
-    color: #dc2626;
+    color: var(--danger);
 }
 
 .menuItemDanger:hover {
-    background-color: #fef2f2;
-    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.05); 
+    color: var(--danger);
 }
 
 @keyframes slideDown {
@@ -448,7 +454,6 @@
         transform: translateX(-50%) translateY(-10px);
         opacity: 0;
     }
-
     to {
         transform: translateX(-50%) translateY(0);
         opacity: 1;
@@ -466,7 +471,6 @@
         opacity: 0;
         transform: scale(0.95);
     }
-
     to {
         opacity: 1;
         transform: scale(1);
@@ -477,15 +481,12 @@
     .root {
         padding: 24px 16px;
     }
-
     .greeting {
         font-size: 1.5rem;
     }
-
     .heroCardsRow {
         grid-template-columns: 1fr;
     }
-
     .projectRow {
         padding: 16px;
     }

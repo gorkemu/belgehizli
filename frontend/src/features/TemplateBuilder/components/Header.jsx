@@ -7,6 +7,7 @@ import globalStyles from '../TemplateBuilder.module.css';
 import styles from './Header.module.css';
 import DOMPurify from 'dompurify';
 import Button from '../../../components/ui/Button';
+import { useTheme } from '../../../context/ThemeContext';
 
 import {
   ArrowLeft, Wrench, Eye, Save, Cloud,
@@ -19,6 +20,8 @@ const Header = () => {
   const navigate = useNavigate();
   const { lang } = useParams(); 
   const currentLang = lang || 'tr'; 
+  
+  const { changeTheme } = useTheme();
   
   const { 
     formData, setFormData, 
@@ -143,6 +146,12 @@ const Header = () => {
     return () => clearTimeout(timer);
   }, [formData]);
 
+  const onThemeSelect = (themeId) => {
+    handleThemeChange(themeId); // TemplateBuilder'ın kendi state'ini güncelle 
+    changeTheme(themeId);       // Global ThemeContext'i güncelle (HTML root)
+    setThemePopover(false);
+  };
+
   return (
     <header className={styles.header}>
       <Button 
@@ -176,7 +185,7 @@ const Header = () => {
                 {THEMES.map(theme => (
                   <button
                     key={theme.id}
-                    onClick={() => { handleThemeChange(theme.id); setThemePopover(false); }}
+                    onClick={() => onThemeSelect(theme.id)} 
                     className={globalStyles.dropdownItem}
                     style={{ justifyContent: 'flex-start', gap: '8px' }}
                   >

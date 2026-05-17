@@ -1,18 +1,18 @@
-/* ProtectedRoute.module.css */
+/* frontend/src/components/ProtectedRoute.module.css */
 .loadingContainer {
     display: flex;
     flex-direction: column;
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f4;
-    color: #57534e;
+    background-color: var(--bg-app);
+    color: var(--text-secondary);
     gap: 16px;
     font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .spinner {
-    color: #a8a29e;
+    color: var(--text-muted);
     animation: spin 1s linear infinite;
 }
 
@@ -20,7 +20,7 @@
     margin: 0;
     font-size: 1rem;
     font-weight: 500;
-    color: #57534e;
+    color: var(--text-secondary);
 }
 
 .unauthorizedContainer {
@@ -28,17 +28,17 @@
     height: 100vh;
     justify-content: center;
     align-items: center;
-    background-color: #f5f5f4;
+    background-color: var(--bg-app);
     padding: 20px;
     font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .unauthorizedCard {
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
     padding: 48px 40px;
     border-radius: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-    border: 1px solid #e7e5e4;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
     max-width: 440px;
     width: 100%;
     text-align: center;
@@ -48,21 +48,22 @@
 .iconWrapper {
     width: 72px;
     height: 72px;
-    background-color: #fef2f2;
+    background-color: rgba(220, 38, 38, 0.05); 
     border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 24px auto;
+    border: 1px solid rgba(220, 38, 38, 0.2);
 }
 
 .shieldIcon {
-    color: #dc2626;
+    color: var(--danger);
 }
 
 .unauthorizedTitle {
     margin: 0 0 12px 0;
-    color: #1c1917;
+    color: var(--text-primary);
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.01em;
@@ -70,22 +71,22 @@
 
 .unauthorizedMessage {
     margin: 0 0 28px 0;
-    color: #57534e;
+    color: var(--text-secondary);
     font-size: 0.95rem;
     line-height: 1.6;
 }
 
 .logoutButton {
     padding: 14px 28px;
-    background-color: #1c1917;
-    color: #ffffff;
+    background-color: var(--text-primary); 
+    color: var(--bg-surface);
     border: none;
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
     font-size: 0.95rem;
     transition: all 0.15s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-sm);
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -93,14 +94,14 @@
 }
 
 .logoutButton:hover {
-    background-color: #292524;
+    opacity: 0.85; 
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-lg);
 }
 
 .logoutButton:active {
     transform: translateY(1px);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--shadow-sm);
 }
 
 @keyframes spin {

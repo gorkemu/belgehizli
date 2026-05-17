@@ -18,7 +18,6 @@ export const DashboardLayout = () => {
   const { lang } = useParams(); 
   const currentLang = lang || 'tr';
 
-  // Dinamik Rotalar
   const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
   const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
   const settingsRoute = currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings';
@@ -48,11 +47,9 @@ export const DashboardLayout = () => {
       {isMobile && (
         <div className={styles.mobileHeader}>
           <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.mobileLogoLink}>
-            <img
-              src="/logo-icon.svg"
-              alt="Belge Hızlı"
-              className={styles.mobileLogoIcon}
-            />
+            {/* MOBİL LOGOLAR */}
+            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.mobileLogoIconLight} />
+            <img src="/logo-icon-white.svg" alt="Belge Hızlı" className={styles.mobileLogoIconDark} />
             <span className={styles.mobileLogoText}>BelgeHızlı</span>
           </Link>
           <Button
@@ -61,7 +58,7 @@ export const DashboardLayout = () => {
             className={styles.menuBtn} 
             aria-label={t('dashboardLayout.openMenu')}
           >
-            <Menu size={24} color="#1c1917" />
+            <Menu size={24} className={styles.menuIconColor} />
           </Button>
         </div>
       )}
@@ -83,11 +80,9 @@ export const DashboardLayout = () => {
       >
         <div className={styles.sidebarHeader}>
           <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.sidebarLogoLink}>
-            <img
-              src="/logo-full-white.svg"
-              alt="Belge Hızlı"
-              className={styles.sidebarLogo}
-            />
+            {/* SIDEBAR LOGOLAR */}
+            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.sidebarLogoLight} />
+            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.sidebarLogoDark} />
           </Link>
           {isMobile && (
             <Button

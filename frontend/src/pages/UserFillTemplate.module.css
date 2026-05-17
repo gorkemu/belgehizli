@@ -1,4 +1,4 @@
-/* UserFillTemplate.module.css */
+/* frontend/src/pages/UserFillTemplate.module.css */
 
 .userFillContainer {
     display: flex;
@@ -6,7 +6,7 @@
     height: 100vh;
     width: 100vw;
     overflow: hidden;
-    background-color: #f5f5f4;
+    background-color: var(--bg-app);
     font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
@@ -15,8 +15,8 @@
     align-items: center;
     gap: 20px;
     padding: 12px 24px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e7e5e4;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
     flex-shrink: 0;
     z-index: 10;
 }
@@ -26,10 +26,10 @@
     align-items: center;
     gap: 8px;
     background: transparent;
-    border: 1px solid #e7e5e4;
+    border: 1px solid var(--border);
     padding: 8px 16px;
     border-radius: 10px;
-    color: #57534e;
+    color: var(--text-secondary);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s;
@@ -37,8 +37,8 @@
 }
 
 .backButton:hover {
-    background-color: #f5f5f4;
-    color: #1c1917;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .headerTitles {
@@ -49,14 +49,14 @@
 .title {
     margin: 0;
     font-size: 1.1rem;
-    color: #1c1917;
+    color: var(--text-primary);
     font-weight: 800;
 }
 
 .description {
     margin: 0;
     font-size: 0.85rem;
-    color: #78716c;
+    color: var(--text-muted);
 }
 
 /* Adım Çubuğu */
@@ -65,7 +65,7 @@
     justify-content: center;
     align-items: center;
     padding: 16px;
-    background-color: #ffffff;
+    background-color: var(--bg-surface);
     flex-shrink: 0;
 }
 
@@ -84,17 +84,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #e7e5e4;
-    color: #78716c;
+    background: var(--bg-hover);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
 }
 
 .stepActive .stepNumber {
-    background: #2563eb;
+    background: var(--accent);
     color: white;
+    border-color: var(--accent);
 }
 
 .stepActive span {
-    color: #1c1917;
+    color: var(--text-primary);
 }
 
 .stepPassive {
@@ -104,24 +106,24 @@
 .stepConnector {
     width: 60px;
     height: 2px;
-    background: #e7e5e4;
+    background: var(--border-strong);
     margin: 0 16px;
 }
 
 .connectorDone {
-    background: #2563eb;
+    background: var(--accent);
 }
 
 .progressBarContainer {
     height: 3px;
-    background-color: #e7e5e4;
+    background-color: var(--border-strong);
     width: 100%;
     flex-shrink: 0;
 }
 
 .progressBar {
     height: 100%;
-    background-color: #2563eb;
+    background-color: var(--accent);
     transition: width 0.3s ease;
 }
 
@@ -135,21 +137,21 @@
     width: 450px;
     display: flex;
     flex-direction: column;
-    background-color: #ffffff;
-    border-right: 1px solid #e7e5e4;
+    background-color: var(--bg-surface);
+    border-right: 1px solid var(--border);
     overflow-y: auto;
     position: relative;
 }
 
 .formColumnHeader {
     padding: 24px;
-    border-bottom: 1px solid #e7e5e4;
+    border-bottom: 1px solid var(--border);
 }
 
 .formStepTag {
     display: inline-block;
-    background: #eff6ff;
-    color: #2563eb;
+    background: var(--accent-bg);
+    color: var(--accent);
     font-size: 0.75rem;
     font-weight: 800;
     padding: 4px 10px;
@@ -161,7 +163,7 @@
 .formColumnHint {
     margin: 0;
     font-size: 0.9rem;
-    color: #57534e;
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 
@@ -172,13 +174,13 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    background-color: #f5f5f4;
+    background-color: var(--bg-app);
 }
 
 .formOverlay {
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 0, 0, 0.5); 
     backdrop-filter: blur(4px);
     z-index: 10;
     display: flex;
@@ -190,27 +192,27 @@
 
 .overlayContent {
     text-align: center;
-    background: white;
+    background: var(--bg-surface);
     padding: 24px;
     border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid #e7e5e4;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
 }
 
 .overlayContent h4 {
     margin: 12px 0 8px;
-    color: #166534;
+    color: var(--success); 
     font-size: 1.1rem;
 }
 
 .overlayContent p {
     margin: 0;
     font-size: 0.85rem;
-    color: #57534e;
+    color: var(--text-secondary);
 }
 
 .overlayIconSuccess {
-    color: #166534;
+    color: var(--success);
 }
 
 .blurredForm {
@@ -222,15 +224,15 @@
 .emptyFormNotice {
     padding: 40px 24px;
     text-align: center;
-    color: #a8a29e;
+    color: var(--text-muted);
     font-size: 0.9rem;
     font-style: italic;
 }
 
 .step1ActionContainer {
     padding: 24px;
-    background: #ffffff;
-    border-top: 1px solid #e7e5e4;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
     position: sticky;
     bottom: 0;
     z-index: 5;
@@ -242,8 +244,8 @@
     justify-content: space-between;
     width: 100%;
     padding: 16px 20px;
-    background: #1c1917;
-    color: white;
+    background: var(--text-primary); 
+    color: var(--bg-surface);
     border: none;
     border-radius: 14px;
     font-weight: 700;
@@ -252,7 +254,7 @@
 }
 
 .nextStepButton:hover:not(:disabled) {
-    background: #2563eb;
+    background: var(--accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(37, 99, 235, 0.2);
 }
@@ -269,8 +271,8 @@
 }
 
 .actionSection {
-    background: #ffffff;
-    border-top: 1px solid #e7e5e4;
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
     padding: 16px 32px;
     display: flex;
     justify-content: flex-end;
@@ -283,8 +285,8 @@
     align-items: center;
     gap: 10px;
     padding: 14px 28px;
-    background: #16a34a;
-    color: white;
+    background: var(--success);
+    color: white; 
     border: none;
     border-radius: 12px;
     font-weight: 700;
@@ -294,9 +296,9 @@
 }
 
 .payDownloadButton:hover:not(:disabled) {
-    background: #15803d;
+    opacity: 0.85; 
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(22, 163, 74, 0.3);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
 }
 
 .modalOverlay {
@@ -311,26 +313,27 @@
 }
 
 .warningModal {
-    background: white;
+    background: var(--bg-surface);
     padding: 32px;
     border-radius: 20px;
     text-align: center;
     max-width: 400px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
 }
 
 .warningIcon {
-    color: #d97706;
+    color: var(--warning);
     margin-bottom: 16px;
 }
 
 .warningModal h3 {
     margin: 0 0 12px 0;
-    color: #1c1917;
+    color: var(--text-primary);
 }
 
 .warningModal p {
-    color: #57534e;
+    color: var(--text-secondary);
     margin: 0 0 24px 0;
     line-height: 1.5;
     font-size: 0.95rem;
@@ -344,23 +347,24 @@
 .cancelBtn {
     flex: 1;
     padding: 12px;
-    border: 1px solid #e7e5e4;
-    background: white;
+    border: 1px solid var(--border);
+    background: transparent;
     border-radius: 12px;
     cursor: pointer;
     font-weight: 600;
-    color: #57534e;
+    color: var(--text-secondary);
 }
 
 .cancelBtn:hover {
-    background: #f5f5f4;
+    background: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .confirmBtn {
     flex: 1;
     padding: 12px;
-    background: #dc2626;
-    color: white;
+    background: var(--danger);
+    color: white; 
     border: none;
     border-radius: 12px;
     cursor: pointer;
@@ -368,7 +372,7 @@
 }
 
 .confirmBtn:hover {
-    background: #b91c1c;
+    opacity: 0.85;
 }
 
 .statusContainer {
@@ -377,14 +381,14 @@
     height: 100vh;
     align-items: center;
     justify-content: center;
-    background: #f5f5f4;
-    color: #57534e;
+    background: var(--bg-app);
+    color: var(--text-secondary);
 }
 
 .spinner {
     animation: spin 1s linear infinite;
     margin-bottom: 16px;
-    color: #a8a29e;
+    color: var(--text-muted);
 }
 
 .errorScreen {
@@ -393,8 +397,8 @@
     height: 100vh;
     align-items: center;
     justify-content: center;
-    background: #fef2f2;
-    color: #dc2626;
+    background: rgba(220, 38, 38, 0.05); 
+    color: var(--danger);
 }
 
 @keyframes spin {

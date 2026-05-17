@@ -137,14 +137,14 @@ const Dashboard = () => {
 
         <div className={styles.heroCardsRow}>
           <button onClick={() => navigate(`/${currentLang}/${projectsRoute}`)} className={styles.heroCardPrimary}>
-            <div className={styles.heroCardIconPrimary}><Plus size={24} color="#ffffff" /></div>
+            <div className={styles.heroCardIconPrimary}><Plus size={24} color="var(--bg-app)" /></div>
             <div className={styles.heroCardContent}>
               <h3>{t('dashboard.createNew')}</h3>
               <p>{t('dashboard.createDesc')}</p>
             </div>
           </button>
           <button onClick={() => navigate(`/${currentLang}/${libraryRoute}`)} className={styles.heroCardSecondary}>
-            <div className={styles.heroCardIconSecondary}><BookOpen size={24} color="#1c1917" /></div>
+            <div className={styles.heroCardIconSecondary}><BookOpen size={24} color="var(--text-primary)" /></div>
             <div className={styles.heroCardContent}>
               <h3>{t('dashboard.library')}</h3>
               <p>{t('dashboard.libraryDesc')}</p>
@@ -168,7 +168,7 @@ const Dashboard = () => {
             recentProjects.map(project => (
               <div key={project._id} className={styles.projectRow}>
                 <div className={styles.projectInfo} onClick={() => navigate(`/${currentLang}/${editRoute}/${project._id}`)}>
-                  <div className={styles.projectIconWrapper}><LayoutTemplate size={18} color="#57534e" /></div>
+                  <div className={styles.projectIconWrapper}><LayoutTemplate size={18} color="var(--text-muted)" /></div>
                   <div className={styles.projectTextData}>
                     {editingProjectId === project._id ? (
                       <input autoFocus value={editingProjectName} onChange={e => setEditingProjectName(e.target.value)} onBlur={() => handleRenameProject(project._id)} onKeyDown={e => { if (e.key === 'Enter') handleRenameProject(project._id); if (e.key === 'Escape') setEditingProjectId(null); }} className={styles.editInput} onClick={e => e.stopPropagation()} />

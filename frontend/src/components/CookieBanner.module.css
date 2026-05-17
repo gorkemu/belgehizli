@@ -1,0 +1,63 @@
+/* frontend/src/components/CookieBanner.module.css */
+
+.cookieWrapper {
+  --cookie-bg: #1c1917;
+  --cookie-text: #f8fafc;
+  --cookie-muted: #a8a29e;
+  --cookie-border: #44403c;
+  --cookie-btn-bg: var(--accent); 
+  --cookie-btn-text: #ffffff;
+  --cookie-hover-bg: rgba(255, 255, 255, 0.05);
+}
+
+.bannerContainer {
+  background-color: var(--cookie-bg) !important;
+  color: var(--cookie-text) !important;
+  font-family: 'DM Sans', 'Inter', system-ui, sans-serif !important;
+  border-top: 1px solid var(--cookie-border) !important;
+  align-items: center !important;
+  padding: 16px 24px !important;
+}
+
+.acceptButton {
+  background-color: var(--cookie-btn-bg) !important;
+  color: var(--cookie-btn-text) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 10px 24px !important;
+  margin: 0 12px 0 0 !important;
+  transition: opacity 0.15s ease !important;
+}
+
+.acceptButton:hover {
+  opacity: 0.85 !important;
+}
+
+.declineButton {
+  background-color: transparent !important;
+  color: var(--cookie-muted) !important;
+  border: 1px solid var(--cookie-border) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  padding: 9px 20px !important;
+  transition: all 0.15s ease !important;
+}
+
+.declineButton:hover {
+  background-color: var(--cookie-hover-bg) !important;
+  color: var(--cookie-text) !important;
+}
+
+.privacyLink {
+  color: var(--cookie-muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.privacyLink:hover {
+  color: var(--cookie-text);
+}

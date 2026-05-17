@@ -28,20 +28,20 @@
   padding: 0 5px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
-  color: var(--btn-text);
+  border-radius: 6px;
+  color: var(--text-secondary);
   cursor: pointer;
-  transition: all .12s;
+  transition: all .15s ease;
 }
 
 .tb:hover {
-  background: var(--btn-hover-bg);
+  background: var(--bg-hover);
   color: var(--text-primary);
 }
 
 .tbActive {
-  background: var(--btn-active-bg);
-  color: var(--btn-active-text);
+  background: var(--accent-bg);
+  color: var(--accent);
   border-color: var(--accent-border);
 }
 
@@ -58,11 +58,11 @@
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--select-text);
-  background-color: var(--select-bg);
+  color: var(--text-primary);
+  background-color: var(--bg-surface);
   flex-shrink: 0;
   width: unset;
-  transition: background .12s, border-color .12s;
+  transition: all .15s ease;
 }
 
 .select:hover {

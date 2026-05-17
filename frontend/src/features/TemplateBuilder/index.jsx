@@ -3,7 +3,6 @@ import React from 'react';
 import { TemplateBuilderProvider } from './context/TemplateBuilderContext';
 import { useTemplateBuilder } from './hooks/useTemplateBuilder'; 
 
-// Alt bileşenler
 import Header from './components/Header';
 import SmartBar from './components/SmartBar';
 import Toolbar from './components/Toolbar';
@@ -14,7 +13,6 @@ import Modals from './components/Modals';
 
 import styles from './TemplateBuilder.module.css';
 
-// Compound Component'in Ana Sarmalayıcısı
 const BuilderRoot = ({ initialData, onSave }) => {
   return (
     <TemplateBuilderProvider initialData={initialData} onSave={onSave}>
@@ -23,12 +21,11 @@ const BuilderRoot = ({ initialData, onSave }) => {
   );
 };
 
-// İçerik (Context'e erişebilmesi için ayrı bir component)
 const BuilderContent = () => {
-  const { mode, editorTheme, toast } = useTemplateBuilder(); 
+  const { mode, toast } = useTemplateBuilder(); 
 
   return (
-    <div className={styles.root} data-theme={editorTheme}>
+    <div className={styles.root}>
       <Header />
 
       <div className={styles.workspace}>

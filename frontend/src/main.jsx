@@ -3,9 +3,12 @@ import './index.css';
 import App from './App.jsx';
 import { HelmetProvider } from 'react-helmet-async'; 
 import './i18n';
+import { ThemeProvider } from './context/ThemeContext';
 
 createRoot(document.getElementById('root')).render(
-    <HelmetProvider>
-        <App />
-    </HelmetProvider>
+    <ThemeProvider>
+        <HelmetProvider>
+            <App />
+        </HelmetProvider>
+    </ThemeProvider>
 );

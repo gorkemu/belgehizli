@@ -1,11 +1,12 @@
 /* frontend/src/components/ui/Button.module.css */
+
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   border: 1px solid transparent;
-  border-radius: var(--radius);
+  border-radius: 8px; 
   font-family: inherit;
   font-weight: 600;
   cursor: pointer;
@@ -15,52 +16,67 @@
 }
 
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
-/* Boyutlar (Sizes) */
-.sm { padding: 6px 12px; font-size: 0.8rem; border-radius: var(--radius-sm); }
+.sm { padding: 6px 12px; font-size: 0.8rem; border-radius: 6px; }
 .md { padding: 8px 16px; font-size: 0.875rem; }
-.lg { padding: 12px 24px; font-size: 1rem; border-radius: var(--radius-lg); }
+.lg { padding: 12px 24px; font-size: 1rem; border-radius: 12px; }
 
-/* Varyasyonlar (Variants) */
 .primary {
-  background: var(--btn-primary-bg);
-  color: var(--btn-primary-text);
+  background: var(--text-primary); 
+  color: var(--bg-surface);
 }
-.primary:hover:not(:disabled) { opacity: 0.9; box-shadow: var(--shadow-sm); }
+.primary:hover:not(:disabled) { 
+  opacity: 0.85; 
+  box-shadow: var(--shadow-sm); 
+  transform: translateY(-1px);
+}
 
 .secondary {
   background: var(--bg-surface);
-  border-color: var(--border);
+  border-color: var(--border-strong);
   color: var(--text-secondary);
 }
-.secondary:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); border-color: var(--border-strong); }
+.secondary:hover:not(:disabled) { 
+  background: var(--bg-hover); 
+  color: var(--text-primary); 
+  border-color: var(--text-muted); 
+}
 
 .danger {
-  background: var(--btn-danger-bg, #fee2e2);
-  color: var(--danger, #dc2626);
+  background: rgba(220, 38, 38, 0.1); 
+  color: var(--danger);
+  border-color: transparent;
 }
-.danger:hover:not(:disabled) { background: #fecaca; }
+.danger:hover:not(:disabled) { 
+  background: rgba(220, 38, 38, 0.15); 
+}
 
 .warning {
-  background: var(--accent-bg, #fef3c7);
-  color: var(--warning, #d97706);
-  border-color: var(--accent-border, #fde68a);
+  background: rgba(217, 119, 6, 0.1); 
+  color: var(--warning);
+  border-color: transparent;
 }
 .warning:hover:not(:disabled) { 
-  background: color-mix(in srgb, var(--warning) 15%, transparent); 
-  border-color: var(--warning);
+  background: rgba(217, 119, 6, 0.15); 
 }
 
 .ghost {
   background: transparent;
   color: var(--text-secondary);
 }
-.ghost:hover:not(:disabled) { background: var(--bg-hover); color: var(--text-primary); }
+.ghost:hover:not(:disabled) { 
+  background: var(--bg-hover); 
+  color: var(--text-primary); 
+}
 
-/* Ekstralar */
 .fullWidth { width: 100%; }
 .spinner { animation: spin 1s linear infinite; }
-@keyframes spin { 100% { transform: rotate(360deg); } }
+
+@keyframes spin { 
+  100% { transform: rotate(360deg); } 
+}

@@ -103,13 +103,13 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   background: var(--bg-hover);
   border: 1px solid var(--border);
   font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s;
-  padding: 1.25rem 1.5rem;
+  padding: 0; 
 }
 .themeActiveBtn:hover {
   background: var(--bg-active);
@@ -117,7 +117,7 @@
 
 .inpErr {
   border-color: var(--danger) !important;
-  background: var(--btn-danger-bg) !important;
+  background: rgba(220, 38, 38, 0.05) !important; 
 }
 
 @media (max-width: 1200px) {

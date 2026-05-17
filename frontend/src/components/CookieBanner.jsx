@@ -4,44 +4,18 @@ import { Link } from 'react-router-dom';
 import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import styles from './CookieBanner.module.css'; 
 
 const CookieBanner = ({
   buttonText,
   declineButtonText,
   cookieName = "belgeHizliCookieConsent",
   expires = 150,
-
-  style = {
-    background: "var(--gray-900)",
-    color: "var(--gray-100)",
-    fontSize: "0.9rem",
-    padding: "10px 20px",
-    alignItems: "center"
-  },
-  buttonStyle = {
-    background: "var(--primary-color)",
-    color: "white",
-    fontSize: "0.9rem",
-    fontWeight: "600",
-    borderRadius: "var(--radius-md)",
-    padding: "10px 20px",
-    margin: "0 10px 0 0"
-  },
-  declineButtonStyle = {
-    background: "transparent",
-    color: "var(--gray-300)",
-    border: "1px solid var(--gray-600)",
-    fontSize: "0.9rem",
-    borderRadius: "var(--radius-md)",
-    padding: "9px 20px"
-  },
-
   privacyPolicyPath = "/gizlilik-politikasi",
   children 
 }) => {
   const { t } = useTranslation();
 
-  // Props ile gelmeyen metinler için çeviri anahtarlarını kullan
   const acceptText = buttonText || t('cookie.accept');
   const declineText = declineButtonText || t('cookie.decline');
 
@@ -50,7 +24,7 @@ const CookieBanner = ({
       {t('cookie.description')}{" "}
       <Link
         to={privacyPolicyPath}
-        style={{ color: "var(--gray-300)", textDecoration: "underline" }}
+        className={styles.privacyLink}
       >
         {t('cookie.privacyPolicy')}
       </Link>{" "}
@@ -59,19 +33,21 @@ const CookieBanner = ({
   );
 
   return (
-    <CookieConsent
-      location="bottom"
-      buttonText={acceptText}
-      declineButtonText={declineText}
-      cookieName={cookieName}
-      style={style}
-      buttonStyle={buttonStyle}
-      declineButtonStyle={declineButtonStyle}
-      expires={expires}
-      enableDeclineButton 
-    >
-      {children || defaultContent}
-    </CookieConsent>
+    <div className={styles.cookieWrapper}>
+      <CookieConsent
+        location="bottom"
+        buttonText={acceptText}
+        declineButtonText={declineText}
+        cookieName={cookieName}
+        expires={expires}
+        enableDeclineButton 
+        containerClasses={styles.bannerContainer}
+        buttonClasses={styles.acceptButton}
+        declineButtonClasses={styles.declineButton}
+      >
+        {children || defaultContent}
+      </CookieConsent>
+    </div>
   );
 };
 
@@ -80,9 +56,6 @@ CookieBanner.propTypes = {
   declineButtonText: PropTypes.string,
   cookieName: PropTypes.string,
   expires: PropTypes.number,
-  style: PropTypes.object,
-  buttonStyle: PropTypes.object,
-  declineButtonStyle: PropTypes.object,
   privacyPolicyPath: PropTypes.string,
   children: PropTypes.node
 };

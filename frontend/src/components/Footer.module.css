@@ -1,11 +1,21 @@
-/* Footer.module.css */
+/* frontend/src/components/Footer.module.css */
 
 .appFooter {
-    background-color: #111110;
+    /* Footer'a Özel Yerel Değişkenler (Her zaman koyu kalmasını sağlar) */
+    --footer-bg: #111110;
+    --footer-bg-bottom: #0a0a0a;
+    --footer-border: #292524;
+    --footer-text-primary: #ffffff;
+    --footer-text-secondary: #f5f5f4;
+    --footer-text-muted: #a8a29e;
+    --footer-text-dim: #78716c;
+    --footer-hover-bg: rgba(255, 255, 255, 0.05);
+
+    background-color: var(--footer-bg);
     margin-top: auto;
     width: 100%;
-    color: #f5f5f4;
-    border-top: 1px solid #292524;
+    color: var(--footer-text-secondary);
+    border-top: 1px solid var(--footer-border);
     font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
@@ -48,7 +58,7 @@
 }
 
 .footerDesc {
-    color: #a8a29e;
+    color: var(--footer-text-muted);
     font-size: 0.95rem;
     margin: 0;
     line-height: 1.7;
@@ -69,7 +79,7 @@
 }
 
 .columnTitle {
-    color: #ffffff;
+    color: var(--footer-text-primary);
     font-size: 0.85rem;
     font-weight: 700;
     margin: 0;
@@ -98,7 +108,7 @@
 }
 
 .footerNav ul li a {
-    color: #a8a29e;
+    color: var(--footer-text-muted);
     text-decoration: none;
     font-size: 0.95rem;
     font-weight: 500;
@@ -110,20 +120,20 @@
 }
 
 .footerNav ul li a:hover {
-    color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--footer-text-primary);
+    background-color: var(--footer-hover-bg);
 }
 
 .footerBottom {
-    border-top: 1px solid #292524;
+    border-top: 1px solid var(--footer-border);
     padding: 1.5rem;
     text-align: center;
-    background-color: #0a0a0a;
+    background-color: var(--footer-bg-bottom);
 }
 
 .footerBottom p {
     margin: 0;
-    color: #78716c;
+    color: var(--footer-text-dim);
     font-size: 0.85rem;
     font-weight: 500;
 }
@@ -168,7 +178,7 @@
 
     .footerNav ul li a:hover {
         background-color: transparent;
-        color: #ffffff;
+        color: var(--footer-text-primary);
         transform: translateX(4px);
     }
 }

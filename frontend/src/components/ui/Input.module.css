@@ -20,21 +20,29 @@
 
 .input {
   width: 100%;
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  font-size: 0.875rem;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px; 
+  font-size: 0.95rem;
   color: var(--text-primary);
-  background: var(--bg-card);
-  transition: all 0.2s ease;
+  background: var(--bg-app);
+  transition: all 0.15s ease;
   font-family: inherit;
   outline: none;
 }
 
-.input::placeholder { color: var(--text-muted); }
+.input:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--bg-surface);
+}
+
+.input::placeholder { 
+  color: var(--text-muted); 
+}
 
 .input:focus:not(.errorInput) {
   border-color: var(--accent);
+  background: var(--bg-surface);
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
@@ -42,20 +50,23 @@
   background: var(--bg-hover);
   color: var(--text-muted);
   cursor: not-allowed;
+  border-color: var(--border);
 }
 
 .errorInput {
   border-color: var(--danger) !important;
-  background: color-mix(in srgb, var(--danger) 5%, transparent) !important;
+  background: rgba(220, 38, 38, 0.05) !important; 
 }
+
 .errorInput:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 15%, transparent);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15) !important;
+  background: var(--bg-surface) !important;
 }
 
 .errorText {
   font-size: 0.75rem;
   color: var(--danger);
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 2px;
 }
 

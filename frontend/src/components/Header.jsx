@@ -52,8 +52,12 @@ function Header() {
         <div className={styles.headerInner}>
 
           <Link to={`/${currentLang}`} className={styles.logoContainer}>
-            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.logoFull} />
-            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.logoIcon} />
+            {/* LOGOLAR: CSS ile data-theme'e göre otomatik aç/kapa yapılacak */}
+            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.logoFullLight} />
+            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.logoFullDark} />
+            
+            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.logoIconLight} />
+            <img src="/logo-icon-white.svg" alt="Belge Hızlı" className={styles.logoIconDark} />
           </Link>
 
           <div className={`${styles.searchWrapper} ${scrolled ? styles.searchVisible : styles.searchHidden}`}>

@@ -1,13 +1,14 @@
-/* PreInformationForm.module.css */
+/* frontend/src/pages/PreInformationForm.module.css */
+
 .container {
   max-width: 840px;
   margin: 4rem auto 6rem auto;
   padding: 4rem;
-  background-color: #ffffff;
+  background-color: var(--bg-surface);
   border-radius: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  border: 1px solid #e7e5e4;
-  color: #1c1917;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
@@ -18,7 +19,7 @@
   text-align: center;
   margin-bottom: 2.5rem;
   padding-bottom: 2rem;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--border);
 }
 
 .title {
@@ -27,7 +28,7 @@
   justify-content: center;
   gap: 12px;
   font-size: 2rem;
-  color: #1c1917;
+  color: var(--text-primary);
   font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 1rem;
@@ -35,7 +36,7 @@
 }
 
 .titleIcon {
-  color: #1c1917;
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 
@@ -43,8 +44,8 @@
 .lastUpdated {
   text-align: center;
   font-size: 0.9rem;
-  color: #57534e;
-  background-color: #f5f5f4;
+  color: var(--text-secondary);
+  background-color: var(--bg-hover);
   padding: 6px 14px;
   border-radius: 8px;
   font-weight: 500;
@@ -55,24 +56,24 @@
 .dynamicContent {
   white-space: normal !important;
   overflow-wrap: break-word !important;
-  color: #44403c;
+  color: var(--text-secondary);
 }
 
 .dynamicContent h2 {
   font-size: 1.3rem;
   margin-top: 3rem;
   margin-bottom: 1.25rem;
-  color: #1c1917;
+  color: var(--text-primary);
   font-weight: 800;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid #f0efed;
+  border-bottom: 1px solid var(--border);
 }
 
 .dynamicContent h3 {
   font-size: 1.1rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
-  color: #1c1917;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -80,11 +81,11 @@
   margin-bottom: 1.5rem;
   font-size: 1rem;
   line-height: 1.7;
-  color: #57534e;
+  color: var(--text-secondary);
 }
 
 .dynamicContent strong {
-  color: #1c1917;
+  color: var(--text-primary);
   font-weight: 700;
 }
 
@@ -94,7 +95,7 @@
   margin-bottom: 2rem;
   font-size: 1rem;
   line-height: 1.7;
-  color: #57534e;
+  color: var(--text-secondary);
 }
 
 .dynamicContent ul li {
@@ -110,47 +111,48 @@
   top: 0.55rem;
   width: 6px;
   height: 6px;
-  background-color: #1c1917;
+  background-color: var(--text-primary); 
   border-radius: 50%;
 }
 
 .dynamicContent hr {
   border: none;
-  border-top: 1px solid #e7e5e4;
+  border-top: 1px solid var(--border);
   margin: 3rem 0;
 }
 
 .dynamicContent a {
-  color: #1c1917;
+  color: var(--text-primary);
   text-decoration: underline;
   text-underline-offset: 4px;
   font-weight: 600;
+  transition: color 0.15s ease;
 }
 
 .dynamicContent a:hover {
-  color: #57534e;
+  color: var(--text-secondary);
 }
 
 /* Backendden gelen özel Info kutuları */
 .dynamicContent .important-note,
 .dynamicContent .important-box {
   padding: 1.5rem;
-  background-color: #fafaf9;
-  border: 1px solid #e7e5e4;
-  border-left: 4px solid #1c1917;
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--text-primary);
   border-radius: 8px;
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #44403c;
+  color: var(--text-secondary);
   margin-bottom: 2rem;
 }
 
 .dynamicContent .success-note {
   padding: 1.5rem;
-  background-color: #ecfdf5;
-  border-left: 4px solid #10b981;
+  background-color: rgba(16, 185, 129, 0.05); 
+  border-left: 4px solid var(--success);
   border-radius: 8px;
-  color: #064e3b;
+  color: var(--success);
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 2rem;
@@ -158,17 +160,17 @@
 
 .dynamicContent .warning-note {
   padding: 1.5rem;
-  background-color: #fef2f2;
-  border-left: 4px solid #dc2626;
+  background-color: rgba(220, 38, 38, 0.05); 
+  border-left: 4px solid var(--danger);
   border-radius: 8px;
-  color: #7f1d1d;
+  color: var(--danger);
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 2rem;
 }
 
 .spinner {
-  color: #a8a29e;
+  color: var(--text-muted);
   animation: spin 1s linear infinite;
   margin-bottom: 1rem;
 }

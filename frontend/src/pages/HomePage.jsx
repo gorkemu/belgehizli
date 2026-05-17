@@ -278,7 +278,7 @@ function HomePage() {
                   <div className={styles.lvH1}>{t('homePage.logicPaperTitle')}</div>
                   <div className={styles.lvPara}>{t('homePage.logicPaperPara1')}</div>
                   <div className={styles.lvCondBlock}>
-                    <div className={styles.lvPara} style={{ color: '#1e40af' }}>{t('homePage.logicConditionPara')}</div>
+                    <div className={styles.lvPara}>{t('homePage.logicConditionPara')}</div>
                   </div>
                   <div className={styles.lvPara}>{t('homePage.logicPaperPara2')}</div>
                   <div className={styles.lvSpacer}></div>

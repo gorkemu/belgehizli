@@ -1,12 +1,12 @@
-/* DashboardLayout.module.css */
+/* frontend/src/components/DashboardLayout.module.css */
 
 .root {
     display: flex;
     height: 100vh;
-    background-color: #fbfbfb;
+    background-color: var(--bg-app);
     font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
     overflow: hidden;
-    color: #1c1917;
+    color: var(--text-primary);
 }
 
 .mobileHeader {
@@ -15,8 +15,8 @@
     left: 0;
     right: 0;
     height: 60px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e7e5e4;
+    background-color: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     padding: 0 16px;
@@ -28,6 +28,10 @@
     padding: 8px;
 }
 
+.menuIconColor {
+    color: var(--text-primary);
+}
+
 .mobileLogoLink {
     display: flex;
     align-items: center;
@@ -36,17 +40,10 @@
     overflow: hidden;
 }
 
-.mobileLogoIcon {
-    height: 28px;
-    width: auto;
-    flex-shrink: 0;
-    object-fit: contain;
-}
-
 .mobileLogoText {
     font-size: 0.95rem;
     font-weight: 700;
-    color: #1c1917;
+    color: var(--text-primary);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -61,22 +58,22 @@
 .overlay {
     position: fixed;
     inset: 0;
-    background-color: rgba(28, 25, 23, 0.4);
+    background-color: var(--modal-overlay); 
     backdrop-filter: blur(2px);
     z-index: 45;
 }
 
 .sidebar {
     width: 260px;
-    background-color: #1c1917;
-    color: #ffffff;
+    background-color: var(--bg-sidebar); 
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     transition: transform 0.25s ease;
     z-index: 50;
     height: 100vh;
     flex-shrink: 0;
-    border-right: 1px solid #292524;
+    border-right: 1px solid var(--border);
 }
 
 .sidebarMobile {
@@ -105,12 +102,54 @@
     align-items: center;
 }
 
-.sidebarLogo {
+.sidebarLogoLight, .mobileLogoIconLight {
+    display: none;
+}
+
+.sidebarLogoDark {
     height: 28px;
     width: auto;
     max-width: 160px;
     object-fit: contain;
     object-position: left center;
+    display: block;
+}
+
+.mobileLogoIconDark {
+    height: 28px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
+    display: block;
+}
+
+:global([data-theme="light"]) .sidebarLogoDark,
+:global([data-theme="default"]) .sidebarLogoDark,
+:global([data-theme="glacier"]) .sidebarLogoDark,
+:global([data-theme="light"]) .mobileLogoIconDark,
+:global([data-theme="default"]) .mobileLogoIconDark,
+:global([data-theme="glacier"]) .mobileLogoIconDark {
+    display: none;
+}
+
+:global([data-theme="light"]) .sidebarLogoLight,
+:global([data-theme="default"]) .sidebarLogoLight,
+:global([data-theme="glacier"]) .sidebarLogoLight {
+    height: 28px;
+    width: auto;
+    max-width: 160px;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+}
+
+:global([data-theme="light"]) .mobileLogoIconLight,
+:global([data-theme="default"]) .mobileLogoIconLight,
+:global([data-theme="glacier"]) .mobileLogoIconLight {
+    height: 28px;
+    width: auto;
+    flex-shrink: 0;
+    object-fit: contain;
     display: block;
 }
 
@@ -133,7 +172,7 @@
     gap: 12px;
     padding: 10px 14px;
     border-radius: 8px;
-    color: #a8a29e;
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.2s ease;
@@ -142,38 +181,38 @@
 }
 
 .navLink:hover {
-    background-color: #292524;
-    color: #e7e5e4;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .navLinkActive {
-    background-color: #292524;
-    color: #ffffff;
+    background-color: var(--bg-hover); 
+    color: var(--text-primary);
 }
 
 .icon {
-    color: #a8a29e;
+    color: var(--text-muted);
     flex-shrink: 0;
     transition: color 0.2s;
 }
 
 .navLink:hover .icon {
-    color: #d6d3d1;
+    color: var(--text-primary);
 }
 
 .iconActive {
-    color: #ffffff;
+    color: var(--text-primary); 
     flex-shrink: 0;
 }
 
 .activeChevron {
     margin-left: auto;
-    color: #57534e;
+    color: var(--text-secondary);
 }
 
 .sidebarFooter {
     padding: 16px 12px;
-    border-top: 1px solid #292524;
+    border-top: 1px solid var(--border);
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -184,8 +223,8 @@
     align-items: center;
     gap: 12px;
     padding: 8px;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background-color: var(--bg-app); 
+    border: 1px solid var(--border);
     border-radius: 10px;
 }
 
@@ -193,12 +232,12 @@
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background-color: #44403c;
+    background-color: var(--accent-bg); 
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--accent);
     font-size: 1rem;
     flex-shrink: 0;
 }
@@ -217,13 +256,13 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    color: #ffffff;
+    color: var(--text-primary);
 }
 
 .userOrg {
     margin: 0;
     font-size: 0.7rem;
-    color: #a8a29e;
+    color: var(--text-muted);
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -243,7 +282,7 @@
     gap: 12px;
     padding: 8px 12px;
     border-radius: 8px;
-    color: #a8a29e;
+    color: var(--text-secondary);
     text-decoration: none;
     font-weight: 600;
     transition: all 0.2s;
@@ -251,22 +290,22 @@
 }
 
 .footerLink:hover {
-    background-color: #292524;
-    color: #e7e5e4;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .footerLinkActive {
-    background-color: #292524;
-    color: #ffffff;
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
 }
 
 .logoutBtn:hover {
-    background-color: #292524 !important;
-    color: #e7e5e4 !important;
+    background-color: rgba(220, 38, 38, 0.05) !important;
+    color: var(--danger) !important;
 }
 
 .logoutBtn:hover .logoutIcon {
-    color: #dc2626;
+    color: var(--danger);
 }
 
 .main {
@@ -274,7 +313,7 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    background-color: #fbfbfb;
+    background-color: var(--bg-app);
 }
 
 .mainMobile {

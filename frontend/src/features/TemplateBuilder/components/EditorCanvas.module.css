@@ -97,7 +97,7 @@
   position: fixed;
   background: var(--bg-card);
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg); 
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -195,8 +195,8 @@
   border-color: var(--accent);
 }
 .occurrenceMatch {
-  background: #fef08a;
-  color: #854d0e;
+  background: rgba(217, 119, 6, 0.15); 
+  color: var(--warning);
   font-weight: 800;
   padding: 0 4px;
   border-radius: 4px;

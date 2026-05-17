@@ -1,37 +1,18 @@
-/* TemplateList.module.css */
-
-:root {
-  --page-bg: #fbfbfb;
-  --surface: #ffffff;
-  --border: #e7e5e4;
-  --border2: #d6d3d1;
-  --text: #1c1917;
-  --text2: #57534e;
-  --text3: #a8a29e;
-  --accent: #2563eb;
-  --accent-bg: #eff6ff;
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .05), 0 1px 2px rgba(0, 0, 0, .04);
-  --shadow: 0 4px 16px rgba(0, 0, 0, .04);
-
-  --r: 8px;
-  --r-lg: 16px;
-  --r-xl: 24px;
-}
+/* frontend/src/pages/TemplateList.module.css */
 
 .pageWrapper {
   font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
-  background-color: var(--page-bg);
-  color: var(--text);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
 .disclaimerBanner {
-  background-color: var(--surface);
+  background-color: var(--bg-surface);
   border-bottom: 1px solid var(--border);
   padding: 10px 20px;
   font-size: 0.8rem;
-  color: var(--text2);
+  color: var(--text-secondary);
 }
 
 .disclaimerInner {
@@ -45,7 +26,7 @@
 }
 
 .disclaimerIcon {
-  color: var(--text3);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
@@ -70,24 +51,24 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--surface);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 5px 14px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--text2);
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
 
 .badge svg {
-  color: var(--text3);
+  color: var(--text-muted);
 }
 
 .sectionTitle {
   font-size: 2.2rem;
   font-weight: 800;
-  color: var(--text);
+  color: var(--text-primary);
   margin: 0 0 1rem 0;
   letter-spacing: -.02em;
   line-height: 1.2;
@@ -95,7 +76,7 @@
 
 .subtitle {
   font-size: 1.05rem;
-  color: var(--text2);
+  color: var(--text-secondary);
   margin: 0 0 2.5rem 0;
   line-height: 1.6;
 }
@@ -103,9 +84,9 @@
 .searchBar {
   display: flex;
   align-items: center;
-  background: var(--surface);
-  border: 1.5px solid var(--border2);
-  border-radius: var(--r-xl);
+  background: var(--bg-surface);
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-xl);
   padding: 5px 5px 5px 18px;
   margin-bottom: 2rem;
   width: 100%;
@@ -115,11 +96,11 @@
 
 .searchBar:focus-within {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(29, 78, 216, .08);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
 .searchIcon {
-  color: var(--text3);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 
@@ -130,30 +111,30 @@
   font-size: .95rem;
   outline: none;
   background: transparent;
-  color: var(--text);
+  color: var(--text-primary);
   font-family: inherit;
 }
 
 .searchBar input::placeholder {
-  color: var(--text3);
+  color: var(--text-muted);
 }
 
 .searchBar button {
-  background: var(--text);
-  color: #fff;
+  background: var(--text-primary);
+  color: var(--bg-surface);
   border: none;
   padding: .75rem 1.5rem;
   border-radius: 18px;
   font-weight: 600;
   font-size: .9rem;
   cursor: pointer;
-  transition: background .15s;
+  transition: opacity .15s;
   font-family: inherit;
   white-space: nowrap;
 }
 
 .searchBar button:hover {
-  background: #292524;
+  opacity: 0.85;
 }
 
 .categoryWrapper {
@@ -169,42 +150,40 @@
   align-items: center;
   gap: 6px;
   padding: 0.5rem 1rem;
-  background: var(--surface);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: 40px;
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--text2);
+  color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
   font-family: inherit;
 }
 
 .categoryTab svg {
-  color: var(--text3);
+  color: var(--text-muted);
   transition: color 0.15s;
 }
 
 .categoryTab:hover {
-  background: var(--page-bg);
-  border-color: var(--border2);
-  color: var(--text);
+  background: var(--bg-app);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
 .categoryTabActive {
-  background: var(--text);
-  color: #ffffff;
-  border-color: var(--text);
+  background: var(--text-primary);
+  color: var(--bg-surface);
+  border-color: var(--text-primary);
 }
 
 .categoryTabActive svg {
-  color: #ffffff;
+  color: var(--bg-surface);
 }
 
 .categoryTabActive:hover {
-  background: #292524;
-  border-color: #292524;
-  color: #fff
+  opacity: 0.9;
 }
 
 .templateGrid {
@@ -214,8 +193,8 @@
 }
 
 .templateCard {
-  background-color: var(--surface);
-  border-radius: var(--r-lg);
+  background-color: var(--bg-surface);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   overflow: hidden;
   display: flex;
@@ -227,8 +206,8 @@
 }
 
 .templateCard:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  border-color: var(--border2);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
   transform: translateY(-4px);
 }
 
@@ -236,7 +215,7 @@
   height: 180px;
   overflow: hidden;
   position: relative;
-  background-color: var(--page-bg);
+  background-color: var(--bg-app);
   border-bottom: 1px solid var(--border);
 }
 
@@ -256,7 +235,7 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(28, 25, 23, 0.4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(2px);
   display: flex;
   align-items: center;
@@ -273,8 +252,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  background: var(--surface);
-  color: var(--text);
+  background: var(--bg-surface);
+  color: var(--text-primary);
   padding: 8px 16px;
   border-radius: 40px;
   font-size: 0.85rem;
@@ -297,14 +276,14 @@
 .cardTitle {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--text);
+  color: var(--text-primary);
   margin: 0 0 0.5rem 0;
   line-height: 1.4;
 }
 
 .cardDescription {
   font-size: 0.9rem;
-  color: var(--text2);
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 1.5rem 0;
   display: -webkit-box;
@@ -317,7 +296,7 @@
 .cardFooter {
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid #f5f5f4;
+  border-top: 1px solid var(--border);
 }
 
 .cardLinkText {
@@ -325,13 +304,13 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.85rem;
-  color: var(--text3);
+  color: var(--text-muted);
   font-weight: 700;
   transition: color 0.15s ease, gap 0.15s ease;
 }
 
 .templateCard:hover .cardLinkText {
-  color: var(--text);
+  color: var(--text-primary);
   gap: 0.75rem;
 }
 
@@ -343,8 +322,8 @@
 
 .loadMoreButton {
   background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border2);
+  color: var(--text-primary);
+  border: 1px solid var(--border-strong);
   padding: 0.9rem 2.5rem;
   border-radius: 40px;
   font-weight: 600;
@@ -355,37 +334,37 @@
 }
 
 .loadMoreButton:hover {
-  background: var(--surface);
-  border-color: var(--text);
+  background: var(--bg-surface);
+  border-color: var(--text-primary);
 }
 
 .noTemplatesMessage {
   text-align: center;
   padding: 5rem 2rem;
-  color: var(--text2);
+  color: var(--text-secondary);
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: var(--surface);
-  border-radius: var(--r-xl);
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border);
 }
 
 .noDataIconWrap {
   width: 64px;
   height: 64px;
-  background: var(--page-bg);
+  background: var(--bg-app);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--text3);
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
 .noTemplatesMessage h3 {
   font-size: 1.2rem;
-  color: var(--text);
+  color: var(--text-primary);
   margin: 0 0 0.5rem 0;
 }
 
@@ -395,19 +374,19 @@
 }
 
 .clearSearchButton {
-  background-color: var(--text);
-  color: white;
+  background-color: var(--text-primary);
+  color: var(--bg-surface);
   border: none;
   padding: 0.7rem 1.8rem;
   border-radius: 40px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.15s ease;
+  transition: opacity 0.15s ease;
   font-family: inherit;
 }
 
 .clearSearchButton:hover {
-  background-color: #292524;
+  opacity: 0.85;
 }
 
 .statusContainerError {
@@ -416,20 +395,25 @@
   align-items: center;
   justify-content: center;
   min-height: 50vh;
-  color: #dc2626;
+  color: var(--danger);
   font-size: 1.1rem;
   font-weight: 600;
   gap: 1.5rem;
 }
 
 .retryButton {
-  background-color: var(--text);
-  color: white;
+  background-color: var(--text-primary);
+  color: var(--bg-surface);
   border: none;
   padding: 0.8rem 1.8rem;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.retryButton:hover {
+  opacity: 0.85;
 }
 
 .skeletonCard {
@@ -440,8 +424,8 @@
 .skeletonImage,
 .skeletonTitle,
 .skeletonDesc {
-  background: #f5f5f4;
-  background-image: linear-gradient(to right, #f5f5f4 0%, var(--border) 20%, #f5f5f4 40%, #f5f5f4 100%);
+  background: var(--bg-hover);
+  background-image: linear-gradient(to right, var(--bg-hover) 0%, var(--border) 20%, var(--bg-hover) 40%, var(--bg-hover) 100%);
   background-repeat: no-repeat;
   background-size: 800px 100%;
   animation: shimmer 1.5s infinite linear;
@@ -471,13 +455,32 @@
 }
 
 @keyframes shimmer {
-  0% {
-    background-position: -468px 0;
-  }
+  0% { background-position: -468px 0; }
+  100% { background-position: 468px 0; }
+}
 
-  100% {
-    background-position: 468px 0;
-  }
+.imagePlaceholder {
+  width: 100%;
+  height: 100%; 
+  min-height: 200px;
+  background: linear-gradient(135deg, var(--bg-hover) 0%, var(--border) 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.placeholderIcon {
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.placeholderLetters {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  opacity: 0.4;
 }
 
 @media (max-width: 768px) {
@@ -526,28 +529,4 @@
     text-align: left;
     align-items: flex-start;
   }
-}
-
-.imagePlaceholder {
-  width: 100%;
-  height: 100%; 
-  min-height: 200px;
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-}
-
-.placeholderIcon {
-  margin-bottom: 8px;
-  opacity: 0.5;
-}
-
-.placeholderLetters {
-  font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  opacity: 0.4;
 }

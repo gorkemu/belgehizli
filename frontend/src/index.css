@@ -1,103 +1,350 @@
-:root {
-  --primary-color: #2563eb;
-  --primary-color-dark: #1d4ed8;
-  --primary-color-light: #eff6ff;
+/* ==========================================================================
+   MASTER GLOBAL CSS & THEME VARIABLES
+   ========================================================================== */
 
-  --secondary-color: #64748b;
-  --accent: #3b82f6;
-
-  --background-color: #f8fafc;
-  --text-color: #1e293b;
-
-  --gray-50: #f8fafc;
-  --gray-100: #f1f5f9;
-  --gray-200: #e2e8f0;
-  --gray-300: #cbd5e1;
-  --gray-400: #94a3b8;
-  --gray-500: #64748b;
-  --gray-600: #475569;
-  --gray-700: #334155;
-  --gray-800: #1e293b;
-  --gray-900: #0f172a;
-
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-  --radius-md: 8px;
-  --radius-lg: 12px;
-}
-
-* {
+/* --------------------------------------------------------------------------
+   1. CSS Reset & Base Styles
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: clip;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.6;
-  color: var(--text-color);
-  background-color: var(--background-color);
-  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  transition: color 0.2s ease;
+/* --------------------------------------------------------------------------
+   2. Light Theme (Default)
+   -------------------------------------------------------------------------- */
+:root, [data-theme="light"] {
+  /* Backgrounds */
+  --bg-app: #f5f5f4;
+  --bg-surface: #ffffff;
+  --bg-hover: #f5f3ef;
+  --bg-sidebar: #fafaf9;
+  --bg-sidebar-head: #f5f5f4;
+  --bg-header: #ffffff;
+  --bg-toolbar: #fafaf9;
+  --bg-canvas: #f0ece6;
+  --bg-paper: #ffffff;
+  
+  /* Borders */
+  --border: #e7e5e4;
+  --border-strong: #d6d3d1;
+  
+  /* Typography */
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-muted: #a8a29e;
+  --text-editor: #1c1917;
+  --text-heading: #0f0d0b;
+  
+  /* Accent (Brand Color) */
+  --accent: #2563eb;
+  --accent-bg: #eff6ff;
+  --accent-border: #bfdbfe;
+  --accent-text: #1d4ed8;
+  --accent-hover: #1d4ed8;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --danger: #dc2626;
+  --warning: #d97706;
+  
+  /* UI Components */
+  --modal-overlay: rgba(28, 25, 23, 0.5);
+  --modal-bg: #ffffff;
+  --autocomplete-bg: #ffffff;
+  --autocomplete-border: #e7e5e4;
+  
+  /* Radii & Shadows */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, .06), 0 1px 2px rgba(0, 0, 0, .04);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, .12);
+  --paper-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
-input,
-select,
-textarea {
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--gray-300);
-  border-radius: var(--radius-md);
-  font-size: 0.95rem;
-  width: 100%;
-  margin-top: 0.25rem;
-  color: var(--text-color);
-  background-color: #fff;
-  font-family: inherit;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+/* --------------------------------------------------------------------------
+   3. Dark Theme
+   -------------------------------------------------------------------------- */
+[data-theme="dark"] {
+  --bg-app: #080d14;
+  --bg-surface: #0e1521;
+  --bg-hover: #1a2235;
+  --bg-sidebar: #0e1521;
+  --bg-sidebar-head: #080d14;
+  --bg-header: #0e1521;
+  --bg-toolbar: #111827;
+  --bg-canvas: #080d14;
+  --bg-paper: #111827;
+  
+  --border: #1f2d42;
+  --border-strong: #2d3f55;
+  
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #3f5470;
+  --text-editor: #d1d9e6;
+  --text-heading: #f1f5f9;
+  
+  --accent: #3b82f6;
+  --accent-bg: #1e3a5f;
+  --accent-border: #1e40af;
+  --accent-text: #60a5fa;
+  --accent-hover: #2563eb;
+  
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  
+  --modal-overlay: rgba(4, 8, 15, 0.8);
+  --modal-bg: #111827;
+  --autocomplete-bg: #111827;
+  --autocomplete-border: #1f2d42;
+  
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  --paper-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+/* --------------------------------------------------------------------------
+   4. Amber Theme
+   -------------------------------------------------------------------------- */
+[data-theme="amber"] {
+  --bg-app: #140b03;
+  --bg-surface: #1e1005;
+  --bg-hover: #291408;
+  --bg-sidebar: #1e1005;
+  --bg-sidebar-head: #140b03;
+  --bg-header: #1e1005;
+  --bg-toolbar: #2a1508;
+  --bg-canvas: #140b03;
+  --bg-paper: #fdf6e3;
+  
+  --border: #3d1e08;
+  --border-strong: #5a2e0e;
+  
+  --text-primary: #f5e6c8;
+  --text-secondary: #c4a882;
+  --text-muted: #6b4d2e;
+  --text-editor: #3d2109;
+  --text-heading: #1f0e04;
+  
+  --accent: #d97706;
+  --accent-bg: #3d1e08;
+  --accent-border: #78350f;
+  --accent-text: #fbbf24;
+  --accent-hover: #b45309;
+  
+  --modal-overlay: rgba(8, 4, 0, 0.8);
+  --modal-bg: #1e1005;
+  --autocomplete-bg: #1e1005;
+  --autocomplete-border: #3d1e08;
+  
+  --paper-shadow: 0 0 0 1px rgba(212, 160, 80, 0.15), 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-textarea {
-  min-height: 100px;
-  resize: vertical;
-  overflow: auto;
+/* --------------------------------------------------------------------------
+   5. Forest Theme
+   -------------------------------------------------------------------------- */
+[data-theme="forest"] {
+  --bg-app: #0a1a10;
+  --bg-surface: #0f2218;
+  --bg-hover: #163323;
+  --bg-sidebar: #0f2218;
+  --bg-sidebar-head: #0a1a10;
+  --bg-header: #0f2218;
+  --bg-toolbar: #132b1d;
+  --bg-canvas: #0a1a10;
+  --bg-paper: #f7fdf9;
+  
+  --border: #1a3d28;
+  --border-strong: #265a3a;
+  
+  --text-primary: #d1fae5;
+  --text-secondary: #6ee7b7;
+  --text-muted: #2d5c42;
+  --text-editor: #14352a;
+  --text-heading: #052e16;
+  
+  --accent: #10b981;
+  --accent-bg: #1a4a2c;
+  --accent-border: #065f46;
+  --accent-text: #34d399;
+  --accent-hover: #059669;
+  
+  --modal-overlay: rgba(4, 12, 8, 0.8);
+  --modal-bg: #0f2218;
+  --autocomplete-bg: #0f2218;
+  --autocomplete-border: #1a3d28;
+  
+  --paper-shadow: 0 0 0 1px rgba(16, 185, 129, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-::placeholder,
-:-ms-input-placeholder,
-::-ms-input-placeholder {
-  color: var(--gray-400);
-  opacity: 1;
-  font-size: 0.9rem;
+/* --------------------------------------------------------------------------
+   6. Glacier Theme
+   -------------------------------------------------------------------------- */
+[data-theme="glacier"] {
+  --bg-app: #dde8f2;
+  --bg-surface: #eef4fa;
+  --bg-hover: #d8e5f0;
+  --bg-sidebar: #eef4fa;
+  --bg-sidebar-head: #dde8f2;
+  --bg-header: #eef4fa;
+  --bg-toolbar: #e8f0f8;
+  --bg-canvas: #dde8f2;
+  --bg-paper: #ffffff;
+  
+  --border: #c2d4e8;
+  --border-strong: #a8c0d8;
+  
+  --text-primary: #1a2332;
+  --text-secondary: #3d5a78;
+  --text-muted: #7a9ab8;
+  --text-editor: #1a2332;
+  --text-heading: #0d1824;
+  
+  --accent: #1a56db;
+  --accent-bg: #c8daf0;
+  --accent-border: #7aaad8;
+  --accent-text: #1a56db;
+  --accent-hover: #1341b0;
+  
+  --modal-overlay: rgba(10, 22, 42, 0.5);
+  --modal-bg: #eef4fa;
+  --autocomplete-bg: #eef4fa;
+  --autocomplete-border: #c2d4e8;
+  
+  --paper-shadow: 0 2px 8px rgba(26, 86, 219, 0.05), 0 16px 40px rgba(20, 60, 120, 0.08);
 }
+
+/* --------------------------------------------------------------------------
+   7. Sunset Theme
+   -------------------------------------------------------------------------- */
+[data-theme="sunset"] {
+  --bg-app: #18060e;
+  --bg-surface: #220b14;
+  --bg-hover: #3a1522;
+  --bg-sidebar: #220b14;
+  --bg-sidebar-head: #18060e;
+  --bg-header: #220b14;
+  --bg-toolbar: #2c1019;
+  --bg-canvas: #18060e;
+  --bg-paper: #fef4f0;
+  
+  --border: #4a1826;
+  --border-strong: #66223a;
+  
+  --text-primary: #fde8ee;
+  --text-secondary: #c48a9a;
+  --text-muted: #66304a;
+  --text-editor: #2a0f1a;
+  --text-heading: #180810;
+  
+  --accent: #e05a7a;
+  --accent-bg: #4d1a2e;
+  --accent-border: #882040;
+  --accent-text: #f48fa8;
+  --accent-hover: #c04060;
+  
+  --modal-overlay: rgba(8, 2, 6, 0.85);
+  --modal-bg: #220b14;
+  --autocomplete-bg: #220b14;
+  --autocomplete-border: #4a1826;
+  
+  --paper-shadow: 0 0 0 1px rgba(224, 90, 122, 0.1), 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* --------------------------------------------------------------------------
+   8. Ink Theme
+   -------------------------------------------------------------------------- */
+[data-theme="ink"] {
+  --bg-app: #111110;
+  --bg-surface: #1a1918;
+  --bg-hover: #2c2b28;
+  --bg-sidebar: #1a1918;
+  --bg-sidebar-head: #111110;
+  --bg-header: #1a1918;
+  --bg-toolbar: #1f1e1c;
+  --bg-canvas: #111110;
+  --bg-paper: #f8f8f5;
+  
+  --border: #2e2d2a;
+  --border-strong: #3e3d38;
+  
+  --text-primary: #d8d8cc;
+  --text-secondary: #8a8a7e;
+  --text-muted: #504f48;
+  --text-editor: #181810;
+  --text-heading: #0a0a08;
+  
+  --accent: #c8c8b8;
+  --accent-bg: #363530;
+  --accent-border: #504f48;
+  --accent-text: #e0e0d0;
+  --accent-hover: #a8a898;
+  
+  --modal-overlay: rgba(0, 0, 0, 0.9);
+  --modal-bg: #1a1918;
+  --autocomplete-bg: #1a1918;
+  --autocomplete-border: #2e2d2a;
+  
+  --paper-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+/* --------------------------------------------------------------------------
+   9. Lavender Theme
+   -------------------------------------------------------------------------- */
+[data-theme="lavender"] {
+  --bg-app: #0c0818;
+  --bg-surface: #140f22;
+  --bg-hover: #251e48;
+  --bg-sidebar: #140f22;
+  --bg-sidebar-head: #0c0818;
+  --bg-header: #140f22;
+  --bg-toolbar: #1a1430;
+  --bg-canvas: #0c0818;
+  --bg-paper: #f6f3ff;
+  
+  --border: #282050;
+  --border-strong: #3a2e68;
+  
+  --text-primary: #e8dfff;
+  --text-secondary: #9e8dc8;
+  --text-muted: #453868;
+  --text-editor: #1e1840;
+  --text-heading: #100c28;
+  
+  --accent: #8b68d4;
+  --accent-bg: #302858;
+  --accent-border: #4e3880;
+  --accent-text: #b090e8;
+  --accent-hover: #7050b8;
+  
+  --modal-overlay: rgba(4, 2, 12, 0.88);
+  --modal-bg: #140f22;
+  --autocomplete-bg: #140f22;
+  --autocomplete-border: #282050;
+  
+  --paper-shadow: 0 0 0 1px rgba(139, 104, 212, 0.1), 0 20px 60px rgba(0, 0, 0, 0.55);
+}
+
+/* ==========================================================================
+   UTILITY CLASSES (Optional)
+   ========================================================================== */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted { color: var(--text-muted); }
+.bg-app { background-color: var(--bg-app); }
+.bg-surface { background-color: var(--bg-surface); }

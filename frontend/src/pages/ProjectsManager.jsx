@@ -5,6 +5,7 @@ import api from '../utils/api';
 import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate } from 'lucide-react';
 import styles from './ProjectsManager.module.css';
 import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
 import { useTranslation } from 'react-i18next';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 import { SEOHead } from '../components/SEOHead'; 
@@ -171,7 +172,7 @@ export const ProjectsManager = () => {
             <form onSubmit={handleCreateDocument} className={styles.modalForm}>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>{t('projects.templateName')}</label>
-                <input
+                <Input
                   type="text"
                   required
                   placeholder={t('projects.templateNamePlaceholder')}

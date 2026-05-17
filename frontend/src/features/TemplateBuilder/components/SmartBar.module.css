@@ -9,25 +9,42 @@
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.smartBarLeft { display: flex; align-items: center; gap: 16px; }
-.smartHint { font-size: 0.85rem; color: var(--text-muted); }
-.smartBarRight { display: flex; align-items: center; gap: 12px; }
+
+.smartBarLeft { 
+  display: flex; 
+  align-items: center; 
+  gap: 16px; 
+}
+
+.smartHint { 
+  font-size: 0.85rem; 
+  color: var(--text-muted); 
+}
+
+.smartBarRight { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+}
 
 .triggerSelectSmart {
   background: var(--bg-surface);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: 8px; 
   font-weight: 700;
   font-size: 0.85rem;
   outline: none;
   cursor: pointer;
   width: 100px;
+  transition: all 0.15s ease; 
 }
+
 .triggerSelectSmart:hover {
   background: var(--bg-hover);
   border-color: var(--border-strong);
+  color: var(--text-primary); 
 }
 
 @media (max-width: 1200px) {
