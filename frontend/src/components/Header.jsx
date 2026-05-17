@@ -1,24 +1,28 @@
 // frontend/src/components/Header.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom'; 
-import { Search, LayoutDashboard, Globe } from 'lucide-react';
+import { Search, LayoutDashboard, Globe, Menu, X } from 'lucide-react'; 
 import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
 import Button from '../components/ui/Button';
 import { translatePath } from '../utils/routeDictionary'; 
+import { useTheme } from '../context/ThemeContext'; 
 
 function Header() {
   const { t, i18n } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); 
 
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useContext(AuthContext);
   const { lang } = useParams(); 
+  const { theme } = useTheme(); 
 
   const currentLang = lang || 'tr'; 
+  const isDark = theme !== 'light' && theme !== 'glacier';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
@@ -26,13 +30,17 @@ function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => { setSearchTerm(''); }, [location]);
+  useEffect(() => { 
+    setSearchTerm(''); 
+    setIsMobileMenuOpen(false);
+  }, [location]);
 
   const handleSearch = e => {
     e.preventDefault();
     if (searchTerm.trim()) {
       const searchRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
       navigate(`/${currentLang}/${searchRoute}?search=${encodeURIComponent(searchTerm.trim())}`);
+      setIsMobileMenuOpen(false); 
     }
   };
 
@@ -52,19 +60,16 @@ function Header() {
         <div className={styles.headerInner}>
 
           <Link to={`/${currentLang}`} className={styles.logoContainer}>
-            {/* LOGOLAR: CSS ile data-theme'e göre otomatik aç/kapa yapılacak */}
-            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.logoFullLight} />
-            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.logoFullDark} />
-            
-            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.logoIconLight} />
-            <img src="/logo-icon-white.svg" alt="Belge Hızlı" className={styles.logoIconDark} />
+            <img src={isDark ? "/logo-full-white.svg" : "/logo-full.svg"} alt="Belge Hızlı" className={styles.logoFull} />
+            <img src={isDark ? "/logo-icon-white.svg" : "/logo-icon.svg"} alt="Belge Hızlı" className={styles.logoIcon} />
           </Link>
 
-          <div className={`${styles.searchWrapper} ${scrolled ? styles.searchVisible : styles.searchHidden}`}>
+          <div className={styles.searchWrapper}>
             <form className={styles.headerSearch} onSubmit={handleSearch}>
               <Search className={styles.searchIcon} size={16} />
               <input
                 type="text"
+                name='searchInput'
                 placeholder={t('header.searchPlaceholder')}
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
@@ -73,8 +78,15 @@ function Header() {
             </form>
           </div>
 
-          <div className={styles.rightSpacer}>
-            {/* Dil Değiştirici */}
+          <button 
+            className={styles.hamburgerBtn} 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <div className={`${styles.rightSpacer} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
             <div className={styles.languageSwitcher}>
               <button
                 className={`${styles.langOption} ${currentLang === 'en' ? styles.langOptionActive : ''}`}
@@ -107,8 +119,13 @@ function Header() {
               </div>
             )}
           </div>
+
         </div>
       </header>
+
+      {isMobileMenuOpen && (
+        <div className={styles.mobileOverlay} onClick={() => setIsMobileMenuOpen(false)} />
+      )}
     </>
   );
 }

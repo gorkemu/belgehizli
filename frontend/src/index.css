@@ -1,10 +1,5 @@
-/* ==========================================================================
-   MASTER GLOBAL CSS & THEME VARIABLES
-   ========================================================================== */
+/* frontend\src\index.css */
 
-/* --------------------------------------------------------------------------
-   1. CSS Reset & Base Styles
-   -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -17,14 +12,10 @@ body {
   background-color: var(--bg-app);
   color: var(--text-primary);
   font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* --------------------------------------------------------------------------
-   2. Light Theme (Default)
-   -------------------------------------------------------------------------- */
+/* Light Theme (Default) */
 :root, [data-theme="light"] {
   /* Backgrounds */
   --bg-app: #f5f5f4;
@@ -66,7 +57,7 @@ body {
   --autocomplete-bg: #ffffff;
   --autocomplete-border: #e7e5e4;
   
-  /* Radii & Shadows */
+  /* Radius & Shadows */
   --radius-sm: 6px;
   --radius: 10px;
   --radius-lg: 14px;
@@ -75,9 +66,7 @@ body {
   --paper-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* --------------------------------------------------------------------------
-   3. Dark Theme
-   -------------------------------------------------------------------------- */
+/* Dark Theme */
 [data-theme="dark"] {
   --bg-app: #080d14;
   --bg-surface: #0e1521;
@@ -118,9 +107,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* --------------------------------------------------------------------------
-   4. Amber Theme
-   -------------------------------------------------------------------------- */
+/* Amber Theme */
 [data-theme="amber"] {
   --bg-app: #140b03;
   --bg-surface: #1e1005;
@@ -155,9 +142,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(212, 160, 80, 0.15), 0 20px 60px rgba(0, 0, 0, 0.6);
 }
 
-/* --------------------------------------------------------------------------
-   5. Forest Theme
-   -------------------------------------------------------------------------- */
+/* Forest Theme */
 [data-theme="forest"] {
   --bg-app: #0a1a10;
   --bg-surface: #0f2218;
@@ -192,9 +177,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(16, 185, 129, 0.12), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
-/* --------------------------------------------------------------------------
-   6. Glacier Theme
-   -------------------------------------------------------------------------- */
+/* Glacier Theme */
 [data-theme="glacier"] {
   --bg-app: #dde8f2;
   --bg-surface: #eef4fa;
@@ -229,9 +212,7 @@ body {
   --paper-shadow: 0 2px 8px rgba(26, 86, 219, 0.05), 0 16px 40px rgba(20, 60, 120, 0.08);
 }
 
-/* --------------------------------------------------------------------------
-   7. Sunset Theme
-   -------------------------------------------------------------------------- */
+/* Sunset Theme */
 [data-theme="sunset"] {
   --bg-app: #18060e;
   --bg-surface: #220b14;
@@ -266,9 +247,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(224, 90, 122, 0.1), 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-/* --------------------------------------------------------------------------
-   8. Ink Theme
-   -------------------------------------------------------------------------- */
+/* Ink Theme */
 [data-theme="ink"] {
   --bg-app: #111110;
   --bg-surface: #1a1918;
@@ -303,9 +282,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
-/* --------------------------------------------------------------------------
-   9. Lavender Theme
-   -------------------------------------------------------------------------- */
+/* Lavender Theme */
 [data-theme="lavender"] {
   --bg-app: #0c0818;
   --bg-surface: #140f22;
@@ -340,9 +317,7 @@ body {
   --paper-shadow: 0 0 0 1px rgba(139, 104, 212, 0.1), 0 20px 60px rgba(0, 0, 0, 0.55);
 }
 
-/* ==========================================================================
-   UTILITY CLASSES (Optional)
-   ========================================================================== */
+/* UTILITY CLASSES (Optional) */
 .text-primary { color: var(--text-primary); }
 .text-secondary { color: var(--text-secondary); }
 .text-muted { color: var(--text-muted); }

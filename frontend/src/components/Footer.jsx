@@ -9,7 +9,7 @@ function Footer() {
   const { lang } = useParams(); 
   const currentLang = lang || 'tr'; 
 
-  // 🔥 Dinamik Rotalar
+  // Dinamik Rotalar
   const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
   const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
   const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
