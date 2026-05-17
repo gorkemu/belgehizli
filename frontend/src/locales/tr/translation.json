@@ -609,7 +609,7 @@
       }
     },
     "magicTitle": "Saniyeler içinde form oluşturun",
-    "magicDescription": "Zaten hazırladığınız bir taslağınız mı var? Metni çalışma alanına yapıştırın veya sürükleyip bırakın. \"Tümünü Algıla\" düğmesiyle sistem, metninizdeki tüm değişkenleri otomatik olarak bulur ve formu sizin yerinize kurar.",
+    "magicDescription": "Zaten hazırladığınız bir taslağınız mı var? Metni çalışma alanına yapıştırın veya sürükleyip bırakın. \"Tümünü Algıla\" özelliğiyle sistem, metninizdeki tüm değişkenleri otomatik olarak bulur ve formu sizin yerinize oluşturur.",
     "bubbleTitle": "Metni seçin, soruya dönüştürün",
     "bubbleDescription": "Her belgede değişecek kelimeleri seçin ve tek tıklamayla dinamik bir form sorusuna çevirin.",
     "logicTitle": "Cevaplara göre şekillenen belgeler",
@@ -666,7 +666,7 @@
     "bubblePaperSelection": "Ahmet Yılmaz",
     "bubblePaperPara2": "ile hizmet alıcı sıfatıyla TechBrand arasında akdedilmiştir...",
     "logicSidebarTitle": "Test Formu",
-    "logicQuestion": "Evcil Hayvan İzni",
+    "logicQuestion": "Evcil Hayvan Var mı?",
     "no": "Hayır",
     "yes": "Evet",
     "logicPaperTitle": "KİRA SÖZLEŞMESİ",
