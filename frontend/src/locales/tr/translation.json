@@ -635,6 +635,12 @@
     "searchPlaceholder": "Örn: Kira sözleşmesi, istifa dilekçesi, ihtarname...",
     "findTemplate": "Şablon Bul",
     "frequentlyUsed": "Sık kullanılanlar",
+    "chips": {
+      "leaseAgreement": "Kira Sözleşmesi",
+      "resignationLetter": "İstifa Dilekçesi",
+      "vehicleSale": "Araç Satış",
+      "legalNotice": "İhtarname"
+    },
     "ctaTitle": "Çalışma alanınızı oluşturun",
     "ctaDescription": "Kendi şablonlarınızı oluşturup kaydetmek için hesap açın.",
     "magicSidebarTitle": "Form Soruları",

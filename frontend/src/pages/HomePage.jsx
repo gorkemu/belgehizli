@@ -1,9 +1,9 @@
 // frontend/src/pages/HomePage.jsx
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; 
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './HomePage.module.css';
-import { SEOHead } from '../components/SEOHead'; 
+import { SEOHead } from '../components/SEOHead';
 import {
   FileText, Search, Home as HomeIcon, Car, Gavel, Sparkles, Zap,
   Building2, Briefcase, Scale,
@@ -12,23 +12,31 @@ import {
 } from 'lucide-react';
 import Button from '../components/ui/Button';
 
-const POPULAR_CHIPS = [
-  { name: 'Kira Sözleşmesi', slug: 'konut-kira-sozlesmesi', icon: <HomeIcon size={13} /> },
-  { name: 'İstifa Dilekçesi', slug: 'istifa-dilekcesi', icon: <FileText size={13} /> },
-  { name: 'Araç Satış', slug: 'arac-satis-sozlesmesi', icon: <Car size={13} /> },
-  { name: 'İhtarname', slug: 'genel-ihtarname', icon: <Gavel size={13} /> },
-];
+const getPopularChips = (t, currentLang) => {
+  const slugs = {
+    tr: { lease: 'konut-kira-sozlesmesi', resignation: 'istifa-dilekcesi-isci-tarafindan-fesih', vehicle: 'arac-satis-sozlesmesi', notice: 'genel-ihtarname' },
+    en: { lease: 'residential-lease-agreement', resignation: 'letter-of-resignation', vehicle: 'motor-vehicle-bill-of-sale', notice: 'formal-demand-letter-legal-notice' },
+  };
+
+  const activeSlugs = slugs[currentLang] || slugs['en'];
+
+  return [
+    { name: t('homePage.chips.leaseAgreement'), slug: activeSlugs.lease, icon: <HomeIcon size={13} /> },
+    { name: t('homePage.chips.resignationLetter'), slug: activeSlugs.resignation, icon: <FileText size={13} /> },
+    { name: t('homePage.chips.vehicleSale'), slug: activeSlugs.vehicle, icon: <Car size={13} /> },
+    { name: t('homePage.chips.legalNotice'), slug: activeSlugs.notice, icon: <Gavel size={13} /> },
+  ];
+};
 
 function HomePage() {
   const { t } = useTranslation();
-  const { lang } = useParams(); 
+  const { lang } = useParams();
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
   const [fade, setFade] = useState(false);
-
-  // Mevcut Dil ve Dinamik Rotalar
   const currentLang = lang || 'tr';
+  const popularChips = getPopularChips(t, currentLang);
   const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
   const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
   const detailRoute = currentLang === 'tr' ? 'sablonlar/detay' : 'templates/detail';
@@ -121,9 +129,9 @@ function HomePage() {
 
   return (
     <div className={styles.pageWrapper}>
-      <SEOHead 
-        titleKey="homePage.pageTitle" 
-        descKey="homePage.metaDescription" 
+      <SEOHead
+        titleKey="homePage.pageTitle"
+        descKey="homePage.metaDescription"
       />
 
       {/* ======================= HERO ======================= */}
@@ -338,8 +346,13 @@ function HomePage() {
           </form>
           <div className={styles.chips}>
             <span className={styles.chipsLabel}>{t('homePage.frequentlyUsed')}:</span>
-            {POPULAR_CHIPS.map(chip => (
-              <button key={chip.slug} onClick={() => navigate(`/${currentLang}/${detailRoute}/${chip.slug}`)} className={styles.chip} type="button">
+            {popularChips.map(chip => (
+              <button
+                key={chip.slug}
+                onClick={() => navigate(`/${currentLang}/${detailRoute}/${chip.slug}`)}
+                className={styles.chip}
+                type="button"
+              >
                 {chip.icon} {chip.name}
               </button>
             ))}

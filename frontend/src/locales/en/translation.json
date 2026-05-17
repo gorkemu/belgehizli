@@ -635,6 +635,12 @@
     "searchPlaceholder": "E.g.: Lease agreement, resignation letter, notice...",
     "findTemplate": "Find Template",
     "frequentlyUsed": "Frequently used",
+    "chips": {
+      "leaseAgreement": "Lease Agreement",
+      "resignationLetter": "Resignation Letter",
+      "vehicleSale": "Vehicle Sale",
+      "legalNotice": "Legal Notice"
+    },
     "ctaTitle": "Create your workspace",
     "ctaDescription": "Sign up to create and save your own templates.",
     "magicSidebarTitle": "Form Questions",
@@ -668,6 +674,7 @@
     "logicConditionText": "Show IF \"{{question}}\" = \"{{answer}}\"",
     "logicConditionPara": "The tenant is personally responsible for any inconvenience or damage caused by their pet in the common areas of the building. Required hygiene standards must be maintained.",
     "logicPaperPara2": "This agreement has been signed by the mutual consent of the parties and a copy has been delivered to each."
+    
   },
   "common": {
     "loading": "Loading..."
