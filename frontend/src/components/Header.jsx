@@ -22,7 +22,7 @@ function Header() {
   const { theme } = useTheme(); 
 
   const currentLang = lang || 'tr'; 
-  const isDark = theme !== 'light' && theme !== 'glacier';
+  const isDark = theme !== 'light' && theme !== 'glacier' && theme !== 'default';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
