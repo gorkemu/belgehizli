@@ -16,7 +16,6 @@
     width: 100%;
     color: var(--footer-text-secondary);
     border-top: 1px solid var(--footer-border);
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .footerContent {

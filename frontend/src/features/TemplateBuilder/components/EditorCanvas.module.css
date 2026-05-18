@@ -206,7 +206,6 @@
 :global(.ProseMirror) {
   outline: none;
   color: var(--text-editor);
-  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
   font-size: 11pt;
   line-height: 1.6;
 }

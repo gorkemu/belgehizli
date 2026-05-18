@@ -9,7 +9,6 @@
     background: var(--bg-app);
     position: relative;
     overflow: hidden;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .authContainer::before {

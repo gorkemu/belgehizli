@@ -6,7 +6,6 @@
   justify-content: center;
   min-height: 80vh;
   padding: 2rem;
-  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
   background-color: var(--bg-app); 
 }
 

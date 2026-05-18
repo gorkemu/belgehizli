@@ -8,7 +8,6 @@
   box-shadow: var(--shadow-lg);
   border: 1px solid var(--border);
   color: var(--text-primary);
-  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .header {

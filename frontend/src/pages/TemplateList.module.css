@@ -1,7 +1,6 @@
 /* frontend/src/pages/TemplateList.module.css */
 
 .pageWrapper {
-  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
   background-color: var(--bg-app);
   color: var(--text-primary);
   min-height: 100vh;

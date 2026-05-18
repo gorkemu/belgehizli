@@ -8,7 +8,6 @@
     background-color: var(--bg-app);
     color: var(--text-secondary);
     gap: 16px;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .spinner {
@@ -30,7 +29,6 @@
     align-items: center;
     background-color: var(--bg-app);
     padding: 20px;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .unauthorizedCard {
@@ -90,7 +88,6 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .logoutButton:hover {

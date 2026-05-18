@@ -7,7 +7,6 @@
     justify-content: center;
     align-items: flex-start;
     padding: 40px 20px;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .formWrapper {
@@ -160,7 +159,6 @@
     align-items: center;
     min-height: 100vh;
     background-color: var(--bg-app);
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
     text-align: center;
     padding: 20px;
 }
@@ -194,7 +192,6 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
 }
 
 .successCard {
