@@ -19,7 +19,7 @@ body {
 
 /* Light Theme (Default) */
 :root,
-[data-theme="light"] {
+[data-theme="light"], [data-theme="default"] {
   /* Backgrounds */
   --bg-app: #f5f5f4;
   --bg-surface: #ffffff;
@@ -30,6 +30,7 @@ body {
   --bg-toolbar: #fafaf9;
   --bg-canvas: #f0ece6;
   --bg-paper: #ffffff;
+  --bg-card: #ffffff;
 
   /* Borders */
   --border: #e7e5e4;
@@ -80,6 +81,7 @@ body {
   --bg-toolbar: #111827;
   --bg-canvas: #080d14;
   --bg-paper: #111827;
+  --bg-card: #1a2235;
 
   --border: #1f2d42;
   --border-strong: #2d3f55;
@@ -121,6 +123,7 @@ body {
   --bg-toolbar: #2a1508;
   --bg-canvas: #140b03;
   --bg-paper: #fdf6e3;
+  --bg-card: #291408;
 
   --border: #3d1e08;
   --border-strong: #5a2e0e;
@@ -156,6 +159,7 @@ body {
   --bg-toolbar: #132b1d;
   --bg-canvas: #0a1a10;
   --bg-paper: #f7fdf9;
+  --bg-card: #163323;
 
   --border: #1a3d28;
   --border-strong: #265a3a;
@@ -191,6 +195,7 @@ body {
   --bg-toolbar: #e8f0f8;
   --bg-canvas: #dde8f2;
   --bg-paper: #ffffff;
+  --bg-card: #eef4fa;
 
   --border: #c2d4e8;
   --border-strong: #a8c0d8;
@@ -226,6 +231,7 @@ body {
   --bg-toolbar: #2c1019;
   --bg-canvas: #18060e;
   --bg-paper: #fef4f0;
+  --bg-card: #2c1019;
 
   --border: #4a1826;
   --border-strong: #66223a;
@@ -261,6 +267,7 @@ body {
   --bg-toolbar: #1f1e1c;
   --bg-canvas: #111110;
   --bg-paper: #f8f8f5;
+  --bg-card: #242320;
 
   --border: #2e2d2a;
   --border-strong: #3e3d38;
@@ -296,6 +303,7 @@ body {
   --bg-toolbar: #1a1430;
   --bg-canvas: #0c0818;
   --bg-paper: #f6f3ff;
+  --bg-card: #1c1738;
 
   --border: #282050;
   --border-strong: #3a2e68;
