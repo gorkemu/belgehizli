@@ -1,6 +1,6 @@
 // frontend/src/components/PostDownloadModal.jsx
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Check, Cloud, FolderKanban, X } from 'lucide-react';
 import styles from './PostDownloadModal.module.css';
@@ -8,6 +8,14 @@ import styles from './PostDownloadModal.module.css';
 export const PostDownloadModal = ({ isOpen, onClose, isLoggedIn }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { lang } = useParams();              
+  const currentLang = lang || 'tr';          
+
+  const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
+  const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
+
+  const dashboardPath = `/${currentLang}/${dashboardRoute}`;   
+  const registerPath = `/${currentLang}/${registerRoute}`;     
 
   if (!isOpen) return null;
 
@@ -46,14 +54,14 @@ export const PostDownloadModal = ({ isOpen, onClose, isLoggedIn }) => {
           {isLoggedIn ? (
             <button
               className={styles.primaryBtn}
-              onClick={() => navigate('/panel')}
+              onClick={() => navigate(dashboardPath)}
             >
               <FolderKanban size={18} /> {t('postDownloadModal.goToDashboard')}
             </button>
           ) : (
             <button
               className={styles.primaryBtn}
-              onClick={() => navigate('/kayit-ol')}
+              onClick={() => navigate(registerPath)}
             >
               <Cloud size={18} /> {t('postDownloadModal.createFreeAccount')}
             </button>
