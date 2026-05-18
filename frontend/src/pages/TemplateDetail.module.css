@@ -472,7 +472,7 @@
   padding: 0.6rem 1.2rem;
   border-radius: 40px;
   box-shadow: var(--shadow-lg);
-  z-index: 9999;
+  z-index: 998;
   font-weight: 500;
   white-space: nowrap;
   border: 1px solid var(--border);
