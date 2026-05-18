@@ -4,7 +4,8 @@
     "find": "Find",
     "workspace": "Workspace",
     "login": "Login",
-    "register": "Sign Up"
+    "register": "Sign Up",
+    "changeTheme": "Change Theme"
   },
   "projects": {
     "title": "All Templates",

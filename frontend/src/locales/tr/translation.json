@@ -4,7 +4,8 @@
     "find": "Bul",
     "workspace": "Çalışma Alanı",
     "login": "Giriş",
-    "register": "Kayıt Ol"
+    "register": "Kayıt Ol",
+    "changeTheme": "Temayı değiştir"
   },
   "projects": {
     "title": "Tüm Şablonlar",

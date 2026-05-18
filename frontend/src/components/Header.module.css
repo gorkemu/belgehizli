@@ -125,8 +125,8 @@
   gap: 0;
   background: var(--bg-hover);
   border: 1px solid var(--border);
-  border-radius: 50px;          
-  padding: 3px;     
+  border-radius: 50px;
+  padding: 3px;
   transition: box-shadow 0.2s ease;
 }
 
@@ -159,6 +159,191 @@
   box-shadow: var(--shadow-sm);
 }
 
+.compactThemeDropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.themeActiveBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  padding: 0;
+  line-height: 1;
+}
+
+.themeActiveBtn:hover {
+  background: var(--bg-active);
+}
+
+.themePopoverMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  box-shadow: var(--shadow-lg);
+  min-width: 160px;
+  padding: 4px;
+  z-index: 100;
+}
+
+.themePopoverItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm, 6px);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.themePopoverItem:hover {
+  background: var(--bg-hover);
+}
+
+.themePopoverItem.active {
+  color: var(--text-primary);
+  font-weight: 800;
+  background: var(--bg-active);
+}
+
+.themeOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+  background: transparent;
+}
+
+.mobileThemeSection {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileThemeToggleBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.mobileThemeToggleBtn:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent);
+}
+
+.mobileThemeToggleLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mobileThemeLabels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.mobileThemeSub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mobileThemeMain {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.chevron {
+  color: var(--text-secondary);
+}
+
+.mobileThemeListWrapper {
+  margin-top: 6px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius, 8px);
+  padding: 4px;
+  animation: slideDownFade 0.2s ease-out forwards;
+}
+
+@keyframes slideDownFade {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mobileThemeList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.mobileThemeOption {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.mobileThemeOption:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.activeMobileTheme {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  font-weight: 800;
+}
+
+.themeEmoji {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
 .hamburgerBtn {
   display: none;
   background: transparent;
@@ -171,7 +356,7 @@
 }
 
 .hamburgerBtn:hover {
-  background-color: var(--bg-hover);
+  background: var(--bg-hover);
 }
 
 .mobileOverlay {
@@ -186,7 +371,7 @@
 
   .logoFull { display: none; }
   .logoIcon { display: block; }
-  
+
   .hamburgerBtn {
     display: flex;
     align-items: center;
@@ -195,7 +380,7 @@
 
   .rightSpacer {
     position: absolute;
-    top: 80px; 
+    top: 80px;
     left: 0;
     width: 100%;
     background-color: var(--bg-surface);
@@ -205,7 +390,7 @@
     gap: 1.5rem;
     border-bottom: 1px solid var(--border);
     box-shadow: var(--shadow-lg);
-    
+
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -222,7 +407,7 @@
     flex-direction: column;
     width: 100%;
   }
-  
+
   .authButtons > * {
     width: 100%;
   }
