@@ -89,7 +89,11 @@
     "personalWorkspace": "Personal Workspace",
     "backToHome": "Back to Home",
     "accountSettings": "Account Settings",
-    "logout": "Sign Out"
+    "logout": "Sign Out",
+    "logoutConfirmTitle": "Logout",
+    "logoutConfirmText": "Are you sure you want to logout?",
+    "cancel": "Cancel",
+    "confirmLogout": "Logout"
   },
   "settings": {
     "pageTitle": "Account Settings",
@@ -674,7 +678,6 @@
     "logicConditionText": "Show IF \"{{question}}\" = \"{{answer}}\"",
     "logicConditionPara": "The tenant is personally responsible for any inconvenience or damage caused by their pet in the common areas of the building. Required hygiene standards must be maintained.",
     "logicPaperPara2": "This agreement has been signed by the mutual consent of the parties and a copy has been delivered to each."
-    
   },
   "common": {
     "loading": "Loading..."

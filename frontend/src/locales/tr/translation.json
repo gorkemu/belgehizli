@@ -89,7 +89,11 @@
     "personalWorkspace": "Kişisel Çalışma Alanı",
     "backToHome": "Ana Sayfaya Dön",
     "accountSettings": "Hesap Ayarları",
-    "logout": "Güvenli Çıkış"
+    "logout": "Güvenli Çıkış",
+    "logoutConfirmTitle": "Çıkış Yap",
+    "logoutConfirmText": "Hesabınızdan çıkış yapmak istediğinize emin misiniz?",
+    "cancel": "İptal",
+    "confirmLogout": "Çıkış Yap"
   },
   "settings": {
     "pageTitle": "Hesap Ayarları",
@@ -333,7 +337,7 @@
   "homePage": {
     "pageTitle": "Belge Hızlı — Akıllı Form ve Sözleşme Oluşturucu",
     "metaDescription": "Sözleşme, dilekçe veya resmi yazışmalarınızı kolayca hazırlayabileceğiniz, akıllı form altyapısına sahip temiz belge çalışma alanı.",
-        "hero": "Belge ve sözleşme hazırlamanın<br /><1>akıllı</1> yolu",
+    "hero": "Belge ve sözleşme hazırlamanın<br /><1>akıllı</1> yolu",
     "heroSub": "Sık kullandığınız sözleşmeleri, ihtarnameleri veya teknik dokümanları saniyeler içinde doldurulabilir akıllı formlara dönüştürün.",
     "startNow": "Hemen Başlayın",
     "readyTemplates": "Hazır Şablonlar",

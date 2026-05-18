@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import {
   LayoutDashboard, FolderKanban,
   LogOut, Settings, Globe,
-  Menu, X, ChevronRight,
+  Menu, X, ChevronRight, AlertTriangle
 } from 'lucide-react';
 import styles from './DashboardLayout.module.css';
 import Button from '../components/ui/Button';
@@ -24,6 +24,7 @@ export const DashboardLayout = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,12 +43,16 @@ export const DashboardLayout = () => {
     { path: `/${currentLang}/${projectsRoute}`, name: t('dashboardLayout.myTemplates'), icon: FolderKanban,  exact: false },
   ];
 
+  const handleLogout = () => {
+    setShowLogoutModal(false);
+    logout();
+  };
+
   return (
     <div className={styles.root}>
       {isMobile && (
         <div className={styles.mobileHeader}>
           <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.mobileLogoLink}>
-            {/* MOBİL LOGOLAR */}
             <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.mobileLogoIconLight} />
             <img src="/logo-icon-white.svg" alt="Belge Hızlı" className={styles.mobileLogoIconDark} />
             <span className={styles.mobileLogoText}>BelgeHızlı</span>
@@ -71,6 +76,26 @@ export const DashboardLayout = () => {
         />
       )}
 
+      {showLogoutModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowLogoutModal(false)}>
+          <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
+            <div className={styles.modalIconBox}>
+              <AlertTriangle size={24} color="#dc2626" />
+            </div>
+            <h2 className={styles.modalTitle}>{t('dashboardLayout.logoutConfirmTitle')}</h2>
+            <p className={styles.modalText}>{t('dashboardLayout.logoutConfirmText')}</p>
+            <div className={styles.modalActions}>
+              <Button variant="secondary" onClick={() => setShowLogoutModal(false)} style={{ flex: 1 }}>
+                {t('dashboardLayout.cancel')}
+              </Button>
+              <Button variant="danger" onClick={handleLogout} style={{ flex: 1 }}>
+                {t('dashboardLayout.confirmLogout')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <aside
         className={[
           styles.sidebar,
@@ -80,7 +105,6 @@ export const DashboardLayout = () => {
       >
         <div className={styles.sidebarHeader}>
           <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.sidebarLogoLink}>
-            {/* SIDEBAR LOGOLAR */}
             <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.sidebarLogoLight} />
             <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.sidebarLogoDark} />
           </Link>
@@ -147,7 +171,7 @@ export const DashboardLayout = () => {
             <Button 
               variant="ghost" 
               fullWidth 
-              onClick={logout} 
+              onClick={() => setShowLogoutModal(true)} 
               className={styles.logoutBtn} 
               leftIcon={<LogOut size={16} className={styles.logoutIcon} />}
             >
