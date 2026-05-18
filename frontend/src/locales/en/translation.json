@@ -332,8 +332,7 @@
   "homePage": {
     "pageTitle": "Belge Hızlı — Smart Form & Contract Builder",
     "metaDescription": "A clean document workspace with smart form infrastructure where you can easily prepare contracts, petitions or official correspondence.",
-    "heroTitle1": "The smart way to prepare",
-    "heroAccent": "documents & contracts",
+    "hero": "A <1>smart</1> way to create<br />documents and contracts",
     "heroSub": "A recurring contract, a formal notice, or a technical document — whatever you're writing, turn your text into a fillable smart form in seconds.",
     "startNow": "Get Started",
     "readyTemplates": "Ready Templates",

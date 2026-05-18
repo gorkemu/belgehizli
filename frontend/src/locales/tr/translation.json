@@ -332,8 +332,7 @@
   "homePage": {
     "pageTitle": "Belge Hızlı — Akıllı Form ve Sözleşme Oluşturucu",
     "metaDescription": "Sözleşme, dilekçe veya resmi yazışmalarınızı kolayca hazırlayabileceğiniz, akıllı form altyapısına sahip temiz belge çalışma alanı.",
-    "heroTitle1": "Belge ve sözleşmeleri hazırlamanın",
-    "heroAccent": "akıllı yolu",
+        "hero": "Belge ve sözleşme hazırlamanın<br /><1>akıllı</1> yolu",
     "heroSub": "Sık kullandığınız sözleşmeleri, ihtarnameleri veya teknik dokümanları saniyeler içinde doldurulabilir akıllı formlara dönüştürün.",
     "startNow": "Hemen Başlayın",
     "readyTemplates": "Hazır Şablonlar",

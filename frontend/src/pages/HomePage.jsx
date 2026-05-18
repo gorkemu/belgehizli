@@ -1,7 +1,7 @@
 // frontend/src/pages/HomePage.jsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans } from 'react-i18next';
 import styles from './HomePage.module.css';
 import { SEOHead } from '../components/SEOHead';
 import {
@@ -139,8 +139,12 @@ function HomePage() {
         <div className={styles.heroInner}>
           <div className={styles.heroText}>
             <h1 className={styles.heroTitle}>
-              {t('homePage.heroTitle1')}<br />
-              <span className={styles.heroAccent}>{t('homePage.heroAccent')}</span>
+              <Trans
+                i18nKey="homePage.hero"
+                components={{
+                  1: <span className={styles.heroAccent} />,
+                }}
+              />
             </h1>
             <p className={styles.heroSub}>{t('homePage.heroSub')}</p>
             <div className={styles.heroCtas}>
