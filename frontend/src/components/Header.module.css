@@ -322,6 +322,7 @@
   border: none;
   background: transparent;
   border-radius: 6px;
+  font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-secondary);
