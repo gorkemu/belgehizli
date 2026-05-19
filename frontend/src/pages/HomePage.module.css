@@ -638,6 +638,37 @@
   opacity: 0.85;
 }
 
+/* Mevcut @media (max-width: 600px) bloğunun içine eklenecek */
+.searchBar {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 8px;
+  gap: 8px;
+}
+
+.searchIcon {
+  display: none;
+  /* Mobilde ikonu gizleyerek alan kazanalım */
+}
+
+.searchBar input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+}
+
+.searchBar button {
+  width: 100%;
+  border-radius: 12px;
+  padding: 0.85rem;
+  white-space: normal;
+  /* Uzun metinlerde taşmayı önler */
+  font-size: 1rem;
+}
+
 .chips {
   display: flex;
   align-items: center;
@@ -837,6 +868,34 @@
 
   .bvBubbleMenu {
     left: 12px;
+  }
+
+  .searchBar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .searchIcon {
+    display: none;
+  }
+
+  .searchBar input {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0;
+    border-radius: 12px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-surface);
+  }
+
+  .searchBar button {
+    width: 100%;
+    border-radius: 12px;
+    padding: 0.85rem;
+    white-space: normal;
+    font-size: 1rem;
   }
 }
 
