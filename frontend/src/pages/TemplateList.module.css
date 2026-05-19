@@ -111,7 +111,6 @@
   outline: none;
   background: transparent;
   color: var(--text-primary);
-  font-family: inherit;
 }
 
 .searchBar input::placeholder {
@@ -128,7 +127,6 @@
   font-size: .9rem;
   cursor: pointer;
   transition: opacity .15s;
-  font-family: inherit;
   white-space: nowrap;
 }
 
@@ -157,7 +155,6 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.15s ease;
-  font-family: inherit;
 }
 
 .categoryTab svg {
@@ -329,7 +326,6 @@
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.15s ease;
-  font-family: inherit;
 }
 
 .loadMoreButton:hover {
@@ -381,7 +377,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: opacity 0.15s ease;
-  font-family: inherit;
 }
 
 .clearSearchButton:hover {

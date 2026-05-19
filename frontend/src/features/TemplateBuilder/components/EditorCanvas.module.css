@@ -127,7 +127,6 @@
   font-size: 0.85rem;
   font-weight: 600;
   transition: all 0.15s;
-  font-family: inherit;
 }
 .bubbleActionBtn:hover, .bubbleBtn:hover { background-color: var(--bg-hover); color: var(--text-primary); }
 .bubbleActionBtnActive { background-color: var(--accent-bg); color: var(--accent); }
@@ -141,7 +140,6 @@
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 0.85rem;
-  font-family: inherit;
   outline: none;
   width: 180px;
 }
@@ -154,7 +152,6 @@
   padding: 6px 8px;
   border-radius: 8px;
   font-size: 0.8rem;
-  font-family: inherit;
   outline: none;
   cursor: pointer;
 }
@@ -168,7 +165,6 @@
   font-size: 0.85rem;
   cursor: pointer;
   transition: 0.15s;
-  font-family: inherit;
 }
 .bubbleConfirmBtn:hover { background: var(--accent-hover); }
 

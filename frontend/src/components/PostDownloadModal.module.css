@@ -113,7 +113,6 @@
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
 }
 
 .secondaryBtn:hover {
@@ -136,7 +135,6 @@
     justify-content: center;
     gap: 8px;
     transition: opacity 0.2s;
-    font-family: inherit;
 }
 
 .primaryBtn:hover {

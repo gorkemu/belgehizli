@@ -613,7 +613,6 @@
   outline: none;
   background: transparent;
   color: var(--text-primary);
-  font-family: inherit;
 }
 
 .searchBar input::placeholder {
@@ -630,7 +629,6 @@
   font-size: .9rem;
   cursor: pointer;
   transition: opacity .15s;
-  font-family: inherit;
   white-space: nowrap;
 }
 
@@ -697,7 +695,6 @@
   color: var(--text-secondary);
   cursor: pointer;
   transition: all .15s;
-  font-family: inherit;
 }
 
 .chip:hover {

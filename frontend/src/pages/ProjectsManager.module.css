@@ -346,7 +346,6 @@
   transition: all 0.15s ease;
   background-color: var(--bg-surface);
   color: var(--text-primary);
-  font-family: inherit;
   font-weight: 500;
 }
 
