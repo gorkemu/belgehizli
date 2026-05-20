@@ -13,18 +13,15 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
       localStorage.setItem('template_builder_tour_seen', 'true');
     });
     const page = await context.newPage();
-    
-    // 🔥 URL güncellendi
+
     await page.goto('/tr/panel');
     await page.getByRole('button', { name: /Yeni Şablon Oluştur/ }).click();
-    
-    // 🔥 Regex güncellendi
+
     await page.waitForURL(/.*\/panel\/projects/);
     await page.getByRole('button', { name: /Yeni Şablon/ }).click();
     await page.getByPlaceholder(/Örn: İş Sözleşmesi/).fill(DOC_NAME);
     await page.getByRole('button', { name: /Oluştur ve Başla/ }).click();
-    
-    // 🔥 Regex güncellendi
+
     await page.waitForURL(/.*\/panel\/duzenle\/.+/);
     const match = page.url().match(/.*\/panel\/duzenle\/([a-f0-9]+)/i);
     if (match && match[1]) TEST_DOC_ID = match[1];
@@ -34,8 +31,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   test.afterAll(async ({ browser }) => {
     if (!TEST_DOC_ID) return;
     const page = await browser.newPage();
-    
-    // 🔥 URL güncellendi
+
     await page.goto('/tr/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
     // Dil bağımsız sil butonu seçici
@@ -51,8 +47,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
       localStorage.setItem('i18nextLng', 'tr');
       localStorage.setItem('template_builder_tour_seen', 'true');
     });
-    
-    // 🔥 URL güncellendi
+
     await page.goto(`/tr/panel/duzenle/${TEST_DOC_ID}`);
     await page.getByRole('button', { name: /Tasarım/ }).click();
 
@@ -98,10 +93,10 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     const formInputs = testFormArea.locator('input');
 
     await formInputs.nth(0).waitFor({ state: 'visible' });
-    
+
     await formInputs.nth(0).fill('Tech Corp');
     await formInputs.nth(1).fill('Görkem Yılmaz');
-    await formInputs.nth(2).fill('2026-04-14'); 
+    await formInputs.nth(2).fill('2026-04-14');
     await formInputs.nth(2).blur();
 
     await page.getByRole('button', { name: /Belgeyi İncele/ }).click();
@@ -152,25 +147,25 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
 
     await page.getByPlaceholder(/Şablon adı…/).fill(DOC_NAME);
     await page.getByRole('button', { name: /Kaydet/ }).click();
-    await expect(page.getByText(/Buluta kaydedildi/)).toBeVisible(); 
-    
+    await expect(page.getByText(/Buluta kaydedildi/)).toBeVisible();
+
     await page.getByRole('button', { name: /Önizleme/ }).click();
 
     const previewForm = page.locator('aside').filter({ hasText: /Test formu/ });
     await previewForm.waitFor({ state: 'visible' });
 
     await previewForm.locator('label', { hasText: 'Standart' }).click();
-    
+
     const textElements = previewForm.locator('input:not([type="radio"]):not([type="checkbox"])');
     const textCount = await textElements.count();
     for (let i = 0; i < textCount; i++) {
-        const el = textElements.nth(i);
-        if (await el.isVisible()) {
-            const type = await el.getAttribute('type');
-            if (type === 'date') await el.fill('2026-04-14');
-            else await el.fill('Test Verisi');
-            await el.press('Tab');
-        }
+      const el = textElements.nth(i);
+      if (await el.isVisible()) {
+        const type = await el.getAttribute('type');
+        if (type === 'date') await el.fill('2026-04-14');
+        else await el.fill('Test Verisi');
+        await el.press('Tab');
+      }
     }
     await page.waitForTimeout(300);
 
@@ -183,7 +178,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
 
     await expect(page.getByText(/Adım 1\/2/)).toBeVisible();
     await previewForm.locator('label', { hasText: 'Premium' }).click();
-    
+
     await page.getByRole('button', { name: /Belgeyi İncele/ }).click();
     await expect(page.locator('main')).toContainText('Premium üyelik avantajları');
   });
@@ -192,7 +187,7 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     await page.getByRole('button', { name: /Yeni alan ekle/ }).click();
     await page.getByPlaceholder(/Örn: Adı Soyadı/).last().fill('Birinci Alan');
     await page.keyboard.press('Tab');
-    
+
     await page.getByRole('button', { name: /Yeni alan ekle/ }).click();
     await page.getByPlaceholder(/Örn: Adı Soyadı/).last().fill('İkinci Alan');
     await page.keyboard.press('Tab');
@@ -201,12 +196,12 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
     const card2 = page.locator('[class*="fieldCard"]').filter({ hasText: 'İkinci Alan' });
 
     const handle1 = card1.locator('[class*="dragHandle"]');
-    
+
     await handle1.scrollIntoViewIfNeeded();
     await card2.scrollIntoViewIfNeeded();
 
     const box1 = await handle1.boundingBox();
-    const box2 = await card2.boundingBox(); 
+    const box2 = await card2.boundingBox();
 
     if (box1 && box2) {
       const startX = box1.x + box1.width / 2;
@@ -255,15 +250,21 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
   });
 
   test('Tema değiştirilebilmeli ve localStorage\'a kaydedilmeli', async ({ page }) => {
+    // Tema menüsünü aç
     await page.locator('#tb-theme-btn button').click();
+
+    // "Orman" temasını seç
     await page.locator('button:has-text("Orman")').click();
 
-    await expect(page.locator('[data-theme="forest"]')).toBeVisible();
+    // 1. DOM Kontrolü: <html> etiketinde data-theme="forest" var mı?
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'forest');
 
-    const theme = await page.evaluate(() => localStorage.getItem('template_theme'));
+    // 2. LocalStorage Kontrolü: Yeni anahtarımız 'app-theme'
+    const theme = await page.evaluate(() => localStorage.getItem('app-theme'));
     expect(theme).toBe('forest');
 
+    // 3. Kalıcılık (Persistance) Kontrolü: Sayfa yenilendikten sonra tema kalıyor mu?
     await page.reload();
-    await expect(page.locator('[data-theme="forest"]')).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'forest');
   });
 });

@@ -18,23 +18,23 @@ import { THEMES } from '../utils/constants';
 const Header = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { lang } = useParams(); 
-  const currentLang = lang || 'tr'; 
-  
-  const { changeTheme } = useTheme();
-  
-  const { 
-    formData, setFormData, 
+  const { lang } = useParams();
+  const currentLang = lang || 'tr';
+
+  const { theme, changeTheme } = useTheme();
+
+
+  const {
+    formData, setFormData,
     formErrors, setFormErrors,
-    mode, setMode, 
-    editorTheme, handleThemeChange, 
+    mode, setMode,
     saveStatus, setSaveStatus,
-    onSave, 
+    onSave,
     editorInstance, getCleanFields, triggerSymbol, showToast,
     expandedFields, setExpandedFields,
-    setIsShareModalOpen, 
+    setIsShareModalOpen,
     setPdfConfirmModal,
-    showBackWarning, setShowBackWarning,  
+    showBackWarning, setShowBackWarning,
     previewStep
   } = useTemplateBuilder();
 
@@ -52,8 +52,8 @@ const Header = () => {
 
     if (!formData.name?.trim()) err.name = true;
 
-    const currentContent = (mode === 'build' && editorInstance) 
-      ? editorInstance.getHTML() 
+    const currentContent = (mode === 'build' && editorInstance)
+      ? editorInstance.getHTML()
       : (formData.content || '');
     const stripped = currentContent.replace(/(<([^>]+)>)/gi, '').trim();
     if (!stripped) err.content = true;
@@ -147,16 +147,17 @@ const Header = () => {
   }, [formData]);
 
   const onThemeSelect = (themeId) => {
-    handleThemeChange(themeId); // TemplateBuilder'ın kendi state'ini güncelle 
-    changeTheme(themeId);       // Global ThemeContext'i güncelle (HTML root)
+    changeTheme(themeId);
     setThemePopover(false);
   };
 
+  const currentThemeObj = THEMES.find(th => th.id === theme) || THEMES[0];
+
   return (
     <header className={styles.header}>
-      <Button 
-        variant="secondary" 
-        onClick={handleBackToProjects} 
+      <Button
+        variant="secondary"
+        onClick={handleBackToProjects}
         leftIcon={<ArrowLeft size={16} />}
       >
         <span>{t('templateBuilder.header.myTemplates')}</span>
@@ -174,7 +175,7 @@ const Header = () => {
 
       <div className={styles.compactThemeDropdown} id="tb-theme-btn">
         <button onClick={() => setThemePopover(!themePopover)} className={styles.themeActiveBtn} title={t('templateBuilder.header.changeTheme')}>
-          {THEMES.find(th => th.id === editorTheme)?.emoji}
+          {currentThemeObj.emoji}
         </button>
 
         {themePopover && (
@@ -182,16 +183,16 @@ const Header = () => {
             <div className={globalStyles.popoverOverlay} onClick={() => setThemePopover(false)} />
             <div style={{ position: 'absolute', top: '100%', right: '0', marginTop: '8px', zIndex: 99999 }}>
               <div className={globalStyles.dropdownMenuFixed} style={{ minWidth: '150px' }}>
-                {THEMES.map(theme => (
+                {THEMES.map(th => (
                   <button
-                    key={theme.id}
-                    onClick={() => onThemeSelect(theme.id)} 
+                    key={th.id}
+                    onClick={() => onThemeSelect(th.id)}
                     className={globalStyles.dropdownItem}
                     style={{ justifyContent: 'flex-start', gap: '8px' }}
                   >
-                    <span style={{ fontSize: '1.2rem' }}>{theme.emoji}</span>
-                    <span style={{ fontWeight: editorTheme === theme.id ? '800' : '600', color: editorTheme === theme.id ? 'var(--text-primary)' : 'inherit' }}>
-                      {t(theme.label)}
+                    <span style={{ fontSize: '1.2rem' }}>{th.emoji}</span>
+                    <span style={{ fontWeight: theme === th.id ? '800' : '600', color: theme === th.id ? 'var(--text-primary)' : 'inherit' }}>
+                      {t(th.label)}
                     </span>
                   </button>
                 ))}
@@ -202,8 +203,8 @@ const Header = () => {
       </div>
 
       <div className={styles.modeSwitch}>
-        <button 
-          className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`} 
+        <button
+          className={`${styles.modeBtn} ${mode === 'build' ? styles.modeOn : ''}`}
           onClick={() => {
             if (mode === 'preview') {
               setShowBackWarning('build');
@@ -214,10 +215,10 @@ const Header = () => {
         >
           <Wrench size={15} /> {t('templateBuilder.header.design')}
         </button>
-        
-        <button 
-          id="tb-preview-btn" 
-          className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`} 
+
+        <button
+          id="tb-preview-btn"
+          className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`}
           onClick={() => setMode('preview')}
         >
           <Eye size={15} /> {t('templateBuilder.header.preview')}
@@ -234,10 +235,10 @@ const Header = () => {
 
         <div className={styles.headerActionsDivider} />
 
-        <Button 
-          id="tb-share-btn" 
-          variant="secondary" 
-          onClick={() => setIsShareModalOpen(true)} 
+        <Button
+          id="tb-share-btn"
+          variant="secondary"
+          onClick={() => setIsShareModalOpen(true)}
           title={t('templateBuilder.header.share')}
           leftIcon={<LinkIcon size={15} />}
         >
@@ -245,9 +246,9 @@ const Header = () => {
         </Button>
 
         {mode === 'preview' && (
-          <Button 
-            variant="secondary" 
-            onClick={() => setPdfConfirmModal(true)} 
+          <Button
+            variant="secondary"
+            onClick={() => setPdfConfirmModal(true)}
             isLoading={isGeneratingPdf}
             leftIcon={!isGeneratingPdf && <Printer size={15} />}
           >
@@ -255,9 +256,9 @@ const Header = () => {
           </Button>
         )}
 
-        <Button 
-          variant="primary" 
-          onClick={handleSaveClick} 
+        <Button
+          variant="primary"
+          onClick={handleSaveClick}
           isLoading={saveStatus === 'saving'}
           leftIcon={<Save size={15} />}
         >

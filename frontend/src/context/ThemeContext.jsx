@@ -1,4 +1,4 @@
-// frontend\src\context\ThemeContext.jsx
+// frontend/src/context/ThemeContext.jsx
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const ThemeContext = createContext();
@@ -15,7 +15,7 @@ export const ThemeProvider = ({ children }) => {
       return 'dark';
     }
     
-    return 'light';
+    return 'default'; 
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const ThemeProvider = ({ children }) => {
     
     const handleChange = (e) => {
       if (!localStorage.getItem('app-theme')) {
-        setTheme(e.matches ? 'dark' : 'light');
+        setTheme(e.matches ? 'dark' : 'default');
       }
     };
 
