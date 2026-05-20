@@ -27,6 +27,11 @@
   gap: 12px; 
 }
 
+.customTriggerWrapper {
+  display: flex;
+  gap: 4px;
+}
+
 .triggerSelectSmart {
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -56,5 +61,36 @@
   }
   .smartHint {
     display: none; 
+  }
+}
+
+@media (max-width: 768px) {
+  .smartBar {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  .smartBarLeft {
+    width: 100%;
+  }
+  .smartBarLeft button {
+    width: 100%;
+    justify-content: center;
+  }
+  .smartBarRight {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .smartBarRight button, .triggerSelectSmart {
+    flex: 1;
+    justify-content: center;
+    text-align: center;
+    padding: 8px;
+  }
+  .triggerSelectSmart { width: auto; }
+  
+  .smartBarRight button span {
+    display: none;
   }
 }

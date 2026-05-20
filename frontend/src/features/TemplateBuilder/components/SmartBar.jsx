@@ -20,7 +20,6 @@ const SmartBar = () => {
   const [isTriggerCustom, setIsTriggerCustom] = useState(!['{{', '[', '{', '@', '<<'].includes(triggerSymbol));
   const [customTriggerInput, setCustomTriggerInput] = useState('');
 
-  // Tetikleyici Değiştirme Mantığı
   const handleTriggerChange = (newTrigger) => {
     if (!newTrigger || !newTrigger.trim() || newTrigger === triggerSymbol) return;
     if (newTrigger.length > 5) return showToast(t('templateBuilder.smartBar.toast.triggerTooLong'), 'error');
@@ -48,7 +47,6 @@ const SmartBar = () => {
     showToast(t('templateBuilder.smartBar.toast.triggerUpdated'), 'success');
   };
 
-  // Dosya İçe Aktarma Mantığı
   const processFile = (file) => {
     if (!file || !editorInstance) return;
     const fileSizeMB = file.size / (1024 * 1024);
@@ -91,7 +89,7 @@ const SmartBar = () => {
           title={t('templateBuilder.smartBar.magicTitle')}
           leftIcon={<Wand2 size={16} />}
         >
-          {t('templateBuilder.smartBar.detectAll')}
+          <span>{t('templateBuilder.smartBar.detectAll')}</span>
         </Button>
         <span className={styles.smartHint}>{t('templateBuilder.smartBar.magicHint')}</span>
       </div>
@@ -114,14 +112,10 @@ const SmartBar = () => {
         </select>
 
         {isTriggerCustom && (
-          <div style={{ display: 'flex', gap: '4px' }}>
+          <div className={styles.customTriggerWrapper}>
             <input type="text" maxLength={5} value={customTriggerInput} onChange={e => setCustomTriggerInput(e.target.value)} onKeyDown={e => { if (e.key === 'Enter') { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); } }} placeholder={t('templateBuilder.smartBar.customPlaceholder')} className={globalStyles.inp} style={{ width: '60px', padding: '6px' }} />
-            <Button 
-              variant="secondary" 
-              size="sm" 
-              onClick={() => { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); }}
-            >
-              {t('templateBuilder.smartBar.select')}
+            <Button variant="secondary" size="sm" onClick={() => { handleTriggerChange(customTriggerInput); setIsTriggerCustom(false); }}>
+              <span>{t('templateBuilder.smartBar.select')}</span>
             </Button>
           </div>
         )}
@@ -134,7 +128,7 @@ const SmartBar = () => {
           onClick={() => fileInputRef.current?.click()}
           leftIcon={<FileUp size={16} />}
         >
-          {t('templateBuilder.smartBar.import')}
+          <span>{t('templateBuilder.smartBar.import')}</span>
         </Button>
 
         <Button 
@@ -143,7 +137,7 @@ const SmartBar = () => {
           onClick={() => setCondModal(true)}
           leftIcon={<Zap size={14} />}
         >
-          {t('templateBuilder.smartBar.conditionalBlock')}
+          <span>{t('templateBuilder.smartBar.conditionalBlock')}</span>
         </Button>
       </div>
     </div>

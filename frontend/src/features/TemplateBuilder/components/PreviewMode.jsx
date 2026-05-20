@@ -85,18 +85,18 @@ const PreviewMode = () => {
 
   return (
     <div className={globalStyles.split}>
-      <aside className={sidebarStyles.left} style={{ background: 'var(--bg-sidebar)', display: 'flex', flexDirection: 'column' }}>
+      <aside className={`${sidebarStyles.left} ${styles.previewSidebar}`}>
         <div className={sidebarStyles.panelHead}>
           <span className={sidebarStyles.panelTitle}>{t('templateBuilder.previewMode.testForm')}</span>
           <span className={styles.stepBadge}>{t('templateBuilder.previewMode.step', { current: previewStep })}</span>
         </div>
 
-        <div style={{ opacity: previewStep === 2 ? 0.35 : 1, pointerEvents: previewStep === 2 ? 'none' : 'auto', flex: 1, overflowY: 'auto' }}>
-          <div style={{ padding: '20px' }}>
+        <div className={styles.previewFormArea} style={{ opacity: previewStep === 2 ? 0.35 : 1, pointerEvents: previewStep === 2 ? 'none' : 'auto' }}>
+          <div className={styles.previewFormInner}>
             {formData.fields.length > 0 ? (
               <DocumentForm templateFields={getCleanFields()} initialData={virtualFormData} onChange={setVirtualFormData} />
             ) : (
-              <p style={{ color: 'var(--text-muted)' }}>{t('templateBuilder.previewMode.noFields')}</p>
+              <p className={styles.noFieldsText}>{t('templateBuilder.previewMode.noFields')}</p>
             )}
           </div>
         </div>
@@ -120,6 +120,7 @@ const PreviewMode = () => {
           ) : (
             <Button
               variant="secondary"
+              className={styles.backFormBtn}
               onClick={() => setShowBackWarning('form')}
               leftIcon={<Edit3 size={16} />}
             >
@@ -129,8 +130,8 @@ const PreviewMode = () => {
         </div>
       </aside>
 
-      <main className={globalStyles.right} style={{ padding: '40px', alignItems: 'center', overflowY: 'auto' }}>
-        <div className={globalStyles.canvas} style={{ width: '100%', padding: '0 40px' }}>
+      <main className={`${globalStyles.right} ${styles.previewMain}`}>
+        <div className={`${globalStyles.canvas} ${styles.previewCanvas}`}>
           <div className={globalStyles.paper}>
             <DocumentPreview
               templateContent={previewHtml}

@@ -260,9 +260,63 @@
   padding: 0; border: none; white-space: pre-wrap; word-wrap: break-word;
   font-family: inherit; margin: 0 0 0.9rem 0;
 }
-
 @media (max-width: 1400px) {
   .paper {
     padding: 20mm 15mm;
+  }
+}
+
+@media (max-width: 768px) {
+  .canvas {
+    padding: 16px 12px;
+    overflow-y: visible; 
+  }
+  
+  .paper {
+    width: 100%;
+    min-height: 70vh;
+    padding: 20px 16px;
+    margin-bottom: 20px;
+    box-shadow: none; 
+    border-color: transparent;
+  }
+
+  .slashMenu,
+  .combinedBubbleMenu {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 16px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 92vw;
+    max-height: 40vh;
+    border-radius: 16px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+  }
+
+  .combinedBubbleMenu {
+    flex-wrap: wrap;
+    padding: 10px;
+  }
+
+  .bubbleSelectionGroup, .bubbleInputRow {
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .bubbleInput {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  .bubbleSelect, .bubbleConfirmBtn {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .multiReplaceList {
+    max-height: 40vh;
   }
 }

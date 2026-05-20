@@ -23,7 +23,6 @@ const Header = () => {
 
   const { theme, changeTheme } = useTheme();
 
-
   const {
     formData, setFormData,
     formErrors, setFormErrors,
@@ -157,6 +156,7 @@ const Header = () => {
     <header className={styles.header}>
       <Button
         variant="secondary"
+        className={styles.backBtn}
         onClick={handleBackToProjects}
         leftIcon={<ArrowLeft size={16} />}
       >
@@ -213,7 +213,7 @@ const Header = () => {
             }
           }}
         >
-          <Wrench size={15} /> {t('templateBuilder.header.design')}
+          <Wrench size={15} /> <span>{t('templateBuilder.header.design')}</span>
         </button>
 
         <button
@@ -221,16 +221,16 @@ const Header = () => {
           className={`${styles.modeBtn} ${mode === 'preview' ? styles.modeOn : ''}`}
           onClick={() => setMode('preview')}
         >
-          <Eye size={15} /> {t('templateBuilder.header.preview')}
+          <Eye size={15} /> <span>{t('templateBuilder.header.preview')}</span>
         </button>
       </div>
 
       <div className={styles.headerRight}>
         <div className={styles.autoSaveIndicator}>
-          {saveStatus === 'saving' && <><Loader2 size={14} className={styles.spinnerIcon} /> {t('templateBuilder.header.saving')}</>}
-          {saveStatus === 'saved' && <><Cloud size={14} style={{ color: 'var(--success)' }} /> {t('templateBuilder.header.savedToCloud')}</>}
-          {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> {t('templateBuilder.header.unsavedChanges')}</>}
-          {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: 'var(--danger)' }} /> {t('templateBuilder.header.saveFailed')}</>}
+          {saveStatus === 'saving' && <><Loader2 size={14} className={styles.spinnerIcon} /> <span>{t('templateBuilder.header.saving')}</span></>}
+          {saveStatus === 'saved' && <><Cloud size={14} style={{ color: 'var(--success)' }} /> <span>{t('templateBuilder.header.savedToCloud')}</span></>}
+          {saveStatus === 'unsaved' && <><span className={styles.unsavedDot}></span> <span>{t('templateBuilder.header.unsavedChanges')}</span></>}
+          {saveStatus === 'error' && <><AlertCircle size={14} style={{ color: 'var(--danger)' }} /> <span>{t('templateBuilder.header.saveFailed')}</span></>}
         </div>
 
         <div className={styles.headerActionsDivider} />
@@ -238,6 +238,7 @@ const Header = () => {
         <Button
           id="tb-share-btn"
           variant="secondary"
+          className={styles.actionBtn}
           onClick={() => setIsShareModalOpen(true)}
           title={t('templateBuilder.header.share')}
           leftIcon={<LinkIcon size={15} />}
@@ -248,6 +249,7 @@ const Header = () => {
         {mode === 'preview' && (
           <Button
             variant="secondary"
+            className={styles.actionBtn}
             onClick={() => setPdfConfirmModal(true)}
             isLoading={isGeneratingPdf}
             leftIcon={!isGeneratingPdf && <Printer size={15} />}
@@ -258,6 +260,7 @@ const Header = () => {
 
         <Button
           variant="primary"
+          className={styles.actionBtn}
           onClick={handleSaveClick}
           isLoading={saveStatus === 'saving'}
           leftIcon={<Save size={15} />}

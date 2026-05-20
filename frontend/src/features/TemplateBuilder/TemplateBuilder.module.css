@@ -402,15 +402,6 @@
   color: var(--accent);
 }
 
-@media (max-width: 800px) {
-  .workspace {
-    overflow-x: auto;
-  }
-  .split {
-    min-width: 800px; 
-  }
-}
-
 .warningModal {
   background: var(--bg-card);
   padding: 2.5rem;
@@ -452,4 +443,40 @@
 @keyframes slideUp {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .root {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+    contain: none;
+  }
+  
+  .workspace {
+    overflow: visible;
+  }
+
+  .split {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  .right {
+    flex: none;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .modal {
+    width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  .formatGrid {
+    grid-template-columns: 1fr;
+  }
 }

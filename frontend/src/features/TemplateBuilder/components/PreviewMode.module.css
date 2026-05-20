@@ -1,5 +1,24 @@
 /* frontend/src/features/TemplateBuilder/components/PreviewMode.module.css */
 
+.previewSidebar {
+  background: var(--bg-sidebar);
+  display: flex;
+  flex-direction: column;
+}
+
+.previewFormArea {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.previewFormInner {
+  padding: 20px;
+}
+
+.noFieldsText {
+  color: var(--text-muted);
+}
+
 .previewFooter {
   padding: 20px 24px;
   border-top: 1px solid var(--border);
@@ -7,53 +26,25 @@
   justify-content: center;
   background: var(--bg-app); 
 }
-.nextBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  padding: 14px 32px;
-  background: var(--text-primary); 
-  color: var(--bg-surface);
-  border: none;
-  border-radius: 40px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-sm); 
-  border: 1px solid transparent;
+
+.pulseBtn {
+  animation: softPulse 2.2s infinite;
+  border-radius: 40px !important;
+  padding: 14px 32px !important;
+  font-size: 1rem !important;
 }
-.nextBtn:hover {
-  opacity: 0.85; 
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+
+.backFormBtn {
+  border-radius: 40px !important;
+  padding: 12px 28px !important;
 }
-.pulseBtn { animation: softPulse 2.2s infinite; }
+
 @keyframes softPulse {
   0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 40%, transparent); }
   70% { box-shadow: 0 0 0 12px transparent; }
   100% { box-shadow: 0 0 0 0 transparent; }
 }
-.backFormBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 28px;
-  background: var(--bg-hover);
-  border: 1px solid var(--border);
-  border-radius: 40px;
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.backFormBtn:hover {
-  background: var(--bg-surface);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-}
+
 .stepBadge {
   background: var(--accent-bg);
   color: var(--accent);
@@ -63,4 +54,28 @@
   font-weight: 700;
   letter-spacing: 0.3px;
   border: 1px solid var(--accent-border);
+}
+
+.previewMain {
+  padding: 40px;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.previewCanvas {
+  width: 100%;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .previewMain {
+    padding: 16px 0;
+  }
+  .previewCanvas {
+    padding: 0 16px;
+  }
+  .pulseBtn, .backFormBtn {
+    width: 100%;
+    justify-content: center;
+  }
 }

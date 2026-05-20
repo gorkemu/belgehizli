@@ -233,7 +233,7 @@ const Modals = () => {
             </div>
             <div className={styles.modalBody}>
               <div className={styles.linkCopyBox} style={{ display: 'flex', gap: '8px', background: 'var(--bg-input)', padding: '10px', borderRadius: '12px', border: '1px solid var(--border)' }}>
-                <input type="text" readOnly value={publicLink} style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', fontFamily: 'monospace' }} />
+                <input type="text" readOnly value={publicLink} style={{ flex: 1, minWidth: 0, border: 'none', background: 'transparent', outline: 'none', color: 'var(--text-primary)', fontFamily: 'monospace' }} />
                 <Button 
                   variant="primary" 
                   onClick={copyToClipboard} 

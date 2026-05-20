@@ -85,3 +85,39 @@
     padding: 8px 12px;
   }
 }
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 8px 12px;
+    gap: 6px;
+    
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  
+  .toolbar::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .tb {
+    min-width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+  
+  .select {
+    height: 36px;
+    flex-shrink: 0;
+  }
+  
+  .tbDivider {
+    height: 24px;
+    flex-shrink: 0;
+  }
+}

@@ -1,3 +1,4 @@
+// frontend/src/features/TemplateBuilder/components/EditorCanvas.jsx
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
@@ -39,7 +40,6 @@ const LineHeight = Extension.create({
   addCommands() { return { setLineHeight: lineHeight => ({ commands }) => this.options.types.map(type => commands.updateAttributes(type, { lineHeight })).some(Boolean), unsetLineHeight: () => ({ commands }) => this.options.types.map(type => commands.resetAttributes(type, 'lineHeight')).some(Boolean), }; },
 });
 
-// --- Çeviriye bağlı slash komutları oluştur ---
 const useSlashCommands = (t, triggerSymbol) => useMemo(() => [
   { id: 'h1', label: t('editorCanvas.slash.h1'), icon: <Heading1 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 1 }).run() },
   { id: 'h2', label: t('editorCanvas.slash.h2'), icon: <Heading2 size={14} />, action: (ed) => ed.chain().focus().toggleHeading({ level: 2 }).run() },
@@ -64,7 +64,6 @@ const EditorCanvas = () => {
   const debounceTimer = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
-  // Menü Durumları
   const [selectionMenu, setSelectionMenu] = useState({ show: false, top: 0, left: 0, mode: 'button', text: '', fieldType: 'text' });
   const [formatMenu, setFormatMenu] = useState({ show: false, top: 0, left: 0 });
   const [slashMenuState, setSlashMenuState] = useState({ show: false, pos: { top: 0, left: 0 }, query: '', range: null });
@@ -374,11 +373,9 @@ const EditorCanvas = () => {
           className={styles.combinedBubbleMenu} 
           style={{ top: formatMenu.top, left: formatMenu.left }} 
           onMouseDown={(e) => {
-            // INPUT, SELECT veya OPTION etiketlerine tıklanıyorsa varsayılan davranışa izin ver
             if (['INPUT', 'SELECT', 'OPTION'].includes(e.target.tagName)) {
               return;
             }
-            // Diğer alanlara (div, buton vs.) tıklanıyorsa editör focus'unu kaybetmemek için engelle
             e.preventDefault();
           }}
         >
