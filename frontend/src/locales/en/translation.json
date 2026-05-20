@@ -115,6 +115,13 @@
     "footerBack": "to go back,",
     "footerSelect": "to close, and",
     "footerUse": "to select.",
+    "footerTheme1": "Use ",
+    "footerTheme2": " to go back, ",
+    "footerTheme3": " to select.",
+    
+    "footerDefault1": "Use ",
+    "footerDefault2": " to close, ",
+    "footerDefault3": " to select.",
     "searchInTemplates": "Search templates for \"{{query}}\"..."
   },
   "settings": {

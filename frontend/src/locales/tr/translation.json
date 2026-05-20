@@ -115,6 +115,13 @@
     "footerBack": "ile geri dön,",
     "footerSelect": "seçmek için",
     "footerUse": "tuşunu kullanın.",
+    "footerTheme1": "Geri dönmek için ",
+    "footerTheme2": ", seçmek için ",
+    "footerTheme3": " tuşunu kullanın.",
+    
+    "footerDefault1": "Kapatmak için ",
+    "footerDefault2": ", seçmek için ",
+    "footerDefault3": " tuşunu kullanın.",
     "searchInTemplates": "\"{{query}}\" için şablonlarda ara..."
   },
   "settings": {

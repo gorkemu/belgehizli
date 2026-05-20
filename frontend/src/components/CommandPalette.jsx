@@ -90,7 +90,7 @@ export const CommandPalette = () => {
                 label: t('commandPalette.searchInTemplates', { query }),
                 icon: <Search size={18} color="var(--accent)" />,
                 shortcut: 'Enter',
-                isSearchAction: true, 
+                isSearchAction: true,
                 action: () => {
                     const searchRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
                     navigate(`/${currentLang}/${searchRoute}?search=${encodeURIComponent(query.trim())}`);
@@ -242,11 +242,22 @@ export const CommandPalette = () => {
                 <div className={styles.footer}>
                     <span>
                         {paletteMode === 'theme' ? (
-                            <><b>ESC / Backspace</b> {t('commandPalette.footerBack', 'ile geri dön,')} </>
+                            <>
+                                {t('commandPalette.footerTheme1')}
+                                <b>ESC / Backspace</b>
+                                {t('commandPalette.footerTheme2')}
+                                <b>ENTER</b>
+                                {t('commandPalette.footerTheme3')}
+                            </>
                         ) : (
-                            <>{t('commandPalette.footerHint')} <b>ESC</b> </>
+                            <>
+                                {t('commandPalette.footerDefault1')}
+                                <b>ESC</b>
+                                {t('commandPalette.footerDefault2')}
+                                <b>ENTER</b>
+                                {t('commandPalette.footerDefault3')}
+                            </>
                         )}
-                        {t('commandPalette.footerSelect')} <b>ENTER</b> {t('commandPalette.footerUse')}
                     </span>
                 </div>
             </div>
