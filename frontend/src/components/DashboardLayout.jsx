@@ -1,6 +1,6 @@
 // frontend/src/components/DashboardLayout.jsx
 import React, { useContext, useState, useEffect } from 'react';
-import { Outlet, Link, useLocation, useParams } from 'react-router-dom'; 
+import { Outlet, Link, useLocation, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import {
@@ -15,7 +15,7 @@ export const DashboardLayout = () => {
   const { t } = useTranslation();
   const { user, logout } = useContext(AuthContext);
   const location = useLocation();
-  const { lang } = useParams(); 
+  const { lang } = useParams();
   const currentLang = lang || 'tr';
 
   const dashboardRoute = currentLang === 'tr' ? 'panel' : 'dashboard';
@@ -39,8 +39,8 @@ export const DashboardLayout = () => {
   useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
 
   const navItems = [
-    { path: `/${currentLang}/${dashboardRoute}`,  name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true  },
-    { path: `/${currentLang}/${projectsRoute}`, name: t('dashboardLayout.myTemplates'), icon: FolderKanban,  exact: false },
+    { path: `/${currentLang}/${dashboardRoute}`, name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true },
+    { path: `/${currentLang}/${projectsRoute}`, name: t('dashboardLayout.myTemplates'), icon: FolderKanban, exact: false },
   ];
 
   const handleLogout = () => {
@@ -53,14 +53,13 @@ export const DashboardLayout = () => {
       {isMobile && (
         <div className={styles.mobileHeader}>
           <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.mobileLogoLink}>
-            <img src="/logo-icon.svg" alt="Belge Hızlı" className={styles.mobileLogoIconLight} />
-            <img src="/logo-icon-white.svg" alt="Belge Hızlı" className={styles.mobileLogoIconDark} />
-            <span className={styles.mobileLogoText}>BelgeHızlı</span>
+            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.mobileLogoLight} />
+            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.mobileLogoDark} />
           </Link>
           <Button
             variant="ghost"
             onClick={() => setIsMobileMenuOpen(true)}
-            className={styles.menuBtn} 
+            className={styles.menuBtn}
             aria-label={t('dashboardLayout.openMenu')}
           >
             <Menu size={24} className={styles.menuIconColor} />
@@ -99,8 +98,8 @@ export const DashboardLayout = () => {
       <aside
         className={[
           styles.sidebar,
-          isMobile         ? styles.sidebarMobile : '',
-          isMobileMenuOpen ? styles.sidebarOpen   : '',
+          isMobile ? styles.sidebarMobile : '',
+          isMobileMenuOpen ? styles.sidebarOpen : '',
         ].join(' ')}
       >
         <div className={styles.sidebarHeader}>
@@ -112,7 +111,7 @@ export const DashboardLayout = () => {
             <Button
               variant="ghost"
               onClick={() => setIsMobileMenuOpen(false)}
-              className={styles.closeBtn} 
+              className={styles.closeBtn}
               aria-label={t('dashboardLayout.closeMenu')}
             >
               <X size={20} />
@@ -122,7 +121,7 @@ export const DashboardLayout = () => {
 
         <nav className={styles.nav}>
           {navItems.map(item => {
-            const Icon     = item.icon;
+            const Icon = item.icon;
             const isActive = item.exact
               ? location.pathname === item.path
               : location.pathname.startsWith(item.path);
@@ -156,7 +155,7 @@ export const DashboardLayout = () => {
               <Globe size={16} className={styles.icon} />
               <span>{t('dashboardLayout.backToHome')}</span>
             </Link>
-            
+
             <Link
               to={`/${currentLang}/${settingsRoute}`}
               className={`${styles.footerLink} ${location.pathname.includes(settingsRoute) ? styles.footerLinkActive : ''}`}
@@ -167,12 +166,12 @@ export const DashboardLayout = () => {
               />
               <span>{t('dashboardLayout.accountSettings')}</span>
             </Link>
-            
-            <Button 
-              variant="ghost" 
-              fullWidth 
-              onClick={() => setShowLogoutModal(true)} 
-              className={styles.logoutBtn} 
+
+            <Button
+              variant="ghost"
+              fullWidth
+              onClick={() => setShowLogoutModal(true)}
+              className={styles.logoutBtn}
               leftIcon={<LogOut size={16} className={styles.logoutIcon} />}
             >
               <span>{t('dashboardLayout.logout')}</span>

@@ -34,18 +34,26 @@
 .mobileLogoLink {
     display: flex;
     align-items: center;
-    gap: 8px;
     text-decoration: none;
-    overflow: hidden;
 }
 
-.mobileLogoText {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+.mobileLogoLight, .mobileLogoDark {
+    height: 28px;
+    width: auto;
+    max-width: 180px; 
+    object-fit: contain;
+    object-position: left center;
+}
+
+.mobileLogoLight { display: none; }
+.mobileLogoDark { display: none; }
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: var(--modal-overlay); 
+    backdrop-filter: blur(2px);
+    z-index: 45;
 }
 
 @media (max-width: 359px) {
@@ -101,9 +109,7 @@
     align-items: center;
 }
 
-.sidebarLogoLight, .mobileLogoIconLight {
-    display: none;
-}
+.sidebarLogoLight { display: none; }
 
 .sidebarLogoDark {
     height: 28px;
@@ -122,36 +128,29 @@
     display: block;
 }
 
-:global([data-theme="light"]) .sidebarLogoDark,
-:global([data-theme="default"]) .sidebarLogoDark,
-:global([data-theme="glacier"]) .sidebarLogoDark,
-:global([data-theme="light"]) .mobileLogoIconDark,
-:global([data-theme="default"]) .mobileLogoIconDark,
-:global([data-theme="glacier"]) .mobileLogoIconDark {
-    display: none;
+:global([data-theme="dark"]) .sidebarLogoDark,
+:global([data-theme="sunset"]) .sidebarLogoDark,
+:global([data-theme="amber"]) .sidebarLogoDark,
+:global([data-theme="forest"]) .sidebarLogoDark,
+:global([data-theme="ink"]) .sidebarLogoDark,
+:global([data-theme="lavender"]) .sidebarLogoDark,
+:global([data-theme="dark"]) .mobileLogoDark,
+:global([data-theme="sunset"]) .mobileLogoDark,
+:global([data-theme="amber"]) .mobileLogoDark,
+:global([data-theme="forest"]) .mobileLogoDark,
+:global([data-theme="ink"]) .mobileLogoDark,
+:global([data-theme="lavender"]) .mobileLogoDark {
+    display: block;
 }
 
 :global([data-theme="light"]) .sidebarLogoLight,
 :global([data-theme="default"]) .sidebarLogoLight,
-:global([data-theme="glacier"]) .sidebarLogoLight {
-    height: 28px;
-    width: auto;
-    max-width: 160px;
-    object-fit: contain;
-    object-position: left center;
+:global([data-theme="glacier"]) .sidebarLogoLight,
+:global([data-theme="light"]) .mobileLogoLight,
+:global([data-theme="default"]) .mobileLogoLight,
+:global([data-theme="glacier"]) .mobileLogoLight {
     display: block;
 }
-
-:global([data-theme="light"]) .mobileLogoIconLight,
-:global([data-theme="default"]) .mobileLogoIconLight,
-:global([data-theme="glacier"]) .mobileLogoIconLight {
-    height: 28px;
-    width: auto;
-    flex-shrink: 0;
-    object-fit: contain;
-    display: block;
-}
-
 .closeBtn {
     padding: 4px;
 }
