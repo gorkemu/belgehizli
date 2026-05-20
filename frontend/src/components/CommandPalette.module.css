@@ -100,14 +100,10 @@
 }
 
 .itemIcon {
-    color: var(--text-muted);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.itemIcon {
-    color: var(--accent);
 }
 
 .itemText {
@@ -122,7 +118,7 @@
 
 .itemActive .itemText,
 .itemActive .itemIcon {
-    color: var(--text-primary);
+    color: var(--accent);
 }
 
 .emptyState {
