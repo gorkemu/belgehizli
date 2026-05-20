@@ -476,17 +476,18 @@
 
 .bvSelection {
   background-color: var(--accent-light);
-  /* Highlight için */
   color: var(--accent);
   padding: 2px 4px;
   border-radius: 4px;
   font-weight: 600;
+  position: relative;     
+  display: inline-block;  
 }
 
 .bvBubbleMenu {
   position: absolute;
-  top: 62px;
-  left: 218px;
+  bottom: calc(100%);
+  left: 50%;                 
   background: #1c1917;
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0, 0, 0, .28);
@@ -495,18 +496,17 @@
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
+  width: max-content;        
+  z-index: 10;
   animation: floatBubble 4s ease-in-out infinite;
 }
 
 @keyframes floatBubble {
-
-  0%,
-  100% {
-    transform: translateY(0);
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
   }
-
   50% {
-    transform: translateY(-6px);
+    transform: translateX(-50%) translateY(-6px);
   }
 }
 
@@ -861,10 +861,6 @@
     font-size: 0.82rem;
     line-height: 1.5;
     margin: 0;
-  }
-
-  .bvBubbleMenu {
-    left: 12px;
   }
 
   .searchBar {

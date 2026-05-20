@@ -252,11 +252,16 @@ function HomePage() {
               <p>{t('homePage.bubblePaperArticle')}</p>
               <div className={styles.bvPara}>
                 {t('homePage.bubblePaperPara1')}{' '}
-                <span className={styles.bvSelection}>{t('homePage.bubblePaperSelection')}</span>{' '}
+                <span className={styles.bvSelection}>
+                  {t('homePage.bubblePaperSelection')}
+
+                  <div className={styles.bvBubbleMenu}>
+                    <div className={styles.bvMagicBtn}>
+                      <Sparkles size={14} color="#fde047" /> {t('homePage.convertToQuestion')}
+                    </div>
+                  </div>
+                </span>{' '}
                 {t('homePage.bubblePaperPara2')}
-              </div>
-              <div className={styles.bvBubbleMenu}>
-                <div className={styles.bvMagicBtn}><Sparkles size={14} color="#fde047" /> {t('homePage.convertToQuestion')}</div>
               </div>
             </div>
           </div>
