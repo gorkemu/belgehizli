@@ -1,6 +1,6 @@
 // frontend/src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, Outlet } from 'react-router-dom';
 import styles from './App.module.css';
 import { Helmet } from 'react-helmet-async';
 import { LanguageWrapper } from './components/LanguageWrapper';
@@ -30,6 +30,15 @@ import { DashboardLayout } from './components/DashboardLayout';
 import { CommandPalette } from './components/CommandPalette';
 import CookieBanner from './components/CookieBanner';
 
+const GlobalLayout = () => {
+    return (
+        <>
+            <CommandPalette />
+            <Outlet />
+        </>
+    );
+};
+
 const MainLayout = () => {
     return (
         <div className={styles.appContainer}>
@@ -55,79 +64,73 @@ function App() {
                     </Helmet>
                 )}
                 <Router>
-                    <CommandPalette />
                     <Routes>
-                        {/* URL'de dil yoksa, varsayılan olarak Türkçe'ye (/tr) yönlendir */}
                         <Route path="/" element={<Navigate to="/tr" replace />} />
                         
-                        {/* Dışa açık bağımsız formlar dilden bağımsız kalabilir */}
                         <Route path="/f/:slug" element={<HostedForm />} />
 
-                        {/* TÜM SAYFALAR /:lang KAPSAYICISI ALTINDA */}
                         <Route path="/:lang" element={<LanguageWrapper />}>
                             
-                            <Route element={<MainLayout />}>
-                                {/* Ana Sayfa */}
-                                <Route index element={<HomePage />} />
+                            <Route element={<GlobalLayout />}>
                                 
-                                {/* Auth Rotaları */}
-                                <Route path="giris-yap" element={<Login />} />
-                                <Route path="login" element={<Login />} />
-                                
-                                <Route path="kayit-ol" element={<Register />} />
-                                <Route path="register" element={<Register />} />
-
-                                <Route path="sifremi-unuttum" element={<ForgotPassword />} />
-                                <Route path="forgot-password" element={<ForgotPassword />} />
-
-                                <Route path="sifre-belirle" element={<SetPassword />} />
-                                <Route path="set-password" element={<SetPassword />} />
-                                
-                                {/* Şablon Rotaları */}
-                                <Route path="sablonlar" element={<TemplateList />} />
-                                <Route path="templates" element={<TemplateList />} />
-                                
-                                <Route path="sablonlar/detay/:slug" element={<TemplateDetail />} />
-                                <Route path="templates/detail/:slug" element={<TemplateDetail />} />
-                                
-                                {/* Kurumsal Rotalar */}
-                                <Route path="hakkimizda" element={<AboutUs />} />
-                                <Route path="about-us" element={<AboutUs />} />
-
-                                <Route path="iletisim" element={<ContactUs />} />
-                                <Route path="contact-us" element={<ContactUs />} />
-                                <Route path="iletisim/:status" element={<ContactUs />} />
-                                <Route path="contact-us/:status" element={<ContactUs />} />
-                                
-                                {/* Hukuki Metin Rotaları */}
-                                <Route path="gizlilik-politikasi" element={<PrivacyPolicy />} />
-                                <Route path="privacy-policy" element={<PrivacyPolicy />} />
-                                
-                                <Route path="kullanim-sartlari" element={<TermsOfService />} />
-                                <Route path="terms-of-service" element={<TermsOfService />} />
-                                
-                                <Route path="on-bilgilendirme-formu" element={<PreInformationForm />} />
-                                <Route path="pre-information-form" element={<PreInformationForm />} />
-                                
-                                <Route path="*" element={<NotFound />} />
-                            </Route>
-
-                            {/* Korumalı Kullanıcı Paneli Rotaları */}
-                            <Route element={<ProtectedRoute />}>
-                                <Route element={<DashboardLayout />}>
-                                    <Route path="panel" element={<Dashboard />} />
-                                    <Route path="dashboard" element={<Dashboard />} />
+                                <Route element={<MainLayout />}>
+                                    <Route index element={<HomePage />} />
                                     
-                                    <Route path="panel/projects" element={<ProjectsManager />} />
-                                    <Route path="dashboard/projects" element={<ProjectsManager />} />
+                                    <Route path="giris-yap" element={<Login />} />
+                                    <Route path="login" element={<Login />} />
                                     
-                                    <Route path="panel/settings" element={<SettingsPage />} />
-                                    <Route path="dashboard/settings" element={<SettingsPage />} />
+                                    <Route path="kayit-ol" element={<Register />} />
+                                    <Route path="register" element={<Register />} />
+
+                                    <Route path="sifremi-unuttum" element={<ForgotPassword />} />
+                                    <Route path="forgot-password" element={<ForgotPassword />} />
+
+                                    <Route path="sifre-belirle" element={<SetPassword />} />
+                                    <Route path="set-password" element={<SetPassword />} />
+                                    
+                                    <Route path="sablonlar" element={<TemplateList />} />
+                                    <Route path="templates" element={<TemplateList />} />
+                                    
+                                    <Route path="sablonlar/detay/:slug" element={<TemplateDetail />} />
+                                    <Route path="templates/detail/:slug" element={<TemplateDetail />} />
+                                    
+                                    <Route path="hakkimizda" element={<AboutUs />} />
+                                    <Route path="about-us" element={<AboutUs />} />
+
+                                    <Route path="iletisim" element={<ContactUs />} />
+                                    <Route path="contact-us" element={<ContactUs />} />
+                                    <Route path="iletisim/:status" element={<ContactUs />} />
+                                    <Route path="contact-us/:status" element={<ContactUs />} />
+                                    
+                                    <Route path="gizlilik-politikasi" element={<PrivacyPolicy />} />
+                                    <Route path="privacy-policy" element={<PrivacyPolicy />} />
+                                    
+                                    <Route path="kullanim-sartlari" element={<TermsOfService />} />
+                                    <Route path="terms-of-service" element={<TermsOfService />} />
+                                    
+                                    <Route path="on-bilgilendirme-formu" element={<PreInformationForm />} />
+                                    <Route path="pre-information-form" element={<PreInformationForm />} />
+                                    
+                                    <Route path="*" element={<NotFound />} />
                                 </Route>
 
-                                <Route path="panel/duzenle/:id" element={<UserTemplateEdit />} />
-                                <Route path="dashboard/edit/:id" element={<UserTemplateEdit />} />
-                            </Route>
+                                <Route element={<ProtectedRoute />}>
+                                    <Route element={<DashboardLayout />}>
+                                        <Route path="panel" element={<Dashboard />} />
+                                        <Route path="dashboard" element={<Dashboard />} />
+                                        
+                                        <Route path="panel/projects" element={<ProjectsManager />} />
+                                        <Route path="dashboard/projects" element={<ProjectsManager />} />
+                                        
+                                        <Route path="panel/settings" element={<SettingsPage />} />
+                                        <Route path="dashboard/settings" element={<SettingsPage />} />
+                                    </Route>
+
+                                    <Route path="panel/duzenle/:id" element={<UserTemplateEdit />} />
+                                    <Route path="dashboard/edit/:id" element={<UserTemplateEdit />} />
+                                </Route>
+
+                            </Route> 
 
                         </Route>
                     </Routes>

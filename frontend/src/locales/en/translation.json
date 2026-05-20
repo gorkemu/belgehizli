@@ -95,6 +95,27 @@
     "cancel": "Cancel",
     "confirmLogout": "Logout"
   },
+  "commandPalette": {
+    "dashboard": "Dashboard / Recent Work",
+    "newDoc": "Create New Document",
+    "gallery": "Explore Template Gallery",
+    "settings": "Account Settings",
+    "logout": "Secure Logout",
+    "home": "Home Page",
+    "login": "Log In",
+    "register": "Sign Up for Free",
+    "changeTheme": "Change Theme...",
+    "searchTheme": "Search theme...",
+    "themes": "THEMES",
+    "active": "Active",
+    "placeholder": "Where to? (e.g., New Document)",
+    "suggestions": "SUGGESTED ACTIONS",
+    "noResults": "No results found for \"{{query}}\".",
+    "footerHint": "Use",
+    "footerBack": "to go back,",
+    "footerSelect": "to select, and",
+    "footerUse": "to close."
+  },
   "settings": {
     "pageTitle": "Account Settings",
     "pageSubtitle": "Manage your personal information and security settings.",

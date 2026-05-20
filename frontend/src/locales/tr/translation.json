@@ -95,6 +95,27 @@
     "cancel": "İptal",
     "confirmLogout": "Çıkış Yap"
   },
+  "commandPalette": {
+    "dashboard": "Ana Panel / Son Çalışmalar",
+    "newDoc": "Yeni Belge Oluştur",
+    "gallery": "Şablon Galerisini Keşfet",
+    "settings": "Hesap Ayarları",
+    "logout": "Güvenli Çıkış Yap",
+    "home": "Ana Sayfa",
+    "login": "Giriş Yap",
+    "register": "Ücretsiz Kayıt Ol",
+    "changeTheme": "Temayı Değiştir...",
+    "searchTheme": "Tema ara...",
+    "themes": "TEMALAR",
+    "active": "Aktif",
+    "placeholder": "Nereye gitmek istersin? (Örn: Yeni Belge)",
+    "suggestions": "ÖNERİLEN EYLEMLER",
+    "noResults": "\"{{query}}\" için bir sonuç bulunamadı.",
+    "footerHint": "Kapatmak için",
+    "footerBack": "ile geri dön,",
+    "footerSelect": "seçmek için",
+    "footerUse": "tuşunu kullanın."
+  },
   "settings": {
     "pageTitle": "Hesap Ayarları",
     "pageSubtitle": "Kişisel bilgilerinizi ve güvenlik ayarlarınızı yönetin.",
