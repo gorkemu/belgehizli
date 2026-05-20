@@ -116,6 +116,15 @@
     color: var(--text-primary);
 }
 
+.itemActive {
+    background-color: var(--bg-hover);
+}
+
+.itemActive .itemText,
+.itemActive .itemIcon {
+    color: var(--text-primary);
+}
+
 .emptyState {
     padding: 48px 24px;
     text-align: center;
