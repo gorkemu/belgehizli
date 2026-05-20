@@ -2,24 +2,24 @@
 import React, { useState, useEffect, useRef, useContext, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { 
-    Search, FolderKanban, BookOpen, 
+import {
+    Search, FolderKanban, BookOpen,
     Settings, LogOut, FileText, AlertTriangle,
-    Home, LogIn, UserPlus, Palette 
+    Home, LogIn, UserPlus, Palette, Check
 } from 'lucide-react';
-import { AuthContext } from '../context/AuthContext'; 
+import { AuthContext } from '../context/AuthContext';
 import styles from './CommandPalette.module.css';
 import Button from '../components/ui/Button';
-import { useTheme } from '../context/ThemeContext'; 
-import { THEMES } from '../features/TemplateBuilder/utils/constants'; 
+import { useTheme } from '../context/ThemeContext';
+import { THEMES } from '../features/TemplateBuilder/utils/constants';
 
 export const CommandPalette = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [query, setQuery] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
-    const [paletteMode, setPaletteMode] = useState('default'); 
-    
+    const [paletteMode, setPaletteMode] = useState('default');
+
     const inputRef = useRef(null);
     const navigate = useNavigate();
     const { user, logout } = useContext(AuthContext);
@@ -30,11 +30,11 @@ export const CommandPalette = () => {
 
     const homePath = `/${currentLang}`;
     const dashboardPath = `/${currentLang}/${currentLang === 'tr' ? 'panel' : 'dashboard'}`;
-    const projectsPath  = `/${currentLang}/${currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects'}`;
-    const galleryPath   = `/${currentLang}/${currentLang === 'tr' ? 'sablonlar' : 'templates'}`;
-    const settingsPath  = `/${currentLang}/${currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings'}`;
-    const loginPath     = `/${currentLang}/${currentLang === 'tr' ? 'giris-yap' : 'login'}`;
-    const registerPath  = `/${currentLang}/${currentLang === 'tr' ? 'kayit-ol' : 'register'}`;
+    const projectsPath = `/${currentLang}/${currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects'}`;
+    const galleryPath = `/${currentLang}/${currentLang === 'tr' ? 'sablonlar' : 'templates'}`;
+    const settingsPath = `/${currentLang}/${currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings'}`;
+    const loginPath = `/${currentLang}/${currentLang === 'tr' ? 'giris-yap' : 'login'}`;
+    const registerPath = `/${currentLang}/${currentLang === 'tr' ? 'kayit-ol' : 'register'}`;
 
     const changeThemeCommand = useMemo(() => ({
         id: 'change_theme',
@@ -69,7 +69,7 @@ export const CommandPalette = () => {
         id: `theme_${th.id}`,
         label: t(th.label),
         icon: <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{th.emoji}</span>,
-        shortcut: theme === th.id ? t('commandPalette.active', 'Aktif') : '',
+        isActive: theme === th.id,
         action: () => {
             changeTheme(th.id);
             setIsOpen(false);
@@ -79,9 +79,26 @@ export const CommandPalette = () => {
     const BASE_COMMANDS = user ? LOGGED_IN_COMMANDS : LOGGED_OUT_COMMANDS;
     const COMMANDS = paletteMode === 'theme' ? THEME_COMMANDS : BASE_COMMANDS;
 
-    const filteredCommands = COMMANDS.filter(cmd => 
-        cmd.label.toLowerCase().includes(query.toLowerCase())
-    );
+    const filteredCommands = useMemo(() => {
+        const filtered = COMMANDS.filter(cmd =>
+            cmd.label.toLowerCase().includes(query.toLowerCase())
+        );
+
+        if (query.trim().length > 0 && paletteMode !== 'theme') {
+            filtered.push({
+                id: 'search_templates',
+                label: t('commandPalette.searchInTemplates', { query }),
+                icon: <Search size={18} color="var(--accent)" />,
+                shortcut: 'Enter',
+                isSearchAction: true, 
+                action: () => {
+                    const searchRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+                    navigate(`/${currentLang}/${searchRoute}?search=${encodeURIComponent(query.trim())}`);
+                }
+            });
+        }
+        return filtered;
+    }, [COMMANDS, query, paletteMode, t, currentLang, navigate]);
 
     useEffect(() => {
         const handleGlobalKeyDown = (e) => {
@@ -90,8 +107,18 @@ export const CommandPalette = () => {
                 setIsOpen(open => !open);
             }
         };
+
+        const handleCustomOpen = () => {
+            setIsOpen(true);
+        };
+
         document.addEventListener('keydown', handleGlobalKeyDown);
-        return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+        window.addEventListener('open-command-palette', handleCustomOpen);
+
+        return () => {
+            document.removeEventListener('keydown', handleGlobalKeyDown);
+            window.removeEventListener('open-command-palette', handleCustomOpen);
+        };
     }, []);
 
     useEffect(() => {
@@ -99,13 +126,13 @@ export const CommandPalette = () => {
             setQuery('');
             setSelectedIndex(0);
             setShowLogoutModal(false);
-            setPaletteMode('default'); 
+            setPaletteMode('default');
             setTimeout(() => inputRef.current?.focus(), 50);
         }
     }, [isOpen]);
 
     const handleKeyDown = (e) => {
-        if (showLogoutModal) return; 
+        if (showLogoutModal) return;
 
         if (e.key === 'Escape') {
             e.preventDefault();
@@ -141,9 +168,9 @@ export const CommandPalette = () => {
         setShowLogoutModal(false);
         setIsOpen(false);
         if (logout) {
-            logout(); 
-        } else { 
-            localStorage.removeItem('user_token'); 
+            logout();
+        } else {
+            localStorage.removeItem('user_token');
             navigate(loginPath);
         }
     };
@@ -169,17 +196,17 @@ export const CommandPalette = () => {
                         value={query}
                         onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
                         onKeyDown={handleKeyDown}
-                        disabled={showLogoutModal} 
+                        disabled={showLogoutModal}
                     />
                     <div className={styles.badge}>ESC</div>
                 </div>
-                
+
                 <div className={styles.content}>
                     {filteredCommands.length > 0 ? (
                         <div className={styles.list}>
                             <div className={styles.listLabel}>
-                                {paletteMode === 'theme' 
-                                    ? t('commandPalette.themes', 'TEMALAR') 
+                                {paletteMode === 'theme'
+                                    ? t('commandPalette.themes', 'TEMALAR')
                                     : t('commandPalette.suggestions')}
                             </div>
                             {filteredCommands.map((cmd, index) => (
@@ -188,20 +215,21 @@ export const CommandPalette = () => {
                                     id={`cmd-item-${index}`}
                                     className={`${styles.item} ${index === selectedIndex ? styles.itemActive : ''}`}
                                     onMouseEnter={() => setSelectedIndex(index)}
-                                    onClick={() => { 
-                                        cmd.action(); 
-                                        if(cmd.id !== 'logout' && cmd.id !== 'change_theme') setIsOpen(false); 
+                                    onClick={() => {
+                                        cmd.action();
+                                        if (cmd.id !== 'logout' && cmd.id !== 'change_theme') setIsOpen(false);
                                     }}
                                 >
                                     <div className={styles.itemLeft}>
                                         <div className={styles.itemIcon}>{cmd.icon}</div>
                                         <span className={styles.itemText}>{cmd.label}</span>
                                     </div>
-                                    <div className={styles.itemRight}>
-                                        {cmd.shortcut.split(' ').map((key, i) => (
-                                            key && <span key={i} className={styles.shortcutKey}>{key}</span>
-                                        ))}
-                                    </div>
+
+                                    {cmd.isActive && (
+                                        <div className={styles.activeCheck}>
+                                            <Check size={16} />
+                                        </div>
+                                    )}
                                 </button>
                             ))}
                         </div>
@@ -216,7 +244,7 @@ export const CommandPalette = () => {
                         {paletteMode === 'theme' ? (
                             <><b>ESC / Backspace</b> {t('commandPalette.footerBack', 'ile geri dön,')} </>
                         ) : (
-                            <>{t('commandPalette.footerHint')} <b>ESC</b>, </>
+                            <>{t('commandPalette.footerHint')} <b>ESC</b> </>
                         )}
                         {t('commandPalette.footerSelect')} <b>ENTER</b> {t('commandPalette.footerUse')}
                     </span>
@@ -234,7 +262,7 @@ export const CommandPalette = () => {
                         <div className={styles.modalActions}>
                             <Button variant="secondary" onClick={() => {
                                 setShowLogoutModal(false);
-                                setTimeout(() => inputRef.current?.focus(), 50); 
+                                setTimeout(() => inputRef.current?.focus(), 50);
                             }} style={{ flex: 1 }}>
                                 {t('dashboardLayout.cancel')}
                             </Button>

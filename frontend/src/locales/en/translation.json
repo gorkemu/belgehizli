@@ -1,6 +1,6 @@
 {
   "header": {
-    "searchPlaceholder": "Search templates (e.g., lease, petition)...",
+    "searchPlaceholder": "Search or type a command...",
     "find": "Find",
     "workspace": "Workspace",
     "login": "Login",
@@ -108,13 +108,14 @@
     "searchTheme": "Search theme...",
     "themes": "THEMES",
     "active": "Active",
-    "placeholder": "Where to? (e.g., New Document)",
+    "placeholder": "Search or type a command...",
     "suggestions": "SUGGESTED ACTIONS",
     "noResults": "No results found for \"{{query}}\".",
     "footerHint": "Use",
     "footerBack": "to go back,",
-    "footerSelect": "to select, and",
-    "footerUse": "to close."
+    "footerSelect": "to close, and",
+    "footerUse": "to select.",
+    "searchInTemplates": "Search templates for \"{{query}}\"..."
   },
   "settings": {
     "pageTitle": "Account Settings",

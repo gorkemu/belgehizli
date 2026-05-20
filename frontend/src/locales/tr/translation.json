@@ -1,6 +1,6 @@
 {
   "header": {
-    "searchPlaceholder": "Hazır şablon ara (örn: kira, dilekçe)...",
+    "searchPlaceholder": "Ara veya komut gir...",
     "find": "Bul",
     "workspace": "Çalışma Alanı",
     "login": "Giriş",
@@ -108,13 +108,14 @@
     "searchTheme": "Tema ara...",
     "themes": "TEMALAR",
     "active": "Aktif",
-    "placeholder": "Nereye gitmek istersin? (Örn: Yeni Belge)",
+    "placeholder": "Ara veya komut gir...",
     "suggestions": "ÖNERİLEN EYLEMLER",
     "noResults": "\"{{query}}\" için bir sonuç bulunamadı.",
     "footerHint": "Kapatmak için",
     "footerBack": "ile geri dön,",
     "footerSelect": "seçmek için",
-    "footerUse": "tuşunu kullanın."
+    "footerUse": "tuşunu kullanın.",
+    "searchInTemplates": "\"{{query}}\" için şablonlarda ara..."
   },
   "settings": {
     "pageTitle": "Hesap Ayarları",

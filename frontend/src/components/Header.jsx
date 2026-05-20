@@ -1,7 +1,7 @@
 // frontend/src/components/Header.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Search, LayoutDashboard, Globe, Menu, X, ChevronDown, ChevronUp } from 'lucide-react'; 
+import { Search, LayoutDashboard, Menu, X, ChevronDown, ChevronUp } from 'lucide-react'; 
 import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
@@ -13,11 +13,12 @@ import { THEMES } from '../features/TemplateBuilder/utils/constants';
 function Header() {
   const { t, i18n } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
-  
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [themePopover, setThemePopover] = useState(false); 
   const [mobileThemeOpen, setMobileThemeOpen] = useState(false); 
+  
+  const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+  const shortcutText = isMac ? '⌘ K' : 'Ctrl K';
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -27,7 +28,6 @@ function Header() {
 
   const currentLang = lang || 'tr';
   const isDark = theme !== 'light' && theme !== 'glacier' && theme !== 'default';
-
   const currentThemeObj = THEMES.find(t => t.id === theme) || THEMES[0];
 
   useEffect(() => {
@@ -37,18 +37,12 @@ function Header() {
   }, []);
 
   useEffect(() => {
-    setSearchTerm('');
     setIsMobileMenuOpen(false);
     setMobileThemeOpen(false); 
   }, [location]);
 
-  const handleSearch = e => {
-    e.preventDefault();
-    if (searchTerm.trim()) {
-      const searchRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
-      navigate(`/${currentLang}/${searchRoute}?search=${encodeURIComponent(searchTerm.trim())}`);
-      setIsMobileMenuOpen(false);
-    }
+  const openCommandPalette = () => {
+    window.dispatchEvent(new CustomEvent('open-command-palette'));
   };
 
   const switchLanguage = (targetLang) => {
@@ -76,17 +70,11 @@ function Header() {
           </Link>
 
           <div className={styles.searchWrapper}>
-            <form className={styles.headerSearch} onSubmit={handleSearch}>
+            <button className={styles.headerSearchBtn} onClick={openCommandPalette}>
               <Search className={styles.searchIcon} size={16} />
-              <input
-                type="text"
-                name="searchInput"
-                placeholder={t('header.searchPlaceholder')}
-                value={searchTerm}
-                onChange={e => setSearchTerm(e.target.value)}
-              />
-              <button type="submit" className={styles.searchBtn}>{t('header.find')}</button>
-            </form>
+              <span className={styles.searchPlaceholder}>{t('header.searchPlaceholder')}</span>
+              <div className={styles.searchShortcut}>{shortcutText}</div>
+            </button>
           </div>
 
           <button
