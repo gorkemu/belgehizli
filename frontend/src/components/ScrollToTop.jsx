@@ -7,9 +7,22 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      
+      const scrollableElements = document.querySelectorAll(
+        'main, #root, [class*="appContainer"], [class*="appMain"], [class*="right"]'
+      );
+      
+      scrollableElements.forEach(el => {
+        el.scrollTo(0, 0);
+      });
+    }, 10); 
+
   }, [pathname]);
 
-  return null; 
+  return null;
 };
 
 export default ScrollToTop;
