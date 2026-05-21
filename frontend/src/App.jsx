@@ -29,6 +29,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { DashboardLayout } from './components/DashboardLayout';
 import { CommandPalette } from './components/CommandPalette';
 import CookieBanner from './components/CookieBanner';
+import ScrollToTop from './components/ScrollToTop';
 
 const GlobalLayout = () => {
     return (
@@ -64,6 +65,7 @@ function App() {
                     </Helmet>
                 )}
                 <Router>
+                    <ScrollToTop />
                     <Routes>
                         <Route path="/" element={<Navigate to="/tr" replace />} />
                         
