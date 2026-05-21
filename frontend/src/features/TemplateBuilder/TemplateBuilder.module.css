@@ -1,6 +1,5 @@
 /* frontend/src/features/TemplateBuilder/TemplateBuilder.module.css */
 
-/* Root Container */
 .root {
   display: flex;
   flex-direction: column;
@@ -12,7 +11,6 @@
   contain: strict;
 }
 
-/* Loading */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -29,7 +27,6 @@
   margin-bottom: 12px;
 }
 
-/* Toast */
 .toast {
   position: fixed;
   top: 24px;
@@ -46,15 +43,27 @@
   box-shadow: var(--shadow-lg);
   animation: toastFadeIn 0.25s ease-out forwards;
 }
-.toastSuccess { background-color: var(--success); }
-.toastError { background-color: var(--danger); }
 
-@keyframes toastFadeIn {
-  from { opacity: 0; transform: translate(-50%, -20px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+.toastSuccess {
+  background-color: var(--success);
 }
 
-/* Overlay & Modal */
+.toastError {
+  background-color: var(--danger);
+}
+
+@keyframes toastFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
 .overlay {
   position: fixed;
   inset: 0;
@@ -65,6 +74,7 @@
   justify-content: center;
   z-index: 10002;
 }
+
 .modal {
   background: var(--modal-bg);
   border-radius: var(--radius-lg);
@@ -74,6 +84,7 @@
   overflow: hidden;
   border: 1px solid var(--border);
 }
+
 .modalHead {
   display: flex;
   align-items: flex-start;
@@ -81,6 +92,7 @@
   padding: 22px 22px 18px;
   border-bottom: 1px solid var(--border);
 }
+
 .modalIcon {
   display: flex;
   align-items: center;
@@ -93,6 +105,7 @@
   color: var(--accent);
   flex-shrink: 0;
 }
+
 .modalClose {
   margin-left: auto;
   display: flex;
@@ -107,16 +120,19 @@
   cursor: pointer;
   padding: unset;
 }
+
 .modalClose:hover {
   background: var(--bg-hover);
   color: var(--text-primary);
 }
+
 .modalBody {
   padding: 18px 22px;
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
+
 .modalFoot {
   display: flex;
   justify-content: flex-end;
@@ -126,12 +142,12 @@
   background: var(--bg-sidebar);
 }
 
-/* Workspace */
 .workspace {
   flex: 1;
   overflow: hidden;
   display: flex;
 }
+
 .split {
   display: flex;
   width: 100%;
@@ -147,22 +163,31 @@
   overflow: hidden;
 }
 
-/* Popover & Dropdown */
 .popoverOverlay {
   position: fixed;
   inset: 0;
   z-index: 99998;
   cursor: default;
 }
+
 .fixedPopover {
   position: fixed;
   z-index: 99999;
   animation: popoverFadeIn 0.15s ease-out forwards;
 }
+
 @keyframes popoverFadeIn {
-  from { opacity: 0; transform: translateY(-8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
+
 .dropdownMenuFixed {
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -173,6 +198,7 @@
   flex-direction: column;
   min-width: 160px;
 }
+
 .dropdownItem {
   display: flex;
   align-items: center;
@@ -186,7 +212,11 @@
   font-weight: 600;
   transition: background 0.15s;
 }
-.dropdownItem:hover { background: var(--bg-hover); }
+
+.dropdownItem:hover {
+  background: var(--bg-hover);
+}
+
 .colorPaletteFixed {
   background: var(--bg-surface);
   border: 1px solid var(--border);
@@ -197,6 +227,7 @@
   align-items: center;
   gap: 6px;
 }
+
 .colorDot {
   width: 24px;
   height: 24px;
@@ -206,7 +237,10 @@
   transition: transform 0.1s;
   padding: 0;
 }
-.colorDot:hover { transform: scale(1.15); }
+
+.colorDot:hover {
+  transform: scale(1.15);
+}
 
 .colorClearDot {
   width: 24px;
@@ -232,7 +266,6 @@
   transform: scale(1.05);
 }
 
-/* Assistant */
 .assistantFab {
   position: fixed;
   bottom: 24px;
@@ -251,7 +284,11 @@
   z-index: 40;
   transition: transform 0.2s;
 }
-.assistantFab:hover { transform: scale(1.08); }
+
+.assistantFab:hover {
+  transform: scale(1.08);
+}
+
 .assistantDrawer {
   position: fixed;
   top: 0;
@@ -266,7 +303,11 @@
   display: flex;
   flex-direction: column;
 }
-.assistantDrawerOpen { transform: translateX(0); }
+
+.assistantDrawerOpen {
+  transform: translateX(0);
+}
+
 .assistantHeader {
   padding: 24px;
   border-bottom: 1px solid var(--border);
@@ -275,7 +316,13 @@
   align-items: center;
   background: var(--bg-sidebar-head);
 }
-.assistantTitle { display: flex; align-items: center; gap: 12px; }
+
+.assistantTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .assistantAvatar {
   width: 40px;
   height: 40px;
@@ -286,7 +333,16 @@
   align-items: center;
   justify-content: center;
 }
-.assistantContent { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 16px; }
+
+.assistantContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .tipCard {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -295,6 +351,7 @@
   display: flex;
   gap: 16px;
 }
+
 .tipIcon {
   width: 36px;
   height: 36px;
@@ -305,8 +362,17 @@
   align-items: center;
   justify-content: center;
 }
-.tipCard h4 { margin: 0 0 6px; color: var(--text-primary); }
-.tipCard p { margin: 0; color: var(--text-secondary); }
+
+.tipCard h4 {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+}
+
+.tipCard p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
 .tipCard code {
   background: var(--bg-hover);
   padding: 2px 6px;
@@ -315,13 +381,13 @@
   border: 1px solid var(--border);
 }
 
-/* Format Grid (Magic Modal) */
 .formatGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 16px;
 }
+
 .formatOption {
   display: flex;
   flex-direction: column;
@@ -334,24 +400,48 @@
   cursor: pointer;
   transition: all 0.2s;
 }
-.formatOption:hover { background: var(--bg-surface); border-color: var(--accent-border); }
+
+.formatOption:hover {
+  background: var(--bg-surface);
+  border-color: var(--accent-border);
+}
+
 .formatOptionActive {
   background: var(--accent-bg);
   border-color: var(--accent);
 }
+
 .formatEx {
   font-family: monospace;
   font-size: 1.1rem;
   font-weight: 800;
   color: var(--accent);
 }
-.formatLabel { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); }
 
-/* Animations */
-@keyframes spin { to { transform: rotate(360deg); } }
-@keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+.formatLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
 
-/* Link Copy Box (Genel Bağlantı Modalı) */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .linkCopyBox {
   display: flex;
   align-items: center;
@@ -362,10 +452,12 @@
   border: 1px solid var(--border);
   transition: border-color 0.15s;
 }
+
 .linkCopyBox:focus-within {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-bg);
 }
+
 .linkCopyBox input {
   flex: 1;
   border: none;
@@ -376,12 +468,12 @@
   font-size: 0.9rem;
   padding: 8px 0;
 }
+
 .linkCopyBox button {
   flex-shrink: 0;
   white-space: nowrap;
 }
 
-/* Sihirli Algılama Bilgi Kutusu */
 .magicInfoBox {
   display: flex;
   align-items: flex-start;
@@ -392,12 +484,14 @@
   border-left: 4px solid var(--warning);
   margin-top: 8px;
 }
+
 .magicInfoBox p {
   margin: 0;
   font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
 .magicInfoBox b {
   color: var(--accent);
 }
@@ -441,8 +535,15 @@
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 768px) {
@@ -452,7 +553,7 @@
     overflow: visible;
     contain: none;
   }
-  
+
   .workspace {
     overflow: visible;
   }
@@ -472,6 +573,34 @@
 
   .modal {
     width: 95%;
+  }
+
+  .fixedPopover {
+    left: 50% !important;
+    animation: popoverFadeInMobile 0.15s ease-out forwards !important;
+  }
+
+  @keyframes popoverFadeInMobile {
+    from {
+      opacity: 0;
+      transform: translate(-50%, -8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
+
+  .colorPaletteFixed {
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 90vw;
+  }
+
+  .dropdownMenuFixed {
+    width: 90vw;
+    max-width: 320px;
   }
 }
 

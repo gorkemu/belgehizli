@@ -1,6 +1,5 @@
 /* frontend/src/features/TemplateBuilder/components/EditorCanvas.module.css */
 
-/* Canvas & Paper */
 .canvas {
   flex: 1;
   overflow-y: auto;
@@ -25,7 +24,6 @@
   color: var(--text-editor);
 }
 
-/* Drag Overlay */
 .dragOverlay {
   position: absolute;
   top: 0;
@@ -48,7 +46,6 @@
 .dragOverlay p { margin: 0; font-size: 0.9rem; }
 .dragOverlay svg { filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
 
-/* Slash & Variable Menus */
 .slashMenu {
   position: fixed;
   background: var(--autocomplete-bg);
@@ -92,7 +89,6 @@
   color: var(--text-secondary);
 }
 
-/* Combined Bubble Menu */
 .combinedBubbleMenu {
   position: fixed;
   background: var(--bg-card);
@@ -168,7 +164,6 @@
 }
 .bubbleConfirmBtn:hover { background: var(--accent-hover); }
 
-/* Multi Replace List */
 .multiReplaceList {
   max-height: 280px;
   overflow-y: auto;
@@ -198,7 +193,6 @@
   border-radius: 4px;
 }
 
-/* ProseMirror Overrides */
 :global(.ProseMirror) {
   outline: none;
   color: var(--text-editor);
@@ -260,6 +254,7 @@
   padding: 0; border: none; white-space: pre-wrap; word-wrap: break-word;
   font-family: inherit; margin: 0 0 0.9rem 0;
 }
+
 @media (max-width: 1400px) {
   .paper {
     padding: 20mm 15mm;
@@ -284,14 +279,13 @@
   .slashMenu,
   .combinedBubbleMenu {
     position: fixed !important;
-    top: auto !important;
-    bottom: 16px !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: 92vw;
-    max-height: 40vh;
-    border-radius: 16px;
-    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+    left: 12px !important;
+    transform: none !important;
+    width: calc(100vw - 24px) !important;
+    max-width: none !important;
+    max-height: 250px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
   }
 
   .combinedBubbleMenu {
