@@ -11,7 +11,9 @@ const getResendClient = () => {
     return new Resend(apiKey);
 };
 
-// Çoklu Dil Mail Sözlüğü (Dictionary)
+const BASE_URL = "https://belgehizli.com";
+const LOGO_URL_WHITE = `${BASE_URL}/logo-full-white.png`;
+
 const mailTranslations = {
     tr: {
         reset: {
@@ -31,7 +33,7 @@ const mailTranslations = {
         },
         pdf: {
             subject: 'Belgeniz Hazır: {{templateName}}',
-            title: 'BELGE <span style="color: #a8a29e;">HIZLI</span>',
+            title: 'BELGE HIZLI',
             greeting: 'Sayın İlgili,',
             body1: 'Sistemimiz üzerinden başarıyla oluşturduğunuz <strong>"{{templateName}}"</strong> adlı PDF dokümanı ekte tarafınıza sunulmuştur.',
             body2: 'İhtiyacınız halinde kendi şablonlarınızı oluşturmak, çalışma alanınızı yönetmek ve belgelerinizi güvenle saklamak için ücretsiz hesabınızı aktifleştirebilirsiniz.',
@@ -58,7 +60,7 @@ const mailTranslations = {
         },
         pdf: {
             subject: 'Your Document is Ready: {{templateName}}',
-            title: 'BELGE <span style="color: #a8a29e;">HIZLI</span>',
+            title: 'BELGE HIZLI',
             greeting: 'Dear User,',
             body1: 'The PDF document named <strong>"{{templateName}}"</strong>, which you successfully generated via our system, is attached to this email.',
             body2: 'If you need to create your own templates, manage your workspace, and securely store your documents, you can activate your free account.',
@@ -78,11 +80,15 @@ const sendPdfEmail = async (to, templateName, pdfBuffer, pdfFilename, lang = 'tr
         const safeTemplateName = templateName || 'Belge / Document';
         const subject = t.pdf.subject.replace('{{templateName}}', safeTemplateName);
 
+        const registerUrl = lang === 'en' ? `${BASE_URL}/en/register` : `${BASE_URL}/tr/kayit-ol`;
+
         const htmlContent = `
             <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #1c1917; max-width: 560px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; background-color: #ffffff;">
-                <div style="background-color: #f5f5f4; padding: 24px; border-bottom: 1px solid #e7e5e4; text-align: left;">
-                    <span style="font-size: 16px; font-weight: 800; color: #1c1917; letter-spacing: -0.02em;">${t.pdf.title}</span>
+                
+                <div style="background-color: #1c1917; padding: 24px; border-bottom: 1px solid #292524; text-align: center;">
+                    <img src="${LOGO_URL_WHITE}" alt="${t.pdf.title}" width="160" style="display: block; margin: 0 auto; max-width: 160px;" />
                 </div>
+
                 <div style="padding: 32px 24px;">
                     <p style="font-size: 15px; line-height: 1.6; color: #57534e; margin-top: 0;">${t.pdf.greeting}</p>
                     <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
@@ -91,14 +97,14 @@ const sendPdfEmail = async (to, templateName, pdfBuffer, pdfFilename, lang = 'tr
                     <p style="font-size: 15px; line-height: 1.6; color: #57534e;">
                         ${t.pdf.body2}
                     </p>
-                    <div style="margin: 32px 0 16px 0;">
-                        <a href="https://belgehizli.com/tr/kayit-ol" target="_blank" rel="noopener noreferrer" 
+                    <div style="margin: 32px 0 16px 0; text-align: center;">
+                        <a href="${registerUrl}" target="_blank" rel="noopener noreferrer" 
                            style="display: inline-block; background-color: #1c1917; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">
                            ${t.pdf.buttonText}
                         </a>
                     </div>
                 </div>
-                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4;">
+                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4; text-align: center;">
                     <p style="font-size: 12px; color: #a8a29e; margin: 0; line-height: 1.5;">
                         ${t.pdf.footer1}<br>
                         ${t.pdf.footer2.replace('{{year}}', currentYear)}
@@ -136,17 +142,27 @@ const sendPasswordResetEmail = async (to, resetLink, lang = 'tr') => {
         const t = mailTranslations[lang] || mailTranslations['tr'];
 
         const htmlContent = `
-            <div style="font-family: 'Inter', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e7e5e4; border-radius: 12px;">
-                <h2 style="color: #1c1917; margin-bottom: 20px;">${t.reset.title}</h2>
-                <p style="color: #57534e; font-size: 16px; line-height: 1.5;">${t.reset.greeting}</p>
-                <p style="color: #57534e; font-size: 16px; line-height: 1.5;">${t.reset.body}</p>
+            <div style="font-family: 'Inter', Arial, sans-serif; max-width: 560px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; background-color: #ffffff;">
                 
-                <div style="text-align: center; margin: 30px 0;">
-                    <a href="${resetLink}" style="background-color: #2563eb; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">${t.reset.buttonText}</a>
+                <div style="background-color: #1c1917; padding: 24px; border-bottom: 1px solid #292524; text-align: center;">
+                    <img src="${LOGO_URL_WHITE}" alt="Belge Hızlı" width="160" style="display: block; margin: 0 auto; max-width: 160px;" />
+                </div>
+
+                <div style="padding: 32px 24px;">
+                    <h2 style="color: #1c1917; margin-top: 0; margin-bottom: 20px;">${t.reset.title}</h2>
+                    <p style="color: #57534e; font-size: 16px; line-height: 1.6; margin-top: 0;">${t.reset.greeting}</p>
+                    <p style="color: #57534e; font-size: 16px; line-height: 1.6;">${t.reset.body}</p>
+                    
+                    <div style="text-align: center; margin: 32px 0;">
+                        <a href="${resetLink}" style="background-color: #1c1917; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 600; display: inline-block;">${t.reset.buttonText}</a>
+                    </div>
+                    
+                    <p style="color: #57534e; font-size: 14px; line-height: 1.5;">${t.reset.ignoreWarning}</p>
                 </div>
                 
-                <p style="color: #57534e; font-size: 14px; line-height: 1.5;">${t.reset.ignoreWarning}</p>
-                <p style="color: #a8a29e; font-size: 12px; margin-top: 30px; text-align: center;">${t.reset.footerInfo}</p>
+                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4; text-align: center;">
+                    <p style="color: #a8a29e; font-size: 12px; margin: 0; line-height: 1.5;">${t.reset.footerInfo}</p>
+                </div>
             </div>
         `;
 
@@ -173,13 +189,24 @@ const sendMfaEmail = async (to, otpCode, lang = 'tr') => {
         const t = mailTranslations[lang] || mailTranslations['tr'];
 
         const htmlContent = `
-            <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 30px; border: 1px solid #e7e5e4; border-radius: 12px; text-align: center;">
-                <h2 style="color: #1c1917; margin-bottom: 20px;">${t.mfa.title}</h2>
-                <p style="color: #57534e; font-size: 16px;">${t.mfa.body}</p>
-                <div style="margin: 30px 0; font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">
-                    ${otpCode}
+            <div style="font-family: 'Inter', Arial, sans-serif; max-width: 560px; margin: 0 auto; border: 1px solid #e7e5e4; border-radius: 16px; overflow: hidden; background-color: #ffffff;">
+                
+                <div style="background-color: #1c1917; padding: 24px; border-bottom: 1px solid #292524; text-align: center;">
+                    <img src="${LOGO_URL_WHITE}" alt="Belge Hızlı" width="160" style="display: block; margin: 0 auto; max-width: 160px;" />
                 </div>
-                <p style="color: #a8a29e; font-size: 14px;">${t.mfa.footerInfo}</p>
+
+                <div style="padding: 32px 24px; text-align: center;">
+                    <h2 style="color: #1c1917; margin-top: 0; margin-bottom: 20px;">${t.mfa.title}</h2>
+                    <p style="color: #57534e; font-size: 16px; margin-top: 0;">${t.mfa.body}</p>
+                    
+                    <div style="margin: 30px 0; font-size: 36px; font-weight: 800; letter-spacing: 8px; color: #1c1917; background-color: #f5f5f4; padding: 16px; border-radius: 12px; display: inline-block;">
+                        ${otpCode}
+                    </div>
+                </div>
+
+                <div style="background-color: #fafaf9; padding: 16px 24px; border-top: 1px solid #e7e5e4; text-align: center;">
+                    <p style="color: #a8a29e; font-size: 12px; margin: 0; line-height: 1.5;">${t.mfa.footerInfo}</p>
+                </div>
             </div>
         `;
 
