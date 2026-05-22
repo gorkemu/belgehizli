@@ -68,7 +68,7 @@ const createPdfForTransaction = async (transaction, template, formDataKullanilac
         console.error(`createPdfForTransaction: Error generating PDF for transaction ${transaction._id}:`, error);
 
         if (transaction) {
-            transaction.errorMessage = (transaction.errorMessage || '') + '; PDF oluşturma hatası (servis_pdf): ' + error.message;
+            transaction.errorMessage = (transaction.errorMessage || '') + '; PDF oluşturma hatası: ' + error.message;
             await transaction.save();
         }
         return null;
@@ -90,16 +90,14 @@ const generateAndDeliverDocument = async (transactionId) => {
 
         transaction = await Transaction.findById(transactionId);
         if (!transaction) {
-            console.error(`documentService: Transaction bulunamadı. ID: ${transactionId}`);
             return { success: false, message: 'İşlem bulunamadı.' };
         }
 
         if (transaction.status !== 'payment_successful') {
-             console.warn(`documentService: Transaction ${transactionId} ödeme başarılı değil veya zaten işleniyor/işlenmiş. Mevcut durum: ${transaction.status}`);
              if (['pdf_generated', 'email_sent', 'completed', 'failed'].includes(transaction.status)) {
-                return { success: true, message: `İşlem daha önce işlenmiş veya ödeme başarılı değil: ${transaction.status}`, status: transaction.status };
+                return { success: true, message: `İşlem daha önce işlenmiş. Durum: ${transaction.status}`, status: transaction.status };
              }
-             return { success: false, message: `İşlem ödeme bekliyor veya başarısız/başlatılmamış: ${transaction.status}` };
+             return { success: false, message: `İşlem ödeme bekliyor veya başarısız: ${transaction.status}` };
         }
 
         template = await Template.findById(transaction.templateId);
@@ -107,7 +105,6 @@ const generateAndDeliverDocument = async (transactionId) => {
             transaction.status = 'failed';
             transaction.errorMessage = 'Belge şablonu bulunamadı (servis).';
             await transaction.save();
-            console.error(`documentService: Şablon bulunamadı. Transaction ID: ${transactionId}, Template ID: ${transaction.templateId}`);
             return { success: false, message: 'Belge şablonu bulunamadı.' };
         }
 
@@ -115,16 +112,14 @@ const generateAndDeliverDocument = async (transactionId) => {
             transaction.status = 'failed';
             transaction.errorMessage = 'Belge oluşturmak için form verisi (snapshot) bulunamadı.';
             await transaction.save();
-            console.error(`documentService: formDataSnapshot eksik. Transaction ID: ${transactionId}`);
             return { success: false, message: 'Belge oluşturmak için gerekli form verisi eksik.' };
         }
         try {
             formDataToUse = JSON.parse(transaction.formDataSnapshot);
         } catch (parseError) {
             transaction.status = 'failed';
-            transaction.errorMessage = 'Form verisi (snapshot) parse edilemedi.';
+            transaction.errorMessage = 'Form verisi parse edilemedi.';
             await transaction.save();
-            console.error(`documentService: formDataSnapshot parse hatası. Transaction ID: ${transactionId}`, parseError);
             return { success: false, message: 'Kaydedilmiş form verisi bozuk.' };
         }
 
@@ -132,11 +127,11 @@ const generateAndDeliverDocument = async (transactionId) => {
             try {
                 billingInfoToUse = JSON.parse(transaction.billingInfoSnapshot);
             } catch (parseError) {
-                console.warn(`documentService: billingInfoSnapshot parse hatası. Transaction ID: ${transactionId}`, parseError);
-                transaction.errorMessage = (transaction.errorMessage || '') + '; Fatura bilgisi (snapshot) parse edilemedi.';
+                transaction.errorMessage = (transaction.errorMessage || '') + '; Fatura bilgisi parse edilemedi.';
             }
         }
 
+        // İngilizce ve Türkçe email değişkenlerini kontrol et
         userEmailForDelivery = billingInfoToUse?.email || formDataToUse?.belge_email || formDataToUse?.document_email || transaction.userEmail;
 
         const pdfResult = await createPdfForTransaction(transaction, template, formDataToUse);
@@ -146,31 +141,31 @@ const generateAndDeliverDocument = async (transactionId) => {
         }
         transaction.status = 'pdf_generated';
         await transaction.save();
-        console.log(`documentService: PDF buffer obtained for transaction ${transaction._id}.`);
 
         if (userEmailForDelivery && userEmailForDelivery !== 'unknown@example.com' && pdfResult.pdfBuffer) {
-
-            const emailSubject = `Belge Hızlı - ${template.name || 'Belge'} Belgeniz`;
-            const emailHtml = `<p>Merhaba,</p><p>Belge Hızlı platformunu kullanarak oluşturduğunuz <strong>${template.name || 'Belge'}</strong> belgesi ektedir.</p><p>İyi günlerde kullanın!</p><br><p>Saygılarımızla,<br>Belge Hızlı Ekibi</p>`;
-            const emailText = `Merhaba,\n\nBelge Hızlı platformunu kullanarak oluşturduğunuz ${template.name || 'Belge'} belgesi ektedir.\n\nİyi günlerde kullanın!\n\nSaygılarımızla,\nBelge Hızlı Ekibi`;
-
-            console.log(`documentService: Initiating PDF email dispatch for transaction ${transaction._id} to ${userEmailForDelivery}`);
+            console.log(`documentService: Initiating PDF email dispatch for transaction ${transaction._id}`);
             try {
-                await sendPdfEmail(userEmailForDelivery, emailSubject, emailHtml, emailHtml, pdfResult.pdfBuffer, pdfResult.safeFilename);
+                const lang = template.language || 'tr';
+                
+                await sendPdfEmail(
+                    userEmailForDelivery, 
+                    template.name, 
+                    pdfResult.pdfBuffer, 
+                    pdfResult.safeFilename, 
+                    lang
+                );
+                
                 transaction.status = 'email_sent';
                 await transaction.save();
             } catch (emailError) {
-                console.error(`documentService: Error during PDF email dispatch for transaction ${transaction._id}:`, emailError);
-                transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'E-posta gönderim hatası (servis): ' + emailError.message;
+                console.error(`documentService: Error during PDF email dispatch:`, emailError);
+                transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'E-posta gönderim hatası: ' + emailError.message;
                 await transaction.save();
             }
-        } else {
-            console.log(`documentService: PDF email skipped for transaction ${transaction._id} (no valid email or PDF buffer).`);
         }
 
         if (billingInfoToUse && Object.keys(billingInfoToUse).length > 0 && billingInfoToUse.email && !transaction.invoiceId) {
             try {
-                console.log(`documentService: Creating invoice record for transaction ${transaction._id}...`);
                 const newInvoice = new Invoice({
                     transactionId: transaction._id,
                     templateName: template.name || 'İsimsiz Şablon',
@@ -187,16 +182,13 @@ const generateAndDeliverDocument = async (transactionId) => {
                     customerEmail: billingInfoToUse.email,
                 });
                 await newInvoice.save();
-                console.log(`documentService: Invoice ${newInvoice._id} created for transaction ${transaction._id}.`);
                 transaction.invoiceId = newInvoice._id;
                 await transaction.save();
             } catch (invoiceError) {
-                console.error(`documentService: Error creating invoice record for transaction ${transaction._id}:`, invoiceError);
-                transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'Fatura kaydı oluşturma hatası (servis): ' + invoiceError.message;
+                console.error(`documentService: Error creating invoice record:`, invoiceError);
+                transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'Fatura kaydı oluşturma hatası: ' + invoiceError.message;
                 await transaction.save();
             }
-        } else if (transaction.invoiceId) {
-            console.log(`documentService: Invoice already exists or no billing info for transaction ${transaction._id}.`);
         }
 
         if (transaction.status !== 'failed') {
@@ -207,14 +199,14 @@ const generateAndDeliverDocument = async (transactionId) => {
         return { success: true, message: 'Belge başarıyla işlendi.', status: transaction.status };
 
     } catch (error) {
-        console.error(`documentService: General error processing document for transaction ${transactionId || 'N/A'}:`, error);
+        console.error(`documentService: General error processing document:`, error);
         if (transaction && transaction._id && transaction.status !== 'failed') {
             try {
                  transaction.status = 'failed';
-                 transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'Belge işleme genel hata (servis): ' + error.message;
+                 transaction.errorMessage = (transaction.errorMessage ? transaction.errorMessage + '; ' : '') + 'Belge işleme genel hata: ' + error.message;
                  await transaction.save();
             } catch (dbError) {
-                 console.error(`documentService: Error updating transaction ${transactionId} to failed after general error:`, dbError);
+                 console.error(`documentService: Error updating transaction failed status:`, dbError);
             }
         }
         return { success: false, message: error.message || 'Belge işlenirken bir sunucu hatası oluştu.' };
