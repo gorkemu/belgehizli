@@ -1,7 +1,6 @@
 /* frontend/src/components/Footer.module.css */
 
 .appFooter {
-    /* Footer'a Özel Yerel Değişkenler (Her zaman koyu kalmasını sağlar) */
     --footer-bg: #111110;
     --footer-bg-bottom: #0a0a0a;
     --footer-border: #292524;
@@ -21,11 +20,11 @@
 .footerContent {
     max-width: 1240px;
     margin: 0 auto;
-    padding: 5rem 2rem;
+    padding: 2rem 1.5rem;                
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4rem;
+    gap: 2rem;                          
     text-align: center;
 }
 
@@ -33,8 +32,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.2rem;
+    gap: 0.75rem;
     max-width: 420px;
+    width: 100%;
 }
 
 .logoContainer {
@@ -50,7 +50,7 @@
 }
 
 .footerLogo {
-    height: 30px;
+    height: 28px;                       
     width: auto;
     display: block;
     object-fit: contain;
@@ -58,28 +58,32 @@
 
 .footerDesc {
     color: var(--footer-text-muted);
-    font-size: 0.95rem;
+    font-size: 0.85rem;                 
     margin: 0;
-    line-height: 1.7;
+    line-height: 1.6;
 }
 
 .footerLinksWrapper {
     display: flex;
-    flex-direction: column;
-    gap: 3rem;
+    flex-direction: row;                
+    justify-content: center;
+    gap: 2.5rem;                         
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .linkColumn {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1rem;                           
     align-items: center;
+    flex: 1 1 auto;
+    min-width: 110px;
 }
 
 .columnTitle {
     color: var(--footer-text-primary);
-    font-size: 0.85rem;
+    font-size: 0.75rem;                 
     font-weight: 700;
     margin: 0;
     letter-spacing: 0.05em;
@@ -98,34 +102,35 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem;
+    gap: 0.5rem;                         
 }
 
 .footerNav ul li {
     width: 100%;
-    max-width: 280px;
+    max-width: 200px;                   
 }
 
 .footerNav ul li a {
     color: var(--footer-text-muted);
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 500;
-    transition: all 0.15s ease;
+    transition: color 0.2s ease;        
     display: block;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 0.3rem 0.4rem;             
+    border-radius: 6px;                  
     text-align: center;
 }
 
 .footerNav ul li a:hover {
     color: var(--footer-text-primary);
-    background-color: var(--footer-hover-bg);
+    background-color: transparent;
+    transform: none;
 }
 
 .footerBottom {
     border-top: 1px solid var(--footer-border);
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;               
     text-align: center;
     background-color: var(--footer-bg-bottom);
 }
@@ -133,7 +138,7 @@
 .footerBottom p {
     margin: 0;
     color: var(--footer-text-dim);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: 500;
 }
 
@@ -143,7 +148,8 @@
         justify-content: space-between;
         text-align: left;
         align-items: flex-start;
-        padding: 5rem 2rem;
+        padding: 4rem 2rem;            
+        gap: 2rem;
     }
 
     .footerBrand {
@@ -153,7 +159,8 @@
     .footerLinksWrapper {
         flex-direction: row;
         width: auto;
-        gap: 5rem;
+        gap: 4rem;
+        justify-content: flex-end;
     }
 
     .linkColumn {
@@ -165,19 +172,27 @@
     }
 
     .footerNav ul li {
-        width: auto;
+        max-width: none;                
     }
 
     .footerNav ul li a {
-        padding: 0.2rem 0;
-        background-color: transparent;
+        padding: 0.15rem 0;            
         border-radius: 0;
         text-align: left;
+        font-size: 0.9rem;
     }
 
     .footerNav ul li a:hover {
-        background-color: transparent;
         color: var(--footer-text-primary);
-        transform: translateX(4px);
+        background-color: transparent;
+        transform: none;
+    }
+
+    .footerLogo {
+        height: 32px;
+    }
+
+    .footerDesc {
+        font-size: 0.9rem;
     }
 }
