@@ -30,7 +30,7 @@ const mailTranslations = {
             footerInfo: 'Bu kodun geçerlilik süresi 5 dakikadır. Eğer giriş yapmaya çalışmıyorsanız, şifrenizi hemen değiştirin.'
         },
         pdf: {
-            subject: '[Sistem Bildirimi] Belgeniz Hazır: {{templateName}}',
+            subject: 'Belgeniz Hazır: {{templateName}}',
             title: 'BELGE <span style="color: #a8a29e;">HIZLI</span>',
             greeting: 'Sayın İlgili,',
             body1: 'Sistemimiz üzerinden başarıyla oluşturduğunuz <strong>"{{templateName}}"</strong> adlı PDF dokümanı ekte tarafınıza sunulmuştur.',
@@ -57,7 +57,7 @@ const mailTranslations = {
             footerInfo: 'This code is valid for 5 minutes. If you did not attempt to log in, please change your password immediately.'
         },
         pdf: {
-            subject: '[System Notification] Your Document is Ready: {{templateName}}',
+            subject: 'Your Document is Ready: {{templateName}}',
             title: 'BELGE <span style="color: #a8a29e;">HIZLI</span>',
             greeting: 'Dear User,',
             body1: 'The PDF document named <strong>"{{templateName}}"</strong>, which you successfully generated via our system, is attached to this email.',
@@ -92,7 +92,7 @@ const sendPdfEmail = async (to, templateName, pdfBuffer, pdfFilename, lang = 'tr
                         ${t.pdf.body2}
                     </p>
                     <div style="margin: 32px 0 16px 0;">
-                        <a href="https://www.belgehizli.com/kayit-ol" 
+                        <a href="https://www.belgehizli.com" 
                            style="display: inline-block; background-color: #1c1917; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">
                            ${t.pdf.buttonText}
                         </a>
