@@ -92,7 +92,7 @@ const sendPdfEmail = async (to, templateName, pdfBuffer, pdfFilename, lang = 'tr
                         ${t.pdf.body2}
                     </p>
                     <div style="margin: 32px 0 16px 0;">
-                        <a href="https://www.belgehizli.com" 
+                        <a href="https://www.belgehizli.com" target="_blank" rel="noopener noreferrer" 
                            style="display: inline-block; background-color: #1c1917; color: #ffffff; padding: 12px 24px; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 14px;">
                            ${t.pdf.buttonText}
                         </a>
