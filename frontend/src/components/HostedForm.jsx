@@ -30,7 +30,6 @@ const convertToHandlebars = (html, trigger) => {
     return tempDiv.innerHTML;
 };
 
-// Handlebars Helpers 
 if (!Handlebars.helpers.eq) {
     Handlebars.registerHelper('eq', function (a, b) { return String(a) === String(b); });
 }
@@ -84,7 +83,6 @@ const HostedForm = () => {
         try {
             let rawContent = projectData.content || "";
 
-            // Şartlı İfade Temizliği 
             rawContent = rawContent.replace(/&quot;/g, '"').replace(/&nbsp;/g, ' ');
             const condRegex = /(?:<p>)?\s*(?:<strong[^>]*>)?\[EĞER:\s*([a-zA-Z0-9_çğıöşüÇĞİÖŞÜ]+)\s*=\s*([^\]]+)\](?:<\/strong>)?\s*(?:<\/p>)?([\s\S]*?)(?:<p>)?\s*(?:<strong[^>]*>)?\[ŞART SONU\](?:<\/strong>)?\s*(?:<\/p>)?/g;
             rawContent = rawContent.replace(condRegex, '{{#if (eq $1 "$2")}}$3{{/if}}');
@@ -175,7 +173,6 @@ const HostedForm = () => {
 
     let formFields = projectData?.fields || [];
     
-    // Fallback: Eğer form alanı yoksa ama eski değişkenler varsa
     if (formFields.length === 0 && projectData?.variables && Object.keys(projectData.variables).length > 0) {
         formFields = Object.keys(projectData.variables)
             .filter(k => k !== '_trigger')
@@ -196,9 +193,10 @@ const HostedForm = () => {
             <div className={`${styles.pageContainer} no-print`}>
                 <div className={styles.formWrapper}>
                     <div className={styles.formHeader}>
-                        <div className={styles.headerBadge}>
-                            <FileText size={16} /> {t('hostedForm.smartDocument')}
+                        <div className={styles.logoContainer}>
+                            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.logo} />
                         </div>
+
                         <h1 className={styles.title}>{projectData.name}</h1>
                         {projectData.description && (
                             <p className={styles.description}>{projectData.description}</p>

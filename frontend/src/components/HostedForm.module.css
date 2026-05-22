@@ -22,24 +22,24 @@
 }
 
 .formHeader {
-    background: linear-gradient(135deg, var(--text-primary) 0%, color-mix(in srgb, var(--text-primary) 85%, transparent) 100%);
-    color: var(--bg-surface);
+    background-color: #000;
+    color: #fff;
     padding: 48px 48px 36px;
     text-align: center;
 }
 
-.headerBadge {
-    display: inline-flex;
+.logoContainer {
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 6px;
-    background-color: rgba(255, 255, 255, 0.08); 
-    backdrop-filter: blur(4px);
-    padding: 6px 16px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+    height: 40px;
+    max-width: 180px;
+    object-fit: contain;
+    display: block;
 }
 
 .title {
@@ -252,6 +252,8 @@
 
 @media (max-width: 640px) {
     .formHeader { padding: 36px 24px 28px; }
+    /* MOBİL İÇİN LOGO MARJINI AYARLA */
+    .logoContainer { margin-bottom: 24px; }
     .title { font-size: 1.8rem; }
     .description { font-size: 0.95rem; }
     .formBody { padding: 28px 20px; }
