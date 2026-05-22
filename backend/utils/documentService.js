@@ -137,7 +137,7 @@ const generateAndDeliverDocument = async (transactionId) => {
             }
         }
 
-        userEmailForDelivery = billingInfoToUse?.email || formDataToUse?.belge_email || transaction.userEmail;
+        userEmailForDelivery = billingInfoToUse?.email || formDataToUse?.belge_email || formDataToUse?.document_email || transaction.userEmail;
 
         const pdfResult = await createPdfForTransaction(transaction, template, formDataToUse);
 

@@ -190,8 +190,9 @@ router.post('/templates/:id/generate-document', async (req, res) => {
             });
         }
 
-        const { formData, editedHtml, consentTimestamp } = req.body;
-        const userEmailForLog = formData?.belge_email || 'unknown@example.com';
+        const { formData, editedHtml, consentTimestamp, email } = req.body;
+        
+        const userEmailForLog = email || formData?.belge_email || formData?.document_email || 'unknown@example.com';
 
         if (!consentTimestamp) {
             return res.status(400).json({
@@ -265,10 +266,8 @@ router.post('/templates/:id/generate-document', async (req, res) => {
         const safeFilename = turkceToLatin(template.name || 'Belge') + '.pdf';
 
         if (userEmailForLog !== 'unknown@example.com' && pdfBuffer) {
-            // Kullanıcının dilini header'dan al (Varsayılan 'tr')
             const userLang = req.headers['accept-language']?.startsWith('en') ? 'en' : 'tr';
 
-            // HTML/Text oluşturma satırlarının hepsini sildik. Sadece gerekli verileri mailer'a gönderiyoruz.
             sendPdfEmail(userEmailForLog, template.name, pdfBuffer, safeFilename, userLang)
                 .catch(err => console.error("E-posta gönderilemedi:", err));
         }
