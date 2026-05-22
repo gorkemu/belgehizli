@@ -4,7 +4,9 @@ const legalDocumentSchema = new mongoose.Schema({
     type: { 
         type: String, 
         required: true, 
-        enum: ['kullanim_sartlari', 'on_bilgilendirme', 'gizlilik_politikasi'] 
+        enum: ['kullanim_sartlari', 'on_bilgilendirme', 'gizlilik_politikasi', 'on_bilgilendirme_en', 
+        'gizlilik_politikasi_en', 
+        'kullanim_sartlari_en'] 
     },
     version: { 
         type: String, 

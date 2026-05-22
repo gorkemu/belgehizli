@@ -13,11 +13,13 @@ function TermsOfService() {
     const { lang } = useParams();
     const currentLang = lang === 'en' ? 'en-US' : 'tr-TR';
 
+    const fetchType = lang === 'en' ? 'kullanim_sartlari_en' : 'kullanim_sartlari';
+
     const [legalDoc, setLegalDoc] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get(`/legal/kullanim_sartlari/latest`)
+        api.get(`/legal/${fetchType}/latest`)
             .then(res => {
                 setLegalDoc(res.data);
                 setLoading(false);

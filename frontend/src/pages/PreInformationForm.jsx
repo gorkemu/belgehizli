@@ -13,11 +13,13 @@ function PreInformationForm() {
     const { lang } = useParams();
     const currentLang = lang === 'en' ? 'en-US' : 'tr-TR';
 
+    const fetchType = lang === 'en' ? 'on_bilgilendirme_en' : 'on_bilgilendirme';
+
     const [legalDoc, setLegalDoc] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get(`/legal/on_bilgilendirme/latest`)
+        api.get(`/legal/${fetchType}/latest`)
             .then(res => {
                 setLegalDoc(res.data);
                 setLoading(false);

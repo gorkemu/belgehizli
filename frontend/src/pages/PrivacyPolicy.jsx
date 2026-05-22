@@ -13,11 +13,13 @@ function PrivacyPolicy() {
     const { lang } = useParams();
     const currentLang = lang === 'en' ? 'en-US' : 'tr-TR';
 
+    const fetchType = lang === 'en' ? 'gizlilik_politikasi_en' : 'gizlilik_politikasi';
+
     const [legalDoc, setLegalDoc] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        api.get(`/legal/gizlilik_politikasi/latest`)
+        api.get(`/legal/${fetchType}/latest`)
             .then(res => {
                 setLegalDoc(res.data);
                 setLoading(false);
