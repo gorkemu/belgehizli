@@ -207,7 +207,7 @@ function TemplateDetail() {
             const backendPayload = {
                 formData,
                 editedHtml: finalEditedHtml,
-                email: formData?.belge_email || '',
+                email: formData?.belge_email || formData?.document_email || '',
                 consentTimestamp: new Date().toISOString(),
             };
 
