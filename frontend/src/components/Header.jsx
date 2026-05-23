@@ -27,7 +27,7 @@ function Header() {
   const { theme, changeTheme } = useTheme();
 
   const currentLang = lang || 'tr';
-  const isDark = theme !== 'light' && theme !== 'glacier' && theme !== 'default';
+  const isDark = theme !== 'light' && theme !== 'glacier' && theme !== 'default' && theme !== 'marine' && theme !== 'ivory' && theme !== 'sage' && theme !== 'rose';
   const currentThemeObj = THEMES.find(t => t.id === theme) || THEMES[0];
 
   useEffect(() => {

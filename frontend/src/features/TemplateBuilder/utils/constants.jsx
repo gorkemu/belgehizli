@@ -14,6 +14,12 @@ export const THEMES = [
   { id: 'sunset', label: 'templateBuilder.themes.sunset', emoji: '🌅' },
   { id: 'ink', label: 'templateBuilder.themes.ink', emoji: '🖋️' },
   { id: 'lavender', label: 'templateBuilder.themes.lavender', emoji: '🔮' },
+  { id: 'marine', label: 'templateBuilder.themes.marine', emoji: '🌊' },
+  { id: 'ivory', label: 'templateBuilder.themes.ivory', emoji: '📜' },
+  { id: 'sage', label: 'templateBuilder.themes.sage', emoji: '🌿' },
+  { id: 'noir', label: 'templateBuilder.themes.noir', emoji: '🖤' },
+  { id: 'rose', label: 'templateBuilder.themes.rose', emoji: '🌹' },
+  { id: 'slate', label: 'templateBuilder.themes.slate', emoji: '🪨' }
 ];
 
 // Çeviri anahtarları: "templateBuilder.variableFormat.<label>"

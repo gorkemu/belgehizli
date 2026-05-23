@@ -782,7 +782,13 @@
       "glacier": "Glacier",
       "sunset": "Sunset",
       "ink": "Ink",
-      "lavender": "Lavender"
+      "lavender": "Lavender",
+      "marine": "Marine",
+      "ivory": "Ivory",
+      "sage": "Sage",
+      "noir": "Noir",
+      "rose": "Rose",
+      "slate": "Slate"
     },
     "variableFormat": {
       "doubleCurly": "Double Curly Braces",

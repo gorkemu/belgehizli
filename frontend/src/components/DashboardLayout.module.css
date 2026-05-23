@@ -134,21 +134,33 @@
 :global([data-theme="forest"]) .sidebarLogoDark,
 :global([data-theme="ink"]) .sidebarLogoDark,
 :global([data-theme="lavender"]) .sidebarLogoDark,
+:global([data-theme="noir"]) .sidebarLogoDark,
+:global([data-theme="slate"]) .sidebarLogoDark,
 :global([data-theme="dark"]) .mobileLogoDark,
 :global([data-theme="sunset"]) .mobileLogoDark,
 :global([data-theme="amber"]) .mobileLogoDark,
 :global([data-theme="forest"]) .mobileLogoDark,
 :global([data-theme="ink"]) .mobileLogoDark,
-:global([data-theme="lavender"]) .mobileLogoDark {
+:global([data-theme="lavender"]) .mobileLogoDark,
+:global([data-theme="noir"]) .mobileLogoDark,
+:global([data-theme="slate"]) .mobileLogoDark {
     display: block;
 }
 
 :global([data-theme="light"]) .sidebarLogoLight,
 :global([data-theme="default"]) .sidebarLogoLight,
 :global([data-theme="glacier"]) .sidebarLogoLight,
+:global([data-theme="marine"]) .sidebarLogoLight,
+:global([data-theme="ivory"]) .sidebarLogoLight,
+:global([data-theme="sage"]) .sidebarLogoLight,
+:global([data-theme="rose"]) .sidebarLogoLight,
 :global([data-theme="light"]) .mobileLogoLight,
 :global([data-theme="default"]) .mobileLogoLight,
-:global([data-theme="glacier"]) .mobileLogoLight {
+:global([data-theme="glacier"]) .mobileLogoLight,
+:global([data-theme="marine"]) .mobileLogoLight,
+:global([data-theme="ivory"]) .mobileLogoLight,
+:global([data-theme="sage"]) .mobileLogoLight,
+:global([data-theme="rose"]) .mobileLogoLight {
     display: block;
 }
 .closeBtn {

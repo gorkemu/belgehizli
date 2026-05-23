@@ -772,7 +772,13 @@
       "glacier": "Buzul",
       "sunset": "Günbatımı",
       "ink": "Mürekkep",
-      "lavender": "Lavanta"
+      "lavender": "Lavanta",
+      "marine": "Marina",
+      "ivory": "Fildişi",
+      "sage": "Adaçayı",
+      "noir": "Noir",
+      "rose": "Gül",
+      "slate": "Çakıl"
     },
     "variableFormat": {
       "doubleCurly": "Çift Süslü Parantez",
