@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const BROWSERLESS_API_KEY = process.env.BROWSERLESS_API_KEY;
-const BROWSERLESS_API_URL = `https://chrome.browserless.io/pdf?token=${BROWSERLESS_API_KEY}`;
+const BROWSERLESS_API_URL = `https://production-sfo.browserless.io/pdf?token=${BROWSERLESS_API_KEY}`;
 
 async function generatePdf(htmlContent, options = {}) {
     if (!BROWSERLESS_API_KEY) {
