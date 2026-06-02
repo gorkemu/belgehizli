@@ -118,7 +118,6 @@
     "footerTheme1": "Geri dönmek için ",
     "footerTheme2": ", seçmek için ",
     "footerTheme3": " tuşunu kullanın.",
-    
     "footerDefault1": "Kapatmak için ",
     "footerDefault2": ", seçmek için ",
     "footerDefault3": " tuşunu kullanın.",
@@ -955,6 +954,9 @@
     "cancel": "Vazgeç",
     "replaceSelected": "Seçilenleri Değiştir",
     "noOccurrencesSelected": "Hiçbir eşleşme seçmediniz.",
+    "selectAll": "Tümünü Seç",
+    "deselectAll": "Tüm Seçimleri Kaldır",
+    "selectedText": "seçili",
     "slash": {
       "h1": "Büyük Başlık",
       "h2": "Orta Başlık",

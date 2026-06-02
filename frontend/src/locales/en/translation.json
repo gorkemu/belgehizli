@@ -118,7 +118,6 @@
     "footerTheme1": "Use ",
     "footerTheme2": " to go back, ",
     "footerTheme3": " to select.",
-    
     "footerDefault1": "Use ",
     "footerDefault2": " to close, ",
     "footerDefault3": " to select.",
@@ -955,6 +954,9 @@
     "cancel": "Cancel",
     "replaceSelected": "Replace selected",
     "noOccurrencesSelected": "You haven't selected any matches.",
+    "selectAll": "Select All",
+    "deselectAll": "Deselect All",
+    "selectedText": "selected",
     "slash": {
       "h1": "Heading 1",
       "h2": "Heading 2",

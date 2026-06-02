@@ -436,13 +436,13 @@ const EditorCanvas = () => {
                   )}
                   <span>
                     {multiReplace.occurrences.every(o => o.selected)
-                      ? t('editorCanvas.deselectAll', 'Tüm Seçimleri Kaldır')
-                      : t('editorCanvas.selectAll', 'Tümünü Seç')}
+                      ? t('editorCanvas.deselectAll')
+                      : t('editorCanvas.selectAll')}
                   </span>
                 </button>
 
                 <span className={styles.selectedCount}>
-                  {multiReplace.occurrences.filter(o => o.selected).length} / {multiReplace.occurrences.length} {t('editorCanvas.selectedText', 'seçili')}
+                  {multiReplace.occurrences.filter(o => o.selected).length} / {multiReplace.occurrences.length} {t('editorCanvas.selectedText')}
                 </span>
               </div>
 
@@ -472,10 +472,10 @@ const EditorCanvas = () => {
               </Button>
               <Button
                 variant="primary"
-                disabled={multiReplace.occurrences.filter(o => o.selected).length === 0} 
+                disabled={multiReplace.occurrences.filter(o => o.selected).length === 0}
                 onClick={() => {
                   const selectedOccs = multiReplace.occurrences.filter(o => o.selected);
-                  if (selectedOccs.length === 0) return; 
+                  if (selectedOccs.length === 0) return;
                   executeConversion(multiReplace.newField, multiReplace.finalVarName, selectedOccs);
                 }}
               >
