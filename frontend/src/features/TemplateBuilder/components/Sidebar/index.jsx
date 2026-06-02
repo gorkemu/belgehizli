@@ -8,7 +8,7 @@ import styles from './Sidebar.module.css';
 
 import { DndContext, closestCenter, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import { Plus, Lightbulb } from 'lucide-react';
+import { Plus, Lightbulb, ChevronLeft, ChevronRight } from 'lucide-react';
 import SortableFieldCard from './SortableFieldCard';
 
 const Sidebar = () => {
@@ -21,12 +21,14 @@ const Sidebar = () => {
   } = useTemplateBuilder();
 
   const [highlightedField, setHighlightedField] = useState(null);
+  const [isCollapsed, setIsCollapsed] = useState(false); 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
-  // --- Field Manipulation Functions ---
   const toggleExpand = id => setExpandedFields(p => p.includes(id) ? p.filter(i => i !== id) : [...p, id]);
   
   const addField = () => {
+    if (isCollapsed) setIsCollapsed(false);
+    
     const id = Math.random().toString(36).substr(2, 9);
     setFormData(p => ({ ...p, fields: [...p.fields, { id, name: '', label: '', fieldType: 'text', required: true, options: [], placeholder: '', condition: null, nameEdited: false }] }));
     setExpandedFields([id]); 
@@ -89,50 +91,62 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className={styles.left}>
-      <div className={styles.panelHead}>
-        <span className={styles.panelTitle}>{t('sidebar.formFields')}</span>
-        <span className={styles.fieldCount}>{formData.fields.length}</span>
-      </div>
+    <aside className={`${styles.left} ${isCollapsed ? styles.collapsed : ''}`}>
       
-      <div className={styles.fieldList} id="field-list">
-        {formData.fields.length === 0 ? (
-          <div className={styles.emptyFieldsState}>
-            <Lightbulb size={32} color="var(--warning)" style={{ marginBottom: 12 }} />
-            <h4>{t('sidebar.emptyTitle')}</h4>
-            <p>{t('sidebar.emptyDescription')}</p>
-          </div>
-        ) : (
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={formData.fields.map(f => f.id)} strategy={verticalListSortingStrategy}>
-              {formData.fields.map((field, i) => (
-                <SortableFieldCard 
-                  key={field.id} 
-                  field={field} 
-                  index={i} 
-                  isExpanded={expandedFields.includes(field.id)} 
-                  formErrors={formErrors} 
-                  isHighlighted={highlightedField === field.id} 
-                  toggleExpand={toggleExpand} 
-                  updateField={updateField} 
-                  updateFieldLabelAndName={updateFieldLabelAndName} 
-                  updateFieldName={updateFieldName} 
-                  removeField={removeField} 
-                  addOption={addOption} 
-                  updateOption={updateOption} 
-                  removeOption={removeOption} 
-                  toggleCondition={toggleCondition} 
-                  getChoiceFields={getChoiceFields} 
-                  allFields={formData.fields} 
-                  onInsertVariable={handleInsertVariable} 
-                />
-              ))}
-            </SortableContext>
-          </DndContext>
-        )}
-        <button className={styles.addFieldBtn} onClick={addField}>
-          <Plus size={16} /> {t('sidebar.addField')}
-        </button>
+      {/* Paneli Daraltma/Genişletme Butonu */}
+      <button 
+        className={styles.collapseBtn} 
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        aria-label="Toggle Sidebar"
+      >
+        {isCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+      </button>
+
+      <div className={styles.leftInner}>
+        <div className={styles.panelHead}>
+          <span className={styles.panelTitle}>{t('sidebar.formFields')}</span>
+          <span className={styles.fieldCount}>{formData.fields.length}</span>
+        </div>
+        
+        <div className={styles.fieldList} id="field-list">
+          {formData.fields.length === 0 ? (
+            <div className={styles.emptyFieldsState}>
+              <Lightbulb size={32} color="var(--warning)" style={{ marginBottom: 12 }} />
+              <h4>{t('sidebar.emptyTitle')}</h4>
+              <p>{t('sidebar.emptyDescription')}</p>
+            </div>
+          ) : (
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              <SortableContext items={formData.fields.map(f => f.id)} strategy={verticalListSortingStrategy}>
+                {formData.fields.map((field, i) => (
+                  <SortableFieldCard 
+                    key={field.id} 
+                    field={field} 
+                    index={i} 
+                    isExpanded={expandedFields.includes(field.id)} 
+                    formErrors={formErrors} 
+                    isHighlighted={highlightedField === field.id} 
+                    toggleExpand={toggleExpand} 
+                    updateField={updateField} 
+                    updateFieldLabelAndName={updateFieldLabelAndName} 
+                    updateFieldName={updateFieldName} 
+                    removeField={removeField} 
+                    addOption={addOption} 
+                    updateOption={updateOption} 
+                    removeOption={removeOption} 
+                    toggleCondition={toggleCondition} 
+                    getChoiceFields={getChoiceFields} 
+                    allFields={formData.fields} 
+                    onInsertVariable={handleInsertVariable} 
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
+          )}
+          <button className={styles.addFieldBtn} onClick={addField}>
+            <Plus size={16} /> {t('sidebar.addField')}
+          </button>
+        </div>
       </div>
     </aside>
   );

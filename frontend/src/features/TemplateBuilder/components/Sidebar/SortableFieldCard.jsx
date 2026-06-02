@@ -1,3 +1,4 @@
+// frontend\src\features\TemplateBuilder\components\Sidebar\SortableFieldCard.jsx
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSortable } from '@dnd-kit/sortable';

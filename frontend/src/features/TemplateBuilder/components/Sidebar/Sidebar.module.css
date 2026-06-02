@@ -135,13 +135,61 @@
 }
 
 .left {
+  position: relative; 
   width: 420px;
   flex-shrink: 0;
   background: var(--bg-app); 
   border-right: 1px solid var(--border);
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 10;
+}
+
+.left.collapsed {
+  width: 0 !important;
+  border-right-color: transparent !important;
+}
+
+.leftInner {
   display: flex;
   flex-direction: column;
-  transition: width 0.3s ease;
+  width: 420px; 
+  height: 100%;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.left.collapsed .leftInner {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.collapseBtn {
+  position: absolute;
+  top: 50%;
+  right: -14px; 
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.collapseBtn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md);
 }
 
 .panelHead {
@@ -202,21 +250,35 @@
 
 @media (max-width: 1400px) {
   .left { width: 380px; }
+  .leftInner { width: 380px; }
 }
 
 @media (max-width: 1200px) {
   .left { width: 340px; }
+  .leftInner { width: 340px; }
 }
 
 @media (max-width: 1000px) {
   .left { width: 320px; }
+  .leftInner { width: 320px; }
 }
 
 @media (max-width: 768px) {
-  .left { 
-    width: 100%; 
-    border-right: none;
+  .left, .left.collapsed { 
+    width: 100% !important; 
+    border-right: none !important;
     border-bottom: 1px solid var(--border);
+  }
+  
+  .leftInner, .left.collapsed .leftInner { 
+    width: 100% !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+  
+  .collapseBtn { 
+    display: none; 
   }
   
   .panelHead {
@@ -230,33 +292,11 @@
 }
 
 @media (max-width: 480px) {
-  .row2 {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .fgCheck {
-    margin-top: -6px; 
-  }
-  
-  .checkLabel {
-    margin-top: 0;
-  }
-  
-  .tabRow {
-    padding: 0 10px;
-  }
-  
-  .tabContent {
-    padding: 14px 12px;
-  }
-  
-  .fieldHeader {
-    padding: 10px;
-  }
-  
-  .insertVarBtn {
-    padding: 6px 8px;
-    font-size: 0.65rem;
-  }
+  .row2 { flex-direction: column; gap: 12px; }
+  .fgCheck { margin-top: -6px; }
+  .checkLabel { margin-top: 0; }
+  .tabRow { padding: 0 10px; }
+  .tabContent { padding: 14px 12px; }
+  .fieldHeader { padding: 10px; }
+  .insertVarBtn { padding: 6px 8px; font-size: 0.65rem; }
 }
