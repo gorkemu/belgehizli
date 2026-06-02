@@ -244,7 +244,12 @@
     margin-top: 0; margin-bottom: 1rem; padding-left: 1.8rem;
 }
 :global(.ProseMirror) li { margin-bottom: 0.4rem; }
-:global(.ProseMirror) li > p { margin: 0 !important; padding: 0 !important; border: none !important; display: inline-block; }
+:global(.ProseMirror) li > p { 
+  margin: 0 !important; 
+  padding: 0 !important; 
+  border: none !important; 
+  display: block; 
+}
 
 :global(.ProseMirror) table { border-color: var(--border); }
 :global(.ProseMirror) th { background: var(--bg-hover); }
