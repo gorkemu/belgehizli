@@ -171,6 +171,7 @@
   flex-direction: column;
   gap: 8px;
 }
+
 .occurrenceItem {
   display: flex;
   align-items: flex-start;
@@ -191,6 +192,59 @@
   font-weight: 800;
   padding: 0 4px;
   border-radius: 4px;
+}
+
+.multiReplaceControls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.selectAllBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  margin-left: -10px; 
+}
+
+.selectAllBtn:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.selectedCount {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  background: var(--bg-hover);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+}
+
+.checkIconActive {
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.checkIconInactive {
+  color: var(--text-muted);
+  flex-shrink: 0;
+  margin-top: 1px;
+  opacity: 0.6;
 }
 
 :global(.ProseMirror) {

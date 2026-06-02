@@ -19,10 +19,11 @@ import Placeholder from '@tiptap/extension-placeholder';
 import CharacterCount from '@tiptap/extension-character-count';
 import * as mammoth from 'mammoth';
 import DOMPurify from 'dompurify';
+import Button from '../../../components/ui/Button';
 
 import {
   Heading1, Heading2, Heading3, List, ListOrdered,
-  Scissors, AlignLeft, AlignRight, FileUp, Sparkles, X, Layers, Bold, Italic
+  Scissors, AlignLeft, AlignRight, FileUp, Sparkles, X, Layers, Bold, Italic, CheckSquare, Square
 } from 'lucide-react';
 
 // --- Custom Tiptap Extensions ---
@@ -154,7 +155,7 @@ const EditorCanvas = () => {
 
       setVarMenuState({
         show: true,
-        pos: posStyles, 
+        pos: posStyles,
         query: varMatch[2],
         range: { from: selection.from - (varMatch[1].length + varMatch[2].length), to: selection.from }
       });
@@ -369,9 +370,9 @@ const EditorCanvas = () => {
 
       {/* --- Bubble Menu (Soruya Dönüştür) --- */}
       {formatMenu.show && selectionMenu.show && mode === 'build' && (
-        <div 
-          className={styles.combinedBubbleMenu} 
-          style={{ top: formatMenu.top, left: formatMenu.left }} 
+        <div
+          className={styles.combinedBubbleMenu}
+          style={{ top: formatMenu.top, left: formatMenu.left }}
           onMouseDown={(e) => {
             if (['INPUT', 'SELECT', 'OPTION'].includes(e.target.tagName)) {
               return;
@@ -405,32 +406,81 @@ const EditorCanvas = () => {
       {/* --- Multi Replace Modal --- */}
       {multiReplace.show && (
         <div className={globalStyles.overlay}>
-          <div className={globalStyles.modal} style={{ maxWidth: '560px' }}>
+          <div className={globalStyles.modal} style={{ maxWidth: '600px' }}>
             <div className={globalStyles.modalHead}>
               <div className={globalStyles.modalIcon} style={{ background: 'var(--text-primary)', color: 'var(--bg-surface)', borderColor: 'var(--border)' }}><Layers size={20} /></div>
-              <div><h3>{t('editorCanvas.multiReplaceTitle')}</h3><p>{t('editorCanvas.multiReplaceDescription', { searchText: multiReplace.searchText, count: multiReplace.occurrences.length })}</p></div>
+              <div>
+                <h3>{t('editorCanvas.multiReplaceTitle')}</h3>
+                <p>{t('editorCanvas.multiReplaceDescription', { searchText: multiReplace.searchText, count: multiReplace.occurrences.length })}</p>
+              </div>
               <button className={globalStyles.modalClose} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}><X size={18} /></button>
             </div>
+
             <div className={globalStyles.modalBody}>
+              <div className={styles.multiReplaceControls}>
+                <button
+                  type="button"
+                  className={styles.selectAllBtn}
+                  onClick={() => {
+                    const isAllSelected = multiReplace.occurrences.every(o => o.selected);
+                    setMultiReplace({
+                      ...multiReplace,
+                      occurrences: multiReplace.occurrences.map(o => ({ ...o, selected: !isAllSelected }))
+                    });
+                  }}
+                >
+                  {multiReplace.occurrences.every(o => o.selected) ? (
+                    <CheckSquare size={18} className={styles.checkIconActive} />
+                  ) : (
+                    <Square size={18} className={styles.checkIconInactive} />
+                  )}
+                  <span>
+                    {multiReplace.occurrences.every(o => o.selected)
+                      ? t('editorCanvas.deselectAll', 'Tüm Seçimleri Kaldır')
+                      : t('editorCanvas.selectAll', 'Tümünü Seç')}
+                  </span>
+                </button>
+
+                <span className={styles.selectedCount}>
+                  {multiReplace.occurrences.filter(o => o.selected).length} / {multiReplace.occurrences.length} {t('editorCanvas.selectedText', 'seçili')}
+                </span>
+              </div>
+
               <div className={styles.multiReplaceList}>
                 {multiReplace.occurrences.map((occ, idx) => (
                   <div key={idx} className={`${styles.occurrenceItem} ${occ.selected ? styles.occurrenceSelected : ''}`} onClick={() => {
-                    const newOccs = [...multiReplace.occurrences]; newOccs[idx].selected = !newOccs[idx].selected;
+                    const newOccs = [...multiReplace.occurrences];
+                    newOccs[idx].selected = !newOccs[idx].selected;
                     setMultiReplace({ ...multiReplace, occurrences: newOccs });
                   }}>
-                    <input type="checkbox" checked={occ.selected} readOnly className={styles.chk} style={{ marginTop: '3px' }} />
-                    <div className={styles.occurrenceText}>...{occ.contextBefore}<span className={styles.occurrenceMatch}>{occ.matchText}</span>{occ.contextAfter}...</div>
+                    {occ.selected ? (
+                      <CheckSquare size={20} className={styles.checkIconActive} />
+                    ) : (
+                      <Square size={20} className={styles.checkIconInactive} />
+                    )}
+                    <div className={styles.occurrenceText}>
+                      ...{occ.contextBefore}<span className={styles.occurrenceMatch}>{occ.matchText}</span>{occ.contextAfter}...
+                    </div>
                   </div>
                 ))}
               </div>
             </div>
-            <div className={globalStyles.modalFoot}>
-              <button className={globalStyles.cancelBtn} onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}>{t('editorCanvas.cancel')}</button>
-              <button className={styles.primaryBtn} onClick={() => {
-                const selectedOccs = multiReplace.occurrences.filter(o => o.selected);
-                if (selectedOccs.length === 0) return showToast(t('editorCanvas.noOccurrencesSelected'), "error");
-                executeConversion(multiReplace.newField, multiReplace.finalVarName, selectedOccs);
-              }}>{t('editorCanvas.replaceSelected')}</button>
+
+            <div className={globalStyles.modalFoot} style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end', paddingTop: '16px' }}>
+              <Button variant="secondary" onClick={() => setMultiReplace({ show: false, occurrences: [], newField: null, finalVarName: '', searchText: '' })}>
+                {t('editorCanvas.cancel')}
+              </Button>
+              <Button
+                variant="primary"
+                disabled={multiReplace.occurrences.filter(o => o.selected).length === 0} 
+                onClick={() => {
+                  const selectedOccs = multiReplace.occurrences.filter(o => o.selected);
+                  if (selectedOccs.length === 0) return; 
+                  executeConversion(multiReplace.newField, multiReplace.finalVarName, selectedOccs);
+                }}
+              >
+                {t('editorCanvas.replaceSelected')}
+              </Button>
             </div>
           </div>
         </div>
