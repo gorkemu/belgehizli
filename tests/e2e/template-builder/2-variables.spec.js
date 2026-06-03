@@ -117,7 +117,7 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     await expect(fieldList).toContainText('IKINCI_TARAF');
   });
 
-  test('Çoklu eşleşme modalı: aynı kelime birden fazla yerde değiştirilebilmeli', async ({ page }) => {
+  test('Çoklu eşleşme modalı: aynı kelime birden fazla yerde değiştirilebilmeli ve seçim kilitleri çalışmalı', async ({ page }) => {
     const editor = page.locator('.ProseMirror');
 
     await editor.click();
@@ -156,10 +156,26 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     const modalHeading = page.getByRole('heading', { name: /Çoklu Eşleşme Bulundu/ });
     await expect(modalHeading).toBeVisible({ timeout: 10000 });
 
-    const checkboxes = page.locator('[class*="occurrenceItem"] input[type="checkbox"]');
-    await expect(checkboxes).toHaveCount(2);
+    const occurrenceItems = page.locator('[class*="occurrenceItem"]');
+    await expect(occurrenceItems).toHaveCount(2);
 
-    await page.getByRole('button', { name: /Seçilenleri Değiştir/ }).click();
+    const toggleAllBtn = page.locator('button[class*="selectAllBtn"]');
+    const replaceBtn = page.getByRole('button', { name: /Seçilenleri Değiştir/ });
+    
+    await expect(toggleAllBtn).toBeVisible();
+    
+    // Tıkla: Tüm Seçimleri Kaldır
+    await toggleAllBtn.click();
+    
+    // Hiç seçim kalmadığı için butonun disabled (kilitli) olması gerekiyor
+    await expect(replaceBtn).toBeDisabled();
+
+    // Tıkla: Tümünü Seç (Tekrar aktif et)
+    await toggleAllBtn.click();
+    await expect(replaceBtn).toBeEnabled();
+
+    // Ve işlemi onayla
+    await replaceBtn.click();
 
     const content = await editor.innerText();
     const matchCount = (content.match(/{{musteri_ismi}}/g) || []).length;
