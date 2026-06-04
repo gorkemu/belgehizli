@@ -5,7 +5,13 @@
     "workspace": "Workspace",
     "login": "Login",
     "register": "Sign Up",
-    "changeTheme": "Change Theme"
+    "changeTheme": "Change Theme",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "logoutConfirmTitle": "Log Out",
+    "logoutConfirmText": "Are you sure you want to log out of your account?",
+    "cancel": "Cancel",
+    "confirmLogout": "Yes, Log Out"
   },
   "projects": {
     "title": "All Templates",

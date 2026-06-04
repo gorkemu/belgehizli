@@ -363,6 +363,141 @@
   display: none;
 }
 
+.loggedInSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.userMenuContainer {
+  position: relative;
+}
+
+.userMenuTrigger {
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.mobileUserName, .mobileUserChevron {
+  display: none;
+}
+
+.avatarBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.userMenuTrigger:hover .avatarBtn {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.userMenuOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: transparent;
+}
+
+.userMenuDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 10px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  min-width: 220px;
+  z-index: 100;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  animation: dropdownFadeIn 0.15s ease-out forwards;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.userInfo {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.userName {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.userEmail {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.menuDivider {
+  height: 1px;
+  background-color: var(--border);
+  margin: 4px 0;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+  text-align: left;
+}
+
+.menuItem:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.menuItemDanger {
+  color: var(--danger);
+}
+
+.menuItemDanger:hover {
+  background: rgba(220, 38, 38, 0.05);
+  color: var(--danger);
+}
+
 @media (max-width: 900px) {
   .headerInner {
     padding: 0 1rem;
@@ -432,6 +567,76 @@
   .searchShortcut {
     display: none;
   }
+
+  .languageSwitcher {
+    flex-direction: column;
+    width: 100%;
+    border-radius: 12px;
+    padding: 6px;
+    gap: 4px;
+  }
+
+  .langOption {
+    width: 100%;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .loggedInSection {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 16px;
+  }
+
+  .workspaceBtn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .userMenuContainer {
+    width: 100%;
+  }
+
+  .userMenuTrigger {
+    width: 100%;
+    padding: 8px 16px 8px 8px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    justify-content: space-between;
+  }
+
+  .mobileUserName {
+    display: block;
+    flex: 1;
+    text-align: left;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+  }
+
+  .mobileUserChevron {
+    display: block;
+    color: var(--text-secondary);
+  }
+
+  .userMenuDropdown {
+    position: static;
+    width: 100%;
+    margin-top: 8px;
+    box-shadow: none;
+    animation: dropdownFadeIn 0.2s ease-out forwards;
+  }
+
+  .userMenuOverlay {
+    display: none;
+  }
+
+  .userInfo, .menuDivider {
+    display: none;
+  }
 }
 
 @media (max-width: 450px) {
@@ -452,4 +657,66 @@
     padding: 0.4rem 0.8rem;
     font-size: 0.75rem;
   }
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001; 
+}
+
+.confirmModal {
+  background-color: var(--bg-surface);
+  padding: 32px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  animation: scaleIn 0.2s ease-out;
+  border: 1px solid var(--border);
+  cursor: default;
+  margin: 0 20px;
+}
+
+.confirmIcon {
+  width: 48px;
+  height: 48px;
+  background-color: rgba(220, 38, 38, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: var(--danger);
+}
+
+.confirmTitle {
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.confirmText {
+  margin: 0 0 24px 0;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 12px;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

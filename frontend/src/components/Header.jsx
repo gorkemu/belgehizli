@@ -1,7 +1,7 @@
 // frontend/src/components/Header.jsx
 import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
-import { Search, LayoutDashboard, Menu, X, ChevronDown, ChevronUp } from 'lucide-react'; 
+import { Search, LayoutDashboard, Menu, X, ChevronDown, ChevronUp, User, Settings, LogOut, AlertTriangle } from 'lucide-react'; 
 import { AuthContext } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import styles from './Header.module.css';
@@ -15,14 +15,16 @@ function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [themePopover, setThemePopover] = useState(false); 
-  const [mobileThemeOpen, setMobileThemeOpen] = useState(false); 
+  const [mobileThemeOpen, setMobileThemeOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false); 
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   
   const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
   const shortcutText = isMac ? '⌘ K' : 'Ctrl K';
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const { lang } = useParams();
   const { theme, changeTheme } = useTheme();
 
@@ -38,7 +40,8 @@ function Header() {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setMobileThemeOpen(false); 
+    setMobileThemeOpen(false);
+    setUserMenuOpen(false);
   }, [location]);
 
   const openCommandPalette = () => {
@@ -56,6 +59,13 @@ function Header() {
     changeTheme(themeId);
     setThemePopover(false); 
     setMobileThemeOpen(false); 
+  };
+
+  const handleLogout = () => {
+    if (logout) logout();
+    setShowLogoutModal(false);
+    setUserMenuOpen(false);
+    navigate(`/${currentLang}/${currentLang === 'tr' ? 'giris-yap' : 'login'}`);
   };
 
   return (
@@ -168,9 +178,61 @@ function Header() {
             )}
 
             {user ? (
-              <Button variant="primary" size="lg" onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'panel' : 'dashboard'}`)} leftIcon={<LayoutDashboard size={16} />}>
-                <span>{t('header.workspace')}</span>
-              </Button>
+              <div className={styles.loggedInSection}>
+                <Button 
+                  className={styles.workspaceBtn} 
+                  variant="primary" 
+                  size="md" 
+                  onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'panel' : 'dashboard'}`)} 
+                  leftIcon={<LayoutDashboard size={16} />}
+                >
+                  <span className={styles.hideMobileText}>{t('header.workspace')}</span>
+                </Button>
+
+                <div className={styles.userMenuContainer}>
+                  <button className={styles.userMenuTrigger} onClick={() => setUserMenuOpen(!userMenuOpen)}>
+                    <div className={styles.avatarBtn}>
+                      {user.fullName ? user.fullName.charAt(0).toUpperCase() : <User size={18} />}
+                    </div>
+                    <span className={styles.mobileUserName}>{user.fullName}</span>
+                    {userMenuOpen ? <ChevronUp size={16} className={styles.mobileUserChevron} /> : <ChevronDown size={16} className={styles.mobileUserChevron} />}
+                  </button>
+                  
+                  {userMenuOpen && (
+                    <>
+                      <div className={styles.userMenuOverlay} onClick={() => setUserMenuOpen(false)} />
+                      <div className={styles.userMenuDropdown}>
+                        <div className={styles.userInfo}>
+                          <span className={styles.userName}>{user.fullName}</span>
+                          <span className={styles.userEmail}>{user.email}</span>
+                        </div>
+                        
+                        <div className={styles.menuDivider} />
+                        
+                        <button 
+                          className={styles.menuItem} 
+                          onClick={() => { 
+                            setUserMenuOpen(false); 
+                            navigate(`/${currentLang}/${currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings'}`); 
+                          }}
+                        >
+                          <Settings size={16} /> {t('header.settings')}
+                        </button>
+                        
+                        <button 
+                          className={`${styles.menuItem} ${styles.menuItemDanger}`} 
+                          onClick={() => {
+                            setUserMenuOpen(false);
+                            setShowLogoutModal(true);
+                          }}
+                        >
+                          <LogOut size={16} /> {t('header.logout')}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             ) : (
               <div className={styles.authButtons}>
                 <Button variant="secondary" onClick={() => navigate(`/${currentLang}/${currentLang === 'tr' ? 'giris-yap' : 'login'}`)}>
@@ -187,6 +249,24 @@ function Header() {
 
       {isMobileMenuOpen && (
         <div className={styles.mobileOverlay} onClick={() => setIsMobileMenuOpen(false)} />
+      )}
+
+      {showLogoutModal && (
+        <div className={styles.modalOverlay} onMouseDown={() => setShowLogoutModal(false)}>
+          <div className={styles.confirmModal} onMouseDown={e => e.stopPropagation()}>
+            <div className={styles.confirmIcon}><AlertTriangle size={24} color="#dc2626" /></div>
+            <h2 className={styles.confirmTitle}>{t('header.logoutConfirmTitle')}</h2>
+            <p className={styles.confirmText}>{t('header.logoutConfirmText')}</p>
+            <div className={styles.confirmActions}>
+              <Button type="button" variant="secondary" onClick={() => setShowLogoutModal(false)} style={{ flex: '1' }}>
+                {t('header.cancel')}
+              </Button>
+              <Button type="button" variant="danger" onClick={handleLogout} style={{ flex: '1' }}>
+                {t('header.confirmLogout')}
+              </Button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

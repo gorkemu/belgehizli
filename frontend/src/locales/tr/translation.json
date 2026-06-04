@@ -5,7 +5,13 @@
     "workspace": "Çalışma Alanı",
     "login": "Giriş",
     "register": "Kayıt Ol",
-    "changeTheme": "Temayı değiştir"
+    "changeTheme": "Temayı değiştir",
+    "settings": "Ayarlar",
+    "logout": "Çıkış Yap",
+    "logoutConfirmTitle": "Çıkış Yap",
+    "logoutConfirmText": "Hesabınızdan çıkış yapmak istediğinize emin misiniz?",
+    "cancel": "İptal",
+    "confirmLogout": "Evet, Çıkış Yap"
   },
   "projects": {
     "title": "Tüm Şablonlar",

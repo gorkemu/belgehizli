@@ -53,6 +53,15 @@ const MainLayout = () => {
     );
 };
 
+const ProtectedDashboardLayout = () => {
+    return (
+        <div style={{ height: '100vh', width: '100%', overflow: 'hidden' }}>
+            <Header />
+            <DashboardLayout />
+        </div>
+    );
+};
+
 function App() {
     const isStaging = window.location.hostname.includes('staging') || window.location.hostname.includes('vercel.app');
 
@@ -117,7 +126,7 @@ function App() {
                                 </Route>
 
                                 <Route element={<ProtectedRoute />}>
-                                    <Route element={<DashboardLayout />}>
+                                    <Route element={<ProtectedDashboardLayout />}>
                                         <Route path="panel" element={<Dashboard />} />
                                         <Route path="dashboard" element={<Dashboard />} />
                                         

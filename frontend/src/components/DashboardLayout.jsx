@@ -6,7 +6,7 @@ import { AuthContext } from '../context/AuthContext';
 import {
   LayoutDashboard, FolderKanban,
   LogOut, Settings, Globe,
-  Menu, X, ChevronRight, AlertTriangle
+  AlertTriangle
 } from 'lucide-react';
 import styles from './DashboardLayout.module.css';
 import Button from '../components/ui/Button';
@@ -22,21 +22,7 @@ export const DashboardLayout = () => {
   const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
   const settingsRoute = currentLang === 'tr' ? 'panel/settings' : 'dashboard/settings';
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth <= 768;
-      setIsMobile(mobile);
-      if (!mobile) setIsMobileMenuOpen(false);
-    };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
 
   const navItems = [
     { path: `/${currentLang}/${dashboardRoute}`, name: t('dashboardLayout.overview'), icon: LayoutDashboard, exact: true },
@@ -50,31 +36,6 @@ export const DashboardLayout = () => {
 
   return (
     <div className={styles.root}>
-      {isMobile && (
-        <div className={styles.mobileHeader}>
-          <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.mobileLogoLink}>
-            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.mobileLogoLight} />
-            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.mobileLogoDark} />
-          </Link>
-          <Button
-            variant="ghost"
-            onClick={() => setIsMobileMenuOpen(true)}
-            className={styles.menuBtn}
-            aria-label={t('dashboardLayout.openMenu')}
-          >
-            <Menu size={24} className={styles.menuIconColor} />
-          </Button>
-        </div>
-      )}
-
-      {isMobile && isMobileMenuOpen && (
-        <div
-          className={styles.overlay}
-          onClick={() => setIsMobileMenuOpen(false)}
-          aria-hidden="true"
-        />
-      )}
-
       {showLogoutModal && (
         <div className={styles.modalOverlay} onClick={() => setShowLogoutModal(false)}>
           <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
@@ -95,30 +56,7 @@ export const DashboardLayout = () => {
         </div>
       )}
 
-      <aside
-        className={[
-          styles.sidebar,
-          isMobile ? styles.sidebarMobile : '',
-          isMobileMenuOpen ? styles.sidebarOpen : '',
-        ].join(' ')}
-      >
-        <div className={styles.sidebarHeader}>
-          <Link to={`/${currentLang}/${dashboardRoute}`} className={styles.sidebarLogoLink}>
-            <img src="/logo-full.svg" alt="Belge Hızlı" className={styles.sidebarLogoLight} />
-            <img src="/logo-full-white.svg" alt="Belge Hızlı" className={styles.sidebarLogoDark} />
-          </Link>
-          {isMobile && (
-            <Button
-              variant="ghost"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={styles.closeBtn}
-              aria-label={t('dashboardLayout.closeMenu')}
-            >
-              <X size={20} />
-            </Button>
-          )}
-        </div>
-
+      <aside className={styles.sidebar}>
         <nav className={styles.nav}>
           {navItems.map(item => {
             const Icon = item.icon;
@@ -133,7 +71,6 @@ export const DashboardLayout = () => {
               >
                 <Icon size={18} className={isActive ? styles.iconActive : styles.icon} />
                 <span>{item.name}</span>
-                {isActive && <ChevronRight size={14} className={styles.activeChevron} />}
               </Link>
             );
           })}
@@ -180,7 +117,7 @@ export const DashboardLayout = () => {
         </div>
       </aside>
 
-      <main className={`${styles.main} ${isMobile ? styles.mainMobile : ''}`}>
+      <main className={styles.main}>
         <Outlet />
       </main>
     </div>
