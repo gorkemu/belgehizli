@@ -47,7 +47,13 @@
     "pdfGenerationError": "PDF oluşturulamadı.",
     "loadError": "Belge yüklenirken hata oluştu.",
     "htmlMissing": "PDF oluşturmak için HTML içeriği eksik.",
-    "serverError": "Sunucu hatası oluştu."
+    "serverError": "Sunucu hatası oluştu.",
+    "edit": "Düzenle",
+    "modalEditTitle": "Şablonu Düzenle",
+    "saveChanges": "Değişiklikleri Kaydet",
+    "saving": "Kaydediliyor...",
+    "toastEdited": "Şablon başarıyla güncellendi.",
+    "errorEditing": "Şablon güncellenirken bir hata oluştu."
   },
   "templates": {
     "fetchAllError": "Şablonlar alınırken bir hata oluştu.",
@@ -79,7 +85,15 @@
     "recentlyEdited": "Son Düzenlenenler",
     "viewAll": "Tümünü Gör",
     "emptyProjects": "Henüz bir şablonunuz bulunmuyor. Yeni bir şablon oluşturarak başlayın.",
-    "rename": "Yeniden Adlandır"
+    "rename": "Yeniden Adlandır",
+    "edit": "Düzenle",
+    "modalEditTitle": "Projeyi Düzenle",
+    "projectName": "Proje Adı",
+    "description": "Açıklama",
+    "saveChanges": "Değişiklikleri Kaydet",
+    "saving": "Kaydediliyor...",
+    "toastEdited": "Proje başarıyla güncellendi.",
+    "errorEditing": "Proje güncellenirken bir hata oluştu."
   },
   "dashboardLayout": {
     "overview": "Özet",

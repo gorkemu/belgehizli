@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { AuthContext } from '../context/AuthContext';
 import {
   ArrowRight, Plus, Edit3, Trash2, AlertTriangle, CheckCircle2,
-  Loader2, BookOpen, LayoutTemplate, MoreHorizontal
+  Loader2, BookOpen, LayoutTemplate, MoreHorizontal, X
 } from 'lucide-react';
 import styles from './Dashboard.module.css';
 import Button from '../components/ui/Button';
+import Input from '../components/ui/Input';
 import { getUserFriendlyMessage } from '../utils/getUserFriendlyMessage';
 
 const Dashboard = () => {
@@ -25,10 +26,15 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState({ show: false, message: '', type: 'success' });
 
+  // Menu & Delete State
   const [rowMenuOpen, setRowMenuOpen] = useState(null);
   const [deleteProjectTarget, setDeleteProjectTarget] = useState(null);
-  const [editingProjectId, setEditingProjectId] = useState(null);
-  const [editingProjectName, setEditingProjectName] = useState('');
+
+  // Edit Modal State
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isEditSubmitting, setIsEditSubmitting] = useState(false);
+  const [editTargetId, setEditTargetId] = useState(null);
+  const [editFormData, setEditFormData] = useState({ name: '', description: '' });
 
   const showToast = (message, type = 'success') => {
     setToast({ show: true, message, type });
@@ -74,15 +80,26 @@ const Dashboard = () => {
     }
   };
 
-  const handleRenameProject = async (projectId) => {
-    if (!editingProjectName.trim()) return setEditingProjectId(null);
+  const openEditModal = (project) => {
+    setEditTargetId(project._id);
+    setEditFormData({ name: project.name, description: project.description || '' });
+    setIsEditModalOpen(true);
+    setRowMenuOpen(null);
+  };
+
+  const handleEditProject = async (e) => {
+    e.preventDefault();
+    setIsEditSubmitting(true);
+
     try {
-      await api.put(`/projects/${projectId}`, { name: editingProjectName });
-      setRecentProjects(prev => prev.map(p => p._id === projectId ? { ...p, name: editingProjectName } : p));
-      setEditingProjectId(null);
-      showToast(t('dashboard.toastRenamed'));
+      await api.put(`/projects/${editTargetId}`, { name: editFormData.name, description: editFormData.description });
+      setRecentProjects(prev => prev.map(p => p._id === editTargetId ? { ...p, name: editFormData.name, description: editFormData.description } : p));
+      setIsEditModalOpen(false);
+      showToast(t('dashboard.toastEdited'));
     } catch (err) {
-      showToast(getUserFriendlyMessage(err.response?.data, 'dashboard.toastRenameError', t), 'error');
+      showToast(getUserFriendlyMessage(err.response?.data, 'dashboard.errorEditing', t), 'error');
+    } finally {
+      setIsEditSubmitting(false);
     }
   };
 
@@ -98,7 +115,6 @@ const Dashboard = () => {
     </div>
   );
 
-  // Dinamik rotalarımız
   const projectsRoute = currentLang === 'tr' ? 'panel/projects' : 'dashboard/projects';
   const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
   const editRoute = currentLang === 'tr' ? 'panel/duzenle' : 'dashboard/edit';
@@ -111,20 +127,56 @@ const Dashboard = () => {
         </div>
       )}
 
+      {/* DELETE MODAL */}
       {deleteProjectTarget && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalCard} onClick={e => e.stopPropagation()}>
+        <div className={styles.modalOverlay} onMouseDown={() => setDeleteProjectTarget(null)}>
+          <div className={styles.modalCard} onMouseDown={e => e.stopPropagation()}>
             <div className={styles.modalIconBox}><AlertTriangle size={24} color="#dc2626" /></div>
             <h2 className={styles.modalTitle}>{t('dashboard.deleteTitle')}</h2>
             <p className={styles.modalText}>{t('dashboard.deleteConfirmText')}</p>
             <div className={styles.modalActions}>
-              <Button variant="secondary" onClick={() => setDeleteProjectTarget(null)} style={{ "flex": 1 }}>
+              <Button variant="secondary" onClick={() => setDeleteProjectTarget(null)} style={{ flex: 1 }}>
                 {t('dashboard.cancel')}
               </Button>
-              <Button variant="danger" onClick={handleDeleteProject} style={{ "flex": 1 }}>
+              <Button variant="danger" onClick={handleDeleteProject} style={{ flex: 1 }}>
                 {t('dashboard.deletePermanently')}
               </Button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* EDIT MODAL */}
+      {isEditModalOpen && (
+        <div className={styles.modalOverlay} onMouseDown={() => setIsEditModalOpen(false)}>
+          <div className={styles.modalCard} style={{ textAlign: 'left' }} onMouseDown={e => e.stopPropagation()}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <h2 className={styles.modalTitle} style={{ margin: 0 }}>{t('dashboard.modalEditTitle')}</h2>
+              <button onClick={() => setIsEditModalOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' }}><X size={20} /></button>
+            </div>
+            
+            <form onSubmit={handleEditProject} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px' }}>{t('dashboard.projectName')}</label>
+                <Input type="text" required value={editFormData.name} onChange={e => setEditFormData({ ...editFormData, name: e.target.value })} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '8px' }}>{t('dashboard.description')}</label>
+                <textarea 
+                  value={editFormData.description} 
+                  onChange={e => setEditFormData({ ...editFormData, description: e.target.value })} 
+                  style={{ width: '100%', padding: '12px', border: '1px solid var(--border)', borderRadius: '8px', background: 'var(--bg-input)', color: 'var(--text-primary)', fontSize: '0.9rem', resize: 'vertical', minHeight: '100px' }} 
+                />
+              </div>
+              <div className={styles.modalActions} style={{ marginTop: '8px' }}>
+                <Button type="button" variant="secondary" size="lg" onClick={() => setIsEditModalOpen(false)} style={{ flex: '1' }}>
+                  {t('dashboard.cancel')}
+                </Button>
+                <Button type="submit" variant="primary" size="lg" disabled={isEditSubmitting} style={{ flex: '1' }}>
+                  {isEditSubmitting ? t('dashboard.saving') : t('dashboard.saveChanges')}
+                </Button>
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -170,9 +222,7 @@ const Dashboard = () => {
                 <div className={styles.projectInfo} onClick={() => navigate(`/${currentLang}/${editRoute}/${project._id}`)}>
                   <div className={styles.projectIconWrapper}><LayoutTemplate size={18} color="var(--text-muted)" /></div>
                   <div className={styles.projectTextData}>
-                    {editingProjectId === project._id ? (
-                      <input autoFocus value={editingProjectName} onChange={e => setEditingProjectName(e.target.value)} onBlur={() => handleRenameProject(project._id)} onKeyDown={e => { if (e.key === 'Enter') handleRenameProject(project._id); if (e.key === 'Escape') setEditingProjectId(null); }} className={styles.editInput} onClick={e => e.stopPropagation()} />
-                    ) : (<h4 className={styles.projectName}>{project.name}</h4>)}
+                    <h4 className={styles.projectName}>{project.name}</h4>
                     <span className={styles.projectDate}>{formatDate(project.updatedAt)}</span>
                   </div>
                 </div>
@@ -180,9 +230,13 @@ const Dashboard = () => {
                   <button onClick={e => { e.stopPropagation(); setRowMenuOpen(rowMenuOpen === project._id ? null : project._id); }} className={styles.menuTrigger}><MoreHorizontal size={18} /></button>
                   {rowMenuOpen === project._id && (
                     <div className={styles.menuDropdown} onClick={e => e.stopPropagation()}>
-                      <button onClick={() => { setEditingProjectId(project._id); setEditingProjectName(project.name); setRowMenuOpen(null); }} className={styles.menuItem}><Edit3 size={14} /> {t('dashboard.rename')}</button>
+                      <button onClick={() => openEditModal(project)} className={styles.menuItem}>
+                        <Edit3 size={14} /> {t('dashboard.edit')}
+                      </button>
                       <div className={styles.menuDivider}></div>
-                      <button onClick={() => { setDeleteProjectTarget(project._id); setRowMenuOpen(null); }} className={`${styles.menuItem} ${styles.menuItemDanger}`}><Trash2 size={14} /> {t('dashboard.deletePermanently')}</button>
+                      <button onClick={() => { setDeleteProjectTarget(project._id); setRowMenuOpen(null); }} className={`${styles.menuItem} ${styles.menuItemDanger}`}>
+                        <Trash2 size={14} /> {t('dashboard.deletePermanently')}
+                      </button>
                     </div>
                   )}
                 </div>

@@ -47,7 +47,13 @@
     "pdfGenerationError": "PDF could not be generated.",
     "loadError": "An error occurred while loading the document.",
     "htmlMissing": "HTML content is missing for PDF generation.",
-    "serverError": "A server error occurred."
+    "serverError": "A server error occurred.",
+    "edit": "Edit",
+    "modalEditTitle": "Edit Template",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "toastEdited": "Template updated successfully.",
+    "errorEditing": "An error occurred while updating the template."
   },
   "templates": {
     "fetchAllError": "An error occurred while fetching templates.",
@@ -79,7 +85,15 @@
     "recentlyEdited": "Recently EDITED",
     "viewAll": "View All",
     "emptyProjects": "You don't have any templates yet. Start by creating a new template.",
-    "rename": "Rename"
+    "rename": "Rename",
+    "edit": "Edit",
+    "modalEditTitle": "Edit Project",
+    "projectName": "Project Name",
+    "description": "Description",
+    "saveChanges": "Save Changes",
+    "saving": "Saving...",
+    "toastEdited": "Project updated successfully.",
+    "errorEditing": "An error occurred while updating the project."
   },
   "dashboardLayout": {
     "overview": "Overview",
