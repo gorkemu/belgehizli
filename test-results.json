@@ -103,12 +103,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 10152,
+                      "duration": 11530,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.419Z",
+                      "startTime": "2026-06-04T01:46:25.506Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -118,7 +118,7 @@
               ],
               "id": "63a92d60ddc539656cb3-7d58569e1dff39b627bd",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 61,
+              "line": 62,
               "column": 7
             },
             {
@@ -137,12 +137,12 @@
                       "workerIndex": 1,
                       "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 9726,
+                      "duration": 11253,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.375Z",
+                      "startTime": "2026-06-04T01:46:25.533Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -171,12 +171,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 9356,
+                      "duration": 9529,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.354Z",
+                      "startTime": "2026-06-04T01:46:25.521Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -186,7 +186,7 @@
               ],
               "id": "63a92d60ddc539656cb3-d4f30336d19521a637cc",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 109,
+              "line": 104,
               "column": 7
             },
             {
@@ -205,12 +205,12 @@
                       "workerIndex": 3,
                       "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 11109,
+                      "duration": 10697,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.456Z",
+                      "startTime": "2026-06-04T01:46:25.531Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -220,7 +220,7 @@
               ],
               "id": "63a92d60ddc539656cb3-b3502f03e4d5eb051915",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 122,
+              "line": 117,
               "column": 7
             },
             {
@@ -239,12 +239,12 @@
                       "workerIndex": 4,
                       "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 8540,
+                      "duration": 10800,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.349Z",
+                      "startTime": "2026-06-04T01:46:25.674Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -254,7 +254,7 @@
               ],
               "id": "63a92d60ddc539656cb3-e77a4a6ef57feb7547b7",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 154,
+              "line": 144,
               "column": 7
             },
             {
@@ -273,12 +273,12 @@
                       "workerIndex": 5,
                       "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 10170,
+                      "duration": 9996,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.362Z",
+                      "startTime": "2026-06-04T01:46:25.582Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -288,7 +288,7 @@
               ],
               "id": "63a92d60ddc539656cb3-7f67c7fb28080dee677d",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 171,
+              "line": 161,
               "column": 7
             },
             {
@@ -307,12 +307,12 @@
                       "workerIndex": 6,
                       "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 10239,
+                      "duration": 10578,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.511Z",
+                      "startTime": "2026-06-04T01:46:25.601Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -322,7 +322,7 @@
               ],
               "id": "63a92d60ddc539656cb3-04ced13f76f5342d543e",
               "file": "e2e/template-builder/1-core-editor.spec.js",
-              "line": 194,
+              "line": 182,
               "column": 7
             }
           ]
@@ -358,12 +358,12 @@
                       "workerIndex": 7,
                       "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 8800,
+                      "duration": 7011,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:01.530Z",
+                      "startTime": "2026-06-04T01:46:25.562Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -373,7 +373,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-072c67392e810de5e15a",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 66,
+              "line": 64,
               "column": 7
             },
             {
@@ -389,15 +389,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 4,
-                      "parallelIndex": 4,
+                      "workerIndex": 7,
+                      "parallelIndex": 7,
                       "status": "passed",
-                      "duration": 4714,
+                      "duration": 4977,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:20.716Z",
+                      "startTime": "2026-06-04T01:46:44.884Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -407,7 +407,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-fef1a793a3e9eb539729",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 88,
+              "line": 86,
               "column": 7
             },
             {
@@ -426,12 +426,12 @@
                       "workerIndex": 2,
                       "parallelIndex": 2,
                       "status": "passed",
-                      "duration": 5993,
+                      "duration": 5990,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:21.599Z",
+                      "startTime": "2026-06-04T01:46:46.700Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -441,7 +441,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-f96e34d73f0f743500f8",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 101,
+              "line": 99,
               "column": 7
             },
             {
@@ -457,15 +457,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 7,
-                      "parallelIndex": 7,
+                      "workerIndex": 6,
+                      "parallelIndex": 6,
                       "status": "passed",
-                      "duration": 9271,
+                      "duration": 8515,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:22.049Z",
+                      "startTime": "2026-06-04T01:46:47.682Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -475,7 +475,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-992025b6ff711835a9f7",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 120,
+              "line": 118,
               "column": 7
             },
             {
@@ -491,15 +491,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 1,
-                      "parallelIndex": 1,
+                      "workerIndex": 3,
+                      "parallelIndex": 3,
                       "status": "passed",
-                      "duration": 5742,
+                      "duration": 5165,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:23.105Z",
+                      "startTime": "2026-06-04T01:46:47.734Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -509,7 +509,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-9bb941c34d7e435548ec",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 189,
+              "line": 185,
               "column": 7
             },
             {
@@ -525,15 +525,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 0,
-                      "parallelIndex": 0,
+                      "workerIndex": 5,
+                      "parallelIndex": 5,
                       "status": "passed",
-                      "duration": 5301,
+                      "duration": 5185,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:23.282Z",
+                      "startTime": "2026-06-04T01:46:48.430Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -543,7 +543,7 @@
               ],
               "id": "6de98e812cf8e05b3f00-7d075bdcbfcfb5d17849",
               "file": "e2e/template-builder/2-variables.spec.js",
-              "line": 206,
+              "line": 202,
               "column": 7
             }
           ]
@@ -576,15 +576,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4973,
+                      "duration": 4995,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:23.479Z",
+                      "startTime": "2026-06-04T01:46:48.642Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -594,7 +594,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-2913efa28d8ace78a5be",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 69,
+              "line": 72,
               "column": 7
             },
             {
@@ -610,15 +610,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 8215,
+                      "duration": 8039,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:33.458Z",
+                      "startTime": "2026-06-04T01:46:59.014Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -628,7 +628,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-579d919d815e8dad610d",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 78,
+              "line": 81,
               "column": 7
             },
             {
@@ -644,15 +644,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 4903,
+                      "duration": 4859,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:41.747Z",
+                      "startTime": "2026-06-04T01:47:07.108Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -662,7 +662,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-a8540461c6496637ad66",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 118,
+              "line": 121,
               "column": 7
             },
             {
@@ -678,15 +678,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 3071,
+                      "duration": 3108,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:46.668Z",
+                      "startTime": "2026-06-04T01:47:11.983Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -696,7 +696,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-84c1ce0fed571f5a2e3e",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 186,
+              "line": 189,
               "column": 7
             },
             {
@@ -712,15 +712,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1661,
+                      "duration": 1674,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:49.756Z",
+                      "startTime": "2026-06-04T01:47:15.106Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -730,7 +730,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-059a42301b94cf4f1a1c",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 236,
+              "line": 239,
               "column": 7
             },
             {
@@ -746,15 +746,15 @@
                   "projectName": "e2e",
                   "results": [
                     {
-                      "workerIndex": 5,
-                      "parallelIndex": 5,
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
                       "status": "passed",
-                      "duration": 1862,
+                      "duration": 1880,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:51.434Z",
+                      "startTime": "2026-06-04T01:47:16.796Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -764,7 +764,7 @@
               ],
               "id": "f56b8c2b7540796d4f75-0c2a3bbb48253f638268",
               "file": "e2e/template-builder/3-form-and-preview.spec.js",
-              "line": 252,
+              "line": 255,
               "column": 7
             }
           ]
@@ -797,15 +797,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 9,
-                      "parallelIndex": 3,
+                      "workerIndex": 8,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1957,
+                      "duration": 1877,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:28.369Z",
+                      "startTime": "2026-06-04T01:46:53.473Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -848,15 +848,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 8,
-                      "parallelIndex": 6,
+                      "workerIndex": 9,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 803,
+                      "duration": 633,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:28.105Z",
+                      "startTime": "2026-06-04T01:46:53.809Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -882,15 +882,15 @@
                   "projectName": "api",
                   "results": [
                     {
-                      "workerIndex": 8,
-                      "parallelIndex": 6,
+                      "workerIndex": 9,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 1688,
+                      "duration": 1661,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:29.213Z",
+                      "startTime": "2026-06-04T01:46:54.816Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -934,14 +934,14 @@
                   "results": [
                     {
                       "workerIndex": 8,
-                      "parallelIndex": 6,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2739,
+                      "duration": 927,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:31.177Z",
+                      "startTime": "2026-06-04T01:46:56.584Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -968,14 +968,14 @@
                   "results": [
                     {
                       "workerIndex": 8,
-                      "parallelIndex": 6,
+                      "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 164,
+                      "duration": 207,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:34.504Z",
+                      "startTime": "2026-06-04T01:46:58.144Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1019,14 +1019,14 @@
                   "results": [
                     {
                       "workerIndex": 9,
-                      "parallelIndex": 3,
+                      "parallelIndex": 4,
                       "status": "passed",
-                      "duration": 1090,
+                      "duration": 1211,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-06-03T00:52:31.600Z",
+                      "startTime": "2026-06-04T01:46:56.602Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -1046,8 +1046,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-06-03T00:51:49.625Z",
-    "duration": 66368.648,
+    "startTime": "2026-06-04T01:46:22.116Z",
+    "duration": 59238.94300000001,
     "expected": 25,
     "skipped": 0,
     "unexpected": 0,

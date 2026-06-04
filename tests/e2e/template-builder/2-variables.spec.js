@@ -7,7 +7,6 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
 
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
-    // Dili Türkçe'ye sabitle
     await context.addInitScript(() => {
       localStorage.setItem('i18nextLng', 'tr');
     });
@@ -34,20 +33,20 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     
     await page.goto('/tr/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
-    // Hem "Sil" hem "Delete" title'ını yakala
-    await projectCard.locator('button[title="Sil"], button[title="Delete"]').click();
-    // "Kalıcı Olarak Sil" veya "Delete Permanently" butonu
-    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/ }).click();
+    
+    // 3 Noktalı menüye tıkla, ardından açılan menüden Sil'i seç
+    await projectCard.locator('button[class*="menuTrigger"]').click();
+    await page.locator('div[class*="menuDropdown"]').locator('button', { hasText: /Sil|Delete/i }).click();
+    
+    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/i }).click();
     await page.waitForTimeout(500);
     await page.close();
   });
 
   test.beforeEach(async ({ page }) => {
-    // Dili tekrar garantiye al
     await page.addInitScript(() => {
       localStorage.setItem('i18nextLng', 'tr');
     });
-    // Onboarding'i kapat
     await page.addInitScript(() => {
       localStorage.setItem('template_builder_tour_seen', 'true');
     });
@@ -55,7 +54,6 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     await page.goto(`/tr/panel/duzenle/${TEST_DOC_ID}`);
     await page.getByRole('button', { name: /Tasarım/ }).click();
 
-    // Editörü temizle
     const editor = page.locator('.ProseMirror');
     await editor.click();
     await editor.press('Meta+a');
@@ -104,7 +102,7 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
 
     await page.getByRole('button', { name: /Tümünü Algıla/ }).click();
     await page.getByRole('button', { name: /Uygula/ }).click();
-    // Toast mesajı
+    
     await expect(page.locator('text=değişken algılandı')).toBeVisible();
 
     await page.getByRole('button', { name: /Tümünü Algıla/ }).click();
@@ -143,24 +141,24 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     const bubbleMenu = page.locator('[class*="combinedBubbleMenu"]');
     await expect(bubbleMenu).toBeVisible();
 
-    await bubbleMenu.getByText(/Soruya Dönüştür/).click();
+    await bubbleMenu.getByText(/Soruya Dönüştür/i).click();
 
-    const bubbleInput = bubbleMenu.getByPlaceholder(/Soru Başlığı/);
+    const bubbleInput = bubbleMenu.getByPlaceholder(/Soru Başlığı/i);
     await expect(bubbleInput).toBeVisible({ timeout: 5000 });
 
     await bubbleInput.fill('');
     await bubbleInput.fill('Müşteri İsmi');
 
-    await bubbleMenu.getByRole('button', { name: /Ekle/ }).click();
+    await bubbleMenu.getByRole('button', { name: /Ekle/i }).click();
 
-    const modalHeading = page.getByRole('heading', { name: /Çoklu Eşleşme Bulundu/ });
+    const modalHeading = page.getByRole('heading', { name: /Çoklu Eşleşme Bulundu/i });
     await expect(modalHeading).toBeVisible({ timeout: 10000 });
 
     const occurrenceItems = page.locator('[class*="occurrenceItem"]');
     await expect(occurrenceItems).toHaveCount(2);
 
     const toggleAllBtn = page.locator('button[class*="selectAllBtn"]');
-    const replaceBtn = page.getByRole('button', { name: /Seçilenleri Değiştir/ });
+    const replaceBtn = page.getByRole('button', { name: /Seçilenleri Değiştir/i });
     
     await expect(toggleAllBtn).toBeVisible();
     
@@ -174,7 +172,7 @@ test.describe('2. Değişkenler ve Tetikleyiciler (Triggers)', () => {
     await toggleAllBtn.click();
     await expect(replaceBtn).toBeEnabled();
 
-    // Ve işlemi onayla
+    // İşlemi onayla
     await replaceBtn.click();
 
     const content = await editor.innerText();

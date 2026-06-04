@@ -7,7 +7,6 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
 
   test.beforeAll(async ({ browser }) => {
     const context = await browser.newContext();
-    // Dili Türkçe'ye sabitleyen init script tanımla
     await context.addInitScript(() => {
       localStorage.setItem('i18nextLng', 'tr');
     });
@@ -33,14 +32,16 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     
     await page.goto('/tr/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
-    await projectCard.locator('button[title="Sil"], button[title="Delete"]').click();
-    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/ }).click();
+    
+    await projectCard.locator('button[class*="menuTrigger"]').click();
+    await page.locator('div[class*="menuDropdown"]').locator('button', { hasText: /Sil|Delete/i }).click();
+    
+    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/i }).click();
     await page.waitForTimeout(500);
     await page.close();
   });
 
   test.beforeEach(async ({ page }) => {
-    // Her testte dilin 'tr' kalmasını garanti et
     await page.addInitScript(() => {
       localStorage.setItem('i18nextLng', 'tr');
     });
@@ -51,7 +52,7 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     await editor.click();
     await editor.press('Meta+a'); await editor.press('Control+a');
     await editor.press('Backspace');
-    // Eğitim turunu engelle
+    
     await page.evaluate(() => localStorage.setItem('template_builder_tour_seen', 'true'));
     await page.reload();
     await page.getByRole('button', { name: 'Tasarım' }).click();
@@ -67,12 +68,11 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     await editor.pressSequentially('Madde 1');
     await page.keyboard.press('Enter');
 
-    // Yeni liste öğesinin oluşmasını bekle
     await expect(editor.locator('ul li')).toHaveCount(2, { timeout: 3000 });
 
     await editor.pressSequentially('Madde 2');
     await page.keyboard.press('Enter');
-    await page.keyboard.press('Enter'); // listeden çık
+    await page.keyboard.press('Enter'); 
 
     await expect(editor.locator('ul li')).toHaveCount(2);
     await expect(editor.locator('ul li').first()).toContainText('Madde 1');
@@ -82,25 +82,20 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     const editor = page.locator('.ProseMirror');
     await editor.fill('Bu metin formatlanacak.');
 
-    // Kalın
     await editor.dblclick({ position: { x: 10, y: 10 } });
     await page.getByTitle('Kalın').click();
     await expect(editor.locator('strong, b')).toBeVisible();
 
-    // İtalik
     await page.getByTitle('İtalik').click();
     await expect(editor.locator('em, i')).toBeVisible();
 
-    // Ortala
     await page.getByTitle('Ortala').click();
     await expect(editor.locator('p[style*="text-align: center"]')).toBeVisible();
 
-    // Yazı rengi (popover testi)
     await page.getByTitle('Yazı Rengi').click();
     await page.locator('button[style*="background-color: rgb(37, 99, 235)"]').click();
     await expect(editor.locator('span[style*="color: rgb(37, 99, 235)"]')).toBeVisible();
 
-    // Vurgu rengi
     await page.getByTitle('Vurgu Rengi').click();
     await page.locator('button[style*="background-color: rgb(254, 240, 138)"]').click();
     await expect(editor.locator('mark')).toBeVisible();
@@ -121,25 +116,20 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
 
   test('Başlık seviyeleri ve liste iç içe geçme çalışmalı', async ({ page }) => {
     const editor = page.locator('.ProseMirror');
-
     await editor.click();
 
-    // Toolbar'ın yüklendiğini bekle
     await page.getByTitle('Kalın').waitFor({ state: 'visible' });
 
-    // Başlık 2 seç
     const headingSelect = page.getByRole('combobox').filter({ hasText: 'Normal' });
     await headingSelect.selectOption('2');
 
     await editor.pressSequentially('Bölüm 1');
     await page.keyboard.press('Enter');
 
-    // Normal paragrafa dön
     await headingSelect.selectOption('0');
     await editor.pressSequentially('Normal metin');
     await page.keyboard.press('Enter');
 
-    // Numaralı liste
     await page.getByTitle('Numaralı Liste').click();
     await editor.pressSequentially('Madde A');
     await page.keyboard.press('Enter');
@@ -176,11 +166,9 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
     const slashMenu = page.getByTestId('slash-menu');
     await expect(slashMenu).toBeVisible({ timeout: 3000 });
 
-    // Varsayılan seçili öğe "Büyük Başlık", bir aşağı ok "Orta Başlık" yapar
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('Enter');
 
-    // h2'nin DOM'a işlenmesini bekle
     const heading2 = editor.locator('h2');
     await expect(heading2).toBeVisible({ timeout: 5000 });
 
@@ -192,7 +180,6 @@ test.describe('1. Çekirdek Editör İşlevleri', () => {
   });
 
   test('Değişken menüsü tetikleyici ile açılıp seçim yapılabilmeli', async ({ page }) => {
-    // Önce alan oluştur
     await page.getByRole('button', { name: 'Yeni alan ekle' }).click();
     await page.getByPlaceholder('Örn: Adı Soyadı').last().fill('Müşteri Adı');
     await page.getByPlaceholder('Örn: Adı Soyadı').last().blur();

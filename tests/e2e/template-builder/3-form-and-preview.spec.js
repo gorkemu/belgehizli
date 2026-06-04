@@ -34,9 +34,12 @@ test.describe.serial('3. Form Mantığı, Şartlı Blok ve Önizleme', () => {
 
     await page.goto('/tr/panel/projects');
     const projectCard = page.locator('div[class*="projectCard"]', { hasText: DOC_NAME }).first();
-    // Dil bağımsız sil butonu seçici
-    await projectCard.locator('button[title="Sil"], button[title="Delete"]').click();
-    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/ }).click();
+    
+    // 3 Noktalı menüye tıkla, ardından açılan menüden Sil'i seç
+    await projectCard.locator('button[class*="menuTrigger"]').click();
+    await page.locator('div[class*="menuDropdown"]').locator('button', { hasText: /Sil|Delete/i }).click();
+    
+    await page.getByRole('button', { name: /Kalıcı Olarak Sil|Delete Permanently/i }).click();
     await page.waitForTimeout(500);
     await page.close();
   });
