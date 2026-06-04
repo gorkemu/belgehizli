@@ -47,6 +47,41 @@ router.post('/create', protectUser, async (req, res) => {
     }
 });
 
+// ŞABLONU ÇOĞALT (DUPLICATE)
+router.post('/:id/duplicate', protectUser, async (req, res) => {
+    try {
+        const originalProject = await Project.findOne({ _id: req.params.id, userId: req.user._id });
+        if (!originalProject) {
+            return res.status(404).json({
+                messageKey: 'projects.notFound',
+                message: 'Document not found or you do not have permission.'
+            });
+        }
+
+        // Frontend'den gelen çevrilmiş ismi kullan, yoksa varsayılan bir isim bekle
+        const newName = req.body.name || `${originalProject.name} (Kopya)`;
+
+        const newProject = new Project({
+            userId: req.user._id,
+            name: newName,
+            description: originalProject.description,
+            content: originalProject.content,
+            fields: originalProject.fields,
+            settings: originalProject.settings,
+            category: originalProject.category
+        });
+
+        await newProject.save();
+
+        res.status(201).json(newProject);
+    } catch (error) {
+        res.status(500).json({
+            messageKey: 'projects.duplicateError',
+            message: 'An error occurred while duplicating the document.'
+        });
+    }
+});
+
 // KULLANICININ TÜM ŞABLONLARINI GETİR
 router.get('/my-projects', protectUser, async (req, res) => {
     try {

@@ -53,7 +53,15 @@
     "saveChanges": "Save Changes",
     "saving": "Saving...",
     "toastEdited": "Template updated successfully.",
-    "errorEditing": "An error occurred while updating the template."
+    "errorEditing": "An error occurred while updating the template.",
+    "duplicate": "Duplicate",
+    "copyOf": "Copy of {{name}}",
+    "toastDuplicated": "Template duplicated successfully.",
+    "errorDuplicating": "An error occurred while duplicating the template.",
+    "duplicateConfirmTitle": "Duplicate Template",
+    "duplicateConfirmText": "Are you sure you want to create a copy of the template '{{name}}'?",
+    "duplicateAction": "Yes, Duplicate",
+    "duplicating": "Duplicating..."
   },
   "templates": {
     "fetchAllError": "An error occurred while fetching templates.",

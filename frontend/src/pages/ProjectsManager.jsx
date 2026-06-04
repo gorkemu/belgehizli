@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'; 
 import api from '../utils/api'; 
-import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate, MoreHorizontal, Edit3 } from 'lucide-react';
+import { Plus, X, Calendar, Trash2, AlertTriangle, Loader2, CheckCircle2, LayoutTemplate, MoreHorizontal, Edit3, Copy } from 'lucide-react';
 import styles from './ProjectsManager.module.css';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -34,9 +34,15 @@ export const ProjectsManager = () => {
   const [editTargetId, setEditTargetId] = useState(null);
   const [editFormData, setEditFormData] = useState({ name: '', description: '' });
 
-  // Delete Modal & Menu
+  // Delete Modal
   const [docToDelete, setDocToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
+
+  // Duplicate Modal
+  const [docToDuplicate, setDocToDuplicate] = useState(null);
+  const [isDuplicating, setIsDuplicating] = useState(false);
+
+  // Menu State
   const [rowMenuOpen, setRowMenuOpen] = useState(null);
 
   const showToast = (message, type = 'success') => {
@@ -127,6 +133,28 @@ export const ProjectsManager = () => {
     }
   };
 
+  const openDuplicateModal = (doc) => {
+    setDocToDuplicate(doc);
+    setRowMenuOpen(null);
+  };
+
+  const confirmDuplicateDocument = async () => {
+    if (!docToDuplicate) return;
+    setIsDuplicating(true);
+    try {
+      const duplicatedName = t('projects.copyOf', { name: docToDuplicate.name });
+      const response = await api.post(`/projects/${docToDuplicate._id}/duplicate`, { name: duplicatedName });
+      
+      setDocuments(prev => [response.data, ...prev]);
+      showToast(t('projects.toastDuplicated'));
+      setDocToDuplicate(null);
+    } catch (err) {
+      showToast(getUserFriendlyMessage(err.response?.data, 'projects.errorDuplicating', t), 'error');
+    } finally {
+      setIsDuplicating(false);
+    }
+  };
+
   const handleDeleteDocument = async () => {
     if (!docToDelete) return;
     setIsDeleting(true);
@@ -184,7 +212,6 @@ export const ProjectsManager = () => {
               <div className={styles.cardHeader}>
                 <div className={styles.categoryIcon}><LayoutTemplate size={18} color="#57534e" /></div>
                 
-                {/* 3 Noktalı Menü */}
                 <div className={styles.projectMenu}>
                   <button onClick={e => { e.stopPropagation(); setRowMenuOpen(rowMenuOpen === doc._id ? null : doc._id); }} className={styles.menuTrigger}>
                     <MoreHorizontal size={18} />
@@ -194,6 +221,11 @@ export const ProjectsManager = () => {
                       <button onClick={() => openEditModal(doc)} className={styles.menuItem}>
                         <Edit3 size={14} /> {t('projects.edit')}
                       </button>
+
+                      <button onClick={() => openDuplicateModal(doc)} className={styles.menuItem}>
+                        <Copy size={14} /> {t('projects.duplicate')}
+                      </button>
+
                       <div className={styles.menuDivider}></div>
                       <button onClick={() => { setDocToDelete(doc); setRowMenuOpen(null); }} className={`${styles.menuItem} ${styles.menuItemDanger}`}>
                         <Trash2 size={14} /> {t('projects.deleteTooltip')}
@@ -282,6 +314,25 @@ export const ProjectsManager = () => {
                 </Button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* DUPLICATE MODAL */}
+      {docToDuplicate && (
+        <div className={styles.modalOverlay} onMouseDown={() => setDocToDuplicate(null)}>
+          <div className={styles.confirmModal} onMouseDown={e => e.stopPropagation()}>
+            <div className={styles.confirmIcon}><Copy size={24} color="var(--accent)" /></div>
+            <h2 className={styles.confirmTitle}>{t('projects.duplicateConfirmTitle')}</h2>
+            <p className={styles.confirmText}>{t('projects.duplicateConfirmText', { name: docToDuplicate.name })}</p>
+            <div className={styles.confirmActions}>
+              <Button type="button" variant="secondary" onClick={() => setDocToDuplicate(null)} style={{ flex: '1' }}>
+                {t('projects.cancel')}
+              </Button>
+              <Button type="button" variant="primary" onClick={confirmDuplicateDocument} disabled={isDuplicating} style={{ flex: '1' }}>
+                {isDuplicating ? t('projects.duplicating') : t('projects.duplicateAction')}
+              </Button>
+            </div>
           </div>
         </div>
       )}

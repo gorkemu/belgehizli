@@ -53,7 +53,15 @@
     "saveChanges": "Değişiklikleri Kaydet",
     "saving": "Kaydediliyor...",
     "toastEdited": "Şablon başarıyla güncellendi.",
-    "errorEditing": "Şablon güncellenirken bir hata oluştu."
+    "errorEditing": "Şablon güncellenirken bir hata oluştu.",
+    "duplicate": "Çoğalt",
+    "copyOf": "{{name}} (Kopya)",
+    "toastDuplicated": "Şablon başarıyla çoğaltıldı.",
+    "errorDuplicating": "Şablon çoğaltılırken bir hata oluştu.",
+    "duplicateConfirmTitle": "Şablonu Çoğalt",
+    "duplicateConfirmText": "{{name}} isimli şablonun bir kopyasını oluşturmak istediğinize emin misiniz?",
+    "duplicateAction": "Evet, Çoğalt",
+    "duplicating": "Çoğaltılıyor..."
   },
   "templates": {
     "fetchAllError": "Şablonlar alınırken bir hata oluştu.",
