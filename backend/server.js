@@ -60,18 +60,18 @@ app.get('/sitemap.xml', async (req, res) => {
             // Türkçe Versiyon
             xml += `
     <url>
-        <loc>https://www.belgehizli.com${url.pathTR}</loc>
-        <xhtml:link rel="alternate" hreflang="tr" href="https://www.belgehizli.com${url.pathTR}" />
-        <xhtml:link rel="alternate" hreflang="en" href="https://www.belgehizli.com${url.pathEN}" />
+        <loc>https://belgehizli.com${url.pathTR}</loc>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://belgehizli.com${url.pathTR}" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://belgehizli.com${url.pathEN}" />
         <changefreq>${url.changefreq}</changefreq>
         <priority>${url.priority}</priority>
     </url>`;
             // İngilizce Versiyon
             xml += `
     <url>
-        <loc>https://www.belgehizli.com${url.pathEN}</loc>
-        <xhtml:link rel="alternate" hreflang="tr" href="https://www.belgehizli.com${url.pathTR}" />
-        <xhtml:link rel="alternate" hreflang="en" href="https://www.belgehizli.com${url.pathEN}" />
+        <loc>https://belgehizli.com${url.pathEN}</loc>
+        <xhtml:link rel="alternate" hreflang="tr" href="https://belgehizli.com${url.pathTR}" />
+        <xhtml:link rel="alternate" hreflang="en" href="https://belgehizli.com${url.pathEN}" />
         <changefreq>${url.changefreq}</changefreq>
         <priority>${url.priority}</priority>
     </url>`;
@@ -79,18 +79,17 @@ app.get('/sitemap.xml', async (req, res) => {
 
         // 2. Dinamik Şablon Sayfaları
         const templates = await Template.find({}, '_id slug updatedAt language').lean();
-        
+
         templates.forEach(template => {
             if (template.slug) {
                 const lang = template.language === 'en' ? 'en' : 'tr';
                 const route = lang === 'en' ? 'templates/detail' : 'sablonlar/detay';
-                const loc = `https://www.belgehizli.com/${lang}/${route}/${template.slug}`;
-                
-                // Resim URL'si 
-                const imageUrl = `https://www.belgehizli.com/template-previews/${template._id}.webp`;
+                // WWW KALDIRILDI
+                const loc = `https://belgehizli.com/${lang}/${route}/${template.slug}`;
+                const imageUrl = `https://belgehizli.com/template-previews/${template._id}.webp`;
 
-                const lastMod = template.updatedAt 
-                    ? format(new Date(template.updatedAt), 'yyyy-MM-dd') 
+                const lastMod = template.updatedAt
+                    ? format(new Date(template.updatedAt), 'yyyy-MM-dd')
                     : format(new Date(), 'yyyy-MM-dd');
 
                 xml += `
@@ -108,7 +107,7 @@ app.get('/sitemap.xml', async (req, res) => {
         });
 
         xml += `\n</urlset>`;
-        
+
         res.header('Content-Type', 'application/xml');
         res.send(xml);
     } catch (error) {

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.belgehizli.com/sitemap.xml
+Sitemap: https://belgehizli.com/sitemap.xml
