@@ -24,7 +24,8 @@ const Modals = () => {
     isShareModalOpen, setIsShareModalOpen,
     pdfConfirmModal, setPdfConfirmModal,
     showBackWarning, setShowBackWarning,
-    previewStep, setPreviewStep
+    previewStep, setPreviewStep,
+    previewEditorRef 
   } = useTemplateBuilder();
 
   // --- Local State for Modals ---
@@ -91,9 +92,18 @@ const Modals = () => {
     setIsGeneratingPdf(true); 
     showToast(t('templateBuilder.modals.pdf.preparing'), 'success');
     try {
-      const hbHtml = convertToHandlebars(editorInstance.getHTML(), triggerSymbol);
-      const template = Handlebars.compile(hbHtml);
-      const finalHtml = template(virtualFormData);
+      let finalHtml = '';
+
+      // Eğer önizleme modundaysak ve editör referansı doluysa,
+      // doğrudan kullanıcının manuel düzenlemelerini de içeren HTML'i alıyoruz.
+      if (mode === 'preview' && previewEditorRef && previewEditorRef.current) {
+        finalHtml = previewEditorRef.current.getHTML();
+      } else {
+        // Fallback: Ana editörden alıp Handlebars ile derleme
+        const hbHtml = convertToHandlebars(editorInstance.getHTML(), triggerSymbol);
+        const template = Handlebars.compile(hbHtml);
+        finalHtml = template(virtualFormData);
+      }
 
       const targetId = formData._id || 'preview';
       

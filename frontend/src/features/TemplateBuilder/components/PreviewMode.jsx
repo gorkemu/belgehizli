@@ -1,5 +1,5 @@
 // frontend/src/features/TemplateBuilder/components/PreviewMode.jsx
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react'; 
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
 import globalStyles from '../TemplateBuilder.module.css';
@@ -17,10 +17,9 @@ const PreviewMode = () => {
   const { t } = useTranslation();
   const {
     formData, virtualFormData, setVirtualFormData,
-    previewStep, setPreviewStep, triggerSymbol, showToast, getCleanFields, setShowBackWarning
+    previewStep, setPreviewStep, triggerSymbol, showToast, getCleanFields, setShowBackWarning,
+    previewEditorRef 
   } = useTemplateBuilder();
-
-  const previewEditorRef = useRef(null);
 
   const validatePreviewForm = () => {
     const requiredFields = formData.fields.filter(f => f.required);
@@ -81,7 +80,7 @@ const PreviewMode = () => {
     if (previewStep === 1 && previewEditorRef.current?.commands) {
       previewEditorRef.current.commands.setContent(previewHtml);
     }
-  }, [previewStep, previewHtml]);
+  }, [previewStep, previewHtml, previewEditorRef]);
 
   return (
     <div className={globalStyles.split}>
@@ -136,7 +135,7 @@ const PreviewMode = () => {
             <DocumentPreview
               templateContent={previewHtml}
               formData={virtualFormData}
-              editorRef={previewEditorRef}
+              editorRef={previewEditorRef} 
               currentStep={previewStep}
             />
           </div>

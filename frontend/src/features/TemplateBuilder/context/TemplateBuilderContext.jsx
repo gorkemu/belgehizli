@@ -1,5 +1,5 @@
 // frontend/src/features/TemplateBuilder/context/TemplateBuilderContext.jsx
-import React, { createContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useState, useEffect, useCallback, useRef } from 'react';
 
 export const TemplateBuilderContext = createContext(null);
 
@@ -29,6 +29,8 @@ export const TemplateBuilderProvider = ({ children, initialData, onSave }) => {
   const [pdfConfirmModal, setPdfConfirmModal] = useState(false);
 
   const [editorInstance, setEditorInstance] = useState(null);
+  
+  const previewEditorRef = useRef(null);
 
   const showToast = useCallback((msg, type = 'success', silent = false) => {
     if (silent) return;
@@ -36,7 +38,6 @@ export const TemplateBuilderProvider = ({ children, initialData, onSave }) => {
     setTimeout(() => setToast({ show: false, message: '', type: 'success' }), 3200);
   }, []);
 
-  // 'form' | 'build' | null
   const [showBackWarning, setShowBackWarning] = useState(null);
 
   const getCleanFields = useCallback(() => {
@@ -55,6 +56,7 @@ export const TemplateBuilderProvider = ({ children, initialData, onSave }) => {
     toast, showToast,
     expandedFields, setExpandedFields,
     editorInstance, setEditorInstance,
+    previewEditorRef, 
     magicModal, setMagicModal,
     condModal, setCondModal,
     previewStep, setPreviewStep,
