@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useTemplateBuilder } from '../hooks/useTemplateBuilder';
+import { useTheme } from '../../../context/ThemeContext';
 import globalStyles from '../TemplateBuilder.module.css';
 import styles from './EditorCanvas.module.css';
 import { getTriggerSymbols, getRegexForTrigger, generateVarName, insertSignatureBlock } from '../utils/helpers';
@@ -23,7 +24,7 @@ import Button from '../../../components/ui/Button';
 
 import {
   Heading1, Heading2, Heading3, List, ListOrdered,
-  Scissors, AlignLeft, AlignRight, FileUp, Sparkles, X, Layers, Bold, Italic, CheckSquare, Square
+  Scissors, AlignLeft, AlignRight, FileUp, Sparkles, X, Layers, Bold, Italic, CheckSquare, Square, Moon, Sun, Plus, Minus
 } from 'lucide-react';
 
 // --- Custom Tiptap Extensions ---
@@ -60,6 +61,11 @@ const EditorCanvas = () => {
     formData, setFormData, triggerSymbol,
     setEditorInstance, showToast, expandedFields, setExpandedFields, mode
   } = useTemplateBuilder();
+
+  const { theme } = useTheme();
+  const isWhitePaper = ['amber', 'forest', 'sunset', 'ink', 'lavender', 'noir', 'slate'].includes(theme);
+  const [dimLevel, setDimLevel] = useState(0);
+  const MAX_DIM_LEVEL = 5;
 
   const [isDraggingFile, setIsDraggingFile] = useState(false);
   const debounceTimer = useRef(null);
@@ -326,6 +332,29 @@ const EditorCanvas = () => {
       onDrop={handleDrop}
       onScroll={handleEditorScroll}
     >
+      {isWhitePaper && (
+        <div
+          className={`no-print ${styles.dimControls}`}
+          onClick={e => e.stopPropagation()}
+          title={t('editorCanvas.paperBrightness')}
+        >
+          <button
+            onClick={() => setDimLevel(p => Math.max(0, p - 1))}
+            disabled={dimLevel === 0}
+          >
+            <Plus size={13} />
+          </button>
+          <Sun size={13} className={styles.dimIcon} />
+          <button
+            onClick={() => setDimLevel(p => Math.min(MAX_DIM_LEVEL, p + 1))}
+            disabled={dimLevel === MAX_DIM_LEVEL}
+          >
+            <Minus size={13} />
+          </button>
+          
+        </div>
+      )}
+
       {isDraggingFile && (
         <div className={styles.dragOverlay}>
           <FileUp size={48} color="var(--accent)" />
@@ -334,7 +363,16 @@ const EditorCanvas = () => {
         </div>
       )}
 
-      <div id="tb-paper" className={styles.paper} onClick={() => { if (editor && !editor.isFocused) editor.chain().focus().run(); }}>
+      <div
+        id="tb-paper"
+        className={styles.paper}
+        onClick={() => { if (editor && !editor.isFocused) editor.chain().focus().run(); }}
+        style={
+          isWhitePaper && dimLevel > 0
+            ? { filter: `brightness(${1 - dimLevel * 0.07}) sepia(${dimLevel * 0.04}) contrast(${1 - dimLevel * 0.01})` }
+            : {}
+        }
+      >
         <EditorContent editor={editor} />
       </div>
 
