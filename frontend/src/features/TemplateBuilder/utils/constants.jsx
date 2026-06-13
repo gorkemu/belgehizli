@@ -6,20 +6,23 @@ export const EDITOR_LIMITS = { MAX_CHARS: 50000, MAX_IMAGE_SIZE_MB: 2 };
 
 // Çeviri anahtarları: "templateBuilder.themes.<label>"
 export const THEMES = [
-  { id: 'default', label: 'templateBuilder.themes.daylight', emoji: '☀️' },
-  { id: 'dark', label: 'templateBuilder.themes.midnight', emoji: '🌙' },
-  { id: 'amber', label: 'templateBuilder.themes.library', emoji: '🕯️' },
-  { id: 'forest', label: 'templateBuilder.themes.forest', emoji: '🌲' },
-  { id: 'glacier', label: 'templateBuilder.themes.glacier', emoji: '❄️' },
-  { id: 'sunset', label: 'templateBuilder.themes.sunset', emoji: '🌅' },
-  { id: 'ink', label: 'templateBuilder.themes.ink', emoji: '🖋️' },
-  { id: 'lavender', label: 'templateBuilder.themes.lavender', emoji: '🔮' },
-  { id: 'marine', label: 'templateBuilder.themes.marine', emoji: '🌊' },
-  { id: 'ivory', label: 'templateBuilder.themes.ivory', emoji: '📜' },
-  { id: 'sage', label: 'templateBuilder.themes.sage', emoji: '🌿' },
-  { id: 'noir', label: 'templateBuilder.themes.noir', emoji: '🖤' },
-  { id: 'rose', label: 'templateBuilder.themes.rose', emoji: '🌹' },
-  { id: 'slate', label: 'templateBuilder.themes.slate', emoji: '🪨' }
+  // Açık Temalar
+  { id: 'default', label: 'templateBuilder.themes.daylight', emoji: '☀️', type: 'light' },
+  { id: 'glacier', label: 'templateBuilder.themes.glacier', emoji: '❄️', type: 'light' },
+  { id: 'marine', label: 'templateBuilder.themes.marine', emoji: '🌊', type: 'light' },
+  { id: 'ivory', label: 'templateBuilder.themes.ivory', emoji: '📜', type: 'light' },
+  { id: 'sage', label: 'templateBuilder.themes.sage', emoji: '🌿', type: 'light' },
+  { id: 'rose', label: 'templateBuilder.themes.rose', emoji: '🌹', type: 'light' },
+  
+  // Koyu Temalar
+  { id: 'dark', label: 'templateBuilder.themes.midnight', emoji: '🌙', type: 'dark' },
+  { id: 'amber', label: 'templateBuilder.themes.library', emoji: '🕯️', type: 'dark' },
+  { id: 'forest', label: 'templateBuilder.themes.forest', emoji: '🌲', type: 'dark' },
+  { id: 'sunset', label: 'templateBuilder.themes.sunset', emoji: '🌅', type: 'dark' },
+  { id: 'ink', label: 'templateBuilder.themes.ink', emoji: '🖋️', type: 'dark' },
+  { id: 'lavender', label: 'templateBuilder.themes.lavender', emoji: '🔮', type: 'dark' },
+  { id: 'noir', label: 'templateBuilder.themes.noir', emoji: '🖤', type: 'dark' },
+  { id: 'slate', label: 'templateBuilder.themes.slate', emoji: '🪨', type: 'dark' }
 ];
 
 // Çeviri anahtarları: "templateBuilder.variableFormat.<label>"

@@ -11,7 +11,9 @@
     "logoutConfirmTitle": "Çıkış Yap",
     "logoutConfirmText": "Hesabınızdan çıkış yapmak istediğinize emin misiniz?",
     "cancel": "İptal",
-    "confirmLogout": "Evet, Çıkış Yap"
+    "confirmLogout": "Evet, Çıkış Yap",
+    "lightThemes": "Açık Temalar",
+    "darkThemes": "Koyu Temalar"
   },
   "projects": {
     "title": "Tüm Şablonlar",
@@ -149,7 +151,9 @@
     "footerDefault1": "Kapatmak için ",
     "footerDefault2": ", seçmek için ",
     "footerDefault3": " tuşunu kullanın.",
-    "searchInTemplates": "\"{{query}}\" için şablonlarda ara..."
+    "searchInTemplates": "\"{{query}}\" için şablonlarda ara...",
+    "lightThemes": "Açık Temalar",
+    "darkThemes": "Koyu Temalar"
   },
   "settings": {
     "pageTitle": "Hesap Ayarları",

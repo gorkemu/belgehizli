@@ -11,7 +11,9 @@
     "logoutConfirmTitle": "Log Out",
     "logoutConfirmText": "Are you sure you want to log out of your account?",
     "cancel": "Cancel",
-    "confirmLogout": "Yes, Log Out"
+    "confirmLogout": "Yes, Log Out",
+    "lightThemes": "Light Themes",
+    "darkThemes": "Dark Themes"
   },
   "projects": {
     "title": "All Templates",
@@ -149,7 +151,9 @@
     "footerDefault1": "Use ",
     "footerDefault2": " to close, ",
     "footerDefault3": " to select.",
-    "searchInTemplates": "Search templates for \"{{query}}\"..."
+    "searchInTemplates": "Search templates for \"{{query}}\"...",
+    "lightThemes": "Light Themes",
+    "darkThemes": "Dark Themes"
   },
   "settings": {
     "pageTitle": "Account Settings",

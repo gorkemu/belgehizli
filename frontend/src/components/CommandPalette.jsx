@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import {
     Search, FolderKanban, BookOpen,
     Settings, LogOut, FileText, AlertTriangle,
-    Home, LogIn, UserPlus, Palette, Check
+    Home, LogIn, UserPlus, Palette, Check, Sun, Moon
 } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 import styles from './CommandPalette.module.css';
@@ -18,6 +18,7 @@ export const CommandPalette = () => {
     const [query, setQuery] = useState('');
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
+    
     const [paletteMode, setPaletteMode] = useState('default');
 
     const inputRef = useRef(null);
@@ -42,7 +43,7 @@ export const CommandPalette = () => {
         icon: <Palette size={18} />,
         shortcut: 'T D',
         action: () => {
-            setPaletteMode('theme');
+            setPaletteMode('theme_categories');
             setQuery('');
             setSelectedIndex(0);
         }
@@ -65,26 +66,32 @@ export const CommandPalette = () => {
         { id: 'register', label: t('commandPalette.register'), icon: <UserPlus size={18} />, shortcut: 'S U', action: () => navigate(registerPath) },
     ], [navigate, t, homePath, galleryPath, loginPath, registerPath, changeThemeCommand]);
 
-    const THEME_COMMANDS = useMemo(() => THEMES.map(th => ({
-        id: `theme_${th.id}`,
-        label: t(th.label),
-        icon: <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{th.emoji}</span>,
-        isActive: theme === th.id,
-        action: () => {
-            changeTheme(th.id);
-            setIsOpen(false);
-        }
+    const THEME_CATEGORY_COMMANDS = useMemo(() => [
+        { id: 'cat_light', label: t('commandPalette.lightThemes', 'Açık Temalar'), icon: <Sun size={18} />, action: () => { setPaletteMode('theme_light'); setSelectedIndex(0); setQuery(''); } },
+        { id: 'cat_dark', label: t('commandPalette.darkThemes', 'Koyu Temalar'), icon: <Moon size={18} />, action: () => { setPaletteMode('theme_dark'); setSelectedIndex(0); setQuery(''); } }
+    ], [t]);
+
+    const THEME_LIGHT_COMMANDS = useMemo(() => THEMES.filter(t => t.type === 'light').map(th => ({
+        id: `theme_${th.id}`, label: t(th.label), icon: <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{th.emoji}</span>, isActive: theme === th.id, action: () => { changeTheme(th.id); setIsOpen(false); }
     })), [theme, changeTheme, t]);
 
-    const BASE_COMMANDS = user ? LOGGED_IN_COMMANDS : LOGGED_OUT_COMMANDS;
-    const COMMANDS = paletteMode === 'theme' ? THEME_COMMANDS : BASE_COMMANDS;
+    const THEME_DARK_COMMANDS = useMemo(() => THEMES.filter(t => t.type === 'dark').map(th => ({
+        id: `theme_${th.id}`, label: t(th.label), icon: <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{th.emoji}</span>, isActive: theme === th.id, action: () => { changeTheme(th.id); setIsOpen(false); }
+    })), [theme, changeTheme, t]);
+
+    const COMMANDS = useMemo(() => {
+        if (paletteMode === 'theme_categories') return THEME_CATEGORY_COMMANDS;
+        if (paletteMode === 'theme_light') return THEME_LIGHT_COMMANDS;
+        if (paletteMode === 'theme_dark') return THEME_DARK_COMMANDS;
+        return user ? LOGGED_IN_COMMANDS : LOGGED_OUT_COMMANDS;
+    }, [paletteMode, THEME_CATEGORY_COMMANDS, THEME_LIGHT_COMMANDS, THEME_DARK_COMMANDS, user, LOGGED_IN_COMMANDS, LOGGED_OUT_COMMANDS]);
 
     const filteredCommands = useMemo(() => {
         const filtered = COMMANDS.filter(cmd =>
             cmd.label.toLowerCase().includes(query.toLowerCase())
         );
 
-        if (query.trim().length > 0 && paletteMode !== 'theme') {
+        if (query.trim().length > 0 && !paletteMode.startsWith('theme')) {
             filtered.push({
                 id: 'search_templates',
                 label: t('commandPalette.searchInTemplates', { query }),
@@ -107,10 +114,7 @@ export const CommandPalette = () => {
                 setIsOpen(open => !open);
             }
         };
-
-        const handleCustomOpen = () => {
-            setIsOpen(true);
-        };
+        const handleCustomOpen = () => setIsOpen(true);
 
         document.addEventListener('keydown', handleGlobalKeyDown);
         window.addEventListener('open-command-palette', handleCustomOpen);
@@ -136,17 +140,21 @@ export const CommandPalette = () => {
 
         if (e.key === 'Escape') {
             e.preventDefault();
-            if (paletteMode === 'theme') {
-                setPaletteMode('default');
-                setQuery('');
-                setSelectedIndex(0);
+            if (paletteMode === 'theme_categories') {
+                setPaletteMode('default'); setQuery(''); setSelectedIndex(0);
+            } else if (paletteMode === 'theme_light' || paletteMode === 'theme_dark') {
+                setPaletteMode('theme_categories'); setQuery(''); setSelectedIndex(0);
             } else {
                 setIsOpen(false);
             }
-        } else if (e.key === 'Backspace' && query === '' && paletteMode === 'theme') {
-            e.preventDefault();
-            setPaletteMode('default');
-            setSelectedIndex(0);
+        } else if (e.key === 'Backspace' && query === '') {
+            if (paletteMode === 'theme_categories') {
+                e.preventDefault();
+                setPaletteMode('default'); setSelectedIndex(0);
+            } else if (paletteMode === 'theme_light' || paletteMode === 'theme_dark') {
+                e.preventDefault();
+                setPaletteMode('theme_categories'); setSelectedIndex(0);
+            }
         } else if (e.key === 'ArrowDown') {
             e.preventDefault();
             setSelectedIndex(prev => (prev < filteredCommands.length - 1 ? prev + 1 : 0));
@@ -156,8 +164,9 @@ export const CommandPalette = () => {
         } else if (e.key === 'Enter') {
             e.preventDefault();
             if (filteredCommands.length > 0) {
-                filteredCommands[selectedIndex].action();
-                if (filteredCommands[selectedIndex].id !== 'logout' && filteredCommands[selectedIndex].id !== 'change_theme') {
+                const selectedCmd = filteredCommands[selectedIndex];
+                selectedCmd.action();
+                if (selectedCmd.id !== 'logout' && selectedCmd.id !== 'change_theme' && selectedCmd.id !== 'cat_light' && selectedCmd.id !== 'cat_dark') {
                     setIsOpen(false);
                 }
             }
@@ -167,12 +176,8 @@ export const CommandPalette = () => {
     const handleConfirmLogout = () => {
         setShowLogoutModal(false);
         setIsOpen(false);
-        if (logout) {
-            logout();
-        } else {
-            localStorage.removeItem('user_token');
-            navigate(loginPath);
-        }
+        if (logout) logout();
+        else { localStorage.removeItem('user_token'); navigate(loginPath); }
     };
 
     useEffect(() => {
@@ -184,6 +189,11 @@ export const CommandPalette = () => {
 
     if (!isOpen) return null;
 
+    let listLabelText = t('commandPalette.suggestions');
+    if (paletteMode === 'theme_categories') listLabelText = t('commandPalette.changeTheme', 'TEMAYI DEĞİŞTİR');
+    if (paletteMode === 'theme_light') listLabelText = t('commandPalette.lightThemes', 'AÇIK TEMALAR');
+    if (paletteMode === 'theme_dark') listLabelText = t('commandPalette.darkThemes', 'KOYU TEMALAR');
+
     return (
         <div className={styles.overlay} onMouseDown={() => !showLogoutModal && setIsOpen(false)}>
             <div className={styles.palette} onMouseDown={e => e.stopPropagation()}>
@@ -192,7 +202,7 @@ export const CommandPalette = () => {
                     <input
                         ref={inputRef}
                         className={styles.input}
-                        placeholder={paletteMode === 'theme' ? t('commandPalette.searchTheme', 'Tema ara...') : t('commandPalette.placeholder')}
+                        placeholder={paletteMode.startsWith('theme') ? t('commandPalette.searchTheme', 'Tema ara...') : t('commandPalette.placeholder')}
                         value={query}
                         onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
                         onKeyDown={handleKeyDown}
@@ -205,9 +215,7 @@ export const CommandPalette = () => {
                     {filteredCommands.length > 0 ? (
                         <div className={styles.list}>
                             <div className={styles.listLabel}>
-                                {paletteMode === 'theme'
-                                    ? t('commandPalette.themes', 'TEMALAR')
-                                    : t('commandPalette.suggestions')}
+                                {listLabelText}
                             </div>
                             {filteredCommands.map((cmd, index) => (
                                 <button
@@ -217,7 +225,7 @@ export const CommandPalette = () => {
                                     onMouseEnter={() => setSelectedIndex(index)}
                                     onClick={() => {
                                         cmd.action();
-                                        if (cmd.id !== 'logout' && cmd.id !== 'change_theme') setIsOpen(false);
+                                        if (cmd.id !== 'logout' && cmd.id !== 'change_theme' && cmd.id !== 'cat_light' && cmd.id !== 'cat_dark') setIsOpen(false);
                                     }}
                                 >
                                     <div className={styles.itemLeft}>
@@ -241,7 +249,7 @@ export const CommandPalette = () => {
                 </div>
                 <div className={styles.footer}>
                     <span>
-                        {paletteMode === 'theme' ? (
+                        {paletteMode.startsWith('theme') ? (
                             <>
                                 {t('commandPalette.footerTheme1')}
                                 <b>ESC / Backspace</b>

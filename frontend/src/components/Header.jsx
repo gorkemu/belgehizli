@@ -32,6 +32,9 @@ function Header() {
   const isDark = theme !== 'light' && theme !== 'glacier' && theme !== 'default' && theme !== 'marine' && theme !== 'ivory' && theme !== 'sage' && theme !== 'rose';
   const currentThemeObj = THEMES.find(t => t.id === theme) || THEMES[0];
 
+  const lightThemes = THEMES.filter(t => t.type === 'light');
+  const darkThemes = THEMES.filter(t => t.type === 'dark');
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 60);
     window.addEventListener('scroll', handleScroll);
@@ -133,16 +136,21 @@ function Header() {
                 {mobileThemeOpen && (
                   <div className={styles.mobileThemeListWrapper}>
                     <div className={styles.mobileThemeList}>
-                      {THEMES.map(th => (
-                        <button
-                          key={th.id}
-                          onClick={() => handleThemeSelect(th.id)}
-                          className={`${styles.mobileThemeOption} ${theme === th.id ? styles.activeMobileTheme : ''}`}
-                        >
-                          <span className={styles.themeEmoji}>{th.emoji}</span>
-                          <span>{t(th.label)}</span>
+                      
+                      <div className={styles.mobileThemeGroupLabel}>{t('header.lightThemes')}</div>
+                      {lightThemes.map(th => (
+                        <button key={th.id} onClick={() => handleThemeSelect(th.id)} className={`${styles.mobileThemeOption} ${theme === th.id ? styles.activeMobileTheme : ''}`}>
+                          <span className={styles.themeEmoji}>{th.emoji}</span> <span>{t(th.label)}</span>
                         </button>
                       ))}
+
+                      <div className={styles.mobileThemeGroupLabel}>{t('header.darkThemes')}</div>
+                      {darkThemes.map(th => (
+                        <button key={th.id} onClick={() => handleThemeSelect(th.id)} className={`${styles.mobileThemeOption} ${theme === th.id ? styles.activeMobileTheme : ''}`}>
+                          <span className={styles.themeEmoji}>{th.emoji}</span> <span>{t(th.label)}</span>
+                        </button>
+                      ))}
+                      
                     </div>
                   </div>
                 )}
@@ -161,16 +169,23 @@ function Header() {
                   <>
                     <div className={styles.themeOverlay} onClick={() => setThemePopover(false)} />
                     <div className={styles.themePopoverMenu}>
-                      {THEMES.map(th => (
-                        <button
-                          key={th.id}
-                          onClick={() => handleThemeSelect(th.id)}
-                          className={`${styles.themePopoverItem} ${theme === th.id ? styles.active : ''}`}
-                        >
-                          <span>{th.emoji}</span>
-                          <span>{t(th.label)}</span>
+                      
+                      <div className={styles.themeGroupLabel}>{t('header.lightThemes')}</div>
+                      {lightThemes.map(th => (
+                        <button key={th.id} onClick={() => handleThemeSelect(th.id)} className={`${styles.themePopoverItem} ${theme === th.id ? styles.active : ''}`}>
+                          <span>{th.emoji}</span> <span>{t(th.label)}</span>
                         </button>
                       ))}
+                      
+                      <div className={styles.themeGroupDivider} />
+                      
+                      <div className={styles.themeGroupLabel}>{t('header.darkThemes')}</div>
+                      {darkThemes.map(th => (
+                        <button key={th.id} onClick={() => handleThemeSelect(th.id)} className={`${styles.themePopoverItem} ${theme === th.id ? styles.active : ''}`}>
+                          <span>{th.emoji}</span> <span>{t(th.label)}</span>
+                        </button>
+                      ))}
+
                     </div>
                   </>
                 )}
