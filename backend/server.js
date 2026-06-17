@@ -1,4 +1,4 @@
-// backend\server.js
+// backend/server.js
 process.on('uncaughtException', (error) => {
     console.error('UNCAUGHT EXCEPTION! Shutting down...');
     console.error(error.stack || error);
@@ -22,9 +22,10 @@ const cron = require('node-cron');
 const AdminUser = require('./models/adminUser');
 const Transaction = require('./models/transaction');
 const bcrypt = require('bcryptjs');
+
 const legalRoutes = require('./routes/legal');
 const userAuthRoutes = require('./routes/userAuth');
-const projectsRoutes = require('./routes/projects');
+const projectsRoutes = require('./routes/projects'); 
 
 dotenv.config();
 const app = express();
@@ -84,7 +85,6 @@ app.get('/sitemap.xml', async (req, res) => {
             if (template.slug) {
                 const lang = template.language === 'en' ? 'en' : 'tr';
                 const route = lang === 'en' ? 'templates/detail' : 'sablonlar/detay';
-                // WWW KALDIRILDI
                 const loc = `https://belgehizli.com/${lang}/${route}/${template.slug}`;
                 const imageUrl = `https://belgehizli.com/template-previews/${template._id}.webp`;
 

@@ -1021,7 +1021,6 @@
     "metaDescription": "Contact Belge Hızlı. You can reach out to us for questions, suggestions, or collaboration requests.",
     "title": "Contact Information",
     "paragraph1": "You can use the information below for your questions, suggestions, or technical support requests.",
-    "paragraph2": "For customer support requests, we kindly ask you to primarily use our <bold>email address</bold>.",
     "companyInfo": "Company Information",
     "fullName": "Full Name",
     "taxOffice": "Tax Office",
@@ -1029,7 +1028,11 @@
     "address": "Headquarters Address",
     "contactChannels": "Contact Channels",
     "email": "Email",
-    "phone": "Phone"
+    "phone": "Phone",
+    "helpCenterTitle": "Help Center & Support",
+    "helpCenterDesc": "Find answers to your questions in our knowledge base, or submit a ticket directly to our support team.",
+    "submitTicketBtn": "Submit a Ticket",
+    "knowledgeBaseBtn": "Go to Knowledge Base"
   },
   "legal": {
     "loading": "Loading...",
@@ -1043,5 +1046,19 @@
     "privacyDesc": "Learn about how we process and protect your personal data.",
     "termsTitle": "Terms of Service and Distance Selling Agreement",
     "termsDesc": "Read the terms of use and contract details of our platform."
+  },
+  "supportForm": {
+    "nameLabel": "Full Name",
+    "namePlaceholder": "e.g. John Doe",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "example@email.com",
+    "messageLabel": "Your Message",
+    "messagePlaceholder": "How can we help you?",
+    "submitting": "Sending...",
+    "submitBtn": "Send Message",
+    "successTitle": "Request Received",
+    "successDesc": "Our support team will get back to you via your email address as soon as possible.",
+    "newMsgBtn": "Send Another Message",
+    "errorMsg": "An error occurred. Please email us directly at support@belgehizli.com."
   }
 }

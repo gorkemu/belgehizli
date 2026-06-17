@@ -1021,7 +1021,6 @@
     "metaDescription": "Belge Hızlı ile iletişime geçin. Soru, öneri veya işbirliği talepleriniz için bize ulaşabilirsiniz.",
     "title": "İletişim Bilgileri",
     "paragraph1": "Soru, öneri veya teknik destek talepleriniz için aşağıdaki bilgileri kullanabilirsiniz.",
-    "paragraph2": "Müşteri destek talepleriniz için öncelikli olarak <bold>e-posta adresimizi</bold> kullanmanızı rica ederiz.",
     "companyInfo": "Firma Bilgileri",
     "fullName": "Adı Soyadı",
     "taxOffice": "Vergi Dairesi",
@@ -1029,7 +1028,11 @@
     "address": "Merkez Adresi",
     "contactChannels": "İletişim Kanalları",
     "email": "E-posta",
-    "phone": "Telefon"
+    "phone": "Telefon",
+    "helpCenterTitle": "Yardım Merkezi & Destek",
+    "helpCenterDesc": "Sorularınızın cevabını bilgi bankamızda bulabilir veya destek ekibimize doğrudan bir talep (ticket) oluşturabilirsiniz.",
+    "submitTicketBtn": "Destek Talebi Oluştur",
+    "knowledgeBaseBtn": "Bilgi Bankasına Git"
   },
   "legal": {
     "loading": "Yükleniyor...",

@@ -45,7 +45,7 @@
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.6
 }
 
 .paragraph strong {
@@ -53,11 +53,6 @@
   font-weight: 700;
 }
 
-.gridContainer {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-}
 
 .infoCard {
   background-color: var(--bg-hover);
@@ -133,18 +128,107 @@
   color: var(--text-secondary);
 }
 
+.layoutWrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.infoSection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.supportSection {
+  display: flex;
+  height: 100%;
+}
+
+.supportCard {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.3s ease;
+}
+
+.supportCard:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.supportIconWrapper {
+  width: 72px;
+  height: 72px;
+  background-color: var(--bg-hover);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.supportIcon {
+  color: var(--accent); 
+}
+
+.supportCard h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.supportCard p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+  font-size: 1.05rem;
+  max-width: 360px;
+}
+
+.actionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  font-size: 1rem;
+  padding: 12px;
+}
+
+@media (max-width: 900px) {
+  .layoutWrapper {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .container {
     margin: 2rem 1rem;
     padding: 2rem 1.5rem;
   }
 
-  .gridContainer {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
   .title {
     font-size: 1.8rem;
   }
 }
+
