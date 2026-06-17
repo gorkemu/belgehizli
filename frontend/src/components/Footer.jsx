@@ -10,7 +10,7 @@ function Footer() {
   const currentLang = lang || 'tr'; 
 
   // Dinamik Rotalar
-  const libraryRoute = currentLang === 'tr' ? 'sablonlar' : 'templates';
+  const contactRoute = currentLang === 'tr' ? 'iletisim' : 'contact-us';
   const registerRoute = currentLang === 'tr' ? 'kayit-ol' : 'register';
   const loginRoute = currentLang === 'tr' ? 'giris-yap' : 'login';
   const privacyRoute = currentLang === 'tr' ? 'gizlilik-politikasi' : 'privacy-policy';
@@ -40,7 +40,7 @@ function Footer() {
             <h4 className={styles.columnTitle}>{t('footer.platform')}</h4>
             <nav className={styles.footerNav}>
               <ul>
-                <li><Link to={`/${currentLang}/${libraryRoute}`}>{t('footer.publicLibrary')}</Link></li>
+                
                 <li><Link to={`/${currentLang}/${registerRoute}`}>{t('footer.signUpFree')}</Link></li>
                 <li><Link to={`/${currentLang}/${loginRoute}`}>{t('footer.login')}</Link></li>
               </ul>
@@ -53,7 +53,7 @@ function Footer() {
               <ul>
                 <li><Link to={`/${currentLang}/${privacyRoute}`}>{t('footer.privacy')}</Link></li>
                 <li><Link to={`/${currentLang}/${termsRoute}`}>{t('footer.terms')}</Link></li>
-                <li><Link to={`/${currentLang}/${preInfoRoute}`}>{t('footer.disclaimer')}</Link></li>
+                <li><Link to={`/${currentLang}/${contactRoute}`}>{t('footer.contact')}</Link></li>
               </ul>
             </nav>
           </div>
